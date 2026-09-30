@@ -1,0 +1,127 @@
+{
+  "measuredAt": "2026-09-30",
+  "source": "PageSpeed Insights API v5",
+  "target": "metabase.com (original)",
+  "runs": [
+    {
+      "page": "/",
+      "strategy": "mobile",
+      "scores": {
+        "performance": 56,
+        "accessibility": 95,
+        "best-practices": 92,
+        "seo": 100
+      },
+      "lab": {
+        "first-contentful-paint": "4.7\u00a0s",
+        "largest-contentful-paint": "14.7\u00a0s",
+        "total-blocking-time": "250\u00a0ms",
+        "cumulative-layout-shift": "0.001",
+        "speed-index": "6.2\u00a0s"
+      },
+      "field": {
+        "lcpMs": 2287,
+        "inpMs": 138,
+        "cls": 0,
+        "overall": "AVERAGE"
+      },
+      "totalByteWeight": "Total size was 1,502\u00a0KiB"
+    },
+    {
+      "page": "/",
+      "strategy": "desktop",
+      "scores": {
+        "performance": 81,
+        "accessibility": 92,
+        "best-practices": 92,
+        "seo": 100
+      },
+      "lab": {
+        "first-contentful-paint": "0.8\u00a0s",
+        "largest-contentful-paint": "0.8\u00a0s",
+        "total-blocking-time": "410\u00a0ms",
+        "cumulative-layout-shift": "0.009",
+        "speed-index": "1.0\u00a0s"
+      },
+      "field": {
+        "lcpMs": 1531,
+        "inpMs": 44,
+        "cls": 2,
+        "overall": "FAST"
+      },
+      "totalByteWeight": "Total size was 1,864\u00a0KiB"
+    },
+    {
+      "page": "/blog",
+      "strategy": "mobile",
+      "scores": {
+        "performance": 47,
+        "accessibility": 86,
+        "best-practices": 96,
+        "seo": 92
+      },
+      "lab": {
+        "first-contentful-paint": "5.3\u00a0s",
+        "largest-contentful-paint": "16.4\u00a0s",
+        "total-blocking-time": "360\u00a0ms",
+        "cumulative-layout-shift": "0.122",
+        "speed-index": "6.6\u00a0s"
+      },
+      "field": {
+        "lcpMs": 2129,
+        "inpMs": 137,
+        "cls": 0,
+        "overall": "AVERAGE"
+      },
+      "totalByteWeight": "Total size was 2,358\u00a0KiB"
+    },
+    {
+      "page": "/case-studies",
+      "strategy": "mobile",
+      "scores": {
+        "performance": 56,
+        "accessibility": 96,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "lab": {
+        "first-contentful-paint": "4.0\u00a0s",
+        "largest-contentful-paint": "15.3\u00a0s",
+        "total-blocking-time": "290\u00a0ms",
+        "cumulative-layout-shift": "0",
+        "speed-index": "6.1\u00a0s"
+      },
+      "field": {
+        "lcpMs": 2129,
+        "inpMs": 137,
+        "cls": 0,
+        "overall": "AVERAGE"
+      },
+      "totalByteWeight": "Total size was 2,040\u00a0KiB"
+    },
+    {
+      "page": "/love",
+      "strategy": "mobile",
+      "scores": {
+        "performance": 55,
+        "accessibility": 92,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "lab": {
+        "first-contentful-paint": "4.7\u00a0s",
+        "largest-contentful-paint": "19.0\u00a0s",
+        "total-blocking-time": "290\u00a0ms",
+        "cumulative-layout-shift": "0",
+        "speed-index": "5.7\u00a0s"
+      },
+      "field": {
+        "lcpMs": 2129,
+        "inpMs": 137,
+        "cls": 0,
+        "overall": "AVERAGE"
+      },
+      "totalByteWeight": "Total size was 3,203\u00a0KiB"
+    }
+  ]
+}

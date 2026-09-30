@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build output
+dist/
+build/
+.astro/
+.strapi/
+.cache/
+.tmp/
+
+# env & secrets
+.env
+.env.*
+!.env.example
+
+# databases
+*.db
+*.sqlite
+*.sqlite3
+.tmp/data.db
+
+# uploads (local media; production uses Cloudinary)
+apps/cms/public/uploads/*
+!apps/cms/public/uploads/.gitkeep
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
