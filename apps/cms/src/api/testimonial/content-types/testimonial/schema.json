@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonials",
+  "info": {
+    "singularName": "testimonial",
+    "pluralName": "testimonials",
+    "displayName": "Testimonial",
+    "description": "Written once, reused on home, product sections, case studies and /love."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "pull-quote",
+        "social"
+      ],
+      "default": "pull-quote",
+      "required": true
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "sourceUrl": {
+      "type": "string",
+      "required": false
+    },
+    "sourceNetwork": {
+      "type": "enumeration",
+      "enum": [
+        "x",
+        "linkedin",
+        "reddit",
+        "discourse",
+        "email",
+        "other"
+      ]
+    },
+    "person": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::person.person",
+      "inversedBy": "testimonials"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "testimonials"
+    },
+    "caseStudy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::case-study.case-study",
+      "inversedBy": "testimonials"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "glossary_terms",
+  "info": {
+    "singularName": "glossary-term",
+    "pluralName": "glossary-terms",
+    "displayName": "Glossary Term",
+    "description": "BI/data term definition; listing filters by letter and topic."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "term": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "term"
+    },
+    "definition": {
+      "type": "text",
+      "required": true
+    },
+    "body": {
+      "type": "blocks"
+    },
+    "topic": {
+      "type": "enumeration",
+      "enum": [
+        "querying",
+        "visualization",
+        "data-modeling",
+        "administration",
+        "embedding",
+        "general"
+      ],
+      "default": "general"
+    },
+    "relatedTerms": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::glossary-term.glossary-term"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}
