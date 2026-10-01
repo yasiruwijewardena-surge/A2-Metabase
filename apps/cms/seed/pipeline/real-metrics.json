@@ -1,0 +1,9 @@
+{
+  "_note": "Hand-verified against figures Metabase publishes in the case study headline or body. Automated extraction was discarded: it picked up company statistics (customer counts, vendor counts) that are not outcomes, and putting those on a live page as results would misstate them.",
+  "alto": [{ "value": "~90%", "label": "lower monthly platform cost" }],
+  "aula": [{ "value": "87%", "label": "fewer support tickets" }],
+  "insocial": [{ "value": "1,100+", "label": "engineering hours saved" }],
+  "matter": [{ "value": "30%", "label": "of growth budget saved" }],
+  "marketfuel": [{ "value": "<30 days", "label": "to proof of concept" }],
+  "hola-health": [{ "value": "<3 months", "label": "to replace manual reporting" }]
+}

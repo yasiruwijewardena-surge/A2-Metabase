@@ -1,144 +1,1043 @@
 [
   {
-    "title": "Why your semantic layer is the only AI strategy that matters",
-    "category": "Analytics and BI",
-    "tags": ["AI", "Data modeling"],
-    "author": "Sameer Al-Sakran",
-    "publishedDate": "2026-09-18",
-    "readTimeMinutes": 7,
-    "featured": true,
-    "excerpt": "An agent that can write SQL is not the hard part. An agent that writes SQL against definitions your finance team agrees with is.",
-    "body": "Every analytics vendor now ships something that turns a question into a query. The demos are good. The demos are always good, because the demo database has eight tables and one definition of revenue.\n\nYour warehouse has nine hundred tables and four definitions of revenue, three of which are wrong in ways that only one person remembers.\n\n## The problem was never query generation\n\nLanguage models are genuinely good at writing SQL. Point one at a schema and it will produce something syntactically valid and usually close to what you meant. That is not where analytics goes wrong.\n\nAnalytics goes wrong when two people pull the same number and get different answers, then spend a week finding out why. The model does not fix that. It accelerates it, because now both people can generate a plausible query in four seconds instead of forty minutes.\n\n## What a semantic layer actually buys you\n\nA semantic layer is the agreement about what things mean, written down somewhere a machine can read:\n\n- Which tables are canonical and which are somebody's scratch work\n- What `active_customer` means this quarter\n- Which joins are legitimate and which silently fan out your row counts\n- Which metrics have been checked by someone who would be embarrassed if they were wrong\n\nOnce that exists, an agent stops guessing. It is not inferring intent from column names; it is composing answers out of definitions a human already signed off on.\n\n## Verification is the feature\n\nThe part that matters is not that the agent answers. It is that you can see the query it ran, trace it to the definitions it used, and disagree with it in a specific way.\n\nAn answer you cannot inspect is a rumour with a chart attached."
-  },
-  {
-    "title": "Filtering a thousand rows in the browser, and when to stop",
-    "category": "Engineering",
-    "tags": ["Performance", "Dashboards"],
-    "author": "Maya Okonkwo",
-    "publishedDate": "2026-09-02",
-    "readTimeMinutes": 9,
-    "excerpt": "Client-side filtering feels instant until the list grows. Here is where the line actually sits, measured rather than guessed.",
-    "body": "There is a tempting pattern in content-heavy sites: render everything, then hide what does not match. No network request, no spinner, no loading state to design. Filtering feels instantaneous because it is.\n\nIt also stops working, and the failure is gradual enough that nobody notices the day it starts.\n\n## What actually costs you\n\nThree things, in increasing order of how much they hurt:\n\n- **Transfer.** Every hidden row still shipped over the wire.\n- **Parse and layout.** The browser builds the whole DOM before it paints anything.\n- **Memory.** Each node carries overhead, and on a mid-range phone this is the one that bites.\n\nThe second is the one that shows up in Largest Contentful Paint, which is the one your performance budget cares about.\n\n## Where the line sits\n\nRoughly: under a couple of hundred simple cards, render it all and filter in the browser. Past that, paginate or generate a route per filter value.\n\nThe better question is not how many rows the browser can survive. It is whether the filtered view deserves a URL. If someone might want to send a colleague the Healthcare stories, that is a page, not a DOM state.\n\n## Doing both\n\nStatic routes per filter value give you shareable, indexable pages. A small amount of script on top keeps in-page switching instant and syncs the URL as it goes. You get the fast interaction and the shareable link, and the version without JavaScript still works."
-  },
-  {
-    "title": "Four definitions of churn, and why your dashboard picked the wrong one",
-    "category": "Analytics and BI",
-    "tags": ["Data modeling", "Self-service"],
-    "author": "Priya Raman",
-    "publishedDate": "2026-08-21",
-    "readTimeMinutes": 6,
-    "featured": true,
-    "excerpt": "Churn is not one metric. It is a family of metrics that disagree, and the disagreement is where the useful information lives.",
-    "body": "Someone asks what your churn rate is. You have a number. The number is wrong, or rather, it is right for a question nobody asked.\n\n## The four\n\n**Logo churn** counts customers who left. Treats a two-seat account and a two-thousand-seat account as equal. Useful for understanding product-market fit, useless for forecasting revenue.\n\n**Revenue churn** counts money that left. Reflects the business, hides the fact that you are bleeding small accounts.\n\n**Net revenue churn** subtracts expansion from existing customers. Can go negative, which looks wonderful and can mask a complete failure to retain anyone new.\n\n**Cohort churn** asks what fraction of a given signup month is still here after N months. The only one that tells you whether things are getting better.\n\n## They disagree on purpose\n\nA quarter where logo churn rises and net revenue churn falls is a real situation with a clear story: you are losing small accounts and growing large ones. One number would have hidden that. Two numbers told you what happened.\n\n## What to do about it\n\nDefine all four, name them unambiguously, and put the definition next to the chart. Not in a wiki. Next to the chart, where the person reading it is."
-  },
-  {
-    "title": "Metabase 56 is out",
+    "title": "August 2026 Security Vulnerability: What happened?",
+    "slug": "vulnerability-what-happened",
+    "excerpt": "Explanation of the August 2026 Security Vulnerability.",
     "category": "News",
-    "tags": ["Open Source"],
+    "tags": [
+      "Security"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-08-27",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/august-2026-vulnerability-what-happened.webp",
+    "body": "A security issue affecting self-hosted instances was reported, confirmed and patched. This is an account of what happened, what was exposed, and what we changed afterwards.\n\n## What happened\n\nThe issue allowed a request to reach an internal endpoint that should have required authentication. It was reported through our disclosure process and confirmed the same day.\n\n## What we did\n\nPatches shipped across every supported version before this was published. Cloud instances were updated first and required no action from customers.\n\n## What changed afterwards\n\nTwo things. The endpoint class involved is now covered by a test that asserts authentication rather than assuming it, and our disclosure process now publishes a timeline alongside the fix rather than weeks later.\n\nIf you self-host and have not upgraded, that is the one action worth taking today.",
+    "featured": true
+  },
+  {
+    "title": "Join us for AI Analytics Week",
+    "slug": "ai-analytics-week",
+    "excerpt": "Three live sessions, August 25\u201327, on how AI is changing analytics work, how you can keep up, and a 2-minute quiz to figure out which session is best for you.",
+    "category": "News",
+    "tags": [
+      "AI",
+      "SQL"
+    ],
     "author": "Jess Thompson",
-    "publishedDate": "2026-09-25",
+    "publishedDate": "2026-08-14",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/ai-weekly-blog-post/ai-analytics-week-og-v2.webp",
+    "body": "Three live sessions on how AI is changing analytics work \u2014 what it genuinely helps with, what it quietly makes worse, and how to tell which is which in your own setup.\n\n## The sessions\n\n- **Where agents actually help.** The tasks where a model earns its place, and the ones where it adds a confident wrong answer.\n- **On your own infrastructure.** Running analytics agents without sending your warehouse to someone else's API.\n- **Verification.** Why an answer you cannot inspect is a rumour with a chart attached.\n\n## Who should come\n\nIf you are being asked to \"add AI\" to your analytics stack and are not sure what that means in practice, the first session is the useful one. If you have already tried and found the results uneven, the third.\n\nAll three are recorded and available afterwards without registration.",
+    "featured": true
+  },
+  {
+    "title": "Security-focused Metabase Release Announcement",
+    "slug": "security-focused-release-announcement-2026-08-12",
+    "excerpt": "Following our security update last week, today we are releasing hardened versions of Metabase which incorporate several security improvements.",
+    "category": "News",
+    "tags": [
+      "Security"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-08-12",
+    "readTimeMinutes": 1,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/security-focused-metabase-release-announcement.webp",
+    "body": "Following last week's security update, today we are releasing hardened versions that incorporate several improvements beyond the original fix.\n\n## What is in it\n\nThe original patch closed the specific issue. This release addresses the surrounding class of problem: tighter defaults on internal endpoints, stricter validation on a handful of request paths, and better logging of authentication failures so that unusual activity is visible rather than silent.\n\n## Upgrading\n\nThese are drop-in patch releases for every supported version. No migration, no configuration change.\n\nIf you upgraded last week you are not exposed to the original issue, but upgrading again is still worth doing \u2014 the hardening here is the part that reduces the chance of a similar report next time.",
+    "featured": true
+  },
+  {
+    "title": "Security update available for Metabase - Please upgrade now",
+    "slug": "security-update-6-aug-2026",
+    "excerpt": "We've patched a critical vulnerability.",
+    "category": "News",
+    "tags": [
+      "Security"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-08-06",
     "readTimeMinutes": 2,
-    "excerpt": "Semantic layer curation in Data Studio, faster dashboard loads on large result sets, and a long list of fixes.",
-    "body": "The headline change is curation tooling for your semantic layer — marking canonical sources, defining reusable metrics, and making the distinction between vetted and exploratory content visible to everyone rather than tribal knowledge.\n\n## Also in this release\n\n- Dashboards with large result sets paginate server-side rather than shipping the whole set\n- Query builder handles multi-level aggregation without dropping to SQL\n- Permissions UI rewritten around groups rather than individual users\n- Forty-one bug fixes, including several in the date handling nobody enjoys\n\nUpgrade notes and the full changelog are in the documentation."
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/security-update-august-2026.webp",
+    "body": "A security update is available for all supported versions. If you self-host, upgrading is the recommended action.\n\n## What to do\n\nUpgrade to the latest patch release of whichever major version you run. Metabase Cloud instances have already been updated and require no action.\n\n## If you cannot upgrade immediately\n\nRestricting network access to your instance \u2014 putting it behind a VPN or an allowlist rather than exposing it to the public internet \u2014 meaningfully reduces exposure in the interim. This is good practice regardless.\n\nA fuller account will follow once deployments have had time to update."
   },
   {
-    "title": "We replaced our issue triage with an agent, and kept the humans",
+    "title": "How we picked LibreChat \u2014 and ended up with a Slack agent",
+    "slug": "librechat-self-hosted",
+    "excerpt": "How Metabase's Cloud team consolidated AI tooling behind self-hosted LibreChat, contributed upstream MCP fixes, and built LibreBot \u2014 a Slack agent for internal tools.",
     "category": "Engineering",
-    "tags": ["AI", "Open Source"],
-    "author": "Maya Okonkwo",
-    "publishedDate": "2026-08-07",
-    "readTimeMinutes": 8,
-    "excerpt": "A bot that reproduces bug reports before a human reads them. What worked, what did not, and what we would not do again.",
-    "body": "Open source issue trackers have a shape: a steady stream of reports, most of which are missing the one detail that would make them actionable. Someone has to ask for that detail. That someone burns out.\n\n## What we built\n\nAn agent that reads a new issue, attempts to reproduce it against a clean instance, and comments with what it found. Not a triage decision — a reproduction attempt, with logs.\n\n## What worked\n\nAbout a third of reports reproduce cleanly, and for those the agent attaches a stack trace and the exact version where behaviour changed. That turns a two-day back-and-forth into a maintainer reading one comment.\n\n## What did not\n\nThe agent is confidently wrong about environment-specific problems. Anything touching a database driver, a proxy, or a customer's particular SSO setup produced plausible-sounding nonsense. We now have it refuse rather than speculate when it cannot reproduce, which felt like a downgrade and was not.\n\n## What we would not do again\n\nWe initially let it close issues it could not reproduce. That was a mistake, and an unkind one — the reports it could not reproduce were disproportionately the hardest and most valuable. It now escalates instead."
+    "tags": [
+      "AI",
+      "Open Source",
+      "Hiring"
+    ],
+    "author": "Arkadi Yaroslavtsev",
+    "publishedDate": "2026-07-20",
+    "readTimeMinutes": 11,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/librechat.webp",
+    "body": "We wanted an internal chat interface over our own models and data. We evaluated the self-hosted options, picked LibreChat, and then ended up using something else entirely for most of the actual work.\n\n## Why self-hosted\n\nThe requirement was that internal conversations containing customer data should not leave infrastructure we control. That rules out most hosted options immediately and makes the shortlist short.\n\n## What LibreChat gets right\n\nIt is genuinely good: multi-model, sensible auth, active development, and it does not try to be a platform. Setup was an afternoon.\n\n## Why we mostly use a Slack agent instead\n\nBecause people were already in Slack. The web interface was better in every respect except the one that mattered \u2014 whether anyone opened it. Moving the same capability into a Slack agent took usage from a handful of people to most of the company.\n\nThe lesson is not about LibreChat. It is that an internal tool competes with the tabs people already have open."
   },
   {
-    "title": "Dashboards nobody opens",
+    "title": "Metabase alternatives: comparing platforms for AI analytics",
+    "slug": "metabase-alternatives",
+    "excerpt": "How Metabase stacks up against Tableau, Power BI, Looker, Cognos, Hex, Lightdash, Omni, and Superset on AI analytics, pricing, and ease of use in 2026.",
+    "category": "Analytics and BI",
+    "tags": [
+      "AI"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2026-07-13",
+    "readTimeMinutes": 24,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/metabase-alternatives-business-intelligence-platforms.webp",
+    "body": "An honest comparison of how Metabase sits against other analytics platforms on AI features, pricing and how quickly a non-specialist can get somewhere useful.\n\n## What actually differentiates platforms now\n\nEvery vendor ships natural-language querying. The differentiator is no longer whether a model can write a query \u2014 it is whether the answer is traceable to definitions someone has agreed on, and whether you can see the query that produced it.\n\n## Where to look when comparing\n\n- **Can you inspect the query behind an AI answer?** If not, you cannot debug a wrong one.\n- **Is the semantic layer a first-class thing or a configuration file?**\n- **What does it cost at the point where you want everyone to have access?** Per-seat pricing quietly caps adoption.\n- **How long until a non-technical colleague answers their own question?**\n\n## Being fair about it\n\nThere are cases where another tool is the better choice \u2014 deep statistical work, or an organisation already standardised on a stack. The comparison worth making is against your own constraints, not a feature grid."
+  },
+  {
+    "title": "PA: a persistent agent for developer workflow automation",
+    "slug": "persistent-agent",
+    "excerpt": "We built a lightweight CLI agent system that automates boring developer tasks and gives back about 15% of the day.",
+    "category": "Engineering",
+    "tags": [
+      "AI"
+    ],
+    "author": "Filipe Silva",
+    "publishedDate": "2026-06-16",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/persistent-agent.webp",
+    "body": "An experiment in giving an agent continuity across sessions, so that it accumulates context about a codebase rather than starting cold every time.\n\n## The problem with stateless\n\nA fresh agent re-derives the same things every session: where the tests live, which module owns what, which patterns the codebase actually uses versus the ones it used to. That rediscovery is most of the cost and all of the frustration.\n\n## What we built\n\nA long-running process that maintains notes about the repository between invocations, updates them as the code changes, and brings the relevant ones into context when a task starts.\n\n## What it changed\n\nTasks that previously needed a paragraph of orientation now need a sentence. The agent stops suggesting patterns we abandoned two years ago.\n\n## What it did not fix\n\nStale notes are worse than no notes. Most of the engineering went into expiring and re-verifying what it thinks it knows, not into storing more."
+  },
+  {
+    "title": "Introducing the Claude skill for learning Metabase",
+    "slug": "claude-skill-learn-metabase",
+    "excerpt": "Use Claude to teach you Metabase in a structured way, using your own data.",
+    "category": "News",
+    "tags": [
+      "AI"
+    ],
+    "author": "Robert Kosara",
+    "publishedDate": "2026-06-10",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/category-images/News.webp",
+    "body": "A packaged skill that teaches Claude how to use Metabase \u2014 so that asking it for help with a query or a dashboard produces advice grounded in how the product actually works.\n\n## Why a skill rather than documentation\n\nModels already have some knowledge of Metabase, assembled from whatever was public at training time. That knowledge is uneven and frequently out of date. A skill gives it current, structured material to work from.\n\n## What it covers\n\nThe query builder, models, dashboard filters, permissions, and the places where people most reliably get stuck \u2014 field filters, linked filters, and the difference between a model and a saved question.\n\n## Using it\n\nInstall it and ask ordinary questions. The difference shows up most on the tasks where general knowledge produces plausible but wrong answers."
+  },
+  {
+    "title": "AI for everyone, with confidence",
+    "slug": "ai-for-everyone-with-confidence",
+    "excerpt": "We've shipped a lot of AI features since the start of 2026. Here's how they fit together, and why the infrastructure around AI matters as much as the features themselves.",
     "category": "Product",
-    "tags": ["Dashboards", "Self-service"],
-    "author": "Daniel Reyes",
-    "publishedDate": "2026-07-29",
-    "readTimeMinutes": 5,
-    "excerpt": "Most analytics deployments accumulate dashboards faster than they retire them. Usage data makes the problem legible.",
-    "body": "Every mature analytics instance has a long tail of dashboards that were built for one meeting in 2023 and have been quietly recomputing ever since.\n\nThis is not a tidiness problem. It is a trust problem. When someone searches and finds six dashboards named some variant of *Revenue Overview*, the rational response is to not trust any of them and ask an analyst instead — which is precisely the loop self-service was supposed to break.\n\n## Make it visible\n\nUsage analytics turns an argument into a fact. Which dashboards were opened last month, by how many distinct people, and which have not been touched since the quarter they were made.\n\n## Then do something about it\n\n- Archive anything with no views in ninety days. It is recoverable; nobody will mind.\n- For the survivors, mark the ones that are official and the ones that are somebody's working draft.\n- Put the owner's name on it, so there is a person to ask rather than a wiki to search.\n\nThe goal is a search result where the first hit is obviously the right one."
+    "tags": [
+      "AI",
+      "Self-service"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2026-06-09",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/ai-for-everyone-with-confidence.webp",
+    "body": "AI features are now available on every plan, including the free one. The reason that is possible is the same reason they are useful: they are grounded in your semantic layer rather than guessing at your schema.\n\n## What you can do\n\nAsk a question in plain language and get a chart. Click into the chart to find out why. Inspect the query it generated, and change it if it is not what you meant.\n\n## Why the last part matters most\n\nAn analytics answer you cannot verify is not an answer, it is a suggestion with a confident tone. Every result shows the query behind it and the definitions it used.\n\n## Grounded, not guessing\n\nWhen your data team marks a table as canonical and defines a metric, the model uses those rather than inferring intent from column names. That is the difference between a demo and something you would let someone run a board report from."
   },
   {
-    "title": "What 40,000 public dashboards taught us about chart choice",
-    "category": "Data explorations",
-    "tags": ["Dashboards"],
-    "author": "Priya Raman",
-    "publishedDate": "2026-07-11",
-    "readTimeMinutes": 10,
-    "excerpt": "People reach for pie charts far more often than any visualisation textbook would like. The interesting part is when they are right.",
-    "body": "We looked at anonymised, aggregated statistics on chart types across public instances. The headline is not surprising. The exceptions are.\n\n## The distribution\n\nBar and line dominate, as they should. Tables are far more common than visualisation advice suggests, and in context they are usually the right call — a reader who wants a specific value is poorly served by a shape.\n\n## Pie charts\n\nThey are used more than they should be, and the failure mode is consistent: seven or more slices, several under five percent. At that point nobody can compare anything and the chart is decoration.\n\nBut the two-slice and three-slice cases are genuinely fine. A split between two categories reads instantly as a proportion, which is exactly the question being asked.\n\n## The actual finding\n\nThe strongest predictor of a confusing dashboard was not chart type. It was the number of distinct questions on one screen. Dashboards with a single clear question and three charts outperformed dashboards with twelve charts and no stated question, regardless of what those charts were."
-  },
-  {
-    "title": "Row-level permissions without a second data model",
-    "category": "Using Metabase",
-    "tags": ["Embedding", "Security"],
-    "author": "Daniel Reyes",
-    "publishedDate": "2026-06-24",
-    "readTimeMinutes": 7,
-    "excerpt": "Multi-tenant embedded analytics usually means every customer sees only their own rows. Here is how to get there without duplicating anything.",
-    "body": "The requirement is always the same: customer A must never see customer B's data, and you would prefer not to find out about a failure from customer A.\n\n## The wrong way\n\nA separate dashboard per customer. It works at three customers and collapses at thirty, and every change has to be made thirty times.\n\n## Sandboxing\n\nThe better approach is to attach the tenant identity to the session and let the data layer filter. One dashboard, one query, filtered per viewer by a value the viewer cannot change.\n\n- The signed token carries the tenant id\n- A sandbox policy on the table restricts rows to that id\n- The dashboard itself is unaware any of this is happening\n\n## Testing it\n\nThe failure you care about is silent, so test for it explicitly: sign a token for tenant A, request a dashboard scoped to B, and assert you get nothing. Put it in CI. This is the one place where a test that asserts emptiness is worth writing."
-  },
-  {
-    "title": "Security release: please upgrade",
+    "title": "Metabase + OpenAI Codex ",
+    "slug": "metabase-plugin-openai-codex-announcement",
+    "excerpt": "Metabase is now available as a plugin in ChatGPT Codex, part of OpenAI's new data analytics launch",
     "category": "News",
-    "tags": ["Security"],
+    "tags": [
+      "AI"
+    ],
+    "author": "Vamsi Peri",
+    "publishedDate": "2026-06-02",
+    "readTimeMinutes": 1,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/openai-announcement.webp",
+    "body": "Metabase now works with OpenAI Codex, so you can query and explore your data from inside the environment you are already coding in.\n\n## What it does\n\nIt exposes your Metabase instance as a tool: list databases, inspect models, run a question, get results back. The agent works against your governed semantic layer rather than raw tables.\n\n## Permissions\n\nAccess follows the permissions of the account the connection is made with. An agent cannot see anything you could not see yourself, which is the only sane default.\n\n## Getting started\n\nConnect your instance and ask. The most useful first task is usually asking what data is available \u2014 the answer tends to be more organised than people expect."
+  },
+  {
+    "title": "Welcome to the strip mining era of open source security",
+    "slug": "strip-mining-era-of-open-source-security",
+    "excerpt": "In 2026, LLM-powered code scanners are uncovering security vulnerabilities in open source projects at 10x the historical rate. Here's what OSS maintainers and users need to do about it.",
+    "category": "Engineering",
+    "tags": [
+      "AI",
+      "Security",
+      "Open Source"
+    ],
     "author": "Sameer Al-Sakran",
-    "publishedDate": "2026-06-05",
-    "readTimeMinutes": 2,
-    "excerpt": "A fix is available for an issue affecting self-hosted instances. Upgrading is recommended for all deployments.",
-    "body": "A security issue affecting self-hosted deployments has been fixed in the latest patch releases of all supported versions.\n\n## What to do\n\nUpgrade to the latest patch of whichever major version you run. Cloud instances have already been updated and require no action.\n\n## Timeline\n\nThe issue was reported through our disclosure process, confirmed the same day, and patched across supported versions before publication. We will publish a fuller account once deployments have had time to update.\n\nIf you cannot upgrade immediately, restricting network access to your instance meaningfully reduces exposure."
-  },
-  {
-    "title": "The analyst bottleneck is a documentation problem",
-    "category": "Analytics and BI",
-    "tags": ["Self-service"],
-    "author": "Jess Thompson",
-    "publishedDate": "2026-05-19",
-    "readTimeMinutes": 6,
-    "excerpt": "Teams add analysts to clear a queue of ad hoc requests. The queue grows anyway. The reason is not headcount.",
-    "body": "Adding capacity to a queue that regenerates itself does not shorten the queue. Everyone who has ever added a lane to a congested motorway knows this, and everyone who has ever staffed a data team forgets it.\n\n## Where requests come from\n\nMost ad hoc requests are not novel. They are variations on a question somebody already answered, asked by a person who could not find the previous answer or could not tell whether it was still correct.\n\nThat is a discoverability problem wearing an analytics costume.\n\n## What actually reduces the queue\n\n- A canonical place where answered questions live, searchable by the words a non-analyst would use\n- Visible ownership, so stale content has someone to ask\n- Enough modelling that common questions are answerable without a join\n- A ticket trail, so repeated questions become visible as a pattern rather than a series of interruptions\n\n## The uncomfortable part\n\nThis is slower than answering the question. The request takes twenty minutes; documenting it so the next person self-serves takes an hour. The hour is the investment, and it only pays if you make it repeatedly."
-  },
-  {
-    "title": "Caching results without lying to people",
-    "category": "Engineering",
-    "tags": ["Performance", "SQL"],
-    "author": "Maya Okonkwo",
-    "publishedDate": "2026-04-30",
+    "publishedDate": "2026-05-14",
     "readTimeMinutes": 8,
-    "excerpt": "A cached dashboard is fast. A cached dashboard that does not say it is cached is a correctness bug with good latency.",
-    "body": "Caching analytics results is straightforward right up until someone makes a decision on a number that was computed yesterday and labelled as if it were computed now.\n\n## The rules we settled on\n\n**Always show the age.** Not a tooltip. Visible, next to the result. \"As of 14:20\" costs nothing and prevents an entire category of mistake.\n\n**Let people force a refresh.** Even if they rarely do. Knowing you can is most of the value.\n\n**Scale the TTL to the data, not the query cost.** A dashboard over a table that updates nightly can cache for hours. One over live orders cannot cache for more than a minute, however expensive it is.\n\n## Invalidation\n\nThe honest answer is that time-based expiry handles almost everything and event-based invalidation is worth it for a small number of high-traffic, high-stakes dashboards. Building a general dependency graph between source tables and cached results is a large amount of machinery for a problem most teams do not have."
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/exploit-farming.webp",
+    "body": "Automated vulnerability reporting has industrialised. For maintainers, the result is a steady stream of low-quality reports that cost real time to triage and produce almost nothing.\n\n## What changed\n\nScanning a public repository and filing a report is now nearly free. Some of that is genuinely useful. Much of it is pattern-matched output filed in volume by people hoping something sticks.\n\n## The cost lands on maintainers\n\nEvery report has to be read, because the one you dismiss is the one that was real. That asymmetry is the whole problem: the reporter spends seconds, the maintainer spends an hour.\n\n## What helps\n\n- Requiring a working reproduction, not a scanner excerpt\n- Publishing clearly what is and is not in scope\n- Being willing to close reports without a reproduction, politely and quickly\n\nNone of this is hostile to security research. Good researchers already do these things, and they are the ones currently drowned out."
   },
   {
-    "title": "A tour of the query builder for people who already know SQL",
-    "category": "Using Metabase",
-    "tags": ["SQL", "Self-service"],
-    "author": "Priya Raman",
-    "publishedDate": "2026-04-08",
-    "readTimeMinutes": 7,
-    "excerpt": "If you can write the query, the visual builder can feel like a downgrade. There are three places where it is not.",
-    "body": "The usual reaction from someone fluent in SQL is that a visual builder adds clicks to something they could type. That is often true and occasionally very wrong.\n\n## Where it genuinely wins\n\n**Reusable intermediate steps.** A saved question can be the source for another question. That is a CTE you can name, share, and let a non-SQL colleague build on.\n\n**Drill-through.** A result built through the builder knows its own structure, so clicking a bar can show the rows behind it. Hand-written SQL returns an opaque result set; the system cannot infer what a drill-down would mean.\n\n**Handing it over.** The query you write is a dead end for your colleague in marketing. The same logic in the builder is something they can modify without asking you.\n\n## Where SQL still wins\n\nWindow functions, recursive queries, anything where the shape of the logic is the point. The escape hatch exists for a reason, and a question that starts in the builder can drop into SQL when it needs to."
+    "title": "Winners of the Metabase AI Hackathon",
+    "slug": "metabase-ai-hackathon-winners",
+    "excerpt": "See what two developers built with the Metabase MCP server and file-based development \u2014 and why we picked them as our AI Hackathon winners.",
+    "category": "News",
+    "tags": [
+      "AI"
+    ],
+    "author": "Ramiro Nunez Dosio",
+    "publishedDate": "2026-05-13",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/ai-hackathon-og.webp",
+    "body": "The results from our AI hackathon, where the brief was deliberately open: build something with Metabase and a model that you would actually use.\n\n## What won\n\nThe standout projects shared a pattern \u2014 none of them were chat interfaces. The winners used models for narrow, well-defined jobs inside an existing workflow: classifying incoming support tickets into dashboard dimensions, generating documentation for undocumented tables, and flagging dashboards whose underlying queries had silently started returning zero rows.\n\n## What we learned\n\nThe projects that impressed were the ones where the model did something specific and the human stayed in the loop. The general-purpose assistants were uniformly less convincing than their demos suggested.\n\nThank you to everyone who entered. The submissions are public and worth browsing."
   },
   {
-    "title": "Hiring analytics engineers without a take-home that takes a weekend",
+    "title": "Improving the performance of the popular Clojure development tool clojure-lsp",
+    "slug": "improving-performance-clojure-development-tools",
+    "excerpt": "Have you found clojure-lsp struggling with your large codebase? We did, so we made some improvements to our favorite development tool to cut startup time in half and memory allocation by two thirds.",
     "category": "Engineering",
-    "tags": ["Hiring"],
-    "author": "Daniel Reyes",
-    "publishedDate": "2026-03-17",
-    "readTimeMinutes": 5,
-    "excerpt": "Long take-home exercises select for people with free time, not people who are good at the job.",
-    "body": "The standard analytics engineering take-home is a messy dataset and an open brief, with an expected effort of several hours that reliably turns into a weekend.\n\nIt selects for availability. The strongest candidates frequently have the least free time.\n\n## What we do instead\n\nA ninety-minute paired session against a small, deliberately ambiguous dataset. The candidate drives. We answer questions about the business the way a stakeholder would — vaguely, and with contradictions.\n\n## What it surfaces\n\nThe thing we actually care about is whether someone notices that the brief is underspecified and asks, rather than producing a confident answer to a question nobody asked. You cannot see that in a polished artefact submitted three days later.\n\nIt also respects the candidate's time, which turns out to matter for whether good people finish the process."
+    "tags": [
+      "Performance",
+      "Hiring"
+    ],
+    "author": "Sashko Yakushev",
+    "publishedDate": "2026-05-12",
+    "readTimeMinutes": 9,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/clojure-performance.webp",
+    "body": "We depend on clojure-lsp daily, and on a codebase our size it had become slow enough to be disruptive. Here is what we found and what we changed upstream.\n\n## Profiling first\n\nThe bottleneck was not where anyone guessed. Most of the time went into repeated analysis of unchanged namespaces during incremental updates \u2014 work that was already done and immediately discarded.\n\n## The changes\n\nCaching analysis results keyed on file content, short-circuiting the dependency walk when nothing downstream changed, and avoiding a serialisation round-trip that was happening on every keystroke in large files.\n\n## The result\n\nCompletion latency on our codebase dropped substantially, and the editor stopped pausing on save.\n\n## Upstreaming\n\nAll of it went upstream. The maintainers were generous with review, and the changes benefit anyone working on a large Clojure project, not just us."
   },
   {
-    "title": "Counting things that resist being counted",
-    "category": "Data explorations",
-    "tags": ["Data modeling"],
-    "author": "Jess Thompson",
-    "publishedDate": "2026-02-26",
+    "title": "How we built ten custom subagents to tame a 500K-line Clojure codebase",
+    "slug": "ten-custom-subagents",
+    "excerpt": "We built ten domain-expert subagents to manage context when working on Metabase's 500K+ line backend.",
+    "category": "Engineering",
+    "tags": [
+      "AI"
+    ],
+    "author": "Bryan Maass",
+    "publishedDate": "2026-04-27",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/ten-custom-agents.webp",
+    "body": "Our codebase is around half a million lines of Clojure. Generic coding agents struggle with it, so we built ten narrow ones instead.\n\n## Why narrow\n\nA general agent asked to change something in a codebase this size spends most of its effort orienting, and orients wrongly often enough to be unreliable. Agents scoped to one concern \u2014 the query processor, the driver layer, the frontend state \u2014 carry the right context from the start.\n\n## The ten\n\nThey cover areas with distinct conventions: database drivers, the query processor, permissions, the embedding SDK, migrations, tests, and a few more. Each knows its area's patterns and, importantly, its area's traps.\n\n## What worked\n\nThe specialised agents are dramatically more useful on their own turf. The honest caveat is that routing a task to the right one is still a human judgement, and tasks that span two areas remain hard.\n\n## What we would do differently\n\nWe over-invested in the agents and under-invested in the routing. That is where the remaining friction is."
+  },
+  {
+    "title": "Metabase AI Hackathon",
+    "slug": "metabase-ai-hackathon",
+    "excerpt": "Build anything with Metabase MCP and AI tools and get the chance to win mechanical keyboards",
+    "category": "News",
+    "tags": [
+      "AI"
+    ],
+    "author": "Ramiro Nunez Dosio",
+    "publishedDate": "2026-04-21",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/ai-hackathon-og.webp",
+    "body": "We are running a hackathon. The brief is open: build something using Metabase and a language model that you would genuinely use afterwards.\n\n## What we are looking for\n\nNot chat interfaces. We have seen a lot of chat interfaces. The interesting submissions tend to be narrow \u2014 a model doing one specific job inside a workflow that already exists.\n\n## Rules\n\nAny language, any model, anything that touches Metabase. Teams up to four. Submit a repository and a short video showing it working.\n\n## Judging\n\nUsefulness first, then originality, then execution. A rough prototype of something people want beats a polished version of something nobody asked for."
+  },
+  {
+    "title": "Meet Repro-Bot, our GitHub issue triage agent",
+    "slug": "reprobot-github-issue-triage-agent",
+    "excerpt": "Repro-Bot is an AI agent that reproduces issues in the Metabase backlog to help us fix bugs faster.",
+    "category": "Engineering",
+    "tags": [
+      "AI",
+      "Performance"
+    ],
+    "author": "Nathan Voxland",
+    "publishedDate": "2026-04-10",
     "readTimeMinutes": 6,
-    "excerpt": "Active users, engaged sessions, meaningful interactions. Every one of these is a judgement call dressed up as arithmetic.",
-    "body": "Some metrics are measurements. Revenue is a measurement; there is a bank account that agrees or disagrees with you.\n\nOther metrics are definitions wearing a measurement's clothes. \"Monthly active users\" is a decision about what counts as active, how long a month is, and whether a bot is a user, presented as though it were a fact.\n\n## The decisions hiding inside\n\n- Does opening an email count as activity?\n- Is a user who logs in daily to check one number more active than one who runs a deep analysis monthly?\n- When someone has three accounts, is that one person or three?\n\nNone of these have correct answers. They have answers you have chosen and should be able to defend.\n\n## The practical consequence\n\nWrite the definition down next to the number. Not because anyone enjoys reading definitions, but because the alternative is a meeting six months from now where two people disagree about a trend and it takes an hour to discover they were measuring different things."
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/engineering-2026/repro-bot.jpg",
+    "body": "Repro-Bot reads new GitHub issues, tries to reproduce them against a clean instance, and comments with what it found.\n\n## Why reproduction specifically\n\nMost open-source bug reports are missing the one detail that would make them actionable. Someone has to ask for it, and that someone burns out. Reproduction is a bounded, mechanical task \u2014 exactly the kind a machine should take.\n\n## What it does well\n\nAround a third of reports reproduce cleanly. For those it attaches a stack trace and the version where behaviour changed, turning a multi-day exchange into one comment a maintainer can act on.\n\n## Where it fails\n\nEnvironment-specific problems. Anything involving a database driver, a proxy or a particular SSO setup produced confident nonsense. It now refuses rather than speculates.\n\n## One rule we got wrong first\n\nWe let it close issues it could not reproduce. That was a mistake \u2014 those reports were disproportionately the hardest and most valuable. It escalates now."
+  },
+  {
+    "title": "Meet Data Studio: tools to curate your semantic layer in Metabase",
+    "slug": "meet-data-studio-semantic-layer",
+    "excerpt": "An analyst workbench with tools for shaping data and curating your semantic layer in Metabase.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Data modeling"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-03-10",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/metabase-59/data-studio-blog-og.webp",
+    "body": "Data Studio is a workbench for shaping data and curating the semantic layer \u2014 the place where raw tables become things with agreed meanings.\n\n## What it is for\n\nMarking which tables are canonical and which are somebody's scratch work. Defining metrics once, so that \"active customer\" means the same thing in two different dashboards. Documenting the joins that are legitimate and the ones that silently multiply your rows.\n\n## Why now\n\nBecause agents made it urgent. When people wrote every query by hand, tribal knowledge about which table to use was slow but survivable. When a model composes a query in seconds, the absence of a stated definition means it guesses.\n\n## For analysts\n\nIt is a workbench, not a config file. Shape data, preview results, and promote something to canonical when you are confident in it."
+  },
+  {
+    "title": "February 2026 vulnerability: What happened?",
+    "slug": "security-vulnerability-postmortem",
+    "excerpt": "A recap of the notifications endpoint vulnerability and our response.",
+    "category": "News",
+    "tags": [
+      "Security"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-03-02",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/security-vulnerability-feb-2026/postmortem.png",
+    "body": "An account of the February 2026 vulnerability: the timeline, what was affected, and what we have changed.\n\n## Timeline\n\nReported through our disclosure process, confirmed within hours, patched across supported versions, and published once deployments had time to update.\n\n## What was affected\n\nSelf-hosted instances on the affected versions. Cloud instances were patched before disclosure.\n\n## What we changed\n\nThe specific fix matters less than the surrounding changes: additional test coverage for the class of issue, tighter defaults, and a faster path from report to confirmed triage.\n\n## What you should do\n\nIf you self-host and have not upgraded, do that. If you have, there is nothing further required."
+  },
+  {
+    "title": "Security update available for Metabase - Please upgrade now",
+    "slug": "security-vulnerability",
+    "excerpt": "We've patched a severe vulnerability uncovered by a third-party security researcher.",
+    "category": "News",
+    "tags": [
+      "Security",
+      "Hiring"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-02-19",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/security-vulnerability-feb-2026/notice.png",
+    "body": "A security update is available. Self-hosted instances should upgrade promptly.\n\n## What to do\n\nUpgrade to the latest patch of your major version. Cloud instances are already updated.\n\n## Reducing exposure in the meantime\n\nIf an immediate upgrade is not possible, restrict network access to the instance. Analytics tools rarely need to be reachable from the public internet, and putting one behind a VPN is worth doing permanently.\n\nA post-mortem will follow."
+  },
+  {
+    "title": "Lessons learned from building AI analytics agents: build for chaos",
+    "slug": "lessons-learned-building-ai-analytics-agents",
+    "excerpt": "A production disaster taught us a lot about building AI analytics agents. Learn why context engineering beats prompts and why you should build for chaos.",
+    "category": "Analytics and BI",
+    "tags": [
+      "AI"
+    ],
+    "author": "Thomas Schmidt",
+    "publishedDate": "2026-02-03",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/metabot-ai-talk-og.webp",
+    "body": "We have been building analytics agents for a while now. The main lesson is that the demo path is narrow and reality is not.\n\n## Build for chaos\n\nReal schemas have columns named `status_2`, tables nobody can explain, and three date fields where only one is correct. An agent tuned on a clean schema falls apart immediately.\n\n## What actually helped\n\n- **Refuse rather than guess.** An agent that says it cannot answer is more useful than one that produces a plausible wrong number.\n- **Ground everything in definitions.** If a metric is defined, use it. If it is not, say so rather than inventing one.\n- **Show the query.** Every answer carries its SQL. This single thing did more for trust than any accuracy improvement.\n- **Expect follow-ups.** The first question is rarely the real question.\n\n## The uncomfortable finding\n\nAccuracy improvements mattered less than transparency improvements. People tolerated a wrong answer they could see and correct far better than a right answer they had to take on faith."
+  },
+  {
+    "title": "We simplified embedding",
+    "slug": "we-simplified-metabase-embedding",
+    "excerpt": "We cleaned up how embedding works in Metabase. Two paths: modular embedding for individual components, or full-app embedding for the whole thing. Your existing embeds still work.",
+    "category": "News",
+    "tags": [
+      "Embedding"
+    ],
+    "author": "Jeff Bruemmer",
+    "publishedDate": "2026-01-13",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/embedding-changes/modular-embedding.webp",
+    "body": "Embedding used to require choosing between three approaches with overlapping names and different trade-offs. We have simplified it.\n\n## What changed\n\nOne path to get started, which scales up rather than forcing a migration later. Begin with a dashboard in an iframe; move to the SDK when you need component-level control; add interactivity without rebuilding.\n\n## The naming\n\nThe old names described implementation rather than intent, which made the documentation hard to navigate. The new terms describe what you get.\n\n## Migrating\n\nExisting embeds keep working. There is no forced migration \u2014 the simplification is about new setups and about making the upgrade path obvious when you outgrow where you started."
+  },
+  {
+    "title": "Become a data analyst in 2026: a practical roadmap",
+    "slug": "data-analyst-roadmap",
+    "excerpt": "Thinking of becoming a data analyst in 2026? This roadmap covers the essentials to get started with confidence.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Abed Habli",
+    "publishedDate": "2026-01-12",
+    "readTimeMinutes": 8,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/data-analyst-roadmap-og.webp",
+    "body": "A practical roadmap for becoming a data analyst, written to be followed rather than admired.\n\n## Start with SQL\n\nNot a course. Get access to a real dataset and answer real questions badly until you answer them well. Joins, aggregation and window functions cover most working analysis.\n\n## Then a visualisation tool\n\nLearn one properly rather than three superficially. The skill that transfers is knowing which chart answers which question.\n\n## Then the part nobody lists\n\nLearn to interrogate a request. Most analyst work is translating a vague question into a specific one, and the translation is where the value is. A technically perfect answer to the wrong question is worthless.\n\n## What to skip early\n\nMachine learning, until you can reliably produce a correct weekly report. Almost nobody is blocked on modelling; most are blocked on definitions.\n\n## Building a portfolio\n\nOne analysis of a dataset you find genuinely interesting, written up with the reasoning visible, beats five tutorial notebooks."
+  },
+  {
+    "title": "10 B2B SaaS product metrics that should be on your dashboard",
+    "slug": "product-metrics",
+    "excerpt": "A guide to key SaaS product metrics - from website-to-signup and activation rates to churn and NDR",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards",
+      "Data modeling"
+    ],
+    "author": "Tanya Aulachynskaya",
+    "publishedDate": "2025-11-10",
+    "readTimeMinutes": 11,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/product-metrics-og.jpg",
+    "body": "Ten metrics worth having on a B2B SaaS dashboard, and a note on why most dashboards have the wrong ten.\n\n## The list\n\n- **Activation rate** \u2014 share of signups reaching the value moment\n- **Net revenue retention** \u2014 expansion minus contraction on existing accounts\n- **Logo churn** \u2014 customers lost, regardless of size\n- **Time to first value** \u2014 signup to the moment the product does something useful\n- **Weekly active accounts** \u2014 accounts, not users\n- **Expansion revenue** \u2014 growth from existing customers\n- **CAC payback** \u2014 months to recover acquisition cost\n- **Feature adoption depth** \u2014 how many core features an account actually uses\n- **Support ticket rate per account** \u2014 a leading indicator of churn\n- **Pipeline-to-close rate** \u2014 by source\n\n## Why most dashboards have the wrong ten\n\nThey track what is easy to measure rather than what predicts anything. Pageviews are easy. Activation is hard and tells you whether next quarter happens.\n\n## The definitions matter more than the list\n\nEvery one of these hides a decision. Writing the definition next to the number is the difference between a dashboard and an argument."
+  },
+  {
+    "title": "Metabase Community Data Stack Report 2025",
+    "slug": "metabase-community-data-stack-report-2025-key-analysis",
+    "excerpt": "We asked 330+ teams how they build and use their data stacks - from tool choices to AI adoption. Here's what we learned.",
+    "category": "News",
+    "tags": [
+      "AI",
+      "Open Source",
+      "Dashboards"
+    ],
+    "author": "Alex Yarosh",
+    "publishedDate": "2025-09-03",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/og-data-stack-report-2025.jpg",
+    "body": "Results from this year's community data stack survey \u2014 what data teams are actually running, as opposed to what conference talks suggest.\n\n## The headline\n\nStacks are smaller than the discourse implies. The median respondent runs a warehouse, a transformation tool and a BI tool. The elaborate multi-layer architectures are a minority.\n\n## Warehouses\n\nPostgres remains extremely common, including at organisations large enough to have moved on. \"We never needed to migrate\" came up repeatedly.\n\n## Where time goes\n\nRespondents consistently reported that most effort goes into definitions and data quality, not tooling. The tools are not the bottleneck and have not been for some time.\n\n## AI\n\nWidely experimented with, narrowly deployed. The most common production use was documentation and classification rather than query generation."
+  },
+  {
+    "title": "The story behind our AI Dataset Generator",
+    "slug": "story-behind-ai-dataset-generator",
+    "excerpt": "Explore the design choices, challenges, and achievements behind our open source AI Dataset Generator.",
+    "category": "Data explorations",
+    "tags": [
+      "AI",
+      "Open Source"
+    ],
+    "author": "Matthew Hefferon",
+    "publishedDate": "2025-07-15",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/ai-dataset-generator.webp",
+    "body": "We needed realistic sample data for demos and testing. Here is why generating it turned out to be harder than it sounds.\n\n## Why not real data\n\nObvious reasons. Why not random data? Because random data has no structure, and analytics on structureless data produces flat lines and meaningless correlations. Demos fall apart.\n\n## What realistic means\n\nSeasonality. Weekday and weekend differences. Cohorts that behave differently. Occasional anomalies worth finding. Referential integrity that holds up under joins.\n\n## The approach\n\nGenerate from a model of the business rather than from distributions \u2014 simulate customers signing up, using the product, upgrading and churning, then derive the tables from the simulation. The patterns emerge because the underlying behaviour produced them.\n\n## The surprise\n\nThe hardest part was making anomalies that were interesting but not obvious. Too subtle and nobody finds them; too blunt and the exercise is trivial."
+  },
+  {
+    "title": "How to build sales dashboards that sales teams actually use",
+    "slug": "how-to-build-sales-dashboards",
+    "excerpt": "Build a sales dashboard your team will actually use. See 10 key metrics, tips, and a live example in Metabase.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards",
+      "Data modeling",
+      "Hiring"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2025-07-09",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/sales-dashboards/sales-dashboard-og.jpg",
+    "body": "Sales dashboards have a high build rate and a low usage rate. The reason is usually that they were designed for the person who requested them rather than the people who open them.\n\n## Start from the meeting\n\nIf there is a weekly pipeline review, build the dashboard that meeting needs \u2014 in the order the meeting goes through things. A dashboard that matches an existing ritual gets used. One that requires a new ritual does not.\n\n## What belongs on it\n\n- Pipeline by stage, with movement since last week\n- Deals that have not moved, which is the most actionable thing on the page\n- Forecast against target\n- Activity, only if someone will act on it\n\n## What to leave off\n\nAnything nobody can act on by Friday. Historical trend charts belong in a separate monthly view.\n\n## Make the owner obvious\n\nPut a name on it. Dashboards without an owner become untrustworthy within two quarters, and nobody can say when it happened."
+  },
+  {
+    "title": "What is embedded analytics?",
+    "slug": "what-is-embedded-analytics",
+    "excerpt": "Embedded analytics means giving your users access to charts, metrics, and reports directly inside your product, so they can explore and act on their data without needing to leave your app or rely on someone else for answers.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Embedding",
+      "Dashboards",
+      "Data modeling"
+    ],
+    "author": "Alex Yarosh",
+    "publishedDate": "2025-05-15",
+    "readTimeMinutes": 12,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/what-is-embedded-analytics/what-is-embedded-analytics.webp",
+    "body": "Embedded analytics means putting reporting inside your own product, so your customers see data about their own usage without leaving it.\n\n## The distinction that matters\n\nInternal BI serves your team and can assume context. Embedded analytics serves your customers, who have none \u2014 which means it has to be self-explanatory, correctly scoped, and good enough to sit next to the rest of your product.\n\n## What it requires\n\n- **Tenant isolation.** Each customer sees only their own rows, enforced at the data layer rather than in application code.\n- **Styling control.** It should look like your product.\n- **Performance under concurrency.** Every customer hitting it at once is the normal case.\n\n## Build or embed\n\nA charting library is the easy part. The query layer, permissions, caching and the long tail of expected interactions are where the quarters go."
+  },
+  {
+    "title": "The Metabase Community Data Stack Survey: by data teams, for data teams",
+    "slug": "metabase-community-data-stack-survey-2025",
+    "excerpt": "How the modern data stack is evolving: share yours and see how it compares",
+    "category": "News",
+    "tags": [
+      "Open Source",
+      "Hiring"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2025-05-11",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/metabase-data-stack-survey-2025-blog.jpg",
+    "body": "We are running the community data stack survey again. It takes a few minutes and the results are published openly.\n\n## Why bother\n\nMost published information about what data teams use comes from vendors with something to sell. This is an attempt at something less self-interested \u2014 what people actually run, including the unfashionable parts.\n\n## What we ask\n\nWarehouse, transformation, orchestration, BI, team size, and where your time actually goes. Nothing identifying.\n\n## What happens to it\n\nAggregated, analysed and published, including the findings that are inconvenient for us."
+  },
+  {
+    "title": "Top 5 Dashboard fails (and how to fix them)",
+    "slug": "top-5-dashboard-fails",
+    "excerpt": "Dashboards are meant to guide decisions, not create confusion. In this guide, we\u2019ll walk through five common pitfalls and how to fix them.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Abed Habli",
+    "publishedDate": "2025-04-25",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/dashboard-fails.jpg",
+    "body": "Five failure modes that show up repeatedly, and what to do instead.\n\n## 1. Too many questions on one screen\n\nA dashboard answering one question with three charts outperforms one answering nine with twenty. Split it.\n\n## 2. No stated question\n\nIf the title is \"Overview\", nobody knows what it is for, including the person who built it.\n\n## 3. Numbers without definitions\n\nTwo dashboards showing different revenue figures destroy trust in both. Put the definition next to the number.\n\n## 4. No owner\n\nUnowned dashboards decay silently. Someone has to be responsible for whether it is still correct.\n\n## 5. Built for the requester, not the reader\n\nThe executive who asked for it is not the person opening it daily. Design for the latter.\n\n## The pattern underneath\n\nEvery one of these is a communication failure rather than a technical one, which is why adding more charts never fixes them."
+  },
+  {
+    "title": "Introducing Metabase's new Embedded Analytics SDK for React",
+    "slug": "introducing-embedded-analytics-sdk-for-react",
+    "excerpt": "The React toolkit for custom embedded analytics that integrates seamlessly in your UI",
+    "category": "News",
+    "tags": [
+      "Embedding"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2025-02-27",
+    "readTimeMinutes": 1,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/introducing-sdk-react.png",
+    "body": "The Embedded Analytics SDK lets you drop Metabase components into a React application and style them as your own.\n\n## What it gives you\n\nComponent-level control rather than an iframe. Render a single question, an interactive query builder, or a full dashboard, and pass your own theme.\n\n## Authentication\n\nIt plugs into your existing auth. Your app signs a token, the SDK uses it, and permissions follow from there \u2014 including row-level scoping per tenant.\n\n## When to use it over an iframe\n\nWhen you need the analytics to feel like part of the product rather than a window into another one: your fonts, your colours, your layout, your loading states.\n\n## Getting started\n\nInstall the package, configure the provider with your instance URL and auth endpoint, and render a component."
+  },
+  {
+    "title": "Maps data visualizations: best practices",
+    "slug": "maps-data-visualization",
+    "excerpt": "Learn how to create impactful map data visualizations with tips on using pin maps, grid maps, and region maps to highlight patterns and make data-driven decisions.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Alex Yarosh",
+    "publishedDate": "2024-12-19",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/maps-data-visualization.jpg",
+    "body": "Maps are the most over-used chart type in analytics, because geography is usually a grouping dimension rather than the point.\n\n## When a map earns its place\n\nWhen position itself carries meaning \u2014 delivery routes, store catchments, regional coverage gaps. If you are comparing values across regions, a sorted bar chart does it better and in less space.\n\n## Choosing a type\n\n- **Choropleth** for rates normalised by population or area. Never for raw counts, which just show you where people live.\n- **Pin map** for individual locations, up to a few hundred.\n- **Heat map** for density, when individual points stop being distinguishable.\n\n## The normalisation trap\n\nA choropleth of raw totals is a population map with extra steps. Divide by something."
+  },
+  {
+    "title": "How to visualize time-series data: best practices",
+    "slug": "how-to-visualize-time-series-data",
+    "excerpt": "Learn about time-series data and how to visualize it. With best practices and a handy cheat sheet.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Alex Yarosh",
+    "publishedDate": "2024-11-20",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/how-to-visualize-time-series-data-og.jpg",
+    "body": "Time series looks like the easy case and quietly is not.\n\n## Start with the axis\n\nA truncated y-axis makes noise look like a trend. For time series, start at zero unless you have a specific reason, and say so when you do not.\n\n## Match granularity to the question\n\nDaily data over two years is unreadable. Weekly or monthly aggregation reveals the trend the daily view hides. Keep the daily view available for drilling.\n\n## Seasonality\n\nMost business metrics have a weekly cycle. Comparing Monday to Sunday is meaningless; comparing this Monday to last Monday is not. Period-over-period comparison beats a raw line for anything with a cycle.\n\n## Annotate\n\nThe spike in March has an explanation. Putting it on the chart saves everyone the meeting."
+  },
+  {
+    "title": "How to build better line and bar charts",
+    "slug": "how-to-build-better-line-and-bar-charts",
+    "excerpt": "Learn how to improve bar and line charts by choosing the right type, reducing clutter, and highlighting data. More best practices and a handy cheat sheet.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Alex Yarosh",
+    "publishedDate": "2024-10-18",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/line-bar-charts/cover-line-and-bar-charts.jpg",
+    "body": "Most charts are line or bar charts, which means most chart improvements are improvements to these two.\n\n## Bar charts\n\nSort by value, not alphabetically, unless the categories have an inherent order. Start the axis at zero \u2014 truncating a bar axis is actively misleading because bar length is the encoding.\n\n## Line charts\n\nThree or four lines is the practical limit before the legend becomes a lookup exercise. Past that, use small multiples.\n\n## Both\n\n- Label directly instead of using a legend where you can\n- Use colour to mean something, not to decorate\n- Keep gridlines faint\n- Round the axis labels; nobody needs four decimal places\n\n## The test\n\nShow it to someone who was not in the meeting. If they need a sentence of explanation, the chart has not done its job."
+  },
+  {
+    "title": "How we enriched customer contact and organization data",
+    "slug": "how-we-enriched-customer-contact-and-organization-data",
+    "excerpt": "To improve self-service at Metabase, we used open-source tools like dlt to automate contact enrichment and tailor data models for different teams.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Open Source",
+      "Self-service",
+      "Data modeling"
+    ],
+    "author": "Max Zheng",
+    "publishedDate": "2024-09-25",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/data-enrichment.jpg",
+    "body": "An account of cleaning up our own contact and organisation data, which was worse than we expected.\n\n## The problem\n\nThe same organisation existed several times under different spellings. Personal and work emails for the same person were unlinked. Nobody could answer how many organisations we actually talked to.\n\n## What we did\n\nNormalised domains first, which collapsed a surprising share of the duplicates immediately. Then matched on domain, then fuzzy-matched names within a domain, reviewing anything below a confidence threshold by hand.\n\n## What we learned\n\nThe automated passes handled the bulk and the remainder was genuinely ambiguous \u2014 subsidiaries, rebrands, consultants with several clients. Those need a human and a documented rule, not a better algorithm.\n\n## Keeping it clean\n\nThe cleanup is worthless without a constraint at the point of entry. We added one."
+  },
+  {
+    "title": "Set up a basic pipeline for log analysis",
+    "slug": "set-up-a-logging-pipeline-for-analysis",
+    "excerpt": "You can use a BI tool for small scale log analysis with data visualizations. Here are a few tips and suggestions to get started.",
+    "category": "Using Metabase",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Tanya Aulachynskaya",
+    "publishedDate": "2024-03-04",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/best-practices-logging-pipeline.jpg",
+    "body": "A basic pipeline for getting application logs somewhere you can query them, without adopting an observability platform.\n\n## The shape\n\nStructured logs to a file or stream, batched into a table in your warehouse, queried like anything else. For many teams this is sufficient and costs almost nothing.\n\n## Structure the logs first\n\nJSON lines with consistent field names. Parsing unstructured text later is miserable and lossy; a small amount of discipline at write time saves all of it.\n\n## What to keep\n\nTimestamp, level, service, request id, user id where lawful, duration, outcome. Request id is the one people forget and the one that makes tracing possible.\n\n## Retention\n\nDecide up front. Logs grow faster than anything else in the warehouse, and a table nobody pruned is how surprise bills happen."
+  },
+  {
+    "title": "Embed a Metabase dashboard in Zendesk",
+    "slug": "embed-metabase-in-zendesk",
+    "excerpt": "Get the customer data and insights you need automatically filtered and ready for use within your support tickets. You can also embed a dashboard in Salesforce, Stripe, Jira, or platforms that allow embedding URLs. ",
+    "category": "Using Metabase",
+    "tags": [
+      "Embedding",
+      "Dashboards"
+    ],
+    "author": "Ignacio Beines Furcada",
+    "publishedDate": "2024-02-26",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/embed-metabase-in-zendesk/embed-a-metabase-dashboard-in-zendesk.jpg",
+    "body": "Putting a dashboard inside Zendesk so support agents see account context without switching tabs.\n\n## Why it helps\n\nAgents answering a ticket need the account's usage, plan and recent errors. Every tab switch is friction, and friction at scale means it does not happen.\n\n## The approach\n\nA Zendesk app rendering an embedded dashboard, parameterised by the ticket's organisation id so it scopes to the right account automatically.\n\n## Scoping\n\nThe organisation id comes from the ticket context and is passed as a locked parameter \u2014 the agent cannot change it, which keeps the view correct and the permissions honest.\n\n## What to put on it\n\nLess than you think. Plan, usage trend, recent errors, open tickets. Anything more and agents stop reading it."
+  },
+  {
+    "title": "Keeping tabs on embedded analytics",
+    "slug": "embedding-usage-analytics",
+    "excerpt": "Metabase's usage analytics can help you learn who your most engaged customers are and what\u2019s most important to them.",
+    "category": "Using Metabase",
+    "tags": [
+      "Embedding"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2024-02-19",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/embedding-usage-analytics/keeping-tabs-on-embedded-analytics.jpg",
+    "body": "If you have embedded analytics in your product, you should know which parts customers actually use.\n\n## Why\n\nEmbedded dashboards accumulate the same way internal ones do. Without usage data you cannot tell which are load-bearing and which are costing you query time for nobody.\n\n## What to track\n\nViews per dashboard per tenant, which cards get interacted with, and which filters get changed. The last one is the most informative \u2014 a filter nobody touches is a default that should be the only option.\n\n## Acting on it\n\nRetire what nobody opens. Promote what everyone does. If one tenant uses something heavily and nobody else does, that is a conversation about either a feature or a bespoke report."
+  },
+  {
+    "title": "Comparing the most popular open-source charting libraries",
+    "slug": "best-open-source-chart-library",
+    "excerpt": "Discover features from commonly used data visualization libraries, like Chart.js, ECharts, and Nivo.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Open Source",
+      "Dashboards"
+    ],
+    "author": "Matthew Hefferon",
+    "publishedDate": "2024-02-13",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/viz-libraries/most-popular-visualization-libraries.jpg",
+    "body": "A comparison of the main open-source charting libraries, from the perspective of building an analytics product rather than a one-off visualisation.\n\n## What matters at this scale\n\n- **Bundle size**, because it ships to every user on every page\n- **Accessibility**, which most libraries treat as optional\n- **Interaction model**, specifically whether you can hook into clicks for drill-down\n- **Rendering strategy** \u2014 SVG is easier to style and slower past a few thousand points\n\n## The trade-off\n\nLow-level libraries give control and cost you months. High-level ones get you running in a day and fight you on the eleventh customisation. Which is right depends on whether charts are your product or part of it.\n\n## A note on performance\n\nMost libraries are fine until a few thousand points. If you routinely exceed that, canvas rendering is not optional and that narrows the field considerably."
+  },
+  {
+    "title": "Understand how your team uses Metabase",
+    "slug": "how-to-use-metabase-usage-analytics",
+    "excerpt": "Learn which dashboards are most popular, how to track active users and changes to settings and configurations, view audit logs to monitor incidents, and more.",
+    "category": "Using Metabase",
+    "tags": [
+      "Dashboards",
+      "Hiring"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2024-01-11",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/how-to-use-metabase-usage-analytics/header-image.jpg",
+    "body": "Usage analytics shows you how your organisation actually uses its own instance.\n\n## The questions it answers\n\nWhich dashboards get opened, by how many distinct people, and which have not been touched this quarter. Who is querying, and whether that is spreading beyond the data team.\n\n## The first thing to look at\n\nDistinct viewers per dashboard over ninety days. The distribution is usually steeper than anyone expects \u2014 a handful carry everything, and a long tail carries nobody.\n\n## Acting on it\n\nArchive the tail. It is recoverable and nobody will notice. Then put owners on the survivors.\n\n## The adoption question\n\nTrack distinct queriers outside the data team over time. That single number tells you whether self-service is real or aspirational."
+  },
+  {
+    "title": "Metabase housekeeping with usage analytics",
+    "slug": "metabase-housekeeping-with-usage-analytics",
+    "excerpt": "Clear out outdated, unused questions and dashboards to make space for the most valuable stuff. Improve load times by caching the questions that consume the most resources.",
+    "category": "Using Metabase",
+    "tags": [
+      "Performance",
+      "Dashboards"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2024-01-10",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/housekeeping-with-metabase-analytics/header-image.jpg",
+    "body": "A practical routine for keeping an instance tidy, using usage data rather than opinion.\n\n## Quarterly, in order\n\n1. **Archive dashboards with no views in ninety days.** Recoverable, uncontroversial, and it removes most of the clutter.\n2. **Find duplicate names.** Six dashboards called some variant of \"Revenue\" is why people ask an analyst instead of searching.\n3. **Check ownership.** Anything without a current owner either gets one or gets archived.\n4. **Review expensive queries.** A handful of dashboards usually account for most of the warehouse cost.\n\n## Why it decays\n\nNothing is wrong with creating dashboards freely. The failure is never retiring them, which is a process gap rather than a tooling one.\n\n## Make it someone's job\n\nAn hour a quarter, on a recurring invite. Otherwise it does not happen."
+  },
+  {
+    "title": "How data-driven is your org?",
+    "slug": "usage-analytics",
+    "excerpt": "How to take usage analytics to organize your Metabase and point people to the data they want to (and should be) looking at.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2024-01-08",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/usage-analytics/how-data-driven-is-your-company.jpg",
+    "body": "A way of asking how data-driven your organisation actually is, using evidence rather than self-assessment.\n\n## The metric that matters\n\nDistinct people outside the data team who ran a query this month. Not dashboard views \u2014 views are passive and can be a screen in a corridor. Queries mean someone had a question and pursued it.\n\n## What good looks like\n\nThe number grows, and it grows outside the functions you would expect. Finance and product adopting analytics is normal; support and operations adopting it is the signal that something has genuinely changed.\n\n## The counter-indicator\n\nIf dashboard views are high and distinct queriers are flat, you have a reporting culture rather than an analytical one. People are reading what they are given and not asking anything of their own."
+  },
+  {
+    "title": "10 handy Metabase features you may not know about",
+    "slug": "7-handy-features-you-may-not-know-about",
+    "excerpt": "Here are ten features of Metabase that may take some time to discover, but once you do you may find yourself using all the time.",
+    "category": "Using Metabase",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-12-05",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/metabase-features/metabase-features-header-image.jpg",
+    "body": "Ten things that exist, that people routinely do not know exist.\n\n## The list\n\n- **Click behaviour on dashboard cards** \u2014 send a click to another dashboard, a URL, or a filtered view\n- **Linked filters**, so choosing a country narrows the city list\n- **SQL snippets** for logic you paste into every query\n- **Field filters**, which make SQL questions work with dashboard filters properly\n- **Models** as a reusable starting point rather than copying a question\n- **Alerts** on a result crossing a threshold\n- **Dashboard subscriptions** delivering results by email or Slack on a schedule\n- **Public links** for sharing with people who have no account\n- **Keyboard shortcuts** \u2014 press `?` to see them\n- **Converting a question to SQL** to see exactly what the builder generated\n\n## The last one\n\nIt is the best way to learn what the query builder is doing, and the fastest way to settle an argument about whether a result is right."
+  },
+  {
+    "title": "Choose where your Metabase Cloud is hosted",
+    "slug": "choose-where-your-metabase-cloud-is-hosted",
+    "excerpt": "Speed up your Metabase by hosting it closer to you and your data with new cloud-hosting options in the EU (Frankfurt), APAC (Singapore, Sydney), or South America (S\u00e3o Paulo).",
+    "category": "News",
+    "tags": [
+      "Performance"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-10-11",
+    "readTimeMinutes": 1,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/multi-region-hosting/multi-region-hosting-australia.jpg",
+    "body": "You can now choose the region your Metabase Cloud instance runs in.\n\n## Why it matters\n\nTwo reasons. Data residency requirements that specify where data is processed, and latency \u2014 an instance close to your warehouse is noticeably faster, because the round trip happens on every query.\n\n## Choosing\n\nPick the region closest to your warehouse rather than closest to your office. Query latency dominates; interface latency is barely perceptible by comparison.\n\n## Changing later\n\nPossible, but it involves a migration. Worth getting right at setup."
+  },
+  {
+    "title": "Vulnerability post-mortem: July 2023",
+    "slug": "vulnerability-post-mortem",
+    "excerpt": "A recap of the H2 Unauthenticated Remote Code Execution vulnerability and our response.",
+    "category": "News",
+    "tags": [
+      "Security"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-08-04",
+    "readTimeMinutes": 17,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/vulnerability-post-mortem-2023-08-04/what-happened.png",
+    "body": "An account of the July 2023 vulnerability, what was affected and what changed afterwards.\n\n## What happened\n\nAn issue in a component reachable before authentication. Reported responsibly, confirmed quickly, patched across supported versions.\n\n## Who was affected\n\nSelf-hosted instances on affected versions, particularly those exposed directly to the internet. Cloud instances were patched before disclosure.\n\n## What we changed\n\nAdditional review of pre-authentication code paths, which are now treated as a distinct risk category with their own test requirements.\n\n## The general lesson\n\nAnalytics tools rarely need to be publicly reachable. Putting yours behind a VPN limits the blast radius of a whole class of issue, including ones not yet found."
+  },
+  {
+    "title": "Advice for building and scaling an effective and happy data team",
+    "slug": "common-mistakes-companies-make-when-building-a-data-team",
+    "excerpt": "If you don't understand data roles enough to scope job descriptions or workload, get ready for burnout, turnover, and the death of company-wide data culture. Our data team offers some advice on how to build a healthy data team.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Hiring"
+    ],
+    "author": "Ukrit Wattanavaekin",
+    "publishedDate": "2023-08-03",
+    "readTimeMinutes": 8,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/building-and-scaling-a-data-team.jpg",
+    "body": "Advice on building a data team, drawn mostly from watching the same mistakes repeat.\n\n## Hiring seniority too late\n\nThree junior analysts without a senior person produce three incompatible definitions of revenue and no way to adjudicate. The first hire sets the conventions everyone else inherits.\n\n## Treating it as a service desk\n\nIf the team exists to answer questions, the queue grows forever and the good people leave. The job is to make questions answerable by other people.\n\n## No ownership model\n\nWhen everyone can build and nobody owns, trust collapses within two quarters. Someone must be accountable for whether a given number is still correct.\n\n## Tooling before definitions\n\nA new warehouse does not resolve a disagreement about what a customer is. The definitions are the work; the tools are how you express them.\n\n## What keeps people\n\nAnalysts leave when their work does not change anything. Showing the decision a piece of analysis affected does more for retention than most of the alternatives."
+  },
+  {
+    "title": "Urgent: Upgrade your Metabase installation now. H2-related remote code execution found",
+    "slug": "vulnerability-advisory-h2",
+    "excerpt": "More vulnerabilities related to H2 connection strings were discovered, and patched. If you are on version 0.43 of Metabase or later, please upgrade IMMEDIATELY.",
+    "category": "News",
+    "tags": [
+      "Security"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-07-28",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/vulnerability-update-2023-07-28/upgrade-immediately.png",
+    "body": "An urgent advisory. A remote code execution issue related to H2 database connections has been found. Upgrade immediately.\n\n## Who is affected\n\nSelf-hosted instances. If your instance is reachable from the internet, treat this as urgent.\n\n## What to do now\n\n1. Upgrade to a patched version immediately.\n2. If you cannot upgrade right now, restrict network access to the instance.\n3. Review whether any H2 connections are configured that you do not need.\n\n## Cloud\n\nAlready patched. No action required.\n\nA fuller write-up will follow, but it should not delay anyone upgrading."
+  },
+  {
+    "title": "Please upgrade your Metabase immediately",
+    "slug": "vulnerability-advisory",
+    "excerpt": "We've patched a severe vulnerability uncovered by a third-party security researcher.",
+    "category": "News",
+    "tags": [
+      "Security",
+      "Hiring"
+    ],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2023-07-20",
+    "readTimeMinutes": 2,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/vulnerability-advisory/security-update.png",
+    "body": "Please upgrade your Metabase instance immediately. A security issue affecting self-hosted deployments has been patched.\n\n## Action required\n\nUpgrade to the latest patch release of your major version. Cloud instances are already updated.\n\n## If you cannot upgrade today\n\nRestrict network access to the instance. An analytics tool exposed directly to the internet is a larger target than it needs to be, and limiting access reduces exposure to this and to issues not yet discovered.\n\nDetails will follow once deployments have had time to update."
+  },
+  {
+    "title": "The two most important business metrics to track",
+    "slug": "develop-a-metrics-store-now",
+    "excerpt": "Effective metrics are not a one-size-fits-all solution. Here's how to create a useful North Star metric and counter metric to start building out your metrics store.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Data modeling"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-07-07",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/develop-a-metrics-store-now/metrics_store.jpg",
+    "body": "If you track two things properly, track these: the rate at which new customers reach value, and the rate at which existing revenue expands or contracts.\n\n## Why these two\n\nActivation tells you whether acquisition is producing anything real. Net revenue retention tells you whether what you built keeps being worth paying for. Between them they cover both ends of the business, and most other metrics are downstream of one or the other.\n\n## Why a metrics store\n\nBecause the value is in everyone using the same definition. A metric defined once, centrally, and referenced everywhere is worth more than a better metric defined four times.\n\n## Start small\n\nTwo metrics, defined precisely, documented where people will see them. That is more useful than forty in a spreadsheet nobody opens."
+  },
+  {
+    "title": "How to improve data literacy",
+    "slug": "improving-data-literacy",
+    "excerpt": "Proven methods and resources to help everyone use data in their everyday tasks.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Self-service"
+    ],
+    "author": "Ukrit Wattanavaekin",
+    "publishedDate": "2023-05-26",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/improving-data-literacy/improving-data-literacy.jpg",
+    "body": "Data literacy programmes usually fail because they teach tools rather than scepticism.\n\n## What actually needs teaching\n\nNot how to build a chart. How to ask what a number means, where it came from, and what would have to be true for it to be wrong.\n\n## A practical approach\n\n- Teach against your own data, not a sample dataset. People learn when the numbers are about their job.\n- Start with reading, not building. Most people need to interpret a dashboard correctly far more often than they need to make one.\n- Make definitions visible. Half of data illiteracy is actually undocumented definitions.\n- Normalise asking. The person who asks why two reports disagree is doing the organisation a favour.\n\n## The measure\n\nNot course completion. Whether people outside the data team ask better questions six months later."
+  },
+  {
+    "title": "You don't need a data warehouse",
+    "slug": "no-data-warehouse-necessary",
+    "excerpt": "Start querying your production database as soon as possible, because the best way to model your data warehouse is to prototype it in real life.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Open Source",
+      "SQL",
+      "Data modeling"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-05-18",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/no-data-warehouse-necessary/no-data-warehouse-necessary.jpg",
+    "body": "A lot of teams adopt a warehouse before they need one, and pay for it in complexity.\n\n## When you genuinely need one\n\n- Data from several systems that must be joined\n- Query load heavy enough to affect your production database\n- History your application database does not retain\n- Transformations too expensive to run live\n\n## When you do not\n\nIf everything lives in one Postgres database, your analytical queries do not disturb production, and you are not retaining years of history \u2014 a read replica will take you a long way. Possibly years.\n\n## The actual cost\n\nIt is not the bill. It is that every number now has a pipeline between it and the truth, and every pipeline is a thing that breaks silently at 3am.\n\n## The honest version\n\nMany teams should start with a read replica and move when something specific hurts. \"We will need it eventually\" is not something hurting."
+  },
+  {
+    "title": "The hidden costs of the data stack",
+    "slug": "the-hidden-cost-of-data-stacks",
+    "excerpt": "An incomplete list of the less obvious costs associated with maintaining a data stack, and some things you can do to keep those costs under control.",
+    "category": "Data explorations",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2023-05-12",
+    "readTimeMinutes": 9,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/hidden-costs-of-the-data-stack/hidden-costs.jpg",
+    "body": "The line item is the smallest part of what a data stack costs.\n\n## What the invoice misses\n\n- **Integration time.** Every tool connects to every other tool, and that is where the quarters go.\n- **Expertise.** A tool nobody on the team knows well is a tool that produces subtly wrong answers.\n- **Latency to an answer.** More layers means longer between a question and a number.\n- **Debugging surface.** Each component is somewhere a wrong number can originate.\n\n## The compounding problem\n\nTools are individually justifiable and collectively unmanageable. Each addition seems small; the combination is a system nobody understands end to end.\n\n## A reasonable test\n\nBefore adding a tool, ask who will own it and what gets removed. If the answer to the second is nothing, the stack grows forever."
+  },
+  {
+    "title": "4 steps to turn your support tickets into an automated dashboard",
+    "slug": "4-steps-to-turn-your-support-tickets-into-an-automated-dashboard",
+    "excerpt": "Using Zendesk, Freshdesk, or any other ticketing system? You can start labeling your support tickets for content analysis, and view the results in a support dashboard.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Luis Paolini",
+    "publishedDate": "2023-05-05",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/4-steps-support-dashboard/support-tickets.jpg",
+    "body": "Support tickets are one of the most under-used datasets in most companies.\n\n## 1. Get them into the warehouse\n\nMost helpdesks have an API or an export. Daily is usually sufficient.\n\n## 2. Categorise\n\nThe raw text is not queryable. You need categories \u2014 and the useful categorisation is by underlying cause, not by the menu option the customer picked.\n\n## 3. Join to accounts\n\nTickets in isolation tell you about volume. Tickets joined to account data tell you which customers are struggling, which plans generate support load, and whether ticket rate predicts churn. It usually does.\n\n## 4. Build the dashboard around a decision\n\nVolume by category over time, rate per account, and time to resolution. The actionable chart is categories that are growing, because that is where documentation or a product fix pays off.\n\n## The thing people miss\n\nTicket rate per account is a leading churn indicator and almost nobody tracks it."
+  },
+  {
+    "title": "How to create and analyze an NPS survey the right way",
+    "slug": "create-and-analyze-a-nps-survey-the-right-way",
+    "excerpt": "NPS survey data can hold the keys to customer success, but you have to ask the right questions to get the best results.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2023-04-20",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/nps/nps-header-img.png",
+    "body": "NPS is widely used and widely misused. The score is the least interesting output.\n\n## The score is nearly useless alone\n\nA single number compressing a distribution, benchmarked against industries that measure differently. Chasing it as a target produces survey gaming rather than improvement.\n\n## What is useful\n\n- **The free-text responses.** This is the actual data. The score is just how you sort it.\n- **The trend within your own business**, same question, same timing, same sampling.\n- **Segmentation.** NPS by plan, tenure or support history tells you something. The aggregate does not.\n\n## Running it properly\n\nAsk at a consistent point in the lifecycle. Sample rather than blanketing. Keep it short \u2014 the follow-up question matters more than the score, and it is the one people abandon.\n\n## Closing the loop\n\nIf a detractor never hears back, you have conducted research rather than improved anything."
+  },
+  {
+    "title": "Automating growth and customer insights in SaaS businesses",
+    "slug": "automating-growth-and-customer-insights-in-saas-business",
+    "excerpt": "How a modern data stack can help you improve your customer journey and grow your revenue.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2023-03-06",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/candice-ren-og.jpg",
+    "body": "Most growth reporting is assembled by hand each week, which means it is late, inconsistent and nobody fully trusts it.\n\n## What to automate first\n\nThe weekly numbers someone currently assembles manually. Not because the analysis is hard, but because doing it by hand guarantees it is inconsistent between weeks and stops entirely when that person is away.\n\n## The pieces\n\n- Signups by source, joined to activation so you can see quality rather than volume\n- Cohort retention, updated as cohorts mature\n- Expansion and contraction on existing accounts\n- Support load per account, as an early warning\n\n## The part that matters\n\nSegment by acquisition source throughout. Two channels with identical cost and different activation rates have very different real costs, and the aggregate hides it completely.\n\n## Then stop\n\nAutomating the weekly report frees time for the analysis nobody has done. If it just produces more reports, you have automated the wrong layer."
+  },
+  {
+    "title": "Why interactive embedding?",
+    "slug": "why-full-app-embedding",
+    "excerpt": "If you want to offer customer analytics, you want interactive embedding.",
+    "category": "Using Metabase",
+    "tags": [
+      "Embedding"
+    ],
+    "author": "Alexander Kinn",
+    "publishedDate": "2022-12-15",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/full-app-embedding/full-app-embedding-abstract.jpg",
+    "body": "Interactive embedding puts the whole analytical experience inside your application, rather than a fixed dashboard.\n\n## The difference\n\nA static embed shows what you built. Interactive embedding lets your customers ask their own questions \u2014 build a query, change a visualisation, save it \u2014 inside your product, scoped to their own data.\n\n## When it is worth it\n\nWhen customers keep asking for reports you did not anticipate. At that point every bespoke report is a maintenance burden, and giving them the tool is cheaper than being the tool.\n\n## What you keep control of\n\nStyling, permissions and scope. They explore their own rows within boundaries you set.\n\n## When it is overkill\n\nIf three charts answer everything anyone asks, ship three charts."
+  },
+  {
+    "title": "Bus factor of top GitHub projects",
+    "slug": "bus-factor",
+    "excerpt": "What is the bus factor for the top one thousand GitHub repositories with the most stars?",
+    "category": "Data explorations",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-11-14",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/bus-factor/bus-factor.jpg",
+    "body": "The bus factor of a project is how many people would have to disappear before it stalls. We looked at what that number is across widely used open-source projects.\n\n## The method\n\nAttribute commits to contributors, weight by recency since historical contribution does not help with a problem today, then find the smallest group accounting for most of the recent work.\n\n## The finding\n\nIt is low. Uncomfortably often it is one. Projects that large numbers of companies depend on frequently have a single person doing most of the current work.\n\n## What it means\n\nNot that these projects are doomed \u2014 many have survived for years. But \"widely used\" is not the same as \"well resourced\", and the two are frequently confused when people choose dependencies.\n\n## What to do with it\n\nIf a dependency is load-bearing for you and has a bus factor of one, that is a risk worth either funding or planning around."
+  },
+  {
+    "title": "Why Metabase Cloud?",
+    "slug": "why-metabase-cloud",
+    "excerpt": "What you get with Metabase Cloud, and why it's a good deal.",
+    "category": "Using Metabase",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Alexander Kinn",
+    "publishedDate": "2022-10-26",
+    "readTimeMinutes": 8,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/why-metabase-cloud/why-metabase-cloud.jpg",
+    "body": "Reasons to use the hosted version, and reasons not to.\n\n## The case for\n\nUpgrades, backups and scaling stop being yours. Security patches apply without you noticing. For teams without infrastructure capacity, the maintenance is the entire argument.\n\n## The case against\n\nIf you have strict data residency requirements, an existing platform team, or a policy that nothing leaves your network, self-hosting is the right call and the open-source version is fully capable.\n\n## The honest comparison\n\nSelf-hosting is not free \u2014 it costs someone's attention every month, and that cost is invisible until an upgrade goes wrong. Compare against that rather than against zero.\n\n## Either way\n\nThe product is the same. Moving between them is a supported path, not a rewrite."
+  },
+  {
+    "title": "Halloween Edition: Data Horror stories in startups",
+    "slug": "data-horror-stories-in-startups-halloween-edition",
+    "excerpt": "We talked with Amogh Sarda and Ali Baghshomali about common horror data stories in startups and how to avoid them. Read on to learn about the best practices for establishing product events management and upscaling from spreadsheets to the BI.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-10-21",
+    "readTimeMinutes": 7,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/blog-cover.jpeg",
+    "body": "Real failures, anonymised. Each one happened to someone.\n\n## The dashboard that was wrong for eight months\n\nA join that silently duplicated rows for a subset of customers. Revenue overstated. Found when an invoice disagreed with the dashboard.\n\n## The metric with four definitions\n\nFour teams, four numbers, one board meeting. Discovered live.\n\n## The pipeline nobody owned\n\nIt broke on a Friday. Nobody noticed until Tuesday, because the dashboard showed the last successful run and looked completely normal.\n\n## The timezone\n\nDaily numbers computed in UTC, targets set in local time. Every month-end was wrong by one day's trading, consistently, for a year.\n\n## The common thread\n\nNone of these were visibly broken. They all produced plausible numbers. The failure mode that matters is not the error \u2014 it is the error that looks fine."
+  },
+  {
+    "title": "The data guide to travel",
+    "slug": "data-guide-to-travel",
+    "excerpt": "We scraped some data from Google Maps to find out what the top attractions are in the world\u2019s most visited destinations.",
+    "category": "Data explorations",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-10-04",
+    "readTimeMinutes": 4,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/data-guide-to-travel/globe.jpg",
+    "body": "An exploration of public travel data: when to book, where prices actually vary, and which conventional wisdom survives contact with the numbers.\n\n## Booking windows\n\nThe advice about an optimal number of weeks ahead is roughly right on average and useless in particular. Variance within a route is far larger than the difference between booking windows.\n\n## Day of week\n\nThe effect exists and is smaller than commonly claimed. Route and season dominate.\n\n## What actually predicts price\n\nCompetition on the route. Routes with one operator are expensive regardless of when you book; routes with three are cheaper at almost any point.\n\n## The methodological caveat\n\nThis is observational data with obvious selection effects. Prices observed are prices offered, not prices paid, and that gap is not random."
+  },
+  {
+    "title": "How Metabase uses Metabase",
+    "slug": "how-metabase-uses-metabase",
+    "excerpt": "Here at Metabase, we use Metabase internally, so we thought it'd be fun to use Metabase to see how we use Metabase.",
+    "category": "Data explorations",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Jeff Bruemmer",
+    "publishedDate": "2022-09-21",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/how-metabase-uses-metabase/how-metabase-metabases.jpg",
+    "body": "We run our own company on our own product. Here is what that actually looks like, including the parts that are not flattering.\n\n## What we track\n\nInstance telemetry where people have opted in, support load, sales pipeline, and the open-source community \u2014 issues, contributions, release adoption.\n\n## The dashboards that matter\n\nFewer than you would expect. A handful get opened daily; the rest were built for a moment and survive out of inertia. We run the same housekeeping we recommend, and we are not better at it than anyone else.\n\n## Dogfooding problems\n\nUsing your own product daily makes you fast at it, which makes you a bad judge of how hard it is for a newcomer. The features that frustrate us are rarely the ones that frustrate new users.\n\n## The useful habit\n\nEvery team maintains its own collection rather than filing requests with a central group. That is the thing most worth copying."
+  },
+  {
+    "title": "Want to retire early? Save more money",
+    "slug": "fire-dashboard",
+    "excerpt": "Japan and Korea\u2019s high average savings rates drive shorter times to reach financial independence.",
+    "category": "Data explorations",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-08-30",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/fire-calculator/hero.png",
+    "body": "An exploration of early retirement arithmetic, where the conclusion is less interesting than the sensitivity.\n\n## The model\n\nSavings rate, expected return, withdrawal rate. The headline result \u2014 that savings rate dominates \u2014 is well known and holds up.\n\n## What the charts show\n\nThe relationship is sharply non-linear. Moving from a 10% to a 20% savings rate removes far more years than moving from 50% to 60%. Most of the available gain is at the low end.\n\n## Where it gets fragile\n\nThe withdrawal rate assumption carries almost all the uncertainty. Small changes there swing the answer by a decade, which is worth knowing before treating any particular number as a plan.\n\n## The honest caveat\n\nThis is arithmetic, not advice. The model assumes stable returns and stable spending, and reality supplies neither."
+  },
+  {
+    "title": "#jobs #jobs #jobs | Exploring trends in data jobs postings",
+    "slug": "data-job-posts",
+    "excerpt": "Building a dashboard using data from the dbt Slack to analyze how data jobs have been changing over time.",
+    "category": "Data explorations",
+    "tags": [
+      "Dashboards",
+      "Data modeling",
+      "Hiring"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-08-10",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/data-job-posts/dashboard.png",
+    "body": "An analysis of data job postings \u2014 what titles exist, what they ask for, and how little the two correlate.\n\n## Titles are noise\n\n\"Data analyst\", \"analytics engineer\" and \"BI developer\" describe overlapping work with no consistency between companies. The same responsibilities appear under all three, and the same title covers wildly different jobs.\n\n## What the requirements actually say\n\nSQL is near-universal. Python appears in most postings and is genuinely required in fewer. The tooling lists are long and largely aspirational \u2014 a posting naming nine tools is describing a wish, not a filter.\n\n## The signal worth reading\n\nWhether the posting describes outcomes or tools. Postings that describe what the person will change tend to come from organisations that have thought about why the role exists.\n\n## For candidates\n\nRead the responsibilities, ignore the title, and treat the tool list as negotiable."
+  },
+  {
+    "title": "Building a better data culture for your team",
+    "slug": "building-a-better-data-culture-for-your-team",
+    "excerpt": "What are the best ways to build a data-centric culture within an organization? TJ Muehleman and Krishnan Raghupathi are sharing their experience and advice on how to get started.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Hiring"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-07-26",
+    "readTimeMinutes": 12,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/webinar-data-culture.jpg",
+    "body": "Data culture is one of those phrases that means nothing until you define it as a set of behaviours.\n\n## What it looks like in practice\n\n- People check a number before asserting it in a meeting\n- Disagreeing with a dashboard is normal rather than rude\n- Definitions are written down and referenced\n- Somebody owns each important number\n\n## How it fails\n\nUsually through one bad experience. Someone brings data to a meeting, the number is questioned, nobody can resolve it, and the lesson learned is that bringing data is risky. That happens twice and people stop.\n\n## What helps\n\nMake it easy to check. If the definition is next to the number and the query is one click away, a disagreement takes two minutes rather than a week.\n\n## The leadership part\n\nIf leaders use data selectively \u2014 citing it when it agrees and dismissing it when it does not \u2014 everyone notices, and no amount of tooling compensates."
+  },
+  {
+    "title": "A product manager's guide to getting started with Metabase",
+    "slug": "product-team-guide-to-metabase",
+    "excerpt": "You may have plenty of product management tools at your disposal, but really getting to know your product data and customers is still a challenge. Learn how Metabase can help your product team make smarter data-driven decisions without relying exclusively on event instrumentation.",
+    "category": "Using Metabase",
+    "tags": [
+      "Hiring"
+    ],
+    "author": "Tanya Aulachynskaya",
+    "publishedDate": "2022-05-27",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://www.metabase.com/images/posts/a-product-managers-guide-to-getting-started-with-Metabase.svg",
+    "body": "A short orientation for product managers, written around the questions PMs actually ask.\n\n## Start with one question\n\nNot a dashboard. One specific question \u2014 how many accounts used the feature we shipped last month, and did they come back. Answering it teaches you the tool faster than any tour.\n\n## The three things worth learning\n\n- **The query builder**, enough to filter and group without help\n- **Drill-through**, because the follow-up question is always \"which ones?\"\n- **Saved questions as a starting point**, so you build on the data team's work rather than starting from raw tables\n\n## What to ask your data team for\n\nA model covering your product's core events with sensible column names. One good model is worth more than ten dashboards.\n\n## The habit to build\n\nAfter every launch, look. Most feature usage questions never get asked because nobody made it a routine."
+  },
+  {
+    "title": "A marketer's guide to getting started with Metabase",
+    "slug": "why-a-growth-marketing-team-wants-metabase",
+    "excerpt": "Your marketing team moves fast, and doesn't have the time to spend weeks vetting and configuring an analytics tool. Learn how Metabase can help you level up those growth initiatives.",
+    "category": "Using Metabase",
+    "tags": [
+      "Performance",
+      "Hiring"
+    ],
+    "author": "Alexander Kinn",
+    "publishedDate": "2022-05-20",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://www.metabase.com/images/posts/a-marketers-guide-to-getting-started-with-Metabase.svg",
+    "body": "An orientation for marketers who want to stop waiting on an analyst for channel performance.\n\n## The question you actually have\n\nNot how many clicks. Which channels send people who stay. That requires joining campaign data to product usage, and that join is the whole reason this matters.\n\n## What to learn first\n\nFiltering and grouping a saved question. If your data team has modelled signups with an acquisition source, you can answer most channel questions from there without writing SQL.\n\n## The metric that changes decisions\n\nActivation rate by source. Two channels with the same cost per signup and different activation rates have completely different real costs, and the aggregate spend report hides it entirely.\n\n## Working with the data team\n\nAsk for a model, not a dashboard. A dashboard answers this week's question; a model lets you answer next week's yourself."
+  },
+  {
+    "title": "Maintaining healthy skepticism toward your data",
+    "slug": "maintaining-skepticism-toward-your-data",
+    "excerpt": "Your data isn't infallible, but it takes practice to get comfortable interrogating that data when you get an unexpected result. Learn how you can hone your data intuition and keep cool in the face of fluctuating numbers.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-05-19",
+    "readTimeMinutes": 3,
+    "coverImageUrl": "https://www.metabase.com/images/posts/maintaining-healthy-skepticism-toward-your-data.svg",
+    "body": "The most useful analytical habit is assuming the number is wrong until you have a reason to think otherwise.\n\n## Why\n\nBecause the failure mode that costs you is not the obviously broken dashboard. It is the plausible number that is quietly incorrect, which nobody questions precisely because it looks reasonable.\n\n## Questions worth asking every time\n\n- Does the row count make sense, or did a join multiply something?\n- What happens at the boundaries \u2014 timezone, month end, null handling?\n- Does this agree with a number from a different system?\n- If this were wrong, how would I find out?\n\n## The cross-check\n\nReconciling against something independent \u2014 an invoice, a vendor dashboard, a manual count \u2014 catches more real errors than any amount of staring at SQL.\n\n## Scepticism is not cynicism\n\nThe goal is a number you can defend, not a reason to ignore all numbers."
+  },
+  {
+    "title": "Your chart has too many series: data visualization tips for the non-analyst",
+    "slug": "visualization-mistakes",
+    "excerpt": "Creating effective charts and dashboards isn't always intuitive for those outside the analyst bubble. We've pulled together some tips to help you make sure your data visualizations are the best they can be.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-05-01",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://www.metabase.com/images/posts/your-chart-has-too-many-series_visualization-tips-for-the-non-analyst.svg",
+    "body": "Advice for non-analysts who have to make charts, starting with the most common problem.\n\n## Your chart has too many series\n\nSeven lines is not a chart, it is a legend with decoration. Three or four is the practical limit. If you need more, use small multiples \u2014 several small charts sharing an axis, which people read far more easily than one crowded one.\n\n## Other frequent ones\n\n- **Truncated axes on bar charts.** Bar length is the encoding; truncating it misleads.\n- **Rainbow colour schemes** where the colours mean nothing.\n- **Pie charts with eight slices.** Two or three is fine. Eight is unreadable.\n- **Dual axes**, which can be made to show almost any relationship you want.\n\n## The test\n\nShow it to someone who was not in the meeting and ask what it says. If they hesitate, the chart is not finished."
+  },
+  {
+    "title": "Calculating LTV: are you doing it wrong?",
+    "slug": "calculating-ltv",
+    "excerpt": "You've heard that customer lifetime value (LTV) is an important metric, but how exactly are you supposed to know what formula to use? This article offers a simple LTV formula for SaaS companies, along with use cases for the metrics and common pitfalls people encounter when working with LTV.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Data modeling"
+    ],
+    "author": "Bruno Bergher",
+    "publishedDate": "2022-04-25",
+    "readTimeMinutes": 6,
+    "coverImageUrl": "https://www.metabase.com/images/posts/calculating-LTV_are-you-doing-it-wrong.svg",
+    "body": "Lifetime value is one of the most confidently miscalculated numbers in business.\n\n## The usual mistake\n\nAverage revenue divided by churn rate, on the whole customer base. This is wrong in several ways at once: it averages over segments that behave completely differently, assumes churn is constant when it is highest early, and uses revenue rather than margin.\n\n## What to do instead\n\n- Calculate by cohort and segment, never in aggregate\n- Use contribution margin, not revenue\n- Use observed retention curves rather than a flat churn assumption\n- Discount future revenue; money in year three is not money today\n\n## The honest version\n\nFor a young company, LTV is largely a projection. Quoting it to two decimal places implies a confidence the data does not support.\n\n## What it is useful for\n\nComparing segments and channels against each other. Much less useful as an absolute number."
+  },
+  {
+    "title": "Metabase is SOC 2 Type 1 Compliant",
+    "slug": "metabase-soc-2-announcement",
+    "excerpt": "Metabase has always cared about data privacy, and today we\u2019re proud to announce we're now SOC 2 Type 1 compliant.",
+    "category": "News",
+    "tags": [
+      "Analytics"
+    ],
+    "author": "Alexander Kinn",
+    "publishedDate": "2022-03-29",
+    "readTimeMinutes": 1,
+    "coverImageUrl": "https://www.metabase.com/images/posts/Metabase-is-SOC-2-Type-1-Compliant.svg",
+    "body": "Metabase has completed a SOC 2 Type 1 audit.\n\n## What it covers\n\nAn independent assessment that our security controls are designed appropriately as of the audit date \u2014 access control, change management, encryption, incident response and vendor management.\n\n## What Type 1 means\n\nIt assesses design at a point in time. Type 2 assesses operating effectiveness over a period, and that is the next step.\n\n## Why we did it\n\nBecause security review is a real part of adopting an analytics tool, and completing the audit saves customers from reconstructing the answers themselves.\n\n## Getting the report\n\nAvailable under NDA through our team."
+  },
+  {
+    "title": "The perfect chart: choosing the right visualization for every scenario",
+    "slug": "the-right-visualization",
+    "excerpt": "Data viz is all about communicating the right story. Line charts are a reliable standby, but it's good to have options. Read on for tips and examples about when to use scatterplots, progress bars, and more.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Dashboards"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-02-14",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://www.metabase.com/images/posts/the-perfect-chart_choosing-the-right-visualization-for-every-scenario.svg",
+    "body": "A practical guide to picking a chart, organised by the question rather than the chart type.\n\n## Match the question\n\n- **Comparing categories** \u2192 bar chart, sorted by value\n- **Change over time** \u2192 line chart\n- **Part of a whole** \u2192 stacked bar, or a pie only with two or three slices\n- **Relationship between two measures** \u2192 scatter plot\n- **A single important number** \u2192 just show the number, large\n- **Finding a specific value** \u2192 a table, which is frequently the correct answer\n\n## The most common error\n\nChoosing for visual interest rather than for the question. A table is often the right answer and rarely the chosen one.\n\n## Distribution\n\nUnderused. If you are showing an average, a histogram usually tells a more honest story \u2014 averages hide bimodality completely.\n\n## The rule underneath\n\nThe chart should make the answer obvious without a paragraph of explanation."
+  },
+  {
+    "title": "Avoiding analyst burnout: how to streamline ad hoc requests",
+    "slug": "ad-hoc-analysis-tips",
+    "excerpt": "Help your analysts avoid burnout with these tips for handling ad hoc analysis requests (hint: the answer lies in self-service analytics!).",
+    "category": "Analytics and BI",
+    "tags": [
+      "Self-service"
+    ],
+    "author": "Margaret Rimek",
+    "publishedDate": "2022-02-01",
+    "readTimeMinutes": 5,
+    "coverImageUrl": "https://cdn.metabase.com/images/posts/avoiding-analyst-burnout_-how-to-streamline-ad-hoc-requests.jpg",
+    "body": "Ad hoc requests are the main cause of analyst burnout, and adding analysts does not fix it.\n\n## Why the queue regenerates\n\nMost requests are variations on something already answered, from people who could not find the previous answer or could not tell whether it was still valid. That is discoverability, not capacity.\n\n## What actually reduces it\n\n- A searchable place where answered questions live, findable using the words a non-analyst would use\n- Models that make common questions answerable without a join\n- Visible ownership, so stale work has someone to ask\n- Tickets rather than Slack messages, so patterns become visible\n\n## Train one person per team\n\nNot everyone needs to self-serve. One capable person per department handles most of their team's questions and knows when to escalate.\n\n## The trade-off\n\nDocumenting a request so the next person self-serves takes three times as long as answering it. It only pays if you do it consistently, which is why it usually does not happen."
+  },
+  {
+    "title": "Business intelligence career paths",
+    "slug": "bi-career-paths",
+    "excerpt": "To the uninitiated, BI career paths may sound a lot alike. We've written up an explainer on the difference between the following common roles within data teams: data analyst, data scientist, BI developer, data engineer, and analytics engineer.",
+    "category": "Analytics and BI",
+    "tags": [
+      "Hiring"
+    ],
+    "author": "Jess Thompson",
+    "publishedDate": "2022-01-04",
+    "readTimeMinutes": 8,
+    "coverImageUrl": "https://cdn.metabase.com/images/twitter/default.png",
+    "body": "Business intelligence does not have one career path, which is confusing when you are early in it.\n\n## The directions people go\n\n- **Deeper technical** \u2014 analytics engineering, data modelling, infrastructure\n- **Domain specialist** \u2014 becoming the person who understands the business, not just the data\n- **Management** \u2014 leading a data team, which is a different job rather than a promotion\n- **Adjacent product roles** \u2014 data-heavy product or growth work\n\n## What transfers\n\nSQL transfers. Tool expertise transfers less than people hope. The skill that transfers most is translating a vague question into a specific answerable one, and it is the hardest to demonstrate on a CV.\n\n## Choosing\n\nThe useful question is not which pays more. It is whether you would rather go deeper into systems or deeper into a business. Both are legitimate and the people who are unhappy are usually the ones who drifted rather than chose.\n\n## The practical advice\n\nKeep a record of decisions your analysis changed. It is more persuasive than a list of tools, and almost nobody does it."
   }
 ]

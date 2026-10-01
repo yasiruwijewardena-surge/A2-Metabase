@@ -1,0 +1,19 @@
+{
+ "IT & Software": "SaaS & Developer Tools",
+ "B2B SaaS": "SaaS & Developer Tools",
+ "Developer Tools": "SaaS & Developer Tools",
+ "B2B Software / Financial Technology": "Financial Services",
+ "Banking & Finance": "Financial Services",
+ "Financial Services": "Financial Services",
+ "Venture Capital": "Financial Services",
+ "Education": "Education",
+ "Healthcare": "Healthcare",
+ "eCommerce": "eCommerce & Retail",
+ "Retail": "eCommerce & Retail",
+ "Travel & Hospitality": "eCommerce & Retail",
+ "Logistics & Transportation": "Logistics & Transport",
+ "Transport Management System": "Logistics & Transport",
+ "Manufacturing": "Manufacturing",
+ "Internet of Things": "Manufacturing",
+ "Nonprofit": "Nonprofit"
+}

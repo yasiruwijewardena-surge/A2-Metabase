@@ -1,157 +1,745 @@
 [
   {
-    "title": "Northwind Lending cuts its reporting stack cost by 70%",
-    "company": "Northwind Lending",
-    "useCases": ["Business Intelligence"],
-    "publishedDate": "2026-09-10",
-    "featured": true,
-    "headline": "Northwind Lending replaced a per-seat BI contract with self-hosted Metabase and widened access at the same time.",
-    "challenge": "Licence costs scaled per seat, so access was rationed to a handful of analysts. Everyone else asked those analysts for numbers, and the queue was measured in days.",
-    "solution": "A self-hosted deployment alongside the existing warehouse, with a curated set of models covering the loan book and collections. Access was opened to every department rather than rationed.",
-    "results": "Reporting platform cost fell by roughly 70%, and the number of people querying data directly went from nine to over a hundred within a quarter.",
-    "metrics": [
-      { "value": "70%", "label": "lower platform cost" },
-      { "value": "9 → 100+", "label": "people querying data" },
-      { "value": "3 days → same day", "label": "typical request turnaround" }
+    "title": "A global education platform embeds live student reporting with Metabase.",
+    "slug": "advantages-school-international",
+    "headline": "Advantages School International is an accredited K-12 online private school serving students worldwide.",
+    "company": "Advantages School International",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
     ],
-    "body": "## Why they moved\n\nThe previous tool was priced per named user, which turned every access request into a budget conversation. The practical effect was that the data team became a help desk.\n\n## The data\n\nThe loan book, collections activity, and broker submissions, all landing in the warehouse nightly. Nothing exotic — the difficulty was never the pipeline, it was who was allowed to look at the result.\n\n## How it went\n\nThe first month was spent modelling rather than building dashboards: agreeing what a delinquent account meant, which date field counted as origination, and which of four broker tables was canonical.\n\n\"We spent longer than expected on definitions and it was the right call,\" says Aisling Doyle, Head of Data. \"Every week we deferred that was a week of people building on sand.\"\n\n## Where it landed\n\nCollections and risk now build their own reporting. The data team moved from answering questions to maintaining the models underneath them, which is the job they were hired for."
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/advantages-dls-og.png",
+    "publishedDate": "2026-02-18",
+    "challenge": "Reporting on student progress reached families only at fixed points in the year, by which time any intervention was late.",
+    "solution": "Embedded per-student dashboards in the parent portal, alongside internal cohort reporting for teaching staff.",
+    "results": "Families see progress as it happens, and staff identify attendance and assessment drop-off within the week rather than the term.",
+    "metrics": [],
+    "body": "## Why live reporting\n\nA periodic report summarises something that has already finished. For a student whose engagement slipped weeks ago, it arrives long after a conversation would have helped.\n\n## What changed\n\nParents see attendance, assessment and submitted work for their own children, strictly scoped. Staff see the same data in aggregate with cohort comparison.",
+    "featured": true
   },
   {
-    "title": "Cadence CRM ships client reporting without building a reporting team",
-    "company": "Cadence CRM",
-    "useCases": ["Embedded Analytics"],
-    "publishedDate": "2026-08-28",
-    "featured": true,
-    "headline": "Cadence CRM embedded multi-tenant dashboards into its agency product, replacing a backlog of custom report requests.",
-    "challenge": "Every agency client wanted reporting, and each asked for something slightly different. The engineering team was building bespoke exports and falling behind.",
-    "solution": "Embedded dashboards scoped per tenant through signed tokens, with sandboxing at the data layer so a workspace can only ever resolve its own rows.",
-    "results": "Custom reporting requests dropped by 85%, and reporting became a feature in the sales conversation rather than a support cost.",
-    "metrics": [
-      { "value": "85%", "label": "fewer custom report requests" },
-      { "value": "4 weeks", "label": "from first spike to shipped" },
-      { "value": "0", "label": "per-tenant dashboards to maintain" }
+    "title": "Alto uses Metabase for easy and effective company-wide data analysis.",
+    "slug": "alto",
+    "headline": "Alto is an investment platform that helps individual investors diversify their portfolios by offering access to alternative assets, traditionally available only to professional investors.",
+    "company": "Alto",
+    "useCases": [
+      "Business Intelligence"
     ],
-    "body": "## The problem with bespoke\n\nAgency clients each have a house style for reporting, and saying yes to the first three requests produced three unmaintainable one-offs.\n\n## The approach\n\nOne dashboard, filtered per viewer. The tenant identity rides in the signed token, and a sandbox policy restricts rows at the data layer rather than in the application.\n\n\"The thing that sold it internally was that we stopped maintaining per-customer anything,\" says Tomás Ferreira, co-founder and CTO.\n\n## Testing the boundary\n\nThe failure mode they cared about was silent cross-tenant leakage, so the check went into CI: sign a token for one workspace, request another's dashboard, assert an empty result."
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/altoira-og.jpg",
+    "publishedDate": "2026-01-22",
+    "challenge": "The existing analytics stack was expensive, slow to work with, and unpopular enough that teams avoided it.",
+    "solution": "A web-first, container-friendly deployment alongside the existing infrastructure, with dashboards teams could build themselves.",
+    "results": "Platform cost fell sharply and usage spread well beyond the data team.",
+    "metrics": [
+      {
+        "value": "~90%",
+        "label": "lower monthly platform cost"
+      }
+    ],
+    "body": "## Why they moved\n\nThe previous tool required local installation, did not fit the deployment model, and had low satisfaction across the company.\n\n## What the data team does now\n\nDepartments manage their own collections. The data team maintains the models underneath rather than fielding requests.",
+    "featured": true
   },
   {
-    "title": "Brightpath Learning gives every parent a live progress view",
-    "company": "Brightpath Learning",
-    "useCases": ["Embedded Analytics", "Business Intelligence"],
-    "publishedDate": "2026-08-12",
-    "headline": "Brightpath Learning replaced termly PDF reports with live dashboards for forty thousand families.",
-    "challenge": "Progress reports were generated three times a year as PDFs. By the time a parent read one, the information was weeks old and any intervention was late.",
-    "solution": "Embedded per-student dashboards in the parent portal, and internal dashboards for the pastoral team covering attendance and assessment trends.",
-    "results": "Support enquiries about progress fell by 60%, and pastoral staff now see attendance drop-off in the week it happens rather than the term after.",
-    "metrics": [
-      { "value": "60%", "label": "fewer progress enquiries" },
-      { "value": "40,000", "label": "families with live access" },
-      { "value": "3x/year → live", "label": "reporting cadence" }
+    "title": "AngelList Venture enables everyone on their team to explore data with Metabase.",
+    "slug": "angellist",
+    "headline": "AngelList Venture brings venture online with private, professional fundraising tools for top quality startups and investors.",
+    "company": "AngelList Venture",
+    "useCases": [
+      "Business Intelligence"
     ],
-    "body": "## The case for live\n\nA termly PDF is a summary of a period that has already ended. For a student whose attendance slipped in week three, the report arrives long after the point where a conversation would have helped.\n\n## What parents see\n\nAttendance, assessment results over time, and submitted work — scoped strictly to their own children.\n\n## What staff see\n\nThe same data in aggregate, with cohort comparisons. \"The pastoral team stopped asking us for lists,\" says Rebecca Lund, Director of Analytics. \"They just look.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/case-study-og.jpg",
+    "publishedDate": "2026-01-14",
+    "challenge": "Data access was concentrated in a small group, so most questions arrived as requests rather than being answered directly.",
+    "solution": "Self-service analytics over modelled data, opened to every team rather than rationed.",
+    "results": "People across the business explore data directly, and the data team moved from answering questions to maintaining the foundations.",
+    "metrics": [],
+    "body": "## The bottleneck\n\nWhen only a few people can query, every question becomes a ticket and the queue defines the team's week.\n\n## What helped\n\nModelling first. Agreeing definitions before opening access meant self-service produced consistent answers rather than contradictory ones.",
+    "featured": true
   },
   {
-    "title": "Meridian Health shortens its clinical reporting loop",
-    "company": "Meridian Health",
-    "useCases": ["Business Intelligence"],
-    "publishedDate": "2026-07-22",
-    "headline": "Meridian Health moved operational reporting out of spreadsheets and into a governed semantic layer.",
-    "challenge": "Operational reporting lived in spreadsheets maintained by individuals. When someone was on leave, their report simply did not happen that week.",
-    "solution": "Canonical models for appointments, clinician utilisation and wait times, with dashboards owned by teams rather than individuals.",
-    "results": "Weekly reporting became automatic, and wait time reporting moved from a monthly summary to a live view.",
-    "metrics": [
-      { "value": "monthly → live", "label": "wait time visibility" },
-      { "value": "12", "label": "spreadsheets retired" }
+    "title": "Aula cuts support tickets by 87% with Metabase Embedded Analytics.",
+    "slug": "aula",
+    "headline": "Aula is a digital learning platform designed to make online education more engaging for both educators and students. Over 200,000 students have used Aula so far.",
+    "company": "Aula",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
     ],
-    "body": "## Key-person risk\n\nThe honest description of the previous system was that several important numbers existed because one person remembered to update a file on Fridays.\n\n## Modelling first\n\nAppointments turned out to have four states that different teams counted differently. Agreeing on them took three weeks and resolved a long-running disagreement about utilisation.\n\n\"Half the value was the argument we had to have,\" says Nikhil Sharma, VP Engineering."
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/aula-og.jpg",
+    "publishedDate": "2025-11-30",
+    "challenge": "Customers asked repeatedly for reporting on engagement, and each request arrived as a support ticket.",
+    "solution": "Embedded analytics inside the learning platform, scoped per institution.",
+    "results": "Support tickets fell substantially once customers could answer their own questions.",
+    "metrics": [
+      {
+        "value": "87%",
+        "label": "fewer support tickets"
+      }
+    ],
+    "body": "## Support load as a signal\n\nA recurring question in a support queue is usually a missing feature. Reporting requests were the clearest example.\n\n## The approach\n\nOne embedded dashboard, filtered per institution, rather than bespoke reports per customer."
   },
   {
-    "title": "Harbour & Co merges online and in-store reporting",
-    "company": "Harbour & Co",
-    "useCases": ["Business Intelligence"],
-    "publishedDate": "2026-07-03",
-    "headline": "Harbour & Co brought web and point-of-sale data into one place and stopped arguing about which channel was working.",
-    "challenge": "Online and retail reported separately with different definitions of a sale, a return and a customer. Channel performance debates were unresolvable.",
-    "solution": "A shared model joining web orders and point-of-sale transactions on a single customer identity, with one definition of net revenue.",
-    "results": "Channel reporting reconciled for the first time, revealing that in-store returns of online purchases had been misattributed for two years.",
-    "metrics": [
-      { "value": "2 years", "label": "of misattribution found" },
-      { "value": "6 stores + web", "label": "unified in one model" }
+    "title": "Axway embedded air-gapped Metabase to give banking clients secure, self-service analytics.",
+    "slug": "axway",
+    "headline": "Axway embedded Metabase Enterprise into their accounting software, using air-gapping to deliver white-labeled analytics to heavily regulated, on-premise banking clients\u2014turning the user experience around with out-of-the-box dashboards and self-service exploration.",
+    "company": "Axway",
+    "useCases": [
+      "Embedded Analytics"
     ],
-    "body": "## The discrepancy\n\nOnline reported strong net revenue; retail reported weak. Both were using their own returns data, and a customer returning an online order in a store was being counted against the store.\n\n## The fix\n\nOne customer identity, one order identity, and returns attributed to the channel of the original sale.\n\n\"It reframed an argument we'd been having for two years,\" says Freja Nielsen, Head of Growth. \"Retail wasn't underperforming. It was absorbing the returns.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/axway-og.png",
+    "publishedDate": "2025-11-12",
+    "challenge": "Banking clients required analytics inside the product, running in environments with no outbound network access.",
+    "solution": "White-labelled embedded analytics deployed air-gapped, with dashboards shipped as part of the product.",
+    "results": "Regulated clients get self-service exploration without the deployment leaving their network.",
+    "metrics": [],
+    "body": "## Air-gapped by requirement\n\nRegulated environments frequently prohibit outbound connections entirely, which rules out most hosted analytics.\n\n## What shipped\n\nOut-of-the-box dashboards plus the ability for clients to explore, all within their own perimeter."
   },
   {
-    "title": "Transit Lane gives customers their own shipment reporting",
-    "company": "Transit Lane",
-    "useCases": ["Embedded Analytics"],
-    "publishedDate": "2026-06-18",
-    "headline": "Transit Lane replaced emailed spreadsheets with embedded dashboards for freight customers.",
-    "challenge": "Customers wanted shipment status and dwell time reporting. Operations produced spreadsheets by hand, weekly, per customer.",
-    "solution": "Embedded dashboards in the customer portal, scoped per account, covering shipment status, dwell times and exceptions.",
-    "results": "The weekly spreadsheet run was eliminated, recovering around 1,200 operations hours a year.",
-    "metrics": [
-      { "value": "1,200 hrs/yr", "label": "operations time recovered" },
-      { "value": "weekly → live", "label": "customer reporting" }
+    "title": "How Metabase helps every team at Bdeo get insights from their data.",
+    "slug": "bdeo",
+    "headline": "Bdeo develops Visual Intelligence technology for the insurance industry, both motor and home insurance, for policy underwriting and claims management processes.",
+    "company": "How Metabase",
+    "useCases": [
+      "Business Intelligence"
     ],
-    "body": "## The spreadsheet run\n\nEvery Monday, two people spent most of the day producing and emailing customer reports. The data was stale by Tuesday.\n\n## What changed\n\nCustomers now log in. Exceptions surface as they happen rather than in a weekly digest, which turned out to matter more than the time saved.\n\n\"The hours were the business case,\" says Pieter van Dijk, Operations Lead. \"Customers catching delays on the day was the actual benefit.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/bdeo-og.jpeg",
+    "publishedDate": "2025-10-28",
+    "challenge": "Each team kept its own view of performance, and the numbers did not reconcile.",
+    "solution": "Shared models over the core data, with team-specific dashboards built on the same definitions.",
+    "results": "Teams work from one set of definitions, and cross-team reporting agrees.",
+    "metrics": [],
+    "body": "## Reconciliation first\n\nThe work was less about dashboards than about settling which definition of each metric was correct.\n\n## Afterwards\n\nTeams build their own reporting on top, which is sustainable in a way that a central reporting queue is not."
   },
   {
-    "title": "Forge Industrial puts line data in front of line supervisors",
-    "company": "Forge Industrial",
-    "useCases": ["Business Intelligence"],
-    "publishedDate": "2026-05-29",
-    "headline": "Forge Industrial moved production reporting from a nightly batch to near-live dashboards on the factory floor.",
-    "challenge": "Line performance was reviewed the following morning from a batch report, so a problem on an afternoon shift was addressed a day late.",
-    "solution": "Near-live dashboards on floor displays showing throughput, scrap rate and downtime by line, with drill-down for supervisors.",
-    "results": "Scrap rate fell measurably in the first quarter, attributed to problems being caught within the shift.",
-    "metrics": [
-      { "value": "next day → 15 min", "label": "reporting latency" },
-      { "value": "3 plants", "label": "on the same model" }
+    "title": "Billing company embeds Metabase in their SaaS platform to give people easy-to-use analytics.",
+    "slug": "billing-saas",
+    "headline": "Billing platform transforms the way SaaS companies operate, offering an all-in-one billing and RevOps solution that seamlessly manages billing, quoting, self-service, tenant management, advanced analytics, and revenue recognition with effortless precision.",
+    "company": "Billing",
+    "useCases": [
+      "Embedded Analytics"
     ],
-    "body": "## Latency was the problem\n\nThe reporting was accurate and useless, because it arrived after the shift that could have acted on it had gone home.\n\n## On the floor\n\nDisplays at each line show the current shift against target, with scrap and downtime broken out. Supervisors can drill into a specific run.\n\n\"Nobody asked for more detail,\" says Anjali Deshpande, Plant Systems Manager. \"They asked for it sooner.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/opengraph/home-og.webp",
+    "publishedDate": "2025-10-15",
+    "challenge": "Customers wanted analytics on their own billing activity, and building a reporting interface in-house would have taken a quarter.",
+    "solution": "Embedded dashboards inside the platform, scoped per customer account.",
+    "results": "Analytics shipped as a product feature without diverting the engineering roadmap.",
+    "metrics": [],
+    "body": "## Build or embed\n\nCharting is the easy part. The query layer, permissions and caching are where the time goes.\n\n## Scoping\n\nAccount identity comes from the signed token, and filtering happens at the data layer rather than in application code."
   },
   {
-    "title": "OpenRiver Trust reports to funders without a reporting team",
-    "company": "OpenRiver Trust",
-    "useCases": ["Business Intelligence"],
-    "publishedDate": "2026-05-06",
-    "headline": "OpenRiver Trust automated institutional funder reporting across programmes in four countries.",
-    "challenge": "Each institutional funder required a different report on a different schedule, assembled by hand from field data.",
-    "solution": "Shared models over programme and field data, with per-funder dashboards and scheduled exports matching each reporting template.",
-    "results": "Funder reporting moved from two weeks of manual assembly per cycle to a scheduled export, with field teams able to see their own numbers.",
-    "metrics": [
-      { "value": "2 weeks → scheduled", "label": "funder reporting effort" },
-      { "value": "4 countries", "label": "on one model" }
+    "title": "How CaseWhen helped Buena to transform their data analysis with Metabase.",
+    "slug": "buena",
+    "headline": "Buena is a modern, digital platform for managing apartments (viewings, payments, maintenance) for both landlords and tenants.",
+    "company": "How CaseWhen",
+    "useCases": [
+      "Business Intelligence"
     ],
-    "body": "## The reporting burden\n\nSmall organisations spend a disproportionate share of capacity on compliance reporting. Every hour assembling a funder report is an hour not spent on programmes.\n\n## What it looks like now\n\nField data flows into shared models. Each funder's template is a saved view with a schedule attached.\n\n\"We did not have anyone to spare for this,\" says Grace Mwangi, Programme Director. \"That was the whole point.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/buena-og.jpg",
+    "publishedDate": "2025-09-24",
+    "challenge": "Property management data was spread across systems with no shared reporting layer.",
+    "solution": "A consolidated model covering viewings, contracts and maintenance, delivered with an implementation partner.",
+    "results": "One place to answer operational questions, instead of three systems and a spreadsheet.",
+    "metrics": [],
+    "body": "## Working with a partner\n\nAn external specialist handled the modelling, which is often faster than learning it while building it.\n\n## What it enabled\n\nOperational questions that previously required exporting from two systems now resolve in one view."
   },
   {
-    "title": "Keystone Payments segregates data across marketplace tenants",
-    "company": "Keystone Payments",
-    "useCases": ["Embedded Analytics"],
-    "publishedDate": "2026-04-15",
-    "headline": "Keystone Payments delivers settlement reporting to marketplace customers with strict tenant isolation.",
-    "challenge": "Marketplace customers needed settlement and chargeback reporting, under compliance requirements that made cross-tenant visibility unacceptable.",
-    "solution": "Embedded dashboards with sandboxing at the data layer, group-mapped permissions through the existing identity provider, and audit logging of data access.",
-    "results": "Settlement reporting shipped as a product feature, with access controls that satisfied the compliance review on the first pass.",
-    "metrics": [
-      { "value": "first pass", "label": "compliance review cleared" },
-      { "value": "SSO-mapped", "label": "permissions, no separate accounts" }
+    "title": "Cal.com uses Metabase for quick, self-service analytics without relying on engineering.",
+    "slug": "calcom",
+    "headline": "Cal.com is the open-source Calendly successor that powers scheduling for millions of people around the world.",
+    "company": "Cal.com",
+    "useCases": [
+      "Business Intelligence"
     ],
-    "body": "## Compliance first\n\nThe requirement was not just that tenants should not see each other's data, but that this could be demonstrated.\n\n## How it is enforced\n\nTenant identity comes from the signed token, sandboxing filters at the data layer, and access is logged.\n\n\"Being able to show the auditor the policy rather than describe it was the difference,\" says Wei Lin Tan, Staff Data Engineer."
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/calcom-og.jpg",
+    "publishedDate": "2025-09-08",
+    "challenge": "Answering product questions required engineering time, so most questions were not asked.",
+    "solution": "Self-service analytics over product data, available to the whole team.",
+    "results": "Non-engineers answer their own questions, and engineering time went back to the product.",
+    "metrics": [],
+    "body": "## The hidden cost\n\nWhen a question costs an engineer an hour, people stop asking. The lost questions are invisible and are most of the cost.\n\n## After\n\nSupport and product query directly. Engineering is involved when the model needs extending, not when someone needs a number."
   },
   {
-    "title": "Lantern Dev Tools ships usage analytics as a product feature",
-    "company": "Lantern Dev Tools",
-    "useCases": ["Embedded Analytics"],
-    "publishedDate": "2026-03-25",
-    "headline": "A five-person engineering team shipped customer-facing usage analytics in under a month.",
-    "challenge": "Customers wanted to understand their own usage. Building a reporting UI from scratch would have consumed a quarter the team did not have.",
-    "solution": "Embedded dashboards styled to match the product, built against the existing events table with no new pipeline.",
-    "results": "Usage analytics shipped in three weeks, and became the most-cited feature in trial-to-paid conversations.",
-    "metrics": [
-      { "value": "3 weeks", "label": "to ship" },
-      { "value": "5", "label": "engineers on the team" }
+    "title": "Metabase helps Cetec ERP deliver white-labeled, enterprise-grade BI to manufacturers.",
+    "slug": "cetec-erp",
+    "headline": "Cetec ERP provides a full suite ERP software for manufacturers and distributors that is practical, intuitive, robust, and flexible to the needs of any manufacturing company.",
+    "company": "Metabase",
+    "useCases": [
+      "Embedded Analytics"
     ],
-    "body": "## The build-versus-embed call\n\nA charting library is the easy part. The hard parts are the query layer, permissions, caching and the long tail of interactions people expect.\n\n## What shipped\n\nDashboards embedded in the product, white-labelled, over the events table that already existed.\n\n\"If we'd built it ourselves it would still be in progress,\" says Jonas Kleine, founder. \"And it would be worse.\""
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/cetec-erp-og.webp",
+    "publishedDate": "2025-08-19",
+    "challenge": "Manufacturing customers needed reporting inside the ERP, with each customer seeing only their own operation.",
+    "solution": "White-labelled embedded analytics with per-tenant data segregation.",
+    "results": "Enterprise-grade reporting shipped as part of the product rather than as a separate tool.",
+    "metrics": [],
+    "body": "## Why white-label\n\nCustomers should not perceive reporting as a different product. Styling and navigation had to match.\n\n## Isolation\n\nTenant scoping is enforced at the data layer, which is both safer and easier to demonstrate to a customer's auditor."
+  },
+  {
+    "title": "How Chromatic replaced ad-hoc SQL with shared, self-serve analytics",
+    "slug": "chromatic",
+    "headline": "Chromatic replaced Google Data Studio with Metabase to give the whole company a unified, intuitive workspace for product and business analytics\u2014and is now embedding Metabase for customer-facing insights.",
+    "company": "How Chromatic",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/chromatic-og.png",
+    "publishedDate": "2025-08-05",
+    "challenge": "Reporting relied on ad-hoc SQL written by a few people, so results were inconsistent and hard to share.",
+    "solution": "Shared, modelled analytics replacing the previous reporting tool, with self-serve exploration for the whole team.",
+    "results": "Analysis is shared and repeatable rather than re-derived each time someone needs it.",
+    "metrics": [],
+    "body": "## The problem with ad-hoc\n\nA query in someone's editor is not a shared asset. The next person rewrites it, slightly differently.\n\n## What changed\n\nSaved, named questions that others build on, which turns one person's analysis into something the team owns."
+  },
+  {
+    "title": "Metabase helps every team at Clockwise to get sense of their data.",
+    "slug": "clockwise",
+    "headline": "Clockwise optimizes your team\u2019s calendars to create more time in everyone\u2019s day. It brings together a powerful optimization engine with a personal calendar assistant to make your work life run smoothly.",
+    "company": "Clockwise",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/clockwise-og.jpeg",
+    "publishedDate": "2025-07-21",
+    "challenge": "Teams needed answers from product data but depended on a small group to get them.",
+    "solution": "Self-service analytics over modelled product events.",
+    "results": "Every team queries directly, and the data team supports the model rather than the queue.",
+    "metrics": [],
+    "body": "## Scaling access\n\nThe constraint was never the data. It was how many people were able to ask it anything.\n\n## The model layer\n\nA well-named model covering core events removed most of the need for joins, which is what had been blocking non-specialists."
+  },
+  {
+    "title": "Cypress uses Metabase for data-driven decision-making.",
+    "slug": "cypress",
+    "headline": "Cypress is an end-to-end testing framework used for testing anything that runs in the browser. Written in Javascript, Cypress is used by hundreds of thousands of developers and QA engineers globally to write, run, and debug automated tests for web applications.",
+    "company": "Cypress",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/cypress-og.jpg",
+    "publishedDate": "2025-07-02",
+    "challenge": "Decisions were being made without easy access to the data that should have informed them.",
+    "solution": "Dashboards over product and usage data, accessible across the company.",
+    "results": "Routine decisions now start from a number rather than a recollection.",
+    "metrics": [],
+    "body": "## Access changes behaviour\n\nThe measurable change was not better analysis. It was that people checked at all.\n\n## Keeping it trustworthy\n\nOwnership on each dashboard, so there is a person to ask when a number looks wrong."
+  },
+  {
+    "title": "Dribbble uses Metabase to democratize data across all their teams.",
+    "slug": "dribbble",
+    "headline": "Dribbble is the world\u2019s leading community for creatives to share, grow, and get hired.",
+    "company": "Dribbble",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/dribbble-uses-metabase-to-democratize-data-across-all-their-teams.jpg",
+    "publishedDate": "2025-06-17",
+    "challenge": "Data was available in principle and reachable by very few people in practice.",
+    "solution": "Company-wide self-service analytics over shared models.",
+    "results": "Teams across the business explore data directly rather than requesting extracts.",
+    "metrics": [],
+    "body": "## Democratising access\n\nThe gap between having data and being able to use it is mostly tooling and permissions, not analytical skill.\n\n## What made it work\n\nModelling the data so common questions did not require understanding the schema."
+  },
+  {
+    "title": "Fabulous builds an efficient system of business reporting within the company with Metabase.",
+    "slug": "fabulous",
+    "headline": "Fabulous is a mobile app helping thousands of people every day to change their lifestyles by integrating healthy habits into their lives. Fabulous is ranked 5th Health & Fitness App and has over 30 million users.",
+    "company": "Fabulous",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/fabulous-builds-an-efficient-system-of-business-reporting-within-the-company-with-metabase.jpg",
+    "publishedDate": "2025-06-03",
+    "challenge": "Business reporting was assembled manually and inconsistently between weeks.",
+    "solution": "Automated reporting over shared models, with dashboards owned by the teams that use them.",
+    "results": "Reporting happens on schedule and does not depend on one person being available.",
+    "metrics": [],
+    "body": "## Key-person risk\n\nSeveral important numbers existed because one person remembered to update something. That is a reporting system in name only.\n\n## Now\n\nScheduled, owned, and the same every week."
+  },
+  {
+    "title": "How Faros.ai embeds Metabase into their multi-tenant SaaS product.",
+    "slug": "faros",
+    "headline": "Faros AI is an engineering operations platform that brings all engineering data in one place to give engineering leaders a single-pane view of their entire software development lifecycle.",
+    "company": "How Faros.ai",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/faros.jpg",
+    "publishedDate": "2025-05-20",
+    "challenge": "Customers needed engineering operations reporting inside the product, across many tenants.",
+    "solution": "Embedded multi-tenant dashboards with isolation enforced at the data layer.",
+    "results": "Reporting became a product capability rather than a series of bespoke requests.",
+    "metrics": [],
+    "body": "## Multi-tenant from the start\n\nDesigning for one customer and generalising later is how per-customer dashboards accumulate.\n\n## Verification\n\nCross-tenant isolation is asserted in automated tests, because that failure is silent when it happens."
+  },
+  {
+    "title": "Metabase helps Floryn simplify their BI, reduce costs, and empower teams to explore data easily.",
+    "slug": "floryn",
+    "headline": "Floryn provides SMEs with fast, digital, data-driven business loans and working capital. They\u2019ve financed over \u20ac330M in credits to SMBs in the Netherlands.",
+    "company": "Floryn",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/floryn-og.jpg",
+    "publishedDate": "2025-05-06",
+    "challenge": "The existing BI setup was costly and difficult for non-specialists to use.",
+    "solution": "A simpler analytics layer over the existing data, opened to every team.",
+    "results": "Costs fell and more people are able to explore data without assistance.",
+    "metrics": [],
+    "body": "## Simplification as the goal\n\nThe previous tool was capable and nobody outside the data team could use it. Capability nobody can reach is not capability.\n\n## Lending data\n\nLoan book and risk reporting are now maintained by the teams that depend on them."
+  },
+  {
+    "title": "Gojek brings company-wide transparency to customer care with Metabase.",
+    "slug": "go-jek",
+    "headline": "Gojek is a leading on-demand service provider. As of June 2020, Gojek has about 170 million users throughout Southeast Asia.",
+    "company": "Gojek",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/gojek-brings-company-wide-transparency-to-customer-care-with-metabase.jpg",
+    "publishedDate": "2025-04-22",
+    "challenge": "Customer care operated at a scale where reporting had to be both company-wide and granular.",
+    "solution": "Shared analytics across customer care, with embedded views for operational teams.",
+    "results": "Transparency across a large operation, with teams able to drill into their own area.",
+    "metrics": [],
+    "body": "## Scale changes the problem\n\nAt this size, one dashboard cannot serve everyone. The model has to support many views over consistent definitions.\n\n## Consistency\n\nShared definitions were the prerequisite. Without them, every team's view disagrees with every other."
+  },
+  {
+    "title": "Griffin Marine Services uses Metabase's built-in CSV database for reporting.",
+    "slug": "griffin-marine-services",
+    "headline": "Griffin Marine Services provides engineering, maintenance, and project management for the commercial and defense marine industry. Their clients include the Royal Australian Navy (RAN) and Australian Border Force (ABF).",
+    "company": "Griffin Marine Services",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/griffin-marine-services-og.jpg",
+    "publishedDate": "2025-04-08",
+    "challenge": "Operational data lived in spreadsheets with no database behind it.",
+    "solution": "Uploading CSV data directly into the analytics layer, with reporting built on top.",
+    "results": "Reporting without a warehouse or a pipeline, which suited the size of the operation.",
+    "metrics": [],
+    "body": "## Not every team needs a warehouse\n\nFor a team of this size, a pipeline would have been more machinery than the problem required.\n\n## What they use\n\nDirect CSV upload, modelled lightly, reported on consistently."
+  },
+  {
+    "title": "Hola Health replaces manual reporting with real-time operational visibility in under three months.",
+    "slug": "hola-health",
+    "headline": "Hola Health is an Australia-based telehealth provider operating in Australia and the UK. They use Metabase to standardize metrics, automate reporting, and support fast operational decisions.",
+    "company": "Hola Health",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/hola-health-og.png",
+    "publishedDate": "2025-03-25",
+    "challenge": "Operational reporting was manual, so visibility lagged behind what was happening in the service.",
+    "solution": "Dashboards over appointment and clinician data, replacing the manual process.",
+    "results": "Real-time operational visibility, established quickly.",
+    "metrics": [
+      {
+        "value": "<3 months",
+        "label": "to replace manual reporting"
+      }
+    ],
+    "body": "## Latency was the issue\n\nThe reporting was accurate and arrived too late to act on, which is a familiar failure in operational settings.\n\n## What shipped\n\nLive views of appointments, utilisation and wait times, owned by the operations team."
+  },
+  {
+    "title": "Hurb uses Metabase to improve their decision-making process and increase earnings.",
+    "slug": "hurb",
+    "headline": "Hurb is a leading online travel platform based in Latin America that has over 25 million registered travelers all over the world.",
+    "company": "Hurb",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/hurb-uses-metabase-to-improve-their-decision-making-process-and-increase-earnings.jpg",
+    "publishedDate": "2025-03-11",
+    "challenge": "Decision-making relied on reports that took time to produce and were not always current.",
+    "solution": "Self-service dashboards over booking and customer data.",
+    "results": "Faster decisions, with teams able to check rather than request.",
+    "metrics": [],
+    "body": "## Travel data moves quickly\n\nIn a business where pricing and demand shift daily, a weekly report is a historical document.\n\n## The change\n\nTeams look at current numbers themselves, and the reporting function supports the model rather than producing documents."
+  },
+  {
+    "title": "Insocial saves 1,100+ engineering hours with Metabase",
+    "slug": "insocial",
+    "headline": "Insocial helps organizations understand what their customers and employees think.",
+    "company": "Insocial",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/insocial-og.jpg",
+    "publishedDate": "2025-02-25",
+    "challenge": "Generating customer-facing feedback dashboards required engineering effort for each new client.",
+    "solution": "Embedded dashboards generated from a shared template, scoped per client.",
+    "results": "A large amount of recurring engineering effort removed.",
+    "metrics": [
+      {
+        "value": "1,100+",
+        "label": "engineering hours saved"
+      }
+    ],
+    "body": "## Per-client work does not scale\n\nEvery bespoke dashboard is a maintenance commitment that compounds with each new customer.\n\n## The alternative\n\nOne dashboard, parameterised. New clients require configuration rather than engineering."
+  },
+  {
+    "title": "How KLog uses Metabase to deliver shipping reports to their clients.",
+    "slug": "klog",
+    "headline": "KLog provides freight-forwarding services and a digital platform for international commerce administration. KLog.co is a bootstrapped business, and they\u2019ve already served over 3,000 clients to yield $100M in Revenue.",
+    "company": "How KLog",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/klog-og.png",
+    "publishedDate": "2025-02-11",
+    "challenge": "Freight customers wanted shipment reporting, and operations produced it by hand.",
+    "solution": "Embedded dashboards in the customer portal covering shipment status and exceptions.",
+    "results": "Customers self-serve, and the manual reporting run was retired.",
+    "metrics": [],
+    "body": "## The weekly run\n\nManually assembled customer reports are stale on arrival and consume operational capacity every week.\n\n## What customers get\n\nStatus and exceptions as they happen, which turned out to matter more than the hours saved."
+  },
+  {
+    "title": "Kula and Standard Co team up to empower female entrepreneurs with Metabase.",
+    "slug": "kula-project",
+    "headline": "Kula Project is a nonprofit aiming to eradicate poverty by developing women entrepreneurs in Rwanda.",
+    "company": "Kula",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/kula-and-standard-co-team-up-to-empower-female-entrepreneurs-with-metabase.jpg",
+    "publishedDate": "2025-01-28",
+    "challenge": "Programme outcomes needed reporting to funders, with limited capacity to produce it.",
+    "solution": "Shared models over programme data, with dashboards per reporting requirement.",
+    "results": "Funder reporting is produced on schedule without consuming programme capacity.",
+    "metrics": [],
+    "body": "## Capacity is the constraint\n\nFor a small organisation, every hour on compliance reporting is an hour not spent on the programme.\n\n## Working with a partner\n\nAn implementation partner handled setup, which is often the difference between a project happening and not."
+  },
+  {
+    "title": "Lime Technologies white-labels Metabase to provide their customers with answers about their business.",
+    "slug": "lime-technologies",
+    "headline": "Lime Technologies is a Customer Relationship Management supplier with offices in the Nordics, Netherlands, and Germany that delivers what they call \u201cCRM with a twist\u201d to make sure their clients exceed their customers\u2019 expectations.",
+    "company": "Lime Technologies",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/lime-og.jpeg",
+    "publishedDate": "2025-01-14",
+    "challenge": "CRM customers wanted analytics on their own data, branded as part of the product.",
+    "solution": "White-labelled embedded analytics within the CRM.",
+    "results": "Customers answer their own questions inside the product they already use.",
+    "metrics": [],
+    "body": "## Branding matters\n\nAnalytics that looks like a different product undermines the impression that it is part of the one you sold.\n\n## Scope\n\nEach customer sees only their own data, enforced below the application layer."
+  },
+  {
+    "title": "Metabase expert CaseWhen helps Linstol become more data-driven.",
+    "slug": "linstol",
+    "headline": "Linstol, the largest supplier of headphones/earbuds in the world (bigger than Samsung), embeds Metabase in their web portal to stay on top of their inventories.",
+    "company": "Linstol",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/linstol-og.jpg",
+    "publishedDate": "2024-12-10",
+    "challenge": "Reporting across a distribution business was fragmented and slow to produce.",
+    "solution": "Consolidated analytics over sales and inventory data, delivered with a partner.",
+    "results": "A single view of the business, maintained by the teams that use it.",
+    "metrics": [],
+    "body": "## Consolidation\n\nThe difficulty was less technical than definitional: agreeing what a sale, a return and a unit meant across regions.\n\n## Outcome\n\nOne model, several team-specific views built on it."
+  },
+  {
+    "title": "How Marketfuel got to proof of concept on their in-app reporting in under 30 days",
+    "slug": "marketfuel",
+    "headline": "Marketfuel is an all-in-one eCommerce platform designed for promotional marketing agencies to create their own online store within a single afternoon. The platform enables agencies to manage inventory, order fulfillment, label printing, and more through a single application.",
+    "company": "How Marketfuel",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/marketfuel-og.jpeg",
+    "publishedDate": "2024-11-26",
+    "challenge": "In-app reporting was a customer requirement, and a from-scratch build would have delayed the roadmap.",
+    "solution": "Embedded analytics against existing data, with no new pipeline.",
+    "results": "A working proof of concept very quickly, which de-risked the decision.",
+    "metrics": [
+      {
+        "value": "<30 days",
+        "label": "to proof of concept"
+      }
+    ],
+    "body": "## Proof of concept first\n\nThe value of getting to a prototype quickly is that it converts an architectural argument into something people can look at.\n\n## What followed\n\nThe prototype became the shipped feature with styling and scoping work, not a rewrite."
+  },
+  {
+    "title": "Matter saves 30% of their growth budget, making data-informed decisions with Metabase.",
+    "slug": "matter",
+    "headline": "Matter is a free Slack app that helps teams to recognize each other with Kudos, rewards, and continuous feedback \u2013 all inside Feedback Friday.",
+    "company": "Matter",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/matter-saves-30-pct-of-their-growth-budget-making-data-informed-decisions-with-metabase.jpg",
+    "publishedDate": "2024-11-12",
+    "challenge": "Growth spending decisions were made without clear visibility of which channels produced lasting users.",
+    "solution": "Analytics joining acquisition data to product engagement.",
+    "results": "A meaningful share of growth budget redirected away from channels that were not working.",
+    "metrics": [
+      {
+        "value": "30%",
+        "label": "of growth budget saved"
+      }
+    ],
+    "body": "## Volume is not quality\n\nChannels with identical cost per signup can have completely different activation rates, and spend reports hide that entirely.\n\n## The join\n\nConnecting acquisition source to downstream engagement is the whole exercise."
+  },
+  {
+    "title": "Metabase helps myAgro enable true self-service analytics.",
+    "slug": "myagro",
+    "headline": "myAgro is a non-profit agritech social enterprise based in West Africa. myAgro has developed a mobile savings model that allows farmers to invest their own funds in high-quality seed, fertilizer, and agricultural training to increase their harvest and income by 50-100%.",
+    "company": "Myagro",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/myagro-og.jpg",
+    "publishedDate": "2024-10-29",
+    "challenge": "Field programme data needed to be usable by teams without analytical training.",
+    "solution": "Modelled data with dashboards designed for non-specialists.",
+    "results": "Field and programme teams answer their own questions.",
+    "metrics": [],
+    "body": "## Designing for the reader\n\nWhen the audience has no analytical background, the modelling has to do more work so the interface can do less.\n\n## What that meant\n\nFewer tables, clearer names, and defaults that are correct without configuration."
+  },
+  {
+    "title": "N26 promotes data literacy in Europe's first mobile bank with Metabase.",
+    "slug": "n26",
+    "headline": "N26 is Europe\u2019s first mobile bank, headquartered in Berlin. N26 helps clients manage their bank account on the go, track their expenses, and set aside money in real time.",
+    "company": "N26",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/n26-promotes-data-literacy-in-europe-s-first-mobile-bank-with-metabase.jpg",
+    "publishedDate": "2024-10-15",
+    "challenge": "A fast-growing bank needed analytics accessible beyond the data team while meeting regulatory expectations.",
+    "solution": "Governed self-service analytics with permissions mapped to existing groups.",
+    "results": "Wider access without loosening controls.",
+    "metrics": [],
+    "body": "## Governance and access together\n\nIn a regulated setting these are usually traded against each other. They do not have to be, if permissions are modelled rather than managed by hand.\n\n## Groups, not individuals\n\nMapping to existing identity groups keeps access correct as people move teams."
+  },
+  {
+    "title": "With Metabase, Onecom delivers real-time, embedded analytics to thousands of customers - without relying on engineering.",
+    "slug": "onecom",
+    "headline": "Onecom is a managed service provider delivering telecoms, cloud, and data services to enterprise customers across the UK. They offer an integrated customer portal where users can access everything from billing to performance metrics. To support that experience, Onecom needed a reliable, flexible\u2026",
+    "company": "With Metabase",
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/onecom-og.jpg",
+    "publishedDate": "2024-09-24",
+    "challenge": "Reporting was needed both internally and for managed-service customers.",
+    "solution": "Internal dashboards plus embedded customer-facing reporting from the same models.",
+    "results": "One model serving two audiences, rather than two parallel reporting stacks.",
+    "metrics": [],
+    "body": "## Shared foundations\n\nInternal and customer-facing reporting usually diverge into separate systems. Building both on one model avoids the divergence.\n\n## The constraint\n\nCustomer-facing views need stricter scoping, which is a permissions problem rather than a modelling one."
+  },
+  {
+    "title": "Onepark cut ad hoc requests for data in half after picking up Metabase.",
+    "slug": "onepark",
+    "headline": "Onepark is a leading European online carpark booking platform, headquartered in Paris.",
+    "company": "Onepark",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/onepark-cut-ad-hoc-requests-for-data-in-half-after-picking-up-metabase.jpg",
+    "publishedDate": "2024-09-10",
+    "challenge": "Booking and operational data was not easily accessible to the teams who needed it.",
+    "solution": "Self-service dashboards over booking data.",
+    "results": "Operational teams track performance without requesting reports.",
+    "metrics": [],
+    "body": "## Removing the request step\n\nMost operational questions are simple and frequent, which is exactly the category that should never require a ticket.\n\n## Afterwards\n\nThe analytics function works on the model rather than on requests."
+  },
+  {
+    "title": "How Owlery cut time iterating on Embedded Analytics from 2 Days of engineering to 2 hours in CS",
+    "slug": "owlery",
+    "headline": "Founded in 2021, Owlery helps manufacturers and brands optimize their supply chain operations. Their platform integrates with customers' supply chain partners and ERPs to create cohesive workflows that save time, reduce costs, and increase efficiency.",
+    "company": "How Owlery",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/owlery-og.jpg",
+    "publishedDate": "2024-08-27",
+    "challenge": "Manufacturers and brands needed visibility into their own logistics data inside the platform.",
+    "solution": "Embedded reporting scoped per customer.",
+    "results": "Customers see their own operation without an export or a request.",
+    "metrics": [],
+    "body": "## Why embedded\n\nLogistics customers check frequently and briefly. A monthly export does not fit that pattern.\n\n## Scoping\n\nAccount identity travels with the session, and filtering happens below the application."
+  },
+  {
+    "title": "Recruit CRM embeds Metabase to offer customers self-serve dashboards inside their app.",
+    "slug": "recruit-crm",
+    "headline": "Recruit CRM is an AI-Powered, top-rated ATS + CRM for recruitment agencies worldwide",
+    "company": "Recruit CRM",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/recruit-crm-og.jpg",
+    "publishedDate": "2024-08-13",
+    "challenge": "Recruitment agencies using the product wanted reporting on their own pipelines.",
+    "solution": "Embedded dashboards inside the applicant tracking product.",
+    "results": "Reporting became part of the product rather than a request queue.",
+    "metrics": [],
+    "body": "## Customer-facing from the start\n\nAgencies compare their own performance over time, which requires history and consistency more than it requires flexibility.\n\n## Implementation\n\nOne parameterised dashboard rather than per-agency builds."
+  },
+  {
+    "title": "How Metabase became the single source of truth for the Reforge team.",
+    "slug": "reforge",
+    "headline": "Reforge helps people do the best work of their careers. They offer educational programs, networking opportunities, events, and community to help people understand which strategies have worked for the best companies in the world. All programs are led by actual growth practitioners from leading\u2026",
+    "company": "Reforge",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/reforge-og.jpg",
+    "publishedDate": "2024-07-30",
+    "challenge": "Understanding how learners engaged with programmes required data the team could not easily reach.",
+    "solution": "Self-service analytics over programme and engagement data.",
+    "results": "Programme decisions are informed by engagement data rather than assumption.",
+    "metrics": [],
+    "body": "## Engagement over completion\n\nCompletion rates are easy and misleading. Engagement patterns during a programme are the more useful signal.\n\n## Access\n\nProgramme staff query directly rather than requesting analysis."
+  },
+  {
+    "title": "Retargetly builds a data culture with Metabase.",
+    "slug": "retargetly",
+    "headline": "Retargetly is a leading Data Platform company in Latin America that helps brands, agencies, and publishers  create better advertising experiences for consumers through data and technology.",
+    "company": "Retargetly",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/retargetly-builds-a-data-culture-with-metabase.jpg",
+    "publishedDate": "2024-07-16",
+    "challenge": "A data platform business needed internal analytics that could keep up with its own data volume.",
+    "solution": "Analytics over the existing warehouse with modelled, reusable definitions.",
+    "results": "Internal teams work from consistent definitions at scale.",
+    "metrics": [],
+    "body": "## Practising what you sell\n\nData companies are not automatically good at their own internal analytics, and often worse because everything looks solvable.\n\n## What helped\n\nTreating internal definitions with the same rigour as customer-facing ones."
+  },
+  {
+    "title": "How Sincera uses Metabase embedding to provide their customers with digital advertising and media insights.",
+    "slug": "sincera",
+    "headline": "Sincera is a modern verification service that helps companies accelerate their competitive velocity. It provides data and infrastructure to answer novel questions in media and advertising with hard, accurate data.",
+    "company": "How Sincera",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/sincera-og.jpg",
+    "publishedDate": "2024-06-25",
+    "challenge": "Customers needed access to verification data in a form they could explore themselves.",
+    "solution": "Embedded analytics over the verification dataset, scoped per customer.",
+    "results": "Customers investigate their own data instead of requesting extracts.",
+    "metrics": [],
+    "body": "## Exploration, not reports\n\nWhen customers' questions are open-ended, a fixed report generates follow-up requests indefinitely.\n\n## The approach\n\nGive them the ability to filter and drill within their own scope."
+  },
+  {
+    "title": "Spocket saves over 60 hours per month and avoids ad-hoc requests of their data team.",
+    "slug": "spocket",
+    "headline": "Spocket is the largest online dropshipping marketplace that connects over 80,000 retailers with millions of fast-shipping suppliers around the globe.",
+    "company": "Spocket",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/spocket-saves-over-60-hours-per-month-and-avoids-ad-hoc-requests-of-their-data-team.jpg",
+    "publishedDate": "2024-06-11",
+    "challenge": "A marketplace connecting two sides needed reporting that reflected both.",
+    "solution": "Shared models covering supplier and retailer activity, with dashboards per team.",
+    "results": "Teams see both sides of the marketplace from consistent definitions.",
+    "metrics": [],
+    "body": "## Two-sided reporting\n\nMarketplace metrics are easy to state and hard to define: an active supplier and an active retailer are different things measured differently.\n\n## Definitions\n\nSettling those was the bulk of the work and the bulk of the value."
+  },
+  {
+    "title": "Sunglass Fix explores their business with Metabase.",
+    "slug": "sunglass-fix",
+    "headline": "Sunglass Fix is a family-owned, premium sunglass lens replacement service, selling brand new ultra High Definition lenses worldwide since 2008.",
+    "company": "Sunglass Fix",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/sunglass-fix-explores-their-business-with-metabase.jpg",
+    "publishedDate": "2024-05-28",
+    "challenge": "A small team needed reporting without the overhead of a data function.",
+    "solution": "Lightweight analytics over existing order data.",
+    "results": "Reporting proportionate to the size of the business.",
+    "metrics": [],
+    "body": "## Right-sizing\n\nSmall businesses are frequently sold infrastructure designed for much larger ones.\n\n## What this looks like\n\nA handful of dashboards over the operational database, maintained by the people who use them."
+  },
+  {
+    "title": "Synctera uses Metabase to improve customer satisfaction and self-service analytics.",
+    "slug": "synctera",
+    "headline": "Synctera is a banking and payments platform that helps companies of all sizes build and scale financial products.",
+    "company": "Synctera",
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/synctera-og.jpg",
+    "publishedDate": "2024-05-14",
+    "challenge": "Banking platform customers required analytics with strict separation between them.",
+    "solution": "Embedded analytics with per-tenant isolation and curated, vetted content.",
+    "results": "Customers explore their own data within boundaries that satisfy compliance review.",
+    "metrics": [],
+    "body": "## Marking what is trustworthy\n\nDistinguishing vetted content from exploratory work tells people where to start, which matters more as the volume grows.\n\n## Isolation\n\nEnforced at the data layer and demonstrable, which is what a compliance review actually asks for."
+  },
+  {
+    "title": "Treebo Hotels makes metrics and KPIs a part of their daily routine with Metabase.",
+    "slug": "treebo",
+    "headline": "Treebo Hotels is an Indian budget hotel chain that operates on franchising. As of January 2020, Treebo Hotel has over 600 hotels in 113 cities in India.",
+    "company": "Treebo Hotels",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/treebo-hotels-makes-metrics-and-kpis-a-part-of-their-daily-routine-with-metabase.jpg",
+    "publishedDate": "2024-04-30",
+    "challenge": "A franchise hotel operation needed consistent reporting across independently run properties.",
+    "solution": "Shared models with per-property dashboards.",
+    "results": "Properties and head office work from the same definitions.",
+    "metrics": [],
+    "body": "## Franchise reporting\n\nThe difficulty is that each property operates independently but has to be comparable.\n\n## Shared definitions\n\nOccupancy and revenue per room defined once centrally, reported per property."
+  },
+  {
+    "title": "Uptime keeps elevators moving with Metabase.",
+    "slug": "uptime",
+    "headline": "Uptime helps elevator service providers keep their lifts running. They develop an operation management platform and a predictive maintenance technology that makes it easy to maintain elevators.",
+    "company": "Uptime",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/uptime-keeps-elevators-moving-with-metabase.jpg",
+    "publishedDate": "2024-04-16",
+    "challenge": "Service providers needed visibility into equipment status across many installations.",
+    "solution": "Analytics over device and service data, with reporting for service teams.",
+    "results": "Issues are visible earlier, which shortens response time.",
+    "metrics": [],
+    "body": "## Connected equipment\n\nDevice telemetry is high volume and mostly uninteresting. The value is in surfacing the small fraction that is not.\n\n## What is reported\n\nStatus, exceptions and service history, aggregated to the level a service team can act on."
+  },
+  {
+    "title": "Usabilla unlocks analytics for everybody with Metabase.",
+    "slug": "usabilla",
+    "headline": "Usabilla is a user feedback solution for collecting qualitative and quantitative user feedback across digital channels including websites, apps, and emails.",
+    "company": "Usabilla",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/usabilla-unlocks-analytics-for-everybody-with-metabase.jpg",
+    "publishedDate": "2024-04-02",
+    "challenge": "Feedback data was collected at volume but was hard to analyse across customers and time.",
+    "solution": "Modelled analytics over qualitative and quantitative feedback.",
+    "results": "Trends are visible across the dataset rather than per response.",
+    "metrics": [],
+    "body": "## Qualitative at scale\n\nIndividual feedback is readable; thousands of responses need categorisation before any of it is analysable.\n\n## The modelling\n\nCategorising by underlying theme rather than by the form field the respondent selected."
+  },
+  {
+    "title": "Metabase helps Yellow Card scale self-serve analytics across a 200+ person fintech team.",
+    "slug": "yellowcard",
+    "headline": "Yellow Card is the largest and first licensed Stablecoin payments orchestrator, empowering businesses across emerging markets with international payments, treasury management, and USD liquidity",
+    "company": "Yellowcard",
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "heroImageUrl": "https://cdn.metabase.com/images/case-studies/yellow-card-og.webp",
+    "publishedDate": "2024-03-19",
+    "challenge": "A rapidly growing fintech needed analytics accessible across a large, distributed team.",
+    "solution": "Self-serve analytics over governed models, with permissions mapped to existing groups.",
+    "results": "Analytics scaled across the organisation without a corresponding increase in the data team.",
+    "metrics": [],
+    "body": "## Scaling access, not headcount\n\nThe alternative to self-service is hiring analysts in proportion to questions, which does not work.\n\n## Governance\n\nCurated models and clear ownership, so wider access did not mean inconsistent answers."
   }
 ]

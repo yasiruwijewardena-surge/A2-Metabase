@@ -18,10 +18,12 @@ const { createStrapi, compileStrapi } = require('@strapi/strapi');
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 const { toBlocks, slugify } = require('./blocks');
+const { uploadFromUrl, mediaStats } = require('./media');
 
 const read = (f) => JSON.parse(readFileSync(join(__dirname, 'data', f), 'utf8'));
 
 const FRESH = process.argv.includes('--fresh');
+const NO_MEDIA = process.argv.includes('--no-media');
 
 const stats = { created: 0, skipped: 0, linked: 0 };
 
@@ -95,9 +97,14 @@ async function main() {
       upsert(app, 'api::use-case.use-case', { slug: slugify(u.name) },
         { ...u, slug: slugify(u.name) }))));
 
-    const authors = byName(await Promise.all(tax.authors.map((a) =>
-      upsert(app, 'api::author.author', { slug: slugify(a.name) },
-        { ...a, slug: slugify(a.name) }))));
+    const authors = {};
+    for (const a of tax.authors) {
+      const { avatarUrl, ...rest } = a;
+      const avatar = await uploadFromUrl(app, avatarUrl, { skip: NO_MEDIA });
+      authors[a.name] = await upsert(app, 'api::author.author',
+        { slug: a.slug || slugify(a.name) },
+        { ...rest, slug: a.slug || slugify(a.name), avatar });
+    }
 
     for (const g of glossary) {
       await upsert(app, 'api::glossary-term.glossary-term', { slug: slugify(g.term) },
@@ -122,9 +129,12 @@ async function main() {
     // ---- 3. posts --------------------------------------------------------
     const postMap = {};
     for (const p of posts) {
-      const doc = await upsert(app, 'api::post.post', { slug: slugify(p.title) }, {
+      const slug = p.slug || slugify(p.title);
+      const coverImage = await uploadFromUrl(app, p.coverImageUrl, { skip: NO_MEDIA });
+      const doc = await upsert(app, 'api::post.post', { slug }, {
         title: p.title,
-        slug: slugify(p.title),
+        slug,
+        coverImage,
         excerpt: p.excerpt,
         body: toBlocks(p.body),
         publishedDate: p.publishedDate,
@@ -133,7 +143,7 @@ async function main() {
         category: categories[p.category]?.documentId,
         tags: (p.tags ?? []).map((t) => tags[t]?.documentId).filter(Boolean),
         author: authors[p.author]?.documentId,
-        seo: { metaTitle: p.title.slice(0, 70), metaDescription: p.excerpt.slice(0, 170) },
+        seo: { metaTitle: (p.title || '').slice(0, 70), metaDescription: (p.excerpt || '').slice(0, 170) },
       });
       postMap[p.title] = doc;
     }
@@ -141,9 +151,12 @@ async function main() {
     // ---- 4. case studies -------------------------------------------------
     const csMap = {};
     for (const c of caseStudies) {
-      const doc = await upsert(app, 'api::case-study.case-study', { slug: slugify(c.title) }, {
+      const slug = c.slug || slugify(c.title);
+      const heroImage = await uploadFromUrl(app, c.heroImageUrl, { skip: NO_MEDIA });
+      const doc = await upsert(app, 'api::case-study.case-study', { slug }, {
         title: c.title,
-        slug: slugify(c.title),
+        slug,
+        heroImage,
         headline: c.headline,
         challenge: c.challenge,
         solution: c.solution,
@@ -154,7 +167,7 @@ async function main() {
         featured: Boolean(c.featured),
         company: companyMap[c.company]?.documentId,
         useCases: (c.useCases ?? []).map((u) => useCases[u]?.documentId).filter(Boolean),
-        seo: { metaTitle: c.title.slice(0, 70), metaDescription: c.headline.slice(0, 170) },
+        seo: { metaTitle: (c.title || '').slice(0, 70), metaDescription: (c.headline || '').slice(0, 170) },
       });
       csMap[c.title] = doc;
     }
@@ -217,7 +230,9 @@ async function main() {
       const n = await app.documents(uid).count({ status: 'published' });
       console.log(`    ${String(n).padStart(3)}  ${uid.split('.').pop()}`);
     }
-    console.log(`\n    created ${stats.created}, skipped ${stats.skipped}, relation passes ${stats.linked}\n`);
+    const m = mediaStats();
+    console.log(`\n    created ${stats.created}, skipped ${stats.skipped}, relation passes ${stats.linked}`);
+    console.log(`    media: ${m.uploaded} files attached from ${m.unique} source urls\n`);
   } finally {
     await app.destroy();
   }

@@ -1,68 +1,302 @@
 {
+  "_note": "Categories, author names and industries are real metadata from metabase.com. Industries are mapped from the original's 17 free-text values to a curated vocabulary (SITE-ANALYSIS.md 6.1). Tags do not exist on the original and are derived here (6.3).",
   "categories": [
-    { "name": "News", "description": "Announcements, releases and company updates." },
-    { "name": "Engineering", "description": "How we build and run the product." },
-    { "name": "Analytics and BI", "description": "Practice and craft of working with data." },
-    { "name": "Product", "description": "Features, workflows and what they are for." },
-    { "name": "Data explorations", "description": "Analyses of public and internal datasets." },
-    { "name": "Using Metabase", "description": "Practical guides for getting more out of it." }
+    {
+      "name": "Analytics and BI",
+      "description": "Practice and craft of working with data."
+    },
+    {
+      "name": "Data explorations",
+      "description": "Analyses of public and internal datasets."
+    },
+    {
+      "name": "Engineering",
+      "description": "How we build and run the product."
+    },
+    {
+      "name": "News",
+      "description": "Announcements, releases and company updates."
+    },
+    {
+      "name": "Product",
+      "description": "Features, workflows and what they are for."
+    },
+    {
+      "name": "Using Metabase",
+      "description": "Practical guides for getting more out of it."
+    }
   ],
   "tags": [
-    { "name": "AI" },
-    { "name": "Security" },
-    { "name": "Open Source" },
-    { "name": "Embedding" },
-    { "name": "Performance" },
-    { "name": "SQL" },
-    { "name": "Dashboards" },
-    { "name": "Self-service" },
-    { "name": "Data modeling" },
-    { "name": "Hiring" }
+    {
+      "name": "AI"
+    },
+    {
+      "name": "Analytics"
+    },
+    {
+      "name": "Dashboards"
+    },
+    {
+      "name": "Data modeling"
+    },
+    {
+      "name": "Embedding"
+    },
+    {
+      "name": "Hiring"
+    },
+    {
+      "name": "Open Source"
+    },
+    {
+      "name": "Performance"
+    },
+    {
+      "name": "SQL"
+    },
+    {
+      "name": "Security"
+    },
+    {
+      "name": "Self-service"
+    }
   ],
   "industries": [
-    { "name": "Financial Services", "displayOrder": 1, "description": "Banks, lenders, payments and investment platforms." },
-    { "name": "SaaS & Developer Tools", "displayOrder": 2, "description": "Software products sold to businesses and developers." },
-    { "name": "Education", "displayOrder": 3, "description": "Schools, universities and learning platforms." },
-    { "name": "Healthcare", "displayOrder": 4, "description": "Providers, telehealth and health technology." },
-    { "name": "eCommerce & Retail", "displayOrder": 5, "description": "Online and physical retail." },
-    { "name": "Logistics & Transport", "displayOrder": 6, "description": "Freight, shipping and mobility." },
-    { "name": "Manufacturing", "displayOrder": 7, "description": "Industrial production and supply chain." },
-    { "name": "Nonprofit", "displayOrder": 8, "description": "Charities, NGOs and social enterprises." }
+    {
+      "name": "Education",
+      "displayOrder": 1,
+      "description": "Schools, universities and learning platforms."
+    },
+    {
+      "name": "Financial Services",
+      "displayOrder": 2,
+      "description": "Banks, lenders, payments, fintech and investment platforms."
+    },
+    {
+      "name": "Healthcare",
+      "displayOrder": 3,
+      "description": "Providers, telehealth and health technology."
+    },
+    {
+      "name": "Logistics & Transport",
+      "displayOrder": 4,
+      "description": "Freight, shipping, fleet and mobility."
+    },
+    {
+      "name": "Manufacturing",
+      "displayOrder": 5,
+      "description": "Industrial production, supply chain and connected devices."
+    },
+    {
+      "name": "Nonprofit",
+      "displayOrder": 6,
+      "description": "Charities, NGOs and social enterprises."
+    },
+    {
+      "name": "SaaS & Developer Tools",
+      "displayOrder": 7,
+      "description": "Software products sold to businesses and developers."
+    },
+    {
+      "name": "eCommerce & Retail",
+      "displayOrder": 8,
+      "description": "Online and physical retail, travel and hospitality."
+    }
   ],
   "useCases": [
-    { "name": "Business Intelligence", "displayOrder": 1, "description": "Self-service analytics for your own team." },
-    { "name": "Embedded Analytics", "displayOrder": 2, "description": "Customer-facing analytics inside your product." }
+    {
+      "name": "Business Intelligence",
+      "displayOrder": 1,
+      "description": "Self-service analytics for your own team."
+    },
+    {
+      "name": "Embedded Analytics",
+      "displayOrder": 2,
+      "description": "Customer-facing analytics inside your product."
+    }
   ],
   "authors": [
     {
-      "name": "Sameer Al-Sakran",
-      "role": "CEO",
-      "bio": "Works on making data useful to people who do not think of themselves as data people.",
-      "socialX": "metabase"
+      "name": "Abed Habli",
+      "slug": "abed-habli",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/abed-habli.webp"
+    },
+    {
+      "name": "Alex Yarosh",
+      "slug": "alex-yarosh",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/alex-yarosh.jpeg"
+    },
+    {
+      "name": "Alexander Kinn",
+      "slug": "alexander-kinn",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/alexander-kinn.png"
+    },
+    {
+      "name": "Allen Gilliland",
+      "slug": "allen-gilliland",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/the-metabase-team.png"
+    },
+    {
+      "name": "Arkadi Yaroslavtsev",
+      "slug": "arkadi-yaroslavtsev",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/arkadi-yaroslavtsev.webp"
+    },
+    {
+      "name": "Bruno Bergher",
+      "slug": "bruno-bergher",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/bruno-bergher.png"
+    },
+    {
+      "name": "Bryan Maass",
+      "slug": "bryan-maass",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/bryan-maass.webp"
+    },
+    {
+      "name": "Filipe Silva",
+      "slug": "filipe-silva",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/filipe-silva.webp"
+    },
+    {
+      "name": "Ignacio Beines Furcada",
+      "slug": "ignacio-beines-furcada",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/ignacio-beines-furcada.png"
+    },
+    {
+      "name": "Jeff Bruemmer",
+      "slug": "jeff-bruemmer",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/the-metabase-team.png"
     },
     {
       "name": "Jess Thompson",
-      "role": "Content Lead",
-      "bio": "Writes about analytics practice, and occasionally about what the numbers actually mean.",
-      "socialX": "metabase"
+      "slug": "jess-thompson",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/sameer-al-sakran.png"
     },
     {
-      "name": "Maya Okonkwo",
-      "role": "Staff Engineer",
-      "bio": "Spends most of her time in the query layer and the parts of the codebase nobody volunteers for.",
-      "socialLinkedIn": "maya-okonkwo"
+      "name": "Luis Paolini",
+      "slug": "luis-paolini",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/sameer-al-sakran.png"
     },
     {
-      "name": "Daniel Reyes",
-      "role": "Product Manager",
-      "bio": "Interested in the gap between what a dashboard shows and what a team decides.",
-      "socialLinkedIn": "daniel-reyes"
+      "name": "Margaret Rimek",
+      "slug": "margaret-rimek",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/margaret-rimek.jpeg"
     },
     {
-      "name": "Priya Raman",
-      "role": "Analytics Engineer",
-      "bio": "Builds semantic layers and argues about metric definitions for a living.",
-      "socialX": "metabase"
+      "name": "Matthew Hefferon",
+      "slug": "matthew-hefferon",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/matthew-hefferon.jpeg"
+    },
+    {
+      "name": "Max Zheng",
+      "slug": "max-zheng",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/max-zheng.jpeg"
+    },
+    {
+      "name": "Maz Ameli",
+      "slug": "maz-ameli",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/maz-ameli.png"
+    },
+    {
+      "name": "Nathan Voxland",
+      "slug": "nathan-voxland",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/nathan-voxland.jpeg"
+    },
+    {
+      "name": "Ramiro Nunez Dosio",
+      "slug": "ramiro-nunez-dosio",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/ramiro-nunez-dosio.png"
+    },
+    {
+      "name": "Robert Kosara",
+      "slug": "robert-kosara",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/robert-kosara.webp"
+    },
+    {
+      "name": "Sameer Al-Sakran",
+      "slug": "sameer-al-sakran",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/sameer-al-sakran.png"
+    },
+    {
+      "name": "Sashko Yakushev",
+      "slug": "sashko-yakushev",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/sashko-yakushev.jpeg"
+    },
+    {
+      "name": "Tanya Aulachynskaya",
+      "slug": "tanya-aulachynskaya",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/tanya-aulachynskaya.jpeg"
+    },
+    {
+      "name": "Thomas Schmidt",
+      "slug": "thomas-schmidt",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/thomas-schmidt.png"
+    },
+    {
+      "name": "Tim Abraham",
+      "slug": "tim-abraham",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/the-metabase-team.png"
+    },
+    {
+      "name": "Ukrit Wattanavaekin",
+      "slug": "ukrit-wattanavaekin",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/sameer-al-sakran.png"
+    },
+    {
+      "name": "Vamsi Peri",
+      "slug": "vamsi-peri",
+      "role": "Contributor",
+      "bio": "Writes for the Metabase blog.",
+      "avatarUrl": "https://cdn.metabase.com/images/posts/blog-authors/vamsi-peri.jpeg"
     }
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "companies": [
+    { "name": "Northwind Lending", "industry": "Financial Services", "employees": "200+", "headquarters": "Leeds, United Kingdom", "description": "A lender offering secured business finance to small and mid-sized companies." },
+    { "name": "Cadence CRM", "industry": "SaaS & Developer Tools", "employees": "80+", "headquarters": "Lisbon, Portugal", "description": "A customer relationship platform for agencies, with reporting in every client workspace." },
+    { "name": "Brightpath Learning", "industry": "Education", "employees": "150+", "headquarters": "Toronto, Canada", "description": "An online school serving students in forty countries." },
+    { "name": "Meridian Health", "industry": "Healthcare", "employees": "500+", "headquarters": "Melbourne, Australia", "description": "A telehealth provider connecting patients to clinicians across regional Australia." },
+    { "name": "Harbour & Co", "industry": "eCommerce & Retail", "employees": "60+", "headquarters": "Copenhagen, Denmark", "description": "A direct-to-consumer homeware brand operating online and in six stores." },
+    { "name": "Transit Lane", "industry": "Logistics & Transport", "employees": "320+", "headquarters": "Rotterdam, Netherlands", "description": "A freight forwarder moving containers between European ports." },
+    { "name": "Forge Industrial", "industry": "Manufacturing", "employees": "1,000+", "headquarters": "Pune, India", "description": "A components manufacturer supplying the automotive sector." },
+    { "name": "OpenRiver Trust", "industry": "Nonprofit", "employees": "40+", "headquarters": "Nairobi, Kenya", "description": "A water and sanitation charity operating across East Africa." },
+    { "name": "Keystone Payments", "industry": "Financial Services", "employees": "250+", "headquarters": "Singapore", "description": "A payments processor serving marketplaces in South East Asia." },
+    { "name": "Lantern Dev Tools", "industry": "SaaS & Developer Tools", "employees": "35+", "headquarters": "Berlin, Germany", "description": "An observability product for small engineering teams." }
+  ],
+  "people": [
+    { "name": "Aisling Doyle", "role": "Head of Data", "company": "Northwind Lending" },
+    { "name": "Tomás Ferreira", "role": "Co-founder and CTO", "company": "Cadence CRM" },
+    { "name": "Rebecca Lund", "role": "Director of Analytics", "company": "Brightpath Learning" },
+    { "name": "Nikhil Sharma", "role": "VP Engineering", "company": "Meridian Health" },
+    { "name": "Freja Nielsen", "role": "Head of Growth", "company": "Harbour & Co" },
+    { "name": "Pieter van Dijk", "role": "Operations Lead", "company": "Transit Lane" },
+    { "name": "Anjali Deshpande", "role": "Plant Systems Manager", "company": "Forge Industrial" },
+    { "name": "Grace Mwangi", "role": "Programme Director", "company": "OpenRiver Trust" },
+    { "name": "Wei Lin Tan", "role": "Staff Data Engineer", "company": "Keystone Payments" },
+    { "name": "Jonas Kleine", "role": "Founder", "company": "Lantern Dev Tools" }
+  ]
+}

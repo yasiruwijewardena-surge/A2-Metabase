@@ -61,8 +61,9 @@ changing how a page looks. The ones acted on so far:
 - **Industry is a relation, not free text.** The original has 17 free-text
   industry strings with near-duplicates (`Financial Services` vs
   `Banking & Finance`) and one value that isn't an industry at all
-  (`Transport Management System`). Here it's a controlled collection type,
-  attached to `company` where it belongs.
+  (`Transport Management System`). Measured against their real 44 case studies,
+  **11 of those 17 buttons return exactly one result**. Mapped to a curated
+  8-value vocabulary attached to `company`, only one does.
 - **Testimonials are one entity, not duplicated content.** The original renders
   the same quotes in three shapes across the homepage, case studies and
   `/love`, with nothing linking them. Here one `testimonial` type with a
@@ -90,7 +91,7 @@ Target here is 90+ desktop / 80+ mobile. Full baseline in `SITE-ANALYSIS.md` §2
 - [x] Measure the PageSpeed baseline
 - [x] Scaffold Strapi and define the content model
 - [x] Deploy Strapi + Postgres to Railway
-- [x] Seed content (121 entries, `npm run seed`)
+- [x] Seed content (279 entries + 136 images, `npm run seed`)
 - [ ] Scaffold Astro with the design tokens
 - [ ] Build the pages
 - [ ] Deploy the front end

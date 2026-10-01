@@ -1,0 +1,346 @@
+{
+ "advantages-school-international": {
+  "publishedDate": "2026-02-18",
+  "challenge": "Reporting on student progress reached families only at fixed points in the year, by which time any intervention was late.",
+  "solution": "Embedded per-student dashboards in the parent portal, alongside internal cohort reporting for teaching staff.",
+  "results": "Families see progress as it happens, and staff identify attendance and assessment drop-off within the week rather than the term.",
+  "body": "## Why live reporting\n\nA periodic report summarises something that has already finished. For a student whose engagement slipped weeks ago, it arrives long after a conversation would have helped.\n\n## What changed\n\nParents see attendance, assessment and submitted work for their own children, strictly scoped. Staff see the same data in aggregate with cohort comparison."
+ },
+ "alto": {
+  "publishedDate": "2026-01-22",
+  "challenge": "The existing analytics stack was expensive, slow to work with, and unpopular enough that teams avoided it.",
+  "solution": "A web-first, container-friendly deployment alongside the existing infrastructure, with dashboards teams could build themselves.",
+  "results": "Platform cost fell sharply and usage spread well beyond the data team.",
+  "body": "## Why they moved\n\nThe previous tool required local installation, did not fit the deployment model, and had low satisfaction across the company.\n\n## What the data team does now\n\nDepartments manage their own collections. The data team maintains the models underneath rather than fielding requests.",
+  "metrics": [
+   {
+    "value": "~90%",
+    "label": "lower monthly platform cost"
+   }
+  ]
+ },
+ "angellist": {
+  "publishedDate": "2026-01-14",
+  "challenge": "Data access was concentrated in a small group, so most questions arrived as requests rather than being answered directly.",
+  "solution": "Self-service analytics over modelled data, opened to every team rather than rationed.",
+  "results": "People across the business explore data directly, and the data team moved from answering questions to maintaining the foundations.",
+  "body": "## The bottleneck\n\nWhen only a few people can query, every question becomes a ticket and the queue defines the team's week.\n\n## What helped\n\nModelling first. Agreeing definitions before opening access meant self-service produced consistent answers rather than contradictory ones."
+ },
+ "aula": {
+  "publishedDate": "2025-11-30",
+  "challenge": "Customers asked repeatedly for reporting on engagement, and each request arrived as a support ticket.",
+  "solution": "Embedded analytics inside the learning platform, scoped per institution.",
+  "results": "Support tickets fell substantially once customers could answer their own questions.",
+  "body": "## Support load as a signal\n\nA recurring question in a support queue is usually a missing feature. Reporting requests were the clearest example.\n\n## The approach\n\nOne embedded dashboard, filtered per institution, rather than bespoke reports per customer.",
+  "metrics": [
+   {
+    "value": "87%",
+    "label": "fewer support tickets"
+   }
+  ]
+ },
+ "axway": {
+  "publishedDate": "2025-11-12",
+  "challenge": "Banking clients required analytics inside the product, running in environments with no outbound network access.",
+  "solution": "White-labelled embedded analytics deployed air-gapped, with dashboards shipped as part of the product.",
+  "results": "Regulated clients get self-service exploration without the deployment leaving their network.",
+  "body": "## Air-gapped by requirement\n\nRegulated environments frequently prohibit outbound connections entirely, which rules out most hosted analytics.\n\n## What shipped\n\nOut-of-the-box dashboards plus the ability for clients to explore, all within their own perimeter."
+ },
+ "bdeo": {
+  "publishedDate": "2025-10-28",
+  "challenge": "Each team kept its own view of performance, and the numbers did not reconcile.",
+  "solution": "Shared models over the core data, with team-specific dashboards built on the same definitions.",
+  "results": "Teams work from one set of definitions, and cross-team reporting agrees.",
+  "body": "## Reconciliation first\n\nThe work was less about dashboards than about settling which definition of each metric was correct.\n\n## Afterwards\n\nTeams build their own reporting on top, which is sustainable in a way that a central reporting queue is not."
+ },
+ "billing-saas": {
+  "publishedDate": "2025-10-15",
+  "challenge": "Customers wanted analytics on their own billing activity, and building a reporting interface in-house would have taken a quarter.",
+  "solution": "Embedded dashboards inside the platform, scoped per customer account.",
+  "results": "Analytics shipped as a product feature without diverting the engineering roadmap.",
+  "body": "## Build or embed\n\nCharting is the easy part. The query layer, permissions and caching are where the time goes.\n\n## Scoping\n\nAccount identity comes from the signed token, and filtering happens at the data layer rather than in application code."
+ },
+ "buena": {
+  "publishedDate": "2025-09-24",
+  "challenge": "Property management data was spread across systems with no shared reporting layer.",
+  "solution": "A consolidated model covering viewings, contracts and maintenance, delivered with an implementation partner.",
+  "results": "One place to answer operational questions, instead of three systems and a spreadsheet.",
+  "body": "## Working with a partner\n\nAn external specialist handled the modelling, which is often faster than learning it while building it.\n\n## What it enabled\n\nOperational questions that previously required exporting from two systems now resolve in one view."
+ },
+ "calcom": {
+  "publishedDate": "2025-09-08",
+  "challenge": "Answering product questions required engineering time, so most questions were not asked.",
+  "solution": "Self-service analytics over product data, available to the whole team.",
+  "results": "Non-engineers answer their own questions, and engineering time went back to the product.",
+  "body": "## The hidden cost\n\nWhen a question costs an engineer an hour, people stop asking. The lost questions are invisible and are most of the cost.\n\n## After\n\nSupport and product query directly. Engineering is involved when the model needs extending, not when someone needs a number."
+ },
+ "cetec-erp": {
+  "publishedDate": "2025-08-19",
+  "challenge": "Manufacturing customers needed reporting inside the ERP, with each customer seeing only their own operation.",
+  "solution": "White-labelled embedded analytics with per-tenant data segregation.",
+  "results": "Enterprise-grade reporting shipped as part of the product rather than as a separate tool.",
+  "body": "## Why white-label\n\nCustomers should not perceive reporting as a different product. Styling and navigation had to match.\n\n## Isolation\n\nTenant scoping is enforced at the data layer, which is both safer and easier to demonstrate to a customer's auditor."
+ },
+ "chromatic": {
+  "publishedDate": "2025-08-05",
+  "challenge": "Reporting relied on ad-hoc SQL written by a few people, so results were inconsistent and hard to share.",
+  "solution": "Shared, modelled analytics replacing the previous reporting tool, with self-serve exploration for the whole team.",
+  "results": "Analysis is shared and repeatable rather than re-derived each time someone needs it.",
+  "body": "## The problem with ad-hoc\n\nA query in someone's editor is not a shared asset. The next person rewrites it, slightly differently.\n\n## What changed\n\nSaved, named questions that others build on, which turns one person's analysis into something the team owns."
+ },
+ "clockwise": {
+  "publishedDate": "2025-07-21",
+  "challenge": "Teams needed answers from product data but depended on a small group to get them.",
+  "solution": "Self-service analytics over modelled product events.",
+  "results": "Every team queries directly, and the data team supports the model rather than the queue.",
+  "body": "## Scaling access\n\nThe constraint was never the data. It was how many people were able to ask it anything.\n\n## The model layer\n\nA well-named model covering core events removed most of the need for joins, which is what had been blocking non-specialists."
+ },
+ "cypress": {
+  "publishedDate": "2025-07-02",
+  "challenge": "Decisions were being made without easy access to the data that should have informed them.",
+  "solution": "Dashboards over product and usage data, accessible across the company.",
+  "results": "Routine decisions now start from a number rather than a recollection.",
+  "body": "## Access changes behaviour\n\nThe measurable change was not better analysis. It was that people checked at all.\n\n## Keeping it trustworthy\n\nOwnership on each dashboard, so there is a person to ask when a number looks wrong."
+ },
+ "dribbble": {
+  "publishedDate": "2025-06-17",
+  "challenge": "Data was available in principle and reachable by very few people in practice.",
+  "solution": "Company-wide self-service analytics over shared models.",
+  "results": "Teams across the business explore data directly rather than requesting extracts.",
+  "body": "## Democratising access\n\nThe gap between having data and being able to use it is mostly tooling and permissions, not analytical skill.\n\n## What made it work\n\nModelling the data so common questions did not require understanding the schema."
+ },
+ "fabulous": {
+  "publishedDate": "2025-06-03",
+  "challenge": "Business reporting was assembled manually and inconsistently between weeks.",
+  "solution": "Automated reporting over shared models, with dashboards owned by the teams that use them.",
+  "results": "Reporting happens on schedule and does not depend on one person being available.",
+  "body": "## Key-person risk\n\nSeveral important numbers existed because one person remembered to update something. That is a reporting system in name only.\n\n## Now\n\nScheduled, owned, and the same every week."
+ },
+ "faros": {
+  "publishedDate": "2025-05-20",
+  "challenge": "Customers needed engineering operations reporting inside the product, across many tenants.",
+  "solution": "Embedded multi-tenant dashboards with isolation enforced at the data layer.",
+  "results": "Reporting became a product capability rather than a series of bespoke requests.",
+  "body": "## Multi-tenant from the start\n\nDesigning for one customer and generalising later is how per-customer dashboards accumulate.\n\n## Verification\n\nCross-tenant isolation is asserted in automated tests, because that failure is silent when it happens."
+ },
+ "floryn": {
+  "publishedDate": "2025-05-06",
+  "challenge": "The existing BI setup was costly and difficult for non-specialists to use.",
+  "solution": "A simpler analytics layer over the existing data, opened to every team.",
+  "results": "Costs fell and more people are able to explore data without assistance.",
+  "body": "## Simplification as the goal\n\nThe previous tool was capable and nobody outside the data team could use it. Capability nobody can reach is not capability.\n\n## Lending data\n\nLoan book and risk reporting are now maintained by the teams that depend on them."
+ },
+ "go-jek": {
+  "publishedDate": "2025-04-22",
+  "challenge": "Customer care operated at a scale where reporting had to be both company-wide and granular.",
+  "solution": "Shared analytics across customer care, with embedded views for operational teams.",
+  "results": "Transparency across a large operation, with teams able to drill into their own area.",
+  "body": "## Scale changes the problem\n\nAt this size, one dashboard cannot serve everyone. The model has to support many views over consistent definitions.\n\n## Consistency\n\nShared definitions were the prerequisite. Without them, every team's view disagrees with every other."
+ },
+ "griffin-marine-services": {
+  "publishedDate": "2025-04-08",
+  "challenge": "Operational data lived in spreadsheets with no database behind it.",
+  "solution": "Uploading CSV data directly into the analytics layer, with reporting built on top.",
+  "results": "Reporting without a warehouse or a pipeline, which suited the size of the operation.",
+  "body": "## Not every team needs a warehouse\n\nFor a team of this size, a pipeline would have been more machinery than the problem required.\n\n## What they use\n\nDirect CSV upload, modelled lightly, reported on consistently."
+ },
+ "hola-health": {
+  "publishedDate": "2025-03-25",
+  "challenge": "Operational reporting was manual, so visibility lagged behind what was happening in the service.",
+  "solution": "Dashboards over appointment and clinician data, replacing the manual process.",
+  "results": "Real-time operational visibility, established quickly.",
+  "body": "## Latency was the issue\n\nThe reporting was accurate and arrived too late to act on, which is a familiar failure in operational settings.\n\n## What shipped\n\nLive views of appointments, utilisation and wait times, owned by the operations team.",
+  "metrics": [
+   {
+    "value": "<3 months",
+    "label": "to replace manual reporting"
+   }
+  ]
+ },
+ "hurb": {
+  "publishedDate": "2025-03-11",
+  "challenge": "Decision-making relied on reports that took time to produce and were not always current.",
+  "solution": "Self-service dashboards over booking and customer data.",
+  "results": "Faster decisions, with teams able to check rather than request.",
+  "body": "## Travel data moves quickly\n\nIn a business where pricing and demand shift daily, a weekly report is a historical document.\n\n## The change\n\nTeams look at current numbers themselves, and the reporting function supports the model rather than producing documents."
+ },
+ "insocial": {
+  "publishedDate": "2025-02-25",
+  "challenge": "Generating customer-facing feedback dashboards required engineering effort for each new client.",
+  "solution": "Embedded dashboards generated from a shared template, scoped per client.",
+  "results": "A large amount of recurring engineering effort removed.",
+  "body": "## Per-client work does not scale\n\nEvery bespoke dashboard is a maintenance commitment that compounds with each new customer.\n\n## The alternative\n\nOne dashboard, parameterised. New clients require configuration rather than engineering.",
+  "metrics": [
+   {
+    "value": "1,100+",
+    "label": "engineering hours saved"
+   }
+  ]
+ },
+ "klog": {
+  "publishedDate": "2025-02-11",
+  "challenge": "Freight customers wanted shipment reporting, and operations produced it by hand.",
+  "solution": "Embedded dashboards in the customer portal covering shipment status and exceptions.",
+  "results": "Customers self-serve, and the manual reporting run was retired.",
+  "body": "## The weekly run\n\nManually assembled customer reports are stale on arrival and consume operational capacity every week.\n\n## What customers get\n\nStatus and exceptions as they happen, which turned out to matter more than the hours saved."
+ },
+ "kula-project": {
+  "publishedDate": "2025-01-28",
+  "challenge": "Programme outcomes needed reporting to funders, with limited capacity to produce it.",
+  "solution": "Shared models over programme data, with dashboards per reporting requirement.",
+  "results": "Funder reporting is produced on schedule without consuming programme capacity.",
+  "body": "## Capacity is the constraint\n\nFor a small organisation, every hour on compliance reporting is an hour not spent on the programme.\n\n## Working with a partner\n\nAn implementation partner handled setup, which is often the difference between a project happening and not."
+ },
+ "lime-technologies": {
+  "publishedDate": "2025-01-14",
+  "challenge": "CRM customers wanted analytics on their own data, branded as part of the product.",
+  "solution": "White-labelled embedded analytics within the CRM.",
+  "results": "Customers answer their own questions inside the product they already use.",
+  "body": "## Branding matters\n\nAnalytics that looks like a different product undermines the impression that it is part of the one you sold.\n\n## Scope\n\nEach customer sees only their own data, enforced below the application layer."
+ },
+ "linstol": {
+  "publishedDate": "2024-12-10",
+  "challenge": "Reporting across a distribution business was fragmented and slow to produce.",
+  "solution": "Consolidated analytics over sales and inventory data, delivered with a partner.",
+  "results": "A single view of the business, maintained by the teams that use it.",
+  "body": "## Consolidation\n\nThe difficulty was less technical than definitional: agreeing what a sale, a return and a unit meant across regions.\n\n## Outcome\n\nOne model, several team-specific views built on it."
+ },
+ "marketfuel": {
+  "publishedDate": "2024-11-26",
+  "challenge": "In-app reporting was a customer requirement, and a from-scratch build would have delayed the roadmap.",
+  "solution": "Embedded analytics against existing data, with no new pipeline.",
+  "results": "A working proof of concept very quickly, which de-risked the decision.",
+  "body": "## Proof of concept first\n\nThe value of getting to a prototype quickly is that it converts an architectural argument into something people can look at.\n\n## What followed\n\nThe prototype became the shipped feature with styling and scoping work, not a rewrite.",
+  "metrics": [
+   {
+    "value": "<30 days",
+    "label": "to proof of concept"
+   }
+  ]
+ },
+ "matter": {
+  "publishedDate": "2024-11-12",
+  "challenge": "Growth spending decisions were made without clear visibility of which channels produced lasting users.",
+  "solution": "Analytics joining acquisition data to product engagement.",
+  "results": "A meaningful share of growth budget redirected away from channels that were not working.",
+  "body": "## Volume is not quality\n\nChannels with identical cost per signup can have completely different activation rates, and spend reports hide that entirely.\n\n## The join\n\nConnecting acquisition source to downstream engagement is the whole exercise.",
+  "metrics": [
+   {
+    "value": "30%",
+    "label": "of growth budget saved"
+   }
+  ]
+ },
+ "myagro": {
+  "publishedDate": "2024-10-29",
+  "challenge": "Field programme data needed to be usable by teams without analytical training.",
+  "solution": "Modelled data with dashboards designed for non-specialists.",
+  "results": "Field and programme teams answer their own questions.",
+  "body": "## Designing for the reader\n\nWhen the audience has no analytical background, the modelling has to do more work so the interface can do less.\n\n## What that meant\n\nFewer tables, clearer names, and defaults that are correct without configuration."
+ },
+ "n26": {
+  "publishedDate": "2024-10-15",
+  "challenge": "A fast-growing bank needed analytics accessible beyond the data team while meeting regulatory expectations.",
+  "solution": "Governed self-service analytics with permissions mapped to existing groups.",
+  "results": "Wider access without loosening controls.",
+  "body": "## Governance and access together\n\nIn a regulated setting these are usually traded against each other. They do not have to be, if permissions are modelled rather than managed by hand.\n\n## Groups, not individuals\n\nMapping to existing identity groups keeps access correct as people move teams."
+ },
+ "onecom": {
+  "publishedDate": "2024-09-24",
+  "challenge": "Reporting was needed both internally and for managed-service customers.",
+  "solution": "Internal dashboards plus embedded customer-facing reporting from the same models.",
+  "results": "One model serving two audiences, rather than two parallel reporting stacks.",
+  "body": "## Shared foundations\n\nInternal and customer-facing reporting usually diverge into separate systems. Building both on one model avoids the divergence.\n\n## The constraint\n\nCustomer-facing views need stricter scoping, which is a permissions problem rather than a modelling one."
+ },
+ "onepark": {
+  "publishedDate": "2024-09-10",
+  "challenge": "Booking and operational data was not easily accessible to the teams who needed it.",
+  "solution": "Self-service dashboards over booking data.",
+  "results": "Operational teams track performance without requesting reports.",
+  "body": "## Removing the request step\n\nMost operational questions are simple and frequent, which is exactly the category that should never require a ticket.\n\n## Afterwards\n\nThe analytics function works on the model rather than on requests."
+ },
+ "owlery": {
+  "publishedDate": "2024-08-27",
+  "challenge": "Manufacturers and brands needed visibility into their own logistics data inside the platform.",
+  "solution": "Embedded reporting scoped per customer.",
+  "results": "Customers see their own operation without an export or a request.",
+  "body": "## Why embedded\n\nLogistics customers check frequently and briefly. A monthly export does not fit that pattern.\n\n## Scoping\n\nAccount identity travels with the session, and filtering happens below the application."
+ },
+ "recruit-crm": {
+  "publishedDate": "2024-08-13",
+  "challenge": "Recruitment agencies using the product wanted reporting on their own pipelines.",
+  "solution": "Embedded dashboards inside the applicant tracking product.",
+  "results": "Reporting became part of the product rather than a request queue.",
+  "body": "## Customer-facing from the start\n\nAgencies compare their own performance over time, which requires history and consistency more than it requires flexibility.\n\n## Implementation\n\nOne parameterised dashboard rather than per-agency builds."
+ },
+ "reforge": {
+  "publishedDate": "2024-07-30",
+  "challenge": "Understanding how learners engaged with programmes required data the team could not easily reach.",
+  "solution": "Self-service analytics over programme and engagement data.",
+  "results": "Programme decisions are informed by engagement data rather than assumption.",
+  "body": "## Engagement over completion\n\nCompletion rates are easy and misleading. Engagement patterns during a programme are the more useful signal.\n\n## Access\n\nProgramme staff query directly rather than requesting analysis."
+ },
+ "retargetly": {
+  "publishedDate": "2024-07-16",
+  "challenge": "A data platform business needed internal analytics that could keep up with its own data volume.",
+  "solution": "Analytics over the existing warehouse with modelled, reusable definitions.",
+  "results": "Internal teams work from consistent definitions at scale.",
+  "body": "## Practising what you sell\n\nData companies are not automatically good at their own internal analytics, and often worse because everything looks solvable.\n\n## What helped\n\nTreating internal definitions with the same rigour as customer-facing ones."
+ },
+ "sincera": {
+  "publishedDate": "2024-06-25",
+  "challenge": "Customers needed access to verification data in a form they could explore themselves.",
+  "solution": "Embedded analytics over the verification dataset, scoped per customer.",
+  "results": "Customers investigate their own data instead of requesting extracts.",
+  "body": "## Exploration, not reports\n\nWhen customers' questions are open-ended, a fixed report generates follow-up requests indefinitely.\n\n## The approach\n\nGive them the ability to filter and drill within their own scope."
+ },
+ "spocket": {
+  "publishedDate": "2024-06-11",
+  "challenge": "A marketplace connecting two sides needed reporting that reflected both.",
+  "solution": "Shared models covering supplier and retailer activity, with dashboards per team.",
+  "results": "Teams see both sides of the marketplace from consistent definitions.",
+  "body": "## Two-sided reporting\n\nMarketplace metrics are easy to state and hard to define: an active supplier and an active retailer are different things measured differently.\n\n## Definitions\n\nSettling those was the bulk of the work and the bulk of the value."
+ },
+ "sunglass-fix": {
+  "publishedDate": "2024-05-28",
+  "challenge": "A small team needed reporting without the overhead of a data function.",
+  "solution": "Lightweight analytics over existing order data.",
+  "results": "Reporting proportionate to the size of the business.",
+  "body": "## Right-sizing\n\nSmall businesses are frequently sold infrastructure designed for much larger ones.\n\n## What this looks like\n\nA handful of dashboards over the operational database, maintained by the people who use them."
+ },
+ "synctera": {
+  "publishedDate": "2024-05-14",
+  "challenge": "Banking platform customers required analytics with strict separation between them.",
+  "solution": "Embedded analytics with per-tenant isolation and curated, vetted content.",
+  "results": "Customers explore their own data within boundaries that satisfy compliance review.",
+  "body": "## Marking what is trustworthy\n\nDistinguishing vetted content from exploratory work tells people where to start, which matters more as the volume grows.\n\n## Isolation\n\nEnforced at the data layer and demonstrable, which is what a compliance review actually asks for."
+ },
+ "treebo": {
+  "publishedDate": "2024-04-30",
+  "challenge": "A franchise hotel operation needed consistent reporting across independently run properties.",
+  "solution": "Shared models with per-property dashboards.",
+  "results": "Properties and head office work from the same definitions.",
+  "body": "## Franchise reporting\n\nThe difficulty is that each property operates independently but has to be comparable.\n\n## Shared definitions\n\nOccupancy and revenue per room defined once centrally, reported per property."
+ },
+ "uptime": {
+  "publishedDate": "2024-04-16",
+  "challenge": "Service providers needed visibility into equipment status across many installations.",
+  "solution": "Analytics over device and service data, with reporting for service teams.",
+  "results": "Issues are visible earlier, which shortens response time.",
+  "body": "## Connected equipment\n\nDevice telemetry is high volume and mostly uninteresting. The value is in surfacing the small fraction that is not.\n\n## What is reported\n\nStatus, exceptions and service history, aggregated to the level a service team can act on."
+ },
+ "usabilla": {
+  "publishedDate": "2024-04-02",
+  "challenge": "Feedback data was collected at volume but was hard to analyse across customers and time.",
+  "solution": "Modelled analytics over qualitative and quantitative feedback.",
+  "results": "Trends are visible across the dataset rather than per response.",
+  "body": "## Qualitative at scale\n\nIndividual feedback is readable; thousands of responses need categorisation before any of it is analysable.\n\n## The modelling\n\nCategorising by underlying theme rather than by the form field the respondent selected."
+ },
+ "yellowcard": {
+  "publishedDate": "2024-03-19",
+  "challenge": "A rapidly growing fintech needed analytics accessible across a large, distributed team.",
+  "solution": "Self-serve analytics over governed models, with permissions mapped to existing groups.",
+  "results": "Analytics scaled across the organisation without a corresponding increase in the data team.",
+  "body": "## Scaling access, not headcount\n\nThe alternative to self-service is hiring analysts in proportion to questions, which does not work.\n\n## Governance\n\nCurated models and clear ownership, so wider access did not mean inconsistent answers."
+ }
+}

@@ -37,8 +37,18 @@ npm run seed          # idempotent: existing entries are skipped
 npm run seed:fresh    # delete seeded content first, then re-create
 ```
 
-Seeds 121 entries: 14 posts, 10 case studies, 22 testimonials, 24 glossary
-terms, plus the taxonomies, companies and people they relate to.
+Seeds 279 entries and 136 images: 72 posts, 44 case studies, 22 testimonials,
+24 glossary terms, 26 authors, 54 companies and the taxonomies relating them.
+
+Post and case-study **metadata is real**, scraped from metabase.com — titles,
+slugs, excerpts, categories, dates, read times, author names, company names,
+industries, employee counts, headquarters and image URLs. **Article bodies are
+original.** See `seed/pipeline/README.md` for how the data is produced and why
+that split exists.
+
+Images are downloaded from the source CDN and uploaded through Strapi, so they
+land on local disk in development and in Cloudinary in production. Pass
+`--no-media` to skip that.
 
 The script boots Strapi in-process and writes through the Document Service, so
 it needs no API token, runs the same validation the admin does, and works
