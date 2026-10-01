@@ -163,6 +163,55 @@ you share with the reviewers.
 
 ---
 
+## Step 7b — Seed the content
+
+The seed script runs from your machine against the Railway database. It needs a
+publicly reachable Postgres endpoint, which Railway only provides once the
+database has a TCP proxy.
+
+1. **Postgres → Settings → Networking → Public Networking → Add TCP Proxy**,
+   target port `5432`.
+2. Copy `DATABASE_PUBLIC_URL` from the Postgres service's Variables. If it is
+   not listed, build it from the other variables there — using the **proxy**
+   domain and port, not `PGHOST`/`PGPORT`:
+   `postgresql://<PGUSER>:<PGPASSWORD>@<RAILWAY_TCP_PROXY_DOMAIN>:<RAILWAY_TCP_PROXY_PORT>/<PGDATABASE>`
+3. Fill in `apps/cms/.env.seed` (copy from `.env.seed.example`; gitignored).
+4. Run it:
+
+```bash
+cd apps/cms
+set -a && . ./.env.seed && set +a && npm run seed
+```
+
+5. **Turn the TCP proxy back off.** Nothing needs it after this.
+
+The Cloudinary variables in that file are not optional. The seed uploads 136
+images through whichever provider the local environment points at; without
+them, images are written to your own disk while the production database records
+paths that do not exist there, and every image 404s on the live site.
+
+`npm run seed` is additive and idempotent — it will not touch the admin user,
+and re-running skips anything already present. `npm run seed:fresh` deletes
+seeded content first and is not what you want against production.
+
+### Alternative: seed inside Railway
+
+Avoids exposing the database at all, and reuses the Cloudinary variables
+already set on the service. CMS service → Settings → Deploy → Custom Start
+Command:
+
+```
+npm run seed ; npm run start
+```
+
+Redeploy, watch for `Seed complete`, then clear the custom start command. The
+`;` rather than `&&` means the service still starts if seeding fails. Caveat:
+production installs with `--omit=dev`, so the TypeScript compiler the seed's
+`compileStrapi()` may need might be absent. Untested — the TCP proxy route runs
+on a machine where the toolchain is known good.
+
+---
+
 ## Step 8 — Verify
 
 ```bash
