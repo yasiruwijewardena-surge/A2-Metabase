@@ -9,7 +9,7 @@ and the front end built in Astro.
 | **Replicating** | https://www.metabase.com (open-source BI platform) |
 | **CMS** | Strapi 5 → Railway, with Postgres |
 | **Front end** | Astro → Railway |
-| **Live CMS** | _not deployed yet_ |
+| **Live CMS** | https://a2-metabase-production.up.railway.app/admin |
 | **Live site** | _not deployed yet_ |
 
 ## Repository layout

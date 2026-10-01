@@ -165,9 +165,32 @@ you share with the reviewers.
 
 ## Step 7b — Seed the content
 
-The seed script runs from your machine against the Railway database. It needs a
-publicly reachable Postgres endpoint, which Railway only provides once the
-database has a TCP proxy.
+The seed script runs from your machine against the Railway database. Use the
+Railway CLI's encrypted tunnel rather than exposing the database publicly.
+
+```bash
+brew install railway
+railway login
+railway link --project <project id> --environment production --service Postgres
+railway ssh keys add --key ~/.ssh/<your key>.pub --name <machine>
+railway connect Postgres --tunnel-only      # leave running; prints host/port/creds
+```
+
+The tunnel needs an SSH key registered to your Railway account, and it allocates
+a **new local port each time**, so `.env.seed` has to be rebuilt per session.
+Point `DATABASE_URL` at `127.0.0.1:<port>` with `DATABASE_SSL=false` — the hop to
+localhost is already inside the tunnel.
+
+**The tunnel can drop on a long run.** Ours died after about 35 minutes with
+`Client has encountered a connection error and is not queryable`, roughly 59
+posts in. Because the seed is idempotent, reopening the tunnel, rebuilding
+`.env.seed` with the new port and re-running picked up exactly where it stopped.
+Budget around 45 minutes: Strapi generates responsive variants per image, so 136
+source images become several hundred Cloudinary uploads.
+
+### Public access, if the CLI is unavailable
+
+Needs a TCP proxy, which Railway only adds on request.
 
 1. **Postgres → Settings → Networking → Public Networking → Add TCP Proxy**,
    target port `5432`.

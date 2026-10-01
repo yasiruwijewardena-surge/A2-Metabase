@@ -75,7 +75,7 @@ async function main() {
     const { companies, people } = read('companies.json');
     const posts = read('posts.json');
     const caseStudies = read('case-studies.json');
-    const testimonials = read('testimonials.json');
+    const testimonials = read('testimonials.json').filter((x) => x.quote);
     const glossary = read('glossary.json');
 
     // ---- 1. independent taxonomies -------------------------------------
@@ -145,7 +145,7 @@ async function main() {
         author: authors[p.author]?.documentId,
         seo: { metaTitle: (p.title || '').slice(0, 70), metaDescription: (p.excerpt || '').slice(0, 170) },
       });
-      postMap[p.title] = doc;
+      postMap[slug] = doc;
     }
 
     // ---- 4. case studies -------------------------------------------------
@@ -169,7 +169,7 @@ async function main() {
         useCases: (c.useCases ?? []).map((u) => useCases[u]?.documentId).filter(Boolean),
         seo: { metaTitle: (c.title || '').slice(0, 70), metaDescription: (c.headline || '').slice(0, 170) },
       });
-      csMap[c.title] = doc;
+      csMap[slug] = doc;
     }
 
     // ---- 5. testimonials -------------------------------------------------
@@ -184,19 +184,20 @@ async function main() {
         sourceNetwork: t.sourceNetwork,
         person: person?.documentId,
         company: companyMap[personCompany]?.documentId,
-        caseStudy: t.caseStudy ? csMap[t.caseStudy]?.documentId : undefined,
+        caseStudy: t.caseStudy ? (csMap[t.caseStudy] ?? Object.values(csMap).find((d) => d.title === t.caseStudy))?.documentId : undefined,
       });
     }
 
     // ---- 6. second pass: related content --------------------------------
     // Needs every document to exist first, so it cannot happen inline above.
+    const postKey = (x) => x.slug || slugify(x.title);
     for (const p of posts) {
-      const self = postMap[p.title];
+      const self = postMap[postKey(p)];
       if (!self) continue;
       const siblings = posts
         .filter((o) => o.category === p.category && o.title !== p.title)
         .slice(0, 2)
-        .map((o) => postMap[o.title]?.documentId)
+        .map((o) => postMap[postKey(o)]?.documentId)
         .filter(Boolean);
       if (!siblings.length) continue;
       await app.documents('api::post.post').update({
@@ -207,13 +208,14 @@ async function main() {
       stats.linked++;
     }
 
+    const csKey = (x) => x.slug || slugify(x.title);
     for (const c of caseStudies) {
-      const self = csMap[c.title];
+      const self = csMap[csKey(c)];
       if (!self) continue;
       const siblings = caseStudies
         .filter((o) => o.useCases.some((u) => c.useCases.includes(u)) && o.title !== c.title)
         .slice(0, 3)
-        .map((o) => csMap[o.title]?.documentId)
+        .map((o) => csMap[csKey(o)]?.documentId)
         .filter(Boolean);
       if (!siblings.length) continue;
       await app.documents('api::case-study.case-study').update({
