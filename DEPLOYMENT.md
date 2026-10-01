@@ -103,10 +103,34 @@ reference to match.
 | `APP_KEYS` … `ENCRYPTION_KEY` | Strapi's signing secrets. Must differ from the local ones. |
 | `DATABASE_CLIENT=postgres` | switches `config/database.ts` off SQLite |
 | `DATABASE_URL` | Railway reference, above |
-| `DATABASE_SSL=true` | Railway Postgres requires TLS |
+| `DATABASE_SSL` | see below |
 | `NODE_ENV=production` | affects Strapi's build and admin behaviour |
 | `CLOUDINARY_*` | switches the upload provider; without these, media would be written to the container's ephemeral disk |
 | `FRONTEND_URL` | CORS allow-list; update once the Astro service has a domain |
+
+### Postgres TLS — pick one
+
+Railway's managed Postgres presents a **self-signed certificate**. Node rejects
+it by default, and Strapi exits on boot with:
+
+```
+error: self-signed certificate in certificate chain
+```
+
+Check the host in the Postgres service's `DATABASE_URL` and set variables to
+match:
+
+| `DATABASE_URL` host | Connection | Set |
+|---|---|---|
+| `postgres.railway.internal` | private network, never leaves Railway | `DATABASE_SSL=false` |
+| `*.proxy.rlwy.net` | public proxy | `DATABASE_SSL=true` **and** `DATABASE_SSL_REJECT_UNAUTHORIZED=false` |
+
+Prefer the private network. It keeps database traffic inside Railway and avoids
+disabling certificate verification at all — which is the better answer if
+anyone asks why verification is off.
+
+`config/database.ts` already reads both variables, so neither option needs a
+code change.
 
 **Do not** set `PORT` or `HOST`. Railway injects `PORT`, and `config/server.ts`
 already reads it with `0.0.0.0` as the host default.
@@ -171,7 +195,7 @@ Then in the admin:
 | `EBUSY: resource busy or locked, rmdir '/app/node_modules/.cache'` | the build command ran `npm ci` a second time. Nixpacks already installs dependencies, and its cache is mounted inside `node_modules`, so a reinstall cannot remove it. The build command must be `npm run build` alone. |
 | `error: APP_KEYS is required` | `APP_KEYS` missing, or not comma-separated with at least two values |
 | Healthcheck times out | usually the first build exceeding the window; raise `healthcheckTimeout` in `railway.json` or redeploy |
-| `self signed certificate` / SSL error from Postgres | `DATABASE_SSL=true` missing |
+| `self-signed certificate in certificate chain`, Strapi restart-looping | Railway Postgres uses a self-signed cert. Set `DATABASE_SSL=false` on the private network, or `DATABASE_SSL_REJECT_UNAUTHORIZED=false` on the public proxy. See *Postgres TLS* above. |
 | Images 404 after a redeploy | Cloudinary variables not set — media went to the ephemeral container disk |
 | Admin loads but CSS is broken | CSP blocking; `config/middlewares.ts` already allows `res.cloudinary.com` |
 | CORS error from the Astro site | add the Astro domain to `FRONTEND_URL` / `CORS_ORIGINS` |
