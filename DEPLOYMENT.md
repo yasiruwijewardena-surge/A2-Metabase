@@ -77,7 +77,7 @@ CMS service references in the next step.
    - **Service Name**: `cms` (optional, clearer than the repo name)
 4. Railway reads `apps/cms/railway.json` for the build and start commands, so
    there is nothing to type there:
-   - build: `npm ci && npm run build`
+   - build: `npm run build`  (Nixpacks installs dependencies itself)
    - start: `npm run start`
    - healthcheck: `/_health`
 
@@ -168,6 +168,7 @@ Then in the admin:
 | Symptom | Cause |
 |---|---|
 | Build fails, `npm ci` cannot find package.json | Root Directory is not set to `apps/cms` |
+| `EBUSY: resource busy or locked, rmdir '/app/node_modules/.cache'` | the build command ran `npm ci` a second time. Nixpacks already installs dependencies, and its cache is mounted inside `node_modules`, so a reinstall cannot remove it. The build command must be `npm run build` alone. |
 | `error: APP_KEYS is required` | `APP_KEYS` missing, or not comma-separated with at least two values |
 | Healthcheck times out | usually the first build exceeding the window; raise `healthcheckTimeout` in `railway.json` or redeploy |
 | `self signed certificate` / SSL error from Postgres | `DATABASE_SSL=true` missing |
