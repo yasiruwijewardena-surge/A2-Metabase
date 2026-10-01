@@ -1,0 +1,68 @@
+{
+  "categories": [
+    { "name": "News", "description": "Announcements, releases and company updates." },
+    { "name": "Engineering", "description": "How we build and run the product." },
+    { "name": "Analytics and BI", "description": "Practice and craft of working with data." },
+    { "name": "Product", "description": "Features, workflows and what they are for." },
+    { "name": "Data explorations", "description": "Analyses of public and internal datasets." },
+    { "name": "Using Metabase", "description": "Practical guides for getting more out of it." }
+  ],
+  "tags": [
+    { "name": "AI" },
+    { "name": "Security" },
+    { "name": "Open Source" },
+    { "name": "Embedding" },
+    { "name": "Performance" },
+    { "name": "SQL" },
+    { "name": "Dashboards" },
+    { "name": "Self-service" },
+    { "name": "Data modeling" },
+    { "name": "Hiring" }
+  ],
+  "industries": [
+    { "name": "Financial Services", "displayOrder": 1, "description": "Banks, lenders, payments and investment platforms." },
+    { "name": "SaaS & Developer Tools", "displayOrder": 2, "description": "Software products sold to businesses and developers." },
+    { "name": "Education", "displayOrder": 3, "description": "Schools, universities and learning platforms." },
+    { "name": "Healthcare", "displayOrder": 4, "description": "Providers, telehealth and health technology." },
+    { "name": "eCommerce & Retail", "displayOrder": 5, "description": "Online and physical retail." },
+    { "name": "Logistics & Transport", "displayOrder": 6, "description": "Freight, shipping and mobility." },
+    { "name": "Manufacturing", "displayOrder": 7, "description": "Industrial production and supply chain." },
+    { "name": "Nonprofit", "displayOrder": 8, "description": "Charities, NGOs and social enterprises." }
+  ],
+  "useCases": [
+    { "name": "Business Intelligence", "displayOrder": 1, "description": "Self-service analytics for your own team." },
+    { "name": "Embedded Analytics", "displayOrder": 2, "description": "Customer-facing analytics inside your product." }
+  ],
+  "authors": [
+    {
+      "name": "Sameer Al-Sakran",
+      "role": "CEO",
+      "bio": "Works on making data useful to people who do not think of themselves as data people.",
+      "socialX": "metabase"
+    },
+    {
+      "name": "Jess Thompson",
+      "role": "Content Lead",
+      "bio": "Writes about analytics practice, and occasionally about what the numbers actually mean.",
+      "socialX": "metabase"
+    },
+    {
+      "name": "Maya Okonkwo",
+      "role": "Staff Engineer",
+      "bio": "Spends most of her time in the query layer and the parts of the codebase nobody volunteers for.",
+      "socialLinkedIn": "maya-okonkwo"
+    },
+    {
+      "name": "Daniel Reyes",
+      "role": "Product Manager",
+      "bio": "Interested in the gap between what a dashboard shows and what a team decides.",
+      "socialLinkedIn": "daniel-reyes"
+    },
+    {
+      "name": "Priya Raman",
+      "role": "Analytics Engineer",
+      "bio": "Builds semantic layers and argues about metric definitions for a living.",
+      "socialX": "metabase"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+[
+  {
+    "title": "Why your semantic layer is the only AI strategy that matters",
+    "category": "Analytics and BI",
+    "tags": ["AI", "Data modeling"],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-09-18",
+    "readTimeMinutes": 7,
+    "featured": true,
+    "excerpt": "An agent that can write SQL is not the hard part. An agent that writes SQL against definitions your finance team agrees with is.",
+    "body": "Every analytics vendor now ships something that turns a question into a query. The demos are good. The demos are always good, because the demo database has eight tables and one definition of revenue.\n\nYour warehouse has nine hundred tables and four definitions of revenue, three of which are wrong in ways that only one person remembers.\n\n## The problem was never query generation\n\nLanguage models are genuinely good at writing SQL. Point one at a schema and it will produce something syntactically valid and usually close to what you meant. That is not where analytics goes wrong.\n\nAnalytics goes wrong when two people pull the same number and get different answers, then spend a week finding out why. The model does not fix that. It accelerates it, because now both people can generate a plausible query in four seconds instead of forty minutes.\n\n## What a semantic layer actually buys you\n\nA semantic layer is the agreement about what things mean, written down somewhere a machine can read:\n\n- Which tables are canonical and which are somebody's scratch work\n- What `active_customer` means this quarter\n- Which joins are legitimate and which silently fan out your row counts\n- Which metrics have been checked by someone who would be embarrassed if they were wrong\n\nOnce that exists, an agent stops guessing. It is not inferring intent from column names; it is composing answers out of definitions a human already signed off on.\n\n## Verification is the feature\n\nThe part that matters is not that the agent answers. It is that you can see the query it ran, trace it to the definitions it used, and disagree with it in a specific way.\n\nAn answer you cannot inspect is a rumour with a chart attached."
+  },
+  {
+    "title": "Filtering a thousand rows in the browser, and when to stop",
+    "category": "Engineering",
+    "tags": ["Performance", "Dashboards"],
+    "author": "Maya Okonkwo",
+    "publishedDate": "2026-09-02",
+    "readTimeMinutes": 9,
+    "excerpt": "Client-side filtering feels instant until the list grows. Here is where the line actually sits, measured rather than guessed.",
+    "body": "There is a tempting pattern in content-heavy sites: render everything, then hide what does not match. No network request, no spinner, no loading state to design. Filtering feels instantaneous because it is.\n\nIt also stops working, and the failure is gradual enough that nobody notices the day it starts.\n\n## What actually costs you\n\nThree things, in increasing order of how much they hurt:\n\n- **Transfer.** Every hidden row still shipped over the wire.\n- **Parse and layout.** The browser builds the whole DOM before it paints anything.\n- **Memory.** Each node carries overhead, and on a mid-range phone this is the one that bites.\n\nThe second is the one that shows up in Largest Contentful Paint, which is the one your performance budget cares about.\n\n## Where the line sits\n\nRoughly: under a couple of hundred simple cards, render it all and filter in the browser. Past that, paginate or generate a route per filter value.\n\nThe better question is not how many rows the browser can survive. It is whether the filtered view deserves a URL. If someone might want to send a colleague the Healthcare stories, that is a page, not a DOM state.\n\n## Doing both\n\nStatic routes per filter value give you shareable, indexable pages. A small amount of script on top keeps in-page switching instant and syncs the URL as it goes. You get the fast interaction and the shareable link, and the version without JavaScript still works."
+  },
+  {
+    "title": "Four definitions of churn, and why your dashboard picked the wrong one",
+    "category": "Analytics and BI",
+    "tags": ["Data modeling", "Self-service"],
+    "author": "Priya Raman",
+    "publishedDate": "2026-08-21",
+    "readTimeMinutes": 6,
+    "featured": true,
+    "excerpt": "Churn is not one metric. It is a family of metrics that disagree, and the disagreement is where the useful information lives.",
+    "body": "Someone asks what your churn rate is. You have a number. The number is wrong, or rather, it is right for a question nobody asked.\n\n## The four\n\n**Logo churn** counts customers who left. Treats a two-seat account and a two-thousand-seat account as equal. Useful for understanding product-market fit, useless for forecasting revenue.\n\n**Revenue churn** counts money that left. Reflects the business, hides the fact that you are bleeding small accounts.\n\n**Net revenue churn** subtracts expansion from existing customers. Can go negative, which looks wonderful and can mask a complete failure to retain anyone new.\n\n**Cohort churn** asks what fraction of a given signup month is still here after N months. The only one that tells you whether things are getting better.\n\n## They disagree on purpose\n\nA quarter where logo churn rises and net revenue churn falls is a real situation with a clear story: you are losing small accounts and growing large ones. One number would have hidden that. Two numbers told you what happened.\n\n## What to do about it\n\nDefine all four, name them unambiguously, and put the definition next to the chart. Not in a wiki. Next to the chart, where the person reading it is."
+  },
+  {
+    "title": "Metabase 56 is out",
+    "category": "News",
+    "tags": ["Open Source"],
+    "author": "Jess Thompson",
+    "publishedDate": "2026-09-25",
+    "readTimeMinutes": 2,
+    "excerpt": "Semantic layer curation in Data Studio, faster dashboard loads on large result sets, and a long list of fixes.",
+    "body": "The headline change is curation tooling for your semantic layer — marking canonical sources, defining reusable metrics, and making the distinction between vetted and exploratory content visible to everyone rather than tribal knowledge.\n\n## Also in this release\n\n- Dashboards with large result sets paginate server-side rather than shipping the whole set\n- Query builder handles multi-level aggregation without dropping to SQL\n- Permissions UI rewritten around groups rather than individual users\n- Forty-one bug fixes, including several in the date handling nobody enjoys\n\nUpgrade notes and the full changelog are in the documentation."
+  },
+  {
+    "title": "We replaced our issue triage with an agent, and kept the humans",
+    "category": "Engineering",
+    "tags": ["AI", "Open Source"],
+    "author": "Maya Okonkwo",
+    "publishedDate": "2026-08-07",
+    "readTimeMinutes": 8,
+    "excerpt": "A bot that reproduces bug reports before a human reads them. What worked, what did not, and what we would not do again.",
+    "body": "Open source issue trackers have a shape: a steady stream of reports, most of which are missing the one detail that would make them actionable. Someone has to ask for that detail. That someone burns out.\n\n## What we built\n\nAn agent that reads a new issue, attempts to reproduce it against a clean instance, and comments with what it found. Not a triage decision — a reproduction attempt, with logs.\n\n## What worked\n\nAbout a third of reports reproduce cleanly, and for those the agent attaches a stack trace and the exact version where behaviour changed. That turns a two-day back-and-forth into a maintainer reading one comment.\n\n## What did not\n\nThe agent is confidently wrong about environment-specific problems. Anything touching a database driver, a proxy, or a customer's particular SSO setup produced plausible-sounding nonsense. We now have it refuse rather than speculate when it cannot reproduce, which felt like a downgrade and was not.\n\n## What we would not do again\n\nWe initially let it close issues it could not reproduce. That was a mistake, and an unkind one — the reports it could not reproduce were disproportionately the hardest and most valuable. It now escalates instead."
+  },
+  {
+    "title": "Dashboards nobody opens",
+    "category": "Product",
+    "tags": ["Dashboards", "Self-service"],
+    "author": "Daniel Reyes",
+    "publishedDate": "2026-07-29",
+    "readTimeMinutes": 5,
+    "excerpt": "Most analytics deployments accumulate dashboards faster than they retire them. Usage data makes the problem legible.",
+    "body": "Every mature analytics instance has a long tail of dashboards that were built for one meeting in 2023 and have been quietly recomputing ever since.\n\nThis is not a tidiness problem. It is a trust problem. When someone searches and finds six dashboards named some variant of *Revenue Overview*, the rational response is to not trust any of them and ask an analyst instead — which is precisely the loop self-service was supposed to break.\n\n## Make it visible\n\nUsage analytics turns an argument into a fact. Which dashboards were opened last month, by how many distinct people, and which have not been touched since the quarter they were made.\n\n## Then do something about it\n\n- Archive anything with no views in ninety days. It is recoverable; nobody will mind.\n- For the survivors, mark the ones that are official and the ones that are somebody's working draft.\n- Put the owner's name on it, so there is a person to ask rather than a wiki to search.\n\nThe goal is a search result where the first hit is obviously the right one."
+  },
+  {
+    "title": "What 40,000 public dashboards taught us about chart choice",
+    "category": "Data explorations",
+    "tags": ["Dashboards"],
+    "author": "Priya Raman",
+    "publishedDate": "2026-07-11",
+    "readTimeMinutes": 10,
+    "excerpt": "People reach for pie charts far more often than any visualisation textbook would like. The interesting part is when they are right.",
+    "body": "We looked at anonymised, aggregated statistics on chart types across public instances. The headline is not surprising. The exceptions are.\n\n## The distribution\n\nBar and line dominate, as they should. Tables are far more common than visualisation advice suggests, and in context they are usually the right call — a reader who wants a specific value is poorly served by a shape.\n\n## Pie charts\n\nThey are used more than they should be, and the failure mode is consistent: seven or more slices, several under five percent. At that point nobody can compare anything and the chart is decoration.\n\nBut the two-slice and three-slice cases are genuinely fine. A split between two categories reads instantly as a proportion, which is exactly the question being asked.\n\n## The actual finding\n\nThe strongest predictor of a confusing dashboard was not chart type. It was the number of distinct questions on one screen. Dashboards with a single clear question and three charts outperformed dashboards with twelve charts and no stated question, regardless of what those charts were."
+  },
+  {
+    "title": "Row-level permissions without a second data model",
+    "category": "Using Metabase",
+    "tags": ["Embedding", "Security"],
+    "author": "Daniel Reyes",
+    "publishedDate": "2026-06-24",
+    "readTimeMinutes": 7,
+    "excerpt": "Multi-tenant embedded analytics usually means every customer sees only their own rows. Here is how to get there without duplicating anything.",
+    "body": "The requirement is always the same: customer A must never see customer B's data, and you would prefer not to find out about a failure from customer A.\n\n## The wrong way\n\nA separate dashboard per customer. It works at three customers and collapses at thirty, and every change has to be made thirty times.\n\n## Sandboxing\n\nThe better approach is to attach the tenant identity to the session and let the data layer filter. One dashboard, one query, filtered per viewer by a value the viewer cannot change.\n\n- The signed token carries the tenant id\n- A sandbox policy on the table restricts rows to that id\n- The dashboard itself is unaware any of this is happening\n\n## Testing it\n\nThe failure you care about is silent, so test for it explicitly: sign a token for tenant A, request a dashboard scoped to B, and assert you get nothing. Put it in CI. This is the one place where a test that asserts emptiness is worth writing."
+  },
+  {
+    "title": "Security release: please upgrade",
+    "category": "News",
+    "tags": ["Security"],
+    "author": "Sameer Al-Sakran",
+    "publishedDate": "2026-06-05",
+    "readTimeMinutes": 2,
+    "excerpt": "A fix is available for an issue affecting self-hosted instances. Upgrading is recommended for all deployments.",
+    "body": "A security issue affecting self-hosted deployments has been fixed in the latest patch releases of all supported versions.\n\n## What to do\n\nUpgrade to the latest patch of whichever major version you run. Cloud instances have already been updated and require no action.\n\n## Timeline\n\nThe issue was reported through our disclosure process, confirmed the same day, and patched across supported versions before publication. We will publish a fuller account once deployments have had time to update.\n\nIf you cannot upgrade immediately, restricting network access to your instance meaningfully reduces exposure."
+  },
+  {
+    "title": "The analyst bottleneck is a documentation problem",
+    "category": "Analytics and BI",
+    "tags": ["Self-service"],
+    "author": "Jess Thompson",
+    "publishedDate": "2026-05-19",
+    "readTimeMinutes": 6,
+    "excerpt": "Teams add analysts to clear a queue of ad hoc requests. The queue grows anyway. The reason is not headcount.",
+    "body": "Adding capacity to a queue that regenerates itself does not shorten the queue. Everyone who has ever added a lane to a congested motorway knows this, and everyone who has ever staffed a data team forgets it.\n\n## Where requests come from\n\nMost ad hoc requests are not novel. They are variations on a question somebody already answered, asked by a person who could not find the previous answer or could not tell whether it was still correct.\n\nThat is a discoverability problem wearing an analytics costume.\n\n## What actually reduces the queue\n\n- A canonical place where answered questions live, searchable by the words a non-analyst would use\n- Visible ownership, so stale content has someone to ask\n- Enough modelling that common questions are answerable without a join\n- A ticket trail, so repeated questions become visible as a pattern rather than a series of interruptions\n\n## The uncomfortable part\n\nThis is slower than answering the question. The request takes twenty minutes; documenting it so the next person self-serves takes an hour. The hour is the investment, and it only pays if you make it repeatedly."
+  },
+  {
+    "title": "Caching results without lying to people",
+    "category": "Engineering",
+    "tags": ["Performance", "SQL"],
+    "author": "Maya Okonkwo",
+    "publishedDate": "2026-04-30",
+    "readTimeMinutes": 8,
+    "excerpt": "A cached dashboard is fast. A cached dashboard that does not say it is cached is a correctness bug with good latency.",
+    "body": "Caching analytics results is straightforward right up until someone makes a decision on a number that was computed yesterday and labelled as if it were computed now.\n\n## The rules we settled on\n\n**Always show the age.** Not a tooltip. Visible, next to the result. \"As of 14:20\" costs nothing and prevents an entire category of mistake.\n\n**Let people force a refresh.** Even if they rarely do. Knowing you can is most of the value.\n\n**Scale the TTL to the data, not the query cost.** A dashboard over a table that updates nightly can cache for hours. One over live orders cannot cache for more than a minute, however expensive it is.\n\n## Invalidation\n\nThe honest answer is that time-based expiry handles almost everything and event-based invalidation is worth it for a small number of high-traffic, high-stakes dashboards. Building a general dependency graph between source tables and cached results is a large amount of machinery for a problem most teams do not have."
+  },
+  {
+    "title": "A tour of the query builder for people who already know SQL",
+    "category": "Using Metabase",
+    "tags": ["SQL", "Self-service"],
+    "author": "Priya Raman",
+    "publishedDate": "2026-04-08",
+    "readTimeMinutes": 7,
+    "excerpt": "If you can write the query, the visual builder can feel like a downgrade. There are three places where it is not.",
+    "body": "The usual reaction from someone fluent in SQL is that a visual builder adds clicks to something they could type. That is often true and occasionally very wrong.\n\n## Where it genuinely wins\n\n**Reusable intermediate steps.** A saved question can be the source for another question. That is a CTE you can name, share, and let a non-SQL colleague build on.\n\n**Drill-through.** A result built through the builder knows its own structure, so clicking a bar can show the rows behind it. Hand-written SQL returns an opaque result set; the system cannot infer what a drill-down would mean.\n\n**Handing it over.** The query you write is a dead end for your colleague in marketing. The same logic in the builder is something they can modify without asking you.\n\n## Where SQL still wins\n\nWindow functions, recursive queries, anything where the shape of the logic is the point. The escape hatch exists for a reason, and a question that starts in the builder can drop into SQL when it needs to."
+  },
+  {
+    "title": "Hiring analytics engineers without a take-home that takes a weekend",
+    "category": "Engineering",
+    "tags": ["Hiring"],
+    "author": "Daniel Reyes",
+    "publishedDate": "2026-03-17",
+    "readTimeMinutes": 5,
+    "excerpt": "Long take-home exercises select for people with free time, not people who are good at the job.",
+    "body": "The standard analytics engineering take-home is a messy dataset and an open brief, with an expected effort of several hours that reliably turns into a weekend.\n\nIt selects for availability. The strongest candidates frequently have the least free time.\n\n## What we do instead\n\nA ninety-minute paired session against a small, deliberately ambiguous dataset. The candidate drives. We answer questions about the business the way a stakeholder would — vaguely, and with contradictions.\n\n## What it surfaces\n\nThe thing we actually care about is whether someone notices that the brief is underspecified and asks, rather than producing a confident answer to a question nobody asked. You cannot see that in a polished artefact submitted three days later.\n\nIt also respects the candidate's time, which turns out to matter for whether good people finish the process."
+  },
+  {
+    "title": "Counting things that resist being counted",
+    "category": "Data explorations",
+    "tags": ["Data modeling"],
+    "author": "Jess Thompson",
+    "publishedDate": "2026-02-26",
+    "readTimeMinutes": 6,
+    "excerpt": "Active users, engaged sessions, meaningful interactions. Every one of these is a judgement call dressed up as arithmetic.",
+    "body": "Some metrics are measurements. Revenue is a measurement; there is a bank account that agrees or disagrees with you.\n\nOther metrics are definitions wearing a measurement's clothes. \"Monthly active users\" is a decision about what counts as active, how long a month is, and whether a bot is a user, presented as though it were a fact.\n\n## The decisions hiding inside\n\n- Does opening an email count as activity?\n- Is a user who logs in daily to check one number more active than one who runs a deep analysis monthly?\n- When someone has three accounts, is that one person or three?\n\nNone of these have correct answers. They have answers you have chosen and should be able to defend.\n\n## The practical consequence\n\nWrite the definition down next to the number. Not because anyone enjoys reading definitions, but because the alternative is a meeting six months from now where two people disagree about a trend and it takes an hour to discover they were measuring different things."
+  }
+]

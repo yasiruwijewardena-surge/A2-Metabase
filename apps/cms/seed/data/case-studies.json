@@ -1,0 +1,157 @@
+[
+  {
+    "title": "Northwind Lending cuts its reporting stack cost by 70%",
+    "company": "Northwind Lending",
+    "useCases": ["Business Intelligence"],
+    "publishedDate": "2026-09-10",
+    "featured": true,
+    "headline": "Northwind Lending replaced a per-seat BI contract with self-hosted Metabase and widened access at the same time.",
+    "challenge": "Licence costs scaled per seat, so access was rationed to a handful of analysts. Everyone else asked those analysts for numbers, and the queue was measured in days.",
+    "solution": "A self-hosted deployment alongside the existing warehouse, with a curated set of models covering the loan book and collections. Access was opened to every department rather than rationed.",
+    "results": "Reporting platform cost fell by roughly 70%, and the number of people querying data directly went from nine to over a hundred within a quarter.",
+    "metrics": [
+      { "value": "70%", "label": "lower platform cost" },
+      { "value": "9 → 100+", "label": "people querying data" },
+      { "value": "3 days → same day", "label": "typical request turnaround" }
+    ],
+    "body": "## Why they moved\n\nThe previous tool was priced per named user, which turned every access request into a budget conversation. The practical effect was that the data team became a help desk.\n\n## The data\n\nThe loan book, collections activity, and broker submissions, all landing in the warehouse nightly. Nothing exotic — the difficulty was never the pipeline, it was who was allowed to look at the result.\n\n## How it went\n\nThe first month was spent modelling rather than building dashboards: agreeing what a delinquent account meant, which date field counted as origination, and which of four broker tables was canonical.\n\n\"We spent longer than expected on definitions and it was the right call,\" says Aisling Doyle, Head of Data. \"Every week we deferred that was a week of people building on sand.\"\n\n## Where it landed\n\nCollections and risk now build their own reporting. The data team moved from answering questions to maintaining the models underneath them, which is the job they were hired for."
+  },
+  {
+    "title": "Cadence CRM ships client reporting without building a reporting team",
+    "company": "Cadence CRM",
+    "useCases": ["Embedded Analytics"],
+    "publishedDate": "2026-08-28",
+    "featured": true,
+    "headline": "Cadence CRM embedded multi-tenant dashboards into its agency product, replacing a backlog of custom report requests.",
+    "challenge": "Every agency client wanted reporting, and each asked for something slightly different. The engineering team was building bespoke exports and falling behind.",
+    "solution": "Embedded dashboards scoped per tenant through signed tokens, with sandboxing at the data layer so a workspace can only ever resolve its own rows.",
+    "results": "Custom reporting requests dropped by 85%, and reporting became a feature in the sales conversation rather than a support cost.",
+    "metrics": [
+      { "value": "85%", "label": "fewer custom report requests" },
+      { "value": "4 weeks", "label": "from first spike to shipped" },
+      { "value": "0", "label": "per-tenant dashboards to maintain" }
+    ],
+    "body": "## The problem with bespoke\n\nAgency clients each have a house style for reporting, and saying yes to the first three requests produced three unmaintainable one-offs.\n\n## The approach\n\nOne dashboard, filtered per viewer. The tenant identity rides in the signed token, and a sandbox policy restricts rows at the data layer rather than in the application.\n\n\"The thing that sold it internally was that we stopped maintaining per-customer anything,\" says Tomás Ferreira, co-founder and CTO.\n\n## Testing the boundary\n\nThe failure mode they cared about was silent cross-tenant leakage, so the check went into CI: sign a token for one workspace, request another's dashboard, assert an empty result."
+  },
+  {
+    "title": "Brightpath Learning gives every parent a live progress view",
+    "company": "Brightpath Learning",
+    "useCases": ["Embedded Analytics", "Business Intelligence"],
+    "publishedDate": "2026-08-12",
+    "headline": "Brightpath Learning replaced termly PDF reports with live dashboards for forty thousand families.",
+    "challenge": "Progress reports were generated three times a year as PDFs. By the time a parent read one, the information was weeks old and any intervention was late.",
+    "solution": "Embedded per-student dashboards in the parent portal, and internal dashboards for the pastoral team covering attendance and assessment trends.",
+    "results": "Support enquiries about progress fell by 60%, and pastoral staff now see attendance drop-off in the week it happens rather than the term after.",
+    "metrics": [
+      { "value": "60%", "label": "fewer progress enquiries" },
+      { "value": "40,000", "label": "families with live access" },
+      { "value": "3x/year → live", "label": "reporting cadence" }
+    ],
+    "body": "## The case for live\n\nA termly PDF is a summary of a period that has already ended. For a student whose attendance slipped in week three, the report arrives long after the point where a conversation would have helped.\n\n## What parents see\n\nAttendance, assessment results over time, and submitted work — scoped strictly to their own children.\n\n## What staff see\n\nThe same data in aggregate, with cohort comparisons. \"The pastoral team stopped asking us for lists,\" says Rebecca Lund, Director of Analytics. \"They just look.\""
+  },
+  {
+    "title": "Meridian Health shortens its clinical reporting loop",
+    "company": "Meridian Health",
+    "useCases": ["Business Intelligence"],
+    "publishedDate": "2026-07-22",
+    "headline": "Meridian Health moved operational reporting out of spreadsheets and into a governed semantic layer.",
+    "challenge": "Operational reporting lived in spreadsheets maintained by individuals. When someone was on leave, their report simply did not happen that week.",
+    "solution": "Canonical models for appointments, clinician utilisation and wait times, with dashboards owned by teams rather than individuals.",
+    "results": "Weekly reporting became automatic, and wait time reporting moved from a monthly summary to a live view.",
+    "metrics": [
+      { "value": "monthly → live", "label": "wait time visibility" },
+      { "value": "12", "label": "spreadsheets retired" }
+    ],
+    "body": "## Key-person risk\n\nThe honest description of the previous system was that several important numbers existed because one person remembered to update a file on Fridays.\n\n## Modelling first\n\nAppointments turned out to have four states that different teams counted differently. Agreeing on them took three weeks and resolved a long-running disagreement about utilisation.\n\n\"Half the value was the argument we had to have,\" says Nikhil Sharma, VP Engineering."
+  },
+  {
+    "title": "Harbour & Co merges online and in-store reporting",
+    "company": "Harbour & Co",
+    "useCases": ["Business Intelligence"],
+    "publishedDate": "2026-07-03",
+    "headline": "Harbour & Co brought web and point-of-sale data into one place and stopped arguing about which channel was working.",
+    "challenge": "Online and retail reported separately with different definitions of a sale, a return and a customer. Channel performance debates were unresolvable.",
+    "solution": "A shared model joining web orders and point-of-sale transactions on a single customer identity, with one definition of net revenue.",
+    "results": "Channel reporting reconciled for the first time, revealing that in-store returns of online purchases had been misattributed for two years.",
+    "metrics": [
+      { "value": "2 years", "label": "of misattribution found" },
+      { "value": "6 stores + web", "label": "unified in one model" }
+    ],
+    "body": "## The discrepancy\n\nOnline reported strong net revenue; retail reported weak. Both were using their own returns data, and a customer returning an online order in a store was being counted against the store.\n\n## The fix\n\nOne customer identity, one order identity, and returns attributed to the channel of the original sale.\n\n\"It reframed an argument we'd been having for two years,\" says Freja Nielsen, Head of Growth. \"Retail wasn't underperforming. It was absorbing the returns.\""
+  },
+  {
+    "title": "Transit Lane gives customers their own shipment reporting",
+    "company": "Transit Lane",
+    "useCases": ["Embedded Analytics"],
+    "publishedDate": "2026-06-18",
+    "headline": "Transit Lane replaced emailed spreadsheets with embedded dashboards for freight customers.",
+    "challenge": "Customers wanted shipment status and dwell time reporting. Operations produced spreadsheets by hand, weekly, per customer.",
+    "solution": "Embedded dashboards in the customer portal, scoped per account, covering shipment status, dwell times and exceptions.",
+    "results": "The weekly spreadsheet run was eliminated, recovering around 1,200 operations hours a year.",
+    "metrics": [
+      { "value": "1,200 hrs/yr", "label": "operations time recovered" },
+      { "value": "weekly → live", "label": "customer reporting" }
+    ],
+    "body": "## The spreadsheet run\n\nEvery Monday, two people spent most of the day producing and emailing customer reports. The data was stale by Tuesday.\n\n## What changed\n\nCustomers now log in. Exceptions surface as they happen rather than in a weekly digest, which turned out to matter more than the time saved.\n\n\"The hours were the business case,\" says Pieter van Dijk, Operations Lead. \"Customers catching delays on the day was the actual benefit.\""
+  },
+  {
+    "title": "Forge Industrial puts line data in front of line supervisors",
+    "company": "Forge Industrial",
+    "useCases": ["Business Intelligence"],
+    "publishedDate": "2026-05-29",
+    "headline": "Forge Industrial moved production reporting from a nightly batch to near-live dashboards on the factory floor.",
+    "challenge": "Line performance was reviewed the following morning from a batch report, so a problem on an afternoon shift was addressed a day late.",
+    "solution": "Near-live dashboards on floor displays showing throughput, scrap rate and downtime by line, with drill-down for supervisors.",
+    "results": "Scrap rate fell measurably in the first quarter, attributed to problems being caught within the shift.",
+    "metrics": [
+      { "value": "next day → 15 min", "label": "reporting latency" },
+      { "value": "3 plants", "label": "on the same model" }
+    ],
+    "body": "## Latency was the problem\n\nThe reporting was accurate and useless, because it arrived after the shift that could have acted on it had gone home.\n\n## On the floor\n\nDisplays at each line show the current shift against target, with scrap and downtime broken out. Supervisors can drill into a specific run.\n\n\"Nobody asked for more detail,\" says Anjali Deshpande, Plant Systems Manager. \"They asked for it sooner.\""
+  },
+  {
+    "title": "OpenRiver Trust reports to funders without a reporting team",
+    "company": "OpenRiver Trust",
+    "useCases": ["Business Intelligence"],
+    "publishedDate": "2026-05-06",
+    "headline": "OpenRiver Trust automated institutional funder reporting across programmes in four countries.",
+    "challenge": "Each institutional funder required a different report on a different schedule, assembled by hand from field data.",
+    "solution": "Shared models over programme and field data, with per-funder dashboards and scheduled exports matching each reporting template.",
+    "results": "Funder reporting moved from two weeks of manual assembly per cycle to a scheduled export, with field teams able to see their own numbers.",
+    "metrics": [
+      { "value": "2 weeks → scheduled", "label": "funder reporting effort" },
+      { "value": "4 countries", "label": "on one model" }
+    ],
+    "body": "## The reporting burden\n\nSmall organisations spend a disproportionate share of capacity on compliance reporting. Every hour assembling a funder report is an hour not spent on programmes.\n\n## What it looks like now\n\nField data flows into shared models. Each funder's template is a saved view with a schedule attached.\n\n\"We did not have anyone to spare for this,\" says Grace Mwangi, Programme Director. \"That was the whole point.\""
+  },
+  {
+    "title": "Keystone Payments segregates data across marketplace tenants",
+    "company": "Keystone Payments",
+    "useCases": ["Embedded Analytics"],
+    "publishedDate": "2026-04-15",
+    "headline": "Keystone Payments delivers settlement reporting to marketplace customers with strict tenant isolation.",
+    "challenge": "Marketplace customers needed settlement and chargeback reporting, under compliance requirements that made cross-tenant visibility unacceptable.",
+    "solution": "Embedded dashboards with sandboxing at the data layer, group-mapped permissions through the existing identity provider, and audit logging of data access.",
+    "results": "Settlement reporting shipped as a product feature, with access controls that satisfied the compliance review on the first pass.",
+    "metrics": [
+      { "value": "first pass", "label": "compliance review cleared" },
+      { "value": "SSO-mapped", "label": "permissions, no separate accounts" }
+    ],
+    "body": "## Compliance first\n\nThe requirement was not just that tenants should not see each other's data, but that this could be demonstrated.\n\n## How it is enforced\n\nTenant identity comes from the signed token, sandboxing filters at the data layer, and access is logged.\n\n\"Being able to show the auditor the policy rather than describe it was the difference,\" says Wei Lin Tan, Staff Data Engineer."
+  },
+  {
+    "title": "Lantern Dev Tools ships usage analytics as a product feature",
+    "company": "Lantern Dev Tools",
+    "useCases": ["Embedded Analytics"],
+    "publishedDate": "2026-03-25",
+    "headline": "A five-person engineering team shipped customer-facing usage analytics in under a month.",
+    "challenge": "Customers wanted to understand their own usage. Building a reporting UI from scratch would have consumed a quarter the team did not have.",
+    "solution": "Embedded dashboards styled to match the product, built against the existing events table with no new pipeline.",
+    "results": "Usage analytics shipped in three weeks, and became the most-cited feature in trial-to-paid conversations.",
+    "metrics": [
+      { "value": "3 weeks", "label": "to ship" },
+      { "value": "5", "label": "engineers on the team" }
+    ],
+    "body": "## The build-versus-embed call\n\nA charting library is the easy part. The hard parts are the query layer, permissions, caching and the long tail of interactions people expect.\n\n## What shipped\n\nDashboards embedded in the product, white-labelled, over the events table that already existed.\n\n\"If we'd built it ourselves it would still be in progress,\" says Jonas Kleine, founder. \"And it would be worse.\""
+  }
+]

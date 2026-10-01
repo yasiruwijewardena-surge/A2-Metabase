@@ -12,7 +12,9 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "seed": "node seed/index.js",
+    "seed:fresh": "node seed/index.js --fresh"
   },
   "dependencies": {
     "@strapi/database": "5.56.0",

@@ -89,8 +89,8 @@ Target here is 90+ desktop / 80+ mobile. Full baseline in `SITE-ANALYSIS.md` §2
 - [x] Analyse the original — stack, IA, content model, user journeys
 - [x] Measure the PageSpeed baseline
 - [x] Scaffold Strapi and define the content model
-- [ ] Deploy Strapi + Postgres to Railway
-- [ ] Seed content
+- [x] Deploy Strapi + Postgres to Railway
+- [x] Seed content (121 entries, `npm run seed`)
 - [ ] Scaffold Astro with the design tokens
 - [ ] Build the pages
 - [ ] Deploy the front end

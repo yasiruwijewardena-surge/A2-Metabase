@@ -30,6 +30,45 @@ openssl rand -base64 32
 
 `APP_KEYS` takes at least two, comma-separated.
 
+## Seeding
+
+```bash
+npm run seed          # idempotent: existing entries are skipped
+npm run seed:fresh    # delete seeded content first, then re-create
+```
+
+Seeds 121 entries: 14 posts, 10 case studies, 22 testimonials, 24 glossary
+terms, plus the taxonomies, companies and people they relate to.
+
+The script boots Strapi in-process and writes through the Document Service, so
+it needs no API token, runs the same validation the admin does, and works
+against whatever database the environment points at. Entries are matched on
+their natural key (slug, or the quote text for testimonials), so re-running is
+safe.
+
+Relations are wired in two passes, because `relatedPosts` and
+`relatedCaseStudies` reference documents that do not exist until the first pass
+finishes.
+
+Content lives in `seed/data/*.json` as plain JSON with markdown-ish `body`
+strings; `seed/blocks.js` converts those to Strapi's `blocks` format. Companies
+and people are fictional — inventing quotes and outcomes and attributing them
+to real organisations would be fabricating records.
+
+### Seeding the Railway database
+
+Point the same script at production using the **public** proxy URL from the
+Postgres service (the private `.railway.internal` host is not reachable from
+your machine):
+
+```bash
+DATABASE_CLIENT=postgres \
+DATABASE_URL='<DATABASE_PUBLIC_URL from Railway>' \
+DATABASE_SSL=true \
+DATABASE_SSL_REJECT_UNAUTHORIZED=false \
+npm run seed
+```
+
 ## Content model
 
 Eleven collection types. The shape deliberately differs from metabase.com in a

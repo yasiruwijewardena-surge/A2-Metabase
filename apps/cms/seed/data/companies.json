@@ -1,0 +1,27 @@
+{
+  "_note": "Companies and people are fictional. Inventing quotes and outcomes and attributing them to real organisations would be fabricating records, so the replica uses sample companies throughout. Structure and field shape match the original.",
+  "companies": [
+    { "name": "Northwind Lending", "industry": "Financial Services", "employees": "200+", "headquarters": "Leeds, United Kingdom", "website": "https://example.com/northwind", "description": "A lender offering secured business finance to small and mid-sized companies across the UK." },
+    { "name": "Cadence CRM", "industry": "SaaS & Developer Tools", "employees": "80+", "headquarters": "Lisbon, Portugal", "website": "https://example.com/cadence", "description": "A customer relationship platform for agencies, with reporting built into every client workspace." },
+    { "name": "Brightpath Learning", "industry": "Education", "employees": "150+", "headquarters": "Toronto, Canada", "website": "https://example.com/brightpath", "description": "An online school serving students in forty countries, with live reporting for parents and administrators." },
+    { "name": "Meridian Health", "industry": "Healthcare", "employees": "500+", "headquarters": "Melbourne, Australia", "website": "https://example.com/meridian", "description": "A telehealth provider connecting patients to clinicians across regional Australia." },
+    { "name": "Harbour & Co", "industry": "eCommerce & Retail", "employees": "60+", "headquarters": "Copenhagen, Denmark", "website": "https://example.com/harbour", "description": "A direct-to-consumer homeware brand operating online and through six physical stores." },
+    { "name": "Transit Lane", "industry": "Logistics & Transport", "employees": "320+", "headquarters": "Rotterdam, Netherlands", "website": "https://example.com/transitlane", "description": "A freight forwarder moving containers between European ports and inland distribution." },
+    { "name": "Forge Industrial", "industry": "Manufacturing", "employees": "1,000+", "headquarters": "Pune, India", "website": "https://example.com/forge", "description": "A components manufacturer supplying the automotive and appliance sectors." },
+    { "name": "OpenRiver Trust", "industry": "Nonprofit", "employees": "40+", "headquarters": "Nairobi, Kenya", "website": "https://example.com/openriver", "description": "A water and sanitation charity operating across East Africa, reporting to institutional funders." },
+    { "name": "Keystone Payments", "industry": "Financial Services", "employees": "250+", "headquarters": "Singapore", "website": "https://example.com/keystone", "description": "A payments processor serving marketplaces in South East Asia." },
+    { "name": "Lantern Dev Tools", "industry": "SaaS & Developer Tools", "employees": "35+", "headquarters": "Berlin, Germany", "website": "https://example.com/lantern", "description": "An observability product for small engineering teams, with usage analytics shipped to every customer." }
+  ],
+  "people": [
+    { "name": "Aisling Doyle", "role": "Head of Data", "company": "Northwind Lending" },
+    { "name": "Tomás Ferreira", "role": "Co-founder and CTO", "company": "Cadence CRM" },
+    { "name": "Rebecca Lund", "role": "Director of Analytics", "company": "Brightpath Learning" },
+    { "name": "Nikhil Sharma", "role": "VP Engineering", "company": "Meridian Health" },
+    { "name": "Freja Nielsen", "role": "Head of Growth", "company": "Harbour & Co" },
+    { "name": "Pieter van Dijk", "role": "Operations Lead", "company": "Transit Lane" },
+    { "name": "Anjali Deshpande", "role": "Plant Systems Manager", "company": "Forge Industrial" },
+    { "name": "Grace Mwangi", "role": "Programme Director", "company": "OpenRiver Trust" },
+    { "name": "Wei Lin Tan", "role": "Staff Data Engineer", "company": "Keystone Payments" },
+    { "name": "Jonas Kleine", "role": "Founder", "company": "Lantern Dev Tools" }
+  ]
+}
