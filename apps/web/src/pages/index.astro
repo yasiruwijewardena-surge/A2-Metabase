@@ -7,6 +7,7 @@ import HeroDashboard from '../components/HeroDashboard.astro';
 import PaymentsDashboard from '../components/demos/PaymentsDashboard.astro';
 import DataStudioAccount from '../components/demos/DataStudioAccount.astro';
 import MetabotChat from '../components/demos/MetabotChat.astro';
+import ScaleIcon from '../components/ScaleIcon.astro';
 import CopyCommand from '../components/CopyCommand.astro';
 import DataSourceMarquee from '../components/DataSourceMarquee.astro';
 
@@ -21,7 +22,6 @@ const social = testimonials
   .sort((a, b) => a.displayOrder - b.displayOrder)
   .slice(0, 9);
 
-const featuredCases = cases.filter((c) => c.featured).slice(0, 3);
 
 /** The customer logo strip, matching the original's row. */
 const logos = [
@@ -30,6 +30,37 @@ const logos = [
   ['deutsche-telekom', 'Deutsche Telekom'], ['kong', 'Kong'],
 ];
 
+
+/** The three supporting points under Embedded Analytics. */
+const eaFeatures = [
+  ['Way less engineering overhead than rolling your own in-app reporting',
+   'Data teams and non-technical teammates can work with data without bugging devs.'],
+  ['Self-host or deploy on Metabase Cloud',
+   'Start with simple charts, embed full dashboards, or use the SDK for advanced setups as your needs grow.'],
+  ['Customizable to fit your product',
+   'White-labeling, dynamic styling, and interactive controls from view-only to full data discovery with a low-code integration.'],
+];
+
+/** "Metabase scales as you grow" — six cards, each with an inline feature link. */
+const scaleCards = [
+  { icon: 'grid', title: 'Multi-tenant data segregation',
+    link: ['Granular permissions', '/features/data-segregation'],
+    tail: ' to make sure people see what they need to, and nothing else.' },
+  { icon: 'eye', title: 'Secure and simple access', link: null,
+    tail: 'Integrate with SSO IdPs (SAML, LDAP, JWT, Google) and map to Metabase groups.' },
+  { icon: 'terminal', title: 'Drop into SQL',
+    lead: 'When you need an ', link: ['escape hatch into SQL', '/features/sql-editor'],
+    tail: " to run raw queries, tweak logic, or join tables, you're covered." },
+  { icon: 'chart', title: 'Track data and dashboard usage',
+    link: ['No more unused dashboards', '/features/usage-analytics'],
+    tail: '. Inspect user behavior across content, data access and downloads.' },
+  { icon: 'bolt', title: 'Keep dashboards snappy',
+    lead: 'Go faster with ', link: ['result and model caching', '/docs'],
+    tail: '. No schedulers or pipelines needed.' },
+  { icon: 'layers', title: 'Test and deploy safely',
+    lead: 'Spin up ', link: ['staging environments', '/docs'],
+    tail: ' without touching prod. Export configs, models, and dashboards to test or scale across multiple instances.' },
+];
 
 const biPoints = [
   {
@@ -269,7 +300,16 @@ const biPoints = [
 </MetabaseProvider>`}</code></pre>
       </div>
 
-      <p class="mt-20 text-center">
+      <div class="mt-24 grid gap-10 md:grid-cols-3">
+        {eaFeatures.map(([title, body]) => (
+          <div>
+            <h3 class="mb-2 text-lg leading-snug">{title}</h3>
+            <p class="text-(--color-ink-2)">{body}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-14 text-center">
         <a href="/case-studies/use-case/embedded-analytics" class="font-bold text-(--color-brand-hover) hover:underline">
           See who embeds Metabase →
         </a>
@@ -277,34 +317,32 @@ const biPoints = [
     </div>
   </section>
 
-  <!-- Featured customer stories -->
-  {featuredCases.length > 0 && (
-    <section class="border-t border-(--color-line) py-16">
-      <div class="container-mb">
-        <div class="mb-8 flex items-end justify-between gap-6">
-          <h2 class="text-3xl">Real companies, real data, real stories</h2>
-          <a href="/case-studies" class="shrink-0 font-bold text-(--color-brand-hover) hover:underline">See all stories →</a>
-        </div>
-        <div class="grid gap-6 md:grid-cols-3">
-          {featuredCases.map((c) => (
-            <article class="overflow-hidden rounded-xl border border-(--color-line)">
-              <CldImage image={c.heroImage} widths={[300, 480, 760]} sizes="(max-width: 768px) 100vw, 360px"
-                        ratio={16 / 9} class="aspect-[16/9] w-full object-cover" />
-              <div class="p-5">
-                {c.company?.industry && (
-                  <p class="mb-1 text-xs font-bold uppercase tracking-wide text-(--color-ink-3)">{c.company.industry.name}</p>
-                )}
-                <h3 class="mb-3 text-base leading-snug">
-                  <a href={`/case-studies/${c.slug}`} class="hover:text-(--color-brand-hover)">{c.title}</a>
-                </h3>
-                <a href={`/case-studies/${c.slug}`} class="text-sm font-bold text-(--color-brand-hover)">Read the case study →</a>
-              </div>
-            </article>
-          ))}
-        </div>
+  <!-- Metabase scales as you grow -->
+  <section class="py-20">
+    <div class="container-mb">
+      <header class="mx-auto mb-14 max-w-[700px] text-center">
+        <h2 class="mb-4 text-[2.5rem] leading-[1.1]">Metabase scales as you grow</h2>
+        <p class="text-lg text-(--color-ink-2)">
+          Advanced features for managing lots of users and compliance. Flexible even as your
+          tooling or workflow evolves.
+        </p>
+      </header>
+
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        {scaleCards.map((c) => (
+          <div>
+            <ScaleIcon name={c.icon} />
+            <h3 class="mb-2 mt-4 text-lg leading-snug">{c.title}</h3>
+            <p class="text-(--color-ink-2)">
+              {c.lead}
+              {c.link && <a href={c.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{c.link[0]}</a>}
+              {c.tail}
+            </p>
+          </div>
+        ))}
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
   <!-- Social wall -->
   {social.length > 0 && (
