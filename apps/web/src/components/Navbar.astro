@@ -14,9 +14,9 @@ const features = [
   ['Permissions', '/features/permissions'], ['CSV upload', '/product/csv-uploads'],
 ];
 ---
-<header class="sticky top-0 z-50 border-b border-[--color-line] bg-white/95 backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-(--color-line) bg-white/95 backdrop-blur">
   <nav class="container-mb flex h-16 items-center gap-8" aria-label="Main">
-    <a href="/" class="flex shrink-0 items-center gap-2 font-black text-[--color-ink]" aria-label="Metabase home">
+    <a href="/" class="flex shrink-0 items-center gap-2 font-black text-(--color-ink)" aria-label="Metabase home">
       <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
         <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
         <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
@@ -50,7 +50,7 @@ const features = [
                 {features.map(([label, href, badge]) => (
                   <a href={href} class="nav-item text-sm">
                     {label}
-                    {badge && <span class="ml-1 rounded bg-[--color-brand-muted] px-1 text-[10px] font-bold text-[--color-brand-hover]">{badge}</span>}
+                    {badge && <span class="ml-1 rounded bg-(--color-brand-muted) px-1 text-[10px] font-bold text-(--color-brand-hover)">{badge}</span>}
                   </a>
                 ))}
               </div>
@@ -97,8 +97,8 @@ const features = [
     </ul>
 
     <div class="ml-auto flex items-center gap-3">
-      <a href="/login" class="hidden text-sm font-bold text-[--color-ink-2] hover:text-[--color-brand-hover] sm:inline">Log in</a>
-      <a href="/start" class="rounded-md bg-[--color-brand] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[--color-brand-hover]">Get started</a>
+      <a href="/login" class="hidden text-sm font-bold text-(--color-ink-2) hover:text-(--color-brand-hover) sm:inline">Log in</a>
+      <a href="/start" class="rounded-md bg-(--color-brand) px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-(--color-brand-hover)">Get started</a>
       <button type="button" class="lg:hidden" data-mobile-toggle aria-expanded="false" aria-label="Open menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 6h18M3 12h18M3 18h18"/>
@@ -107,10 +107,10 @@ const features = [
     </div>
   </nav>
 
-  <div class="container-mb hidden border-t border-[--color-line] py-4 lg:!hidden" data-mobile-panel hidden>
+  <div class="container-mb hidden border-t border-(--color-line) py-4 lg:!hidden" data-mobile-panel hidden>
     <ul class="space-y-2">
       {[['Product','/product/business-intelligence'],['Docs','/docs'],['Blog','/blog'],['Customers','/case-studies'],['Love','/love'],['Glossary','/glossary'],['Pricing','/pricing']].map(([l,h]) => (
-        <li><a href={h} class="block py-1 font-bold text-[--color-ink]">{l}</a></li>
+        <li><a href={h} class="block py-1 font-bold text-(--color-ink)">{l}</a></li>
       ))}
     </ul>
   </div>

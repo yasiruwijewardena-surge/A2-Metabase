@@ -5,21 +5,21 @@ const recent = (await getPosts()).slice(0, 4);
 ---
 <BaseLayout title="Page not found | Metabase" description="That page does not exist." noIndex>
   <div class="container-mb max-w-[640px] py-24 text-center">
-    <p class="mb-2 text-sm font-bold uppercase tracking-wide text-[--color-ink-3]">404</p>
+    <p class="mb-2 text-sm font-bold uppercase tracking-wide text-(--color-ink-3)">404</p>
     <h1 class="mb-4 text-4xl">We could not find that page</h1>
-    <p class="mb-8 text-[--color-ink-2]">
+    <p class="mb-8 text-(--color-ink-2)">
       It may have moved, or the link may be wrong. Here is somewhere to start instead.
     </p>
     <div class="mb-12 flex flex-wrap justify-center gap-3">
-      <a href="/" class="rounded-md bg-[--color-brand] px-5 py-2.5 font-bold text-white hover:bg-[--color-brand-hover]">Home</a>
-      <a href="/blog" class="rounded-md border border-[--color-brand-border] px-5 py-2.5 font-bold text-[--color-brand-hover] hover:bg-[--color-brand-muted]">Blog</a>
-      <a href="/case-studies" class="rounded-md border border-[--color-brand-border] px-5 py-2.5 font-bold text-[--color-brand-hover] hover:bg-[--color-brand-muted]">Customer stories</a>
+      <a href="/" class="rounded-md bg-(--color-brand) px-5 py-2.5 font-bold text-white hover:bg-(--color-brand-hover)">Home</a>
+      <a href="/blog" class="rounded-md border border-(--color-brand-border) px-5 py-2.5 font-bold text-(--color-brand-hover) hover:bg-(--color-brand-muted)">Blog</a>
+      <a href="/case-studies" class="rounded-md border border-(--color-brand-border) px-5 py-2.5 font-bold text-(--color-brand-hover) hover:bg-(--color-brand-muted)">Customer stories</a>
     </div>
     <h2 class="mb-4 text-left text-lg">Recent posts</h2>
     <ul class="space-y-3 text-left">
       {recent.map((p) => (
-        <li class="border-b border-[--color-line] pb-3">
-          <a href={`/blog/${p.slug}`} class="font-bold hover:text-[--color-brand-hover]">{p.title}</a>
+        <li class="border-b border-(--color-line) pb-3">
+          <a href={`/blog/${p.slug}`} class="font-bold hover:text-(--color-brand-hover)">{p.title}</a>
         </li>
       ))}
     </ul>

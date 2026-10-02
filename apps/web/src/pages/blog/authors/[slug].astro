@@ -19,18 +19,18 @@ const { author, posts } = Astro.props;
   description={author.bio ?? `Posts by ${author.name}.`}
 >
   <div class="container-mb max-w-[860px] py-12">
-    <a href="/blog" class="text-sm font-bold text-[--color-brand-hover]">← All posts</a>
+    <a href="/blog" class="text-sm font-bold text-(--color-brand-hover)">← All posts</a>
 
     <header class="mt-6 mb-10 flex items-center gap-5">
       <Avatar image={author.avatar} size={72} class="h-[72px] w-[72px]" />
       <div>
         <h1 class="text-3xl">{author.name}</h1>
-        {author.role && <p class="text-[--color-ink-3]">{author.role}</p>}
-        {author.bio && <p class="mt-2 max-w-prose text-[--color-ink-2]">{author.bio}</p>}
+        {author.role && <p class="text-(--color-ink-3)">{author.role}</p>}
+        {author.bio && <p class="mt-2 max-w-prose text-(--color-ink-2)">{author.bio}</p>}
       </div>
     </header>
 
-    <h2 class="mb-6 text-xl text-[--color-ink-3]">
+    <h2 class="mb-6 text-xl text-(--color-ink-3)">
       {posts.length} {posts.length === 1 ? 'post' : 'posts'}
     </h2>
 

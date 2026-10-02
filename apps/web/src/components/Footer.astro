@@ -39,23 +39,23 @@ const columns = [
   ]},
 ];
 ---
-<footer class="border-t border-[--color-line] bg-[--color-brand-faint] py-14">
+<footer class="border-t border-(--color-line) bg-(--color-brand-faint) py-14">
   <div class="container-mb">
     <div class="grid grid-cols-2 gap-x-6 gap-y-9 md:grid-cols-3 lg:grid-cols-5">
       {columns.map((col) => (
         <div>
-          <h3 class="mb-3 text-sm font-bold text-[--color-ink]">{col.title}</h3>
+          <h3 class="mb-3 text-sm font-bold text-(--color-ink)">{col.title}</h3>
           <ul class="space-y-2">
             {col.links.map(([label, href]) => (
               <li>
-                <a href={href} class="text-sm text-[--color-ink-2] hover:text-[--color-brand-hover]">{label}</a>
+                <a href={href} class="text-sm text-(--color-ink-2) hover:text-(--color-brand-hover)">{label}</a>
               </li>
             ))}
           </ul>
         </div>
       ))}
     </div>
-    <p class="mt-12 border-t border-[--color-line] pt-6 text-sm text-[--color-ink-3]">
+    <p class="mt-12 border-t border-(--color-line) pt-6 text-sm text-(--color-ink-3)">
       © Metabase {new Date().getFullYear()} — replica built for an assignment, not affiliated with Metabase, Inc.
     </p>
   </div>

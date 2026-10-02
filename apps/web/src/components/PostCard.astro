@@ -20,22 +20,22 @@ const date = new Date(post.publishedDate).toLocaleDateString('en-GB', {
     />
   )}
 
-  <p class="mb-2 text-sm text-[--color-ink-3]">
-    {date}{post.category && <> in <b class="font-bold text-[--color-ink-2]">{post.category.name}</b></>}
+  <p class="mb-2 text-sm text-(--color-ink-3)">
+    {date}{post.category && <> in <b class="font-bold text-(--color-ink-2)">{post.category.name}</b></>}
   </p>
 
   {/* These cards sit directly under the page h1, so they are h2 — jumping
       straight to h3 is what PSI flags as a non-sequential heading order. */}
   <h2 class={featured ? 'mb-3 text-2xl leading-tight' : 'mb-1 text-lg leading-snug'}>
-    <a href={`/blog/${post.slug}`} class="hover:text-[--color-brand-hover]">{post.title}</a>
+    <a href={`/blog/${post.slug}`} class="hover:text-(--color-brand-hover)">{post.title}</a>
   </h2>
 
-  {featured && <p class="mb-5 text-[--color-ink-2]">{post.excerpt}</p>}
+  {featured && <p class="mb-5 text-(--color-ink-2)">{post.excerpt}</p>}
 
-  <div class="flex items-center gap-2 text-sm text-[--color-ink-3]">
+  <div class="flex items-center gap-2 text-sm text-(--color-ink-3)">
     {featured && <Avatar image={post.author?.avatar} size={36} class="h-9 w-9" />}
     {post.author && (
-      <a href={`/blog/authors/${post.author.slug}`} class="font-bold text-[--color-ink-2] hover:text-[--color-brand-hover]">
+      <a href={`/blog/authors/${post.author.slug}`} class="font-bold text-(--color-ink-2) hover:text-(--color-brand-hover)">
         {post.author.name}
       </a>
     )}

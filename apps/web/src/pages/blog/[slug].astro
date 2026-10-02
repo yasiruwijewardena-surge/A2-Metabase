@@ -37,10 +37,10 @@ const jsonLd = {
   preload={preloadFor(post.coverImage?.url, [400, 760, 1140], '(max-width: 800px) 100vw, 760px')}
 >
   <article class="container-mb max-w-[760px] py-10">
-    <a href="/blog" class="text-sm font-bold text-[--color-brand-hover]">← All posts</a>
+    <a href="/blog" class="text-sm font-bold text-(--color-brand-hover)">← All posts</a>
 
-    <p class="mt-6 mb-3 text-sm text-[--color-ink-3]">
-      {date}{post.category && <> in <a href={`/blog/category/${post.category.slug}`} class="font-bold text-[--color-ink-2] hover:text-[--color-brand-hover]">{post.category.name}</a></>}
+    <p class="mt-6 mb-3 text-sm text-(--color-ink-3)">
+      {date}{post.category && <> in <a href={`/blog/category/${post.category.slug}`} class="font-bold text-(--color-ink-2) hover:text-(--color-brand-hover)">{post.category.name}</a></>}
       {post.readTimeMinutes && <> ‧ {post.readTimeMinutes} min read</>}
     </p>
 
@@ -50,8 +50,8 @@ const jsonLd = {
       <Avatar image={post.author?.avatar} size={40} class="h-10 w-10" />
       {post.author && (
         <div>
-          <a href={`/blog/authors/${post.author.slug}`} class="block font-bold hover:text-[--color-brand-hover]">{post.author.name}</a>
-          {post.author.role && <span class="text-sm text-[--color-ink-3]">{post.author.role}</span>}
+          <a href={`/blog/authors/${post.author.slug}`} class="block font-bold hover:text-(--color-brand-hover)">{post.author.name}</a>
+          {post.author.role && <span class="text-sm text-(--color-ink-3)">{post.author.role}</span>}
         </div>
       )}
     </div>
@@ -67,29 +67,29 @@ const jsonLd = {
     <RichText blocks={post.body} />
 
     {post.tags?.length > 0 && (
-      <div class="mt-10 flex flex-wrap gap-2 border-t border-[--color-line] pt-6">
+      <div class="mt-10 flex flex-wrap gap-2 border-t border-(--color-line) pt-6">
         {post.tags.map((t) => (
-          <span class="rounded-md bg-[--color-surface] px-2.5 py-1 text-sm text-[--color-ink-2]">{t.name}</span>
+          <span class="rounded-md bg-(--color-surface) px-2.5 py-1 text-sm text-(--color-ink-2)">{t.name}</span>
         ))}
       </div>
     )}
   </article>
 
   {post.relatedPosts && post.relatedPosts.length > 0 && (
-    <section class="border-t border-[--color-line] bg-[--color-brand-faint] py-14">
+    <section class="border-t border-(--color-line) bg-(--color-brand-faint) py-14">
       <div class="container-mb">
         <h2 class="mb-8 text-2xl">You might also enjoy</h2>
         <div class="grid gap-8 md:grid-cols-2">
           {post.relatedPosts.map((r) => (
             <article>
-              <p class="mb-2 text-sm text-[--color-ink-3]">
+              <p class="mb-2 text-sm text-(--color-ink-3)">
                 {new Date(r.publishedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 {r.category && <> in {r.category.name}</>}
               </p>
               <h3 class="mb-2 text-xl leading-snug">
-                <a href={`/blog/${r.slug}`} class="hover:text-[--color-brand-hover]">{r.title}</a>
+                <a href={`/blog/${r.slug}`} class="hover:text-(--color-brand-hover)">{r.title}</a>
               </h3>
-              <p class="text-[--color-ink-2]">{r.excerpt}</p>
+              <p class="text-(--color-ink-2)">{r.excerpt}</p>
             </article>
           ))}
         </div>
