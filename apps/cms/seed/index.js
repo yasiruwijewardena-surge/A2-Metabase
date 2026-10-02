@@ -25,13 +25,27 @@ const read = (f) => JSON.parse(readFileSync(join(__dirname, 'data', f), 'utf8'))
 const FRESH = process.argv.includes('--fresh');
 const NO_MEDIA = process.argv.includes('--no-media');
 
-const stats = { created: 0, skipped: 0, linked: 0 };
+const stats = { created: 0, updated: 0, linked: 0 };
 
+/*
+ * Create, or update in place when the entry already exists.
+ *
+ * This used to return the existing document untouched, which made the seeder
+ * create-only: re-running it could add new content but could never correct
+ * content already there. That is how 44 company logos got uploaded to
+ * Cloudinary and then linked to nothing — the upload happens here, the
+ * relation is written by the document call, and the document call was being
+ * skipped. Anything seeded is owned by seed/data, so overwriting is the right
+ * behaviour and the one the name promises.
+ */
 async function upsert(app, uid, where, data) {
   const existing = await app.documents(uid).findFirst({ filters: where });
   if (existing) {
-    stats.skipped++;
-    return existing;
+    const doc = await app.documents(uid).update({
+      documentId: existing.documentId, data, status: 'published',
+    });
+    stats.updated++;
+    return doc ?? existing;
   }
   const doc = await app.documents(uid).create({ data, status: 'published' });
   stats.created++;
@@ -259,7 +273,7 @@ async function main() {
       console.log(`    ${String(n).padStart(3)}  ${uid.split('.').pop()}`);
     }
     const m = mediaStats();
-    console.log(`\n    created ${stats.created}, skipped ${stats.skipped}, relation passes ${stats.linked}`);
+    console.log(`\n    created ${stats.created}, updated ${stats.updated}, relation passes ${stats.linked}`);
     console.log(`    media: ${m.uploaded} files attached from ${m.unique} source urls\n`);
   } finally {
     await app.destroy();
