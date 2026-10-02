@@ -247,7 +247,7 @@ A second Railway service from the same repository.
 | Variable | Value |
 |---|---|
 | `STRAPI_URL` | `https://<your cms domain>` — the **public** URL |
-| `SITE_URL` | `https://${{RAILWAY_PUBLIC_DOMAIN}}` |
+| `SITE_URL` | the literal origin, e.g. `https://your-site.up.railway.app` |
 
 `apps/web/railway.json` supplies the build and start commands.
 
@@ -263,6 +263,22 @@ Strapi unreachable at http://localhost:1337 after 4 attempts
 ```
 
 The traffic is a handful of API calls per build, so the egress is negligible.
+
+### Set SITE_URL to a literal URL
+
+Not `https://${{RAILWAY_PUBLIC_DOMAIN}}`. That variable is only populated at
+runtime, so during the build Astro receives the bare string `https://` and
+fails with:
+
+```
+[config] Astro found issue(s) with your configuration:
+! Invalid URL
+```
+
+Railway keeps serving the last successful deployment when a build fails, so the
+site stays up and the symptom is simply that changes never appear.
+`astro.config.mjs` now falls back to `RAILWAY_PUBLIC_DOMAIN` and warns loudly
+rather than failing on two words, but the literal value is still what to set.
 
 ### Serving the build
 
