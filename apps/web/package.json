@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "audit:links": "node scripts/audit-links.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

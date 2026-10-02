@@ -327,7 +327,9 @@ const biPoints = [
         {scaleCards.map((c) => (
           <div class="scale-card">
             <ScaleIcon name={c.icon} />
-            <h4 class="scale-card__title">{c.title}</h4>
+            {/* h3, not h4: the slab heading above is an h2 and skipping a level
+                  breaks the outline. The class fixes the size at 18/25 either way. */}
+              <h3 class="scale-card__title">{c.title}</h3>
             <p class="scale-card__body">
               {c.lead}
               {c.link && <a href={c.link[1]} class="scale-card__link">{c.link[0]}</a>}

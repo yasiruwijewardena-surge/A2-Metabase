@@ -119,7 +119,11 @@ const features = [
       <a
         href="https://github.com/metabase/metabase"
         class="hidden items-center gap-1.5 text-sm font-bold text-(--color-ink-2) hover:text-(--color-brand-hover) md:flex"
-        aria-label="Metabase on GitHub"
+        {/* WCAG 2.5.3: the accessible name has to contain the visible text, and
+            the visible text here is "49.6k". "Metabase on GitHub" dropped it,
+            so anyone saying "click 49.6k" to a voice control had nothing to
+            match. */}
+        aria-label="49.6k GitHub stars — Metabase on GitHub"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5c518" aria-hidden="true">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>

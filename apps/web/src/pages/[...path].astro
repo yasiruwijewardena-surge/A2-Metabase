@@ -1,0 +1,74 @@
+---
+/*
+ * Every path the replicated navigation points at but this build does not
+ * implement.
+ *
+ * The information architecture is part of what is being replicated, so the nav
+ * and footer carry the original's full link set — 66 of those paths have no
+ * page behind them here. Serving a 404 would misrepresent the build as broken;
+ * inventing a page would misrepresent it as complete. This says plainly which
+ * it is and points at the sections that do exist.
+ *
+ * The list is generated from the built output (`npm run audit:links`) rather
+ * than hand-kept. A path that later gains a real page drops out of it, and
+ * would win anyway: a real route is more specific than this rest parameter.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import paths from '../data/ia-paths.json';
+
+export function getStaticPaths() {
+  return (paths as string[]).map((p) => ({ params: { path: p.replace(/^\//, '') } }));
+}
+
+const here = `/${Astro.params.path}`;
+
+/** The sections of the replica that are built, for somewhere to go next. */
+const built: [string, string, string][] = [
+  ['Home', '/', 'Matched against the original section by section'],
+  ['Blog', '/blog', 'Posts and working category filters, drawn from Strapi'],
+  ['Case studies', '/case-studies', 'Filterable by use case and by industry'],
+  ['Customer love', '/love', 'The testimonial wall'],
+  ['Glossary', '/glossary', 'Analytics terms'],
+];
+
+/** Reads "/features/sql-editor" as "Features — Sql editor". */
+const label = here
+  .split('/')
+  .filter(Boolean)
+  .map((seg) => seg.replace(/-/g, ' ').replace(/^./, (ch) => ch.toUpperCase()))
+  .join(' — ');
+---
+
+<BaseLayout
+  title={`${label} | Metabase replica`}
+  description={`${here} is part of the replicated navigation but is not one of the pages built for this assignment.`}
+  noIndex
+>
+  {/* The auditor keys on this attribute: a stub is not a real page, and
+      without the marker the link audit sees these in dist/ and concludes
+      every link resolves. */}
+  <main class="container-mb stub" data-replica-stub>
+    <p class="stub-eyebrow">Not part of this build</p>
+    <h1 class="stub-title">{label}</h1>
+    <p class="stub-body">
+      <code>{here}</code> is in the navigation because the original's information
+      architecture is part of what this project replicates. The page behind it is
+      not. This assignment builds the homepage, the blog, the case studies, the
+      testimonial wall and the glossary, and models their content in Strapi.
+    </p>
+    <p class="stub-body">
+      Nothing here stands in for the real page — inventing one would claim more
+      than was built.
+    </p>
+
+    <h2 class="stub-sub">What is built</h2>
+    <ul class="stub-list">
+      {built.map(([name, href, note]) => (
+        <li>
+          <a href={href}>{name}</a>
+          <span>{note}</span>
+        </li>
+      ))}
+    </ul>
+  </main>
+</BaseLayout>
