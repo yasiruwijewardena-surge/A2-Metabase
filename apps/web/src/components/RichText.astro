@@ -2,6 +2,13 @@
 /** Renders Strapi's `blocks` rich text. Covers what the seeded content uses. */
 import type { Block, Inline } from '../lib/types';
 
+// The original sets article body copy in Merriweather at 18px/32px
+// (.prose p, .prose li in its global.css). Imported here rather than in the
+// layout so Astro only ships it on pages that actually render prose — the
+// listing pages do not pay for it.
+import '@fontsource/merriweather/latin-400.css';
+import '@fontsource/merriweather/latin-700.css';
+
 interface Props { blocks: Block[] }
 const { blocks = [] } = Astro.props;
 

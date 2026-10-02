@@ -86,10 +86,18 @@
   @media (min-width: 1200px) { .container-mb { max-width: 1140px; } }
   @media (min-width: 1400px) { .container-mb { max-width: 1320px; } }
 
-  .prose-mb :where(p) { margin-block: 1rem; color: var(--color-ink-2); }
+  /* Matches the original: Merriweather, 18px, 32px line height. */
+  .prose-mb :where(p),
+  .prose-mb :where(li) {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 32px;
+    color: var(--color-ink);
+  }
+  .prose-mb :where(p) { margin-block: 1rem; }
   .prose-mb :where(h2) { margin-block: 2rem 0.75rem; font-size: 1.5rem; line-height: 1.33; }
   .prose-mb :where(h3) { margin-block: 1.5rem 0.5rem; font-size: 1.25rem; }
-  .prose-mb :where(ul) { margin-block: 1rem; padding-inline-start: 1.25rem; list-style: disc; color: var(--color-ink-2); }
+  .prose-mb :where(ul) { margin-block: 1rem; padding-inline-start: 1.25rem; list-style: disc; }
   .prose-mb :where(li) { margin-block: 0.375rem; }
   .prose-mb :where(a) { color: var(--color-brand-hover); text-decoration: underline; }
   .prose-mb :where(strong) { color: var(--color-ink); font-weight: 700; }

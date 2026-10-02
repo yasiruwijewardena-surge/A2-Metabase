@@ -1,5 +1,19 @@
 ---
 import '../styles/global.css';
+
+// Self-hosted, latin subset only. The Google Fonts stylesheet was the single
+// largest render-blocking request on the page at ~751 ms; bundling the
+// @font-face rules into the page CSS removes that request entirely.
+import '@fontsource/lato/latin-400.css';
+import '@fontsource/lato/latin-700.css';
+import '@fontsource/lato/latin-900.css';
+
+// Body and heading weights are needed for the first paint, and a font inside a
+// stylesheet is only discovered once that stylesheet has parsed. Preloading the
+// two used above the fold cuts that extra round trip. Imported as URLs so the
+// hashes stay correct across builds.
+import lato400 from '@fontsource/lato/files/lato-latin-400-normal.woff2?url';
+import lato900 from '@fontsource/lato/files/lato-latin-900-normal.woff2?url';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import type { Seo } from '../lib/types';
@@ -45,14 +59,8 @@ const blocked = noIndex || seo?.noIndex;
     {social && <meta property="og:image" content={social} />}
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Self-hosting would be better still, but a preconnect plus display:swap
-         keeps the font off the critical path. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Merriweather:wght@400;700&display=swap"
-    />
+    <link rel="preload" as="font" type="font/woff2" href={lato400} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={lato900} crossorigin />
 
     {preload && (
       <link

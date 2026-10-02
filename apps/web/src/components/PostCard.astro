@@ -24,9 +24,11 @@ const date = new Date(post.publishedDate).toLocaleDateString('en-GB', {
     {date}{post.category && <> in <b class="font-bold text-[--color-ink-2]">{post.category.name}</b></>}
   </p>
 
-  <h3 class={featured ? 'mb-3 text-2xl leading-tight' : 'mb-1 text-lg leading-snug'}>
+  {/* These cards sit directly under the page h1, so they are h2 — jumping
+      straight to h3 is what PSI flags as a non-sequential heading order. */}
+  <h2 class={featured ? 'mb-3 text-2xl leading-tight' : 'mb-1 text-lg leading-snug'}>
     <a href={`/blog/${post.slug}`} class="hover:text-[--color-brand-hover]">{post.title}</a>
-  </h3>
+  </h2>
 
   {featured && <p class="mb-5 text-[--color-ink-2]">{post.excerpt}</p>}
 
