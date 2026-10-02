@@ -1,0 +1,42 @@
+---
+import CldImage from './CldImage.astro';
+import Avatar from './Avatar.astro';
+import type { Post } from '../lib/types';
+
+interface Props { post: Post; featured?: boolean; eager?: boolean }
+const { post, featured = false, eager = false } = Astro.props;
+
+const date = new Date(post.publishedDate).toLocaleDateString('en-GB', {
+  day: 'numeric', month: 'short', year: 'numeric',
+});
+---
+<article class={featured ? 'mb-10' : ''}>
+  {featured && (
+    <CldImage
+      image={post.coverImage}
+      priority={eager}
+      ratio={16 / 9}
+      class="mb-6 aspect-[16/9] w-full rounded-md object-cover"
+    />
+  )}
+
+  <p class="mb-2 text-sm text-[--color-ink-3]">
+    {date}{post.category && <> in <b class="font-bold text-[--color-ink-2]">{post.category.name}</b></>}
+  </p>
+
+  <h3 class={featured ? 'mb-3 text-2xl leading-tight' : 'mb-1 text-lg leading-snug'}>
+    <a href={`/blog/${post.slug}`} class="hover:text-[--color-brand-hover]">{post.title}</a>
+  </h3>
+
+  {featured && <p class="mb-5 text-[--color-ink-2]">{post.excerpt}</p>}
+
+  <div class="flex items-center gap-2 text-sm text-[--color-ink-3]">
+    {featured && <Avatar image={post.author?.avatar} size={36} class="h-9 w-9" />}
+    {post.author && (
+      <a href={`/blog/authors/${post.author.slug}`} class="font-bold text-[--color-ink-2] hover:text-[--color-brand-hover]">
+        {post.author.name}
+      </a>
+    )}
+    {post.readTimeMinutes && <span>‧ {post.readTimeMinutes} min read</span>}
+  </div>
+</article>

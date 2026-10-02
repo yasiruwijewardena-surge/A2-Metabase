@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens lifted from metabase.com's own global.css, so the palette and
+ * type pairing match the original exactly rather than approximately.
+ * See SITE-ANALYSIS.md §1.
+ */
+@theme {
+  /* Brand */
+  --color-brand: #509ee3;          /* base-color-blue-60  */
+  --color-brand-hover: #1c6bb0;    /* base-color-blue-40  */
+  --color-brand-strong: #12436e;   /* base-color-blue-25  */
+  --color-brand-mid: #3685ca;      /* base-color-blue-50  */
+  --color-brand-muted: #e4ecfb;    /* base-color-blue-95  */
+  --color-brand-border: #c2daf0;   /* base-color-blue-85  */
+  --color-brand-soft: #cbdaf6;     /* base-color-blue-75  */
+  --color-brand-faint: #fafbfe;    /* base-color-blue-105 */
+
+  /* Neutrals */
+  --color-ink: #22242b;            /* text primary   */
+  --color-ink-2: #5a6072;          /* text secondary */
+  --color-ink-3: #8d93a5;          /* text tertiary  */
+  --color-ink-4: #c6c9d2;          /* text faint     */
+  --color-line: #e2e4e9;
+  --color-surface: #f1f2f4;
+  --color-surface-2: #fcfcfd;
+  --color-admin: #4c5773;          /* base-color-neutral-20 */
+
+  /* Success */
+  --color-ok: #80b946;
+  --color-ok-faint: #f5f9f0;
+  --color-ok-strong: #236d00;
+
+  /* Type */
+  --font-sans: Lato, "Helvetica Neue", Helvetica, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Merriweather, Georgia, ui-serif, serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #fff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* The original uses weight 900 for headings, which is a large part of why it
+     reads the way it does. */
+  h1, h2, h3, h4 {
+    color: var(--color-ink);
+    font-weight: 900;
+    line-height: 1.11;
+    text-wrap: balance;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Images always carry intrinsic dimensions; the original's blog cards do not,
+     which is why that page measures CLS 0.122. See SITE-ANALYSIS.md §2. */
+  img { max-width: 100%; height: auto; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .container-mb {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.75rem;
+  }
+  @media (min-width: 576px)  { .container-mb { max-width: 540px; } }
+  @media (min-width: 768px)  { .container-mb { max-width: 720px; } }
+  @media (min-width: 992px)  { .container-mb { max-width: 960px; } }
+  @media (min-width: 1200px) { .container-mb { max-width: 1140px; } }
+  @media (min-width: 1400px) { .container-mb { max-width: 1320px; } }
+
+  .prose-mb :where(p) { margin-block: 1rem; color: var(--color-ink-2); }
+  .prose-mb :where(h2) { margin-block: 2rem 0.75rem; font-size: 1.5rem; line-height: 1.33; }
+  .prose-mb :where(h3) { margin-block: 1.5rem 0.5rem; font-size: 1.25rem; }
+  .prose-mb :where(ul) { margin-block: 1rem; padding-inline-start: 1.25rem; list-style: disc; color: var(--color-ink-2); }
+  .prose-mb :where(li) { margin-block: 0.375rem; }
+  .prose-mb :where(a) { color: var(--color-brand-hover); text-decoration: underline; }
+  .prose-mb :where(strong) { color: var(--color-ink); font-weight: 700; }
+}

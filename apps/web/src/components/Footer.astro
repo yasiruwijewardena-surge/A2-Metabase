@@ -1,0 +1,62 @@
+---
+const columns = [
+  { title: 'Product', links: [
+    ['Watch Demo', '/demo'], ['Data Sources', '/data-sources'], ['Security', '/security'],
+    ['Cloud', '/cloud'], ['Roadmap', '/roadmap'], ["What's New", '/releases'],
+  ]},
+  { title: 'Pricing', links: [['Plans', '/pricing'], ['Open Source', '/open-source']] },
+  { title: 'Use cases', links: [
+    ['Self-Service Business Intelligence', '/product/business-intelligence'],
+    ['Embedded Analytics', '/product/embedded-analytics'],
+  ]},
+  { title: 'Metabase plans', links: [
+    ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
+  ]},
+  { title: 'Features', links: [
+    ['Metabase AI', '/features/metabase-ai'], ['Query Builder', '/features/query-builder'],
+    ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
+    ['Dashboards and reporting', '/features/analytics-dashboards'],
+    ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
+    ['Embedded analytics SDK', '/features/embedded-analytics-sdk'],
+  ]},
+  { title: 'Company', links: [
+    ['Jobs', '/jobs'], ['Privacy Policies', '/privacy'], ['Terms of Service', '/terms'],
+    ['License', '/license'], ['Brand Guidelines', '/brand'],
+  ]},
+  { title: 'Support', links: [
+    ['Documentation', '/docs'], ['Help', '/help'],
+    ['Professional Services', '/professional-services'], ['Status', '/status'],
+  ]},
+  { title: 'Resources', links: [
+    ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Learn', '/learn'],
+    ['Community Stories', '/community-posts'], ['Partners', '/partners'],
+    ['Example Dashboards', '/dashboards'],
+  ]},
+  { title: 'Comparisons', links: [
+    ['Metabase vs. Tableau', '/vs/tableau'], ['Metabase vs. Looker', '/vs/looker'],
+    ['Metabase vs. Looker Studio', '/vs/looker-studio'], ['Metabase vs. PowerBI', '/vs/power-bi'],
+    ['Metabase vs. Superset', '/vs/superset'], ['Metabase vs. Omni', '/vs/omni'],
+  ]},
+];
+---
+<footer class="border-t border-[--color-line] bg-[--color-brand-faint] py-14">
+  <div class="container-mb">
+    <div class="grid grid-cols-2 gap-x-6 gap-y-9 md:grid-cols-3 lg:grid-cols-5">
+      {columns.map((col) => (
+        <div>
+          <h3 class="mb-3 text-sm font-bold text-[--color-ink]">{col.title}</h3>
+          <ul class="space-y-2">
+            {col.links.map(([label, href]) => (
+              <li>
+                <a href={href} class="text-sm text-[--color-ink-2] hover:text-[--color-brand-hover]">{label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="mt-12 border-t border-[--color-line] pt-6 text-sm text-[--color-ink-3]">
+      © Metabase {new Date().getFullYear()} — replica built for an assignment, not affiliated with Metabase, Inc.
+    </p>
+  </div>
+</footer>

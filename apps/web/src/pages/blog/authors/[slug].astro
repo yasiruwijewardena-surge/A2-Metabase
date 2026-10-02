@@ -1,0 +1,41 @@
+---
+import Avatar from '../../../components/Avatar.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getAuthors, getPosts } from '../../../lib/strapi';
+
+export async function getStaticPaths() {
+  const [authors, posts] = await Promise.all([getAuthors(), getPosts()]);
+  return authors.map((author) => ({
+    params: { slug: author.slug },
+    props: { author, posts: posts.filter((p) => p.author?.slug === author.slug) },
+  }));
+}
+
+const { author, posts } = Astro.props;
+---
+<BaseLayout
+  title={`${author.name} | Metabase Blog`}
+  description={author.bio ?? `Posts by ${author.name}.`}
+>
+  <div class="container-mb max-w-[860px] py-12">
+    <a href="/blog" class="text-sm font-bold text-[--color-brand-hover]">← All posts</a>
+
+    <header class="mt-6 mb-10 flex items-center gap-5">
+      <Avatar image={author.avatar} size={72} class="h-[72px] w-[72px]" />
+      <div>
+        <h1 class="text-3xl">{author.name}</h1>
+        {author.role && <p class="text-[--color-ink-3]">{author.role}</p>}
+        {author.bio && <p class="mt-2 max-w-prose text-[--color-ink-2]">{author.bio}</p>}
+      </div>
+    </header>
+
+    <h2 class="mb-6 text-xl text-[--color-ink-3]">
+      {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+    </h2>
+
+    <div class="grid gap-10 md:grid-cols-2">
+      {posts.map((p) => <PostCard post={p} />)}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,49 @@
+---
+/**
+ * A Strapi/Cloudinary image rendered with a responsive srcset.
+ *
+ * Always emits width and height: the original's blog cards omit them, which is
+ * why that page measures CLS 0.122 (SITE-ANALYSIS.md §2).
+ */
+import { srcset, src as atWidth } from '../lib/image';
+import type { StrapiImage } from '../lib/types';
+
+interface Props {
+  image: StrapiImage | null | undefined;
+  alt?: string;
+  widths?: number[];
+  sizes?: string;
+  /** The LCP image on a page: preloaded in the head and fetched at high priority. */
+  priority?: boolean;
+  class?: string;
+  /** Rendered aspect ratio, used for the intrinsic height when cropping. */
+  ratio?: number;
+}
+
+const {
+  image,
+  alt = '',
+  widths = [400, 760, 1140],
+  sizes = '(max-width: 992px) 100vw, 760px',
+  priority = false,
+  class: className = '',
+  ratio,
+} = Astro.props;
+
+if (!image?.url) return null;
+
+const width = widths[widths.length - 1];
+const height = ratio ? Math.round(width / ratio) : Math.round((width * image.height) / image.width);
+---
+<img
+  src={atWidth(image.url, width)}
+  srcset={srcset(image.url, widths)}
+  sizes={sizes}
+  width={width}
+  height={height}
+  alt={alt || image.alternativeText || ''}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  decoding={priority ? 'sync' : 'async'}
+  class={className}
+/>

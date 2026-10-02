@@ -1,0 +1,19 @@
+---
+import { avatarSet } from '../lib/image';
+import type { StrapiImage } from '../lib/types';
+
+interface Props { image: StrapiImage | null | undefined; size?: number; alt?: string; class?: string }
+const { image, size = 36, alt = '', class: className = '' } = Astro.props;
+if (!image?.url) return null;
+const { src, srcset } = avatarSet(image.url, size);
+---
+<img
+  src={src}
+  srcset={srcset}
+  width={size}
+  height={size}
+  alt={alt}
+  loading="lazy"
+  decoding="async"
+  class={`rounded-full object-cover ${className}`}
+/>

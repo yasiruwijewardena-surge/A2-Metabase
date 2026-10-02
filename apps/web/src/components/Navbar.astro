@@ -1,0 +1,190 @@
+---
+import { getPosts } from '../lib/strapi';
+
+// The original's megamenu carries a live "Recent Blog Posts" column. Resolved
+// at build time, so it costs nothing at runtime.
+const recent = (await getPosts()).slice(0, 5);
+
+const features = [
+  ['Metabase AI', '/features/metabase-ai', 'New'], ['Data Studio', '/product/data-studio', 'New'],
+  ['Dashboards and reporting', '/features/analytics-dashboards'], ['Query builder', '/features/query-builder'],
+  ['Data segregation', '/features/data-segregation'], ['Usage analytics', '/features/usage-analytics'],
+  ['Embedded analytics SDK', '/features/embedded-analytics-sdk'], ['White-label analytics', '/features/white-label'],
+  ['Drill-through', '/features/drill-through'], ['SQL editor', '/features/sql-editor'],
+  ['Permissions', '/features/permissions'], ['CSV upload', '/product/csv-uploads'],
+];
+---
+<header class="sticky top-0 z-50 border-b border-[--color-line] bg-white/95 backdrop-blur">
+  <nav class="container-mb flex h-16 items-center gap-8" aria-label="Main">
+    <a href="/" class="flex shrink-0 items-center gap-2 font-black text-[--color-ink]" aria-label="Metabase home">
+      <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
+        <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
+        <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
+        <circle cx="5" cy="19" r="2.6"/><circle cx="12" cy="20" r="2.2" opacity=".75"/><circle cx="19" cy="19" r="2.6"/>
+      </svg>
+      <span class="text-lg">Metabase</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex" data-menu-root>
+      <li class="relative">
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="product">Product</button>
+        <div class="nav-panel w-[640px]" data-panel="product" hidden>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <p class="nav-eyebrow">Platform</p>
+              <a href="/product/business-intelligence" class="nav-item">
+                <span class="font-bold">Business Intelligence</span>
+                <span class="nav-sub">Self-service analytics for your team</span>
+              </a>
+              <a href="/product/embedded-analytics" class="nav-item">
+                <span class="font-bold">Embedded Analytics</span>
+                <span class="nav-sub">Fast, flexible customer-facing analytics</span>
+              </a>
+              <a href="/data-sources" class="nav-item">Data sources</a>
+              <a href="/security" class="nav-item">Security</a>
+              <a href="/cloud" class="nav-item">Cloud</a>
+            </div>
+            <div>
+              <p class="nav-eyebrow">Features</p>
+              <div class="grid grid-cols-2 gap-x-3">
+                {features.map(([label, href, badge]) => (
+                  <a href={href} class="nav-item text-sm">
+                    {label}
+                    {badge && <span class="ml-1 rounded bg-[--color-brand-muted] px-1 text-[10px] font-bold text-[--color-brand-hover]">{badge}</span>}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="relative">
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="docs">Docs</button>
+        <div class="nav-panel w-[420px]" data-panel="docs" hidden>
+          <p class="nav-eyebrow">Learn</p>
+          <a href="/docs" class="nav-item"><span class="font-bold">Documentation</span><span class="nav-sub">The Metabase manual</span></a>
+          <a href="/learn" class="nav-item"><span class="font-bold">Learn</span><span class="nav-sub">Guides and tutorials</span></a>
+          <p class="nav-eyebrow mt-4">Guides</p>
+          <a href="/learn" class="nav-item text-sm">Installing Metabase</a>
+          <a href="/learn" class="nav-item text-sm">Adding a database</a>
+          <a href="/learn" class="nav-item text-sm">Asking questions</a>
+          <a href="/learn" class="nav-item text-sm">Creating a dashboard</a>
+        </div>
+      </li>
+
+      <li class="relative">
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="resources">Resources</button>
+        <div class="nav-panel w-[620px]" data-panel="resources" hidden>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <a href="/blog" class="nav-item"><span class="font-bold">Blog</span><span class="nav-sub">News, updates, and ideas</span></a>
+              <a href="/case-studies" class="nav-item"><span class="font-bold">Customers</span><span class="nav-sub">Real companies, real data, real stories</span></a>
+              <a href="/love" class="nav-item"><span class="font-bold">Love</span><span class="nav-sub">What people say about Metabase</span></a>
+              <a href="/glossary" class="nav-item"><span class="font-bold">Glossary</span><span class="nav-sub">Data and BI terms, defined</span></a>
+            </div>
+            <div>
+              <p class="nav-eyebrow">Recent blog posts</p>
+              {recent.map((p) => (
+                <a href={`/blog/${p.slug}`} class="nav-item text-sm leading-snug">{p.title}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li><a href="/pricing" class="nav-trigger inline-block">Pricing</a></li>
+    </ul>
+
+    <div class="ml-auto flex items-center gap-3">
+      <a href="/login" class="hidden text-sm font-bold text-[--color-ink-2] hover:text-[--color-brand-hover] sm:inline">Log in</a>
+      <a href="/start" class="rounded-md bg-[--color-brand] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[--color-brand-hover]">Get started</a>
+      <button type="button" class="lg:hidden" data-mobile-toggle aria-expanded="false" aria-label="Open menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container-mb hidden border-t border-[--color-line] py-4 lg:!hidden" data-mobile-panel hidden>
+    <ul class="space-y-2">
+      {[['Product','/product/business-intelligence'],['Docs','/docs'],['Blog','/blog'],['Customers','/case-studies'],['Love','/love'],['Glossary','/glossary'],['Pricing','/pricing']].map(([l,h]) => (
+        <li><a href={h} class="block py-1 font-bold text-[--color-ink]">{l}</a></li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<style>
+  .nav-trigger {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-ink-2);
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+  .nav-trigger:hover, .nav-trigger[aria-expanded='true'] { color: var(--color-brand-hover); background: var(--color-brand-faint); }
+  .nav-panel {
+    position: absolute; top: calc(100% + 0.5rem); left: 0;
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 32px rgb(34 36 43 / 0.10);
+    padding: 1.25rem;
+  }
+  .nav-eyebrow {
+    margin-bottom: 0.5rem; font-size: 0.6875rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3);
+  }
+  .nav-item {
+    display: block; padding: 0.375rem 0.5rem; border-radius: 0.375rem;
+    color: var(--color-ink); font-size: 0.9375rem;
+  }
+  .nav-item:hover { background: var(--color-brand-faint); color: var(--color-brand-hover); }
+  .nav-sub { display: block; font-size: 0.8125rem; font-weight: 400; color: var(--color-ink-3); }
+</style>
+
+<script>
+  // The only navigation JS: open/close the megamenus and keep aria-expanded
+  // honest. Everything else on the page is static HTML.
+  const root = document.querySelector('[data-menu-root]');
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-menu]')];
+  const panels = new Map(
+    [...document.querySelectorAll<HTMLElement>('[data-panel]')].map((p) => [p.dataset.panel!, p])
+  );
+
+  const closeAll = (except?: string) => {
+    triggers.forEach((t) => {
+      const name = t.dataset.menu!;
+      if (name === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      panels.get(name)!.hidden = true;
+    });
+  };
+
+  triggers.forEach((trigger) => {
+    const name = trigger.dataset.menu!;
+    const panel = panels.get(name)!;
+    trigger.addEventListener('click', () => {
+      const open = trigger.getAttribute('aria-expanded') === 'true';
+      closeAll(name);
+      trigger.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+    });
+  });
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  document.addEventListener('click', (e) => {
+    if (root && !root.contains(e.target as Node)) closeAll();
+  });
+
+  const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+  mobileToggle?.addEventListener('click', () => {
+    const open = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!open));
+    if (mobilePanel) mobilePanel.hidden = open;
+  });
+</script>

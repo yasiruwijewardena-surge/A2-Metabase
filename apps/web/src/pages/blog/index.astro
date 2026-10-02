@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { src as atWidth } from '../../lib/image';
+import BlogListing from '../../components/BlogListing.astro';
+import { getPosts, getCategories } from '../../lib/strapi';
+
+const posts = await getPosts();
+const categories = await getCategories();
+---
+<BaseLayout
+  title="Blog | Metabase"
+  description="News, updates and ideas from the Metabase team."
+  preloadImage={posts[0]?.coverImage ? atWidth(posts[0].coverImage.url, 760) : null}
+>
+  <BlogListing posts={posts} categories={categories} />
+</BaseLayout>
