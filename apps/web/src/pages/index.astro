@@ -7,6 +7,7 @@ import HeroDashboard from '../components/HeroDashboard.astro';
 import PaymentsDashboard from '../components/demos/PaymentsDashboard.astro';
 import DataStudioAccount from '../components/demos/DataStudioAccount.astro';
 import MetabotChat from '../components/demos/MetabotChat.astro';
+import EmbeddedDashboard from '../components/demos/EmbeddedDashboard.astro';
 import ScaleIcon from '../components/ScaleIcon.astro';
 import CopyCommand from '../components/CopyCommand.astro';
 import DataSourceMarquee from '../components/DataSourceMarquee.astro';
@@ -259,46 +260,7 @@ const biPoints = [
         </p>
       </header>
 
-      <div class="relative mx-auto max-w-[1140px]">
-        <div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white">
-          <div class="grid md:grid-cols-[220px_1fr]">
-            <aside class="border-b border-(--color-line) p-5 md:border-b-0 md:border-r">
-              <p class="mb-6 font-black">ProficiencyLabs</p>
-              <p class="mb-3 text-sm font-bold text-(--color-ink-2)">Courses</p>
-              <ul class="space-y-2 text-sm text-(--color-ink-2)">
-                {['New courses', 'Leadership Training', 'Technical Skills', 'Soft Skills'].map((c) => <li>{c}</li>)}
-              </ul>
-            </aside>
-            <div class="p-6">
-              <h3 class="mb-5 text-2xl">Inventory performance</h3>
-              <div class="grid gap-4 sm:grid-cols-2">
-                <div class="rounded-lg border border-(--color-line) p-4">
-                  <p class="mb-3 text-sm font-bold">New products launched this year</p>
-                  <p class="text-4xl font-black">10</p>
-                  <p class="mt-1 text-sm"><span class="font-bold text-(--color-ok-strong)">↑ 400%</span>
-                    <span class="text-(--color-ink-3)"> vs. previous year: 2</span></p>
-                </div>
-                <div class="rounded-lg border border-(--color-line) p-4">
-                  <p class="mb-3 text-sm font-bold">Orders in the last 3 months</p>
-                  <svg viewBox="0 0 300 70" class="w-full" role="img" aria-label="Orders in the last three months">
-                    <polyline fill="none" stroke="#2f9e8f" stroke-width="1.5"
-                      points={Array.from({ length: 60 }, (_, i) => `${i * 5},${60 - (Math.sin(i / 1.7) * 14 + (i === 14 ? 34 : 18))}`).join(' ')} />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <pre class="absolute -bottom-6 left-4 hidden w-[430px] overflow-x-auto rounded-xl bg-(--color-ink) p-5 font-mono text-xs leading-relaxed text-white shadow-xl lg:block"><code>{`import {
-  MetabaseProvider,
-  InteractiveQuestion,
-} from "@metabase/embedding-sdk-react";
-
-<MetabaseProvider config={config}>
-  <InteractiveQuestion questionId={42} />
-</MetabaseProvider>`}</code></pre>
-      </div>
+      <EmbeddedDashboard />
 
       <div class="mt-24 grid gap-10 md:grid-cols-3">
         {eaFeatures.map(([title, body]) => (
