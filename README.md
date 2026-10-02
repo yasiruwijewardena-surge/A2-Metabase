@@ -117,6 +117,31 @@ changing how a page looks. The ones acted on so far:
 - **Outcomes are structured.** A `shared.metric` component surfaces the numbers
   the original buries in prose.
 
+## The navigation
+
+The original's information architecture is part of what is being replicated, so
+the nav and footer carry its full link set. Five sections are built — the
+homepage, the blog, the case studies, the testimonial wall and the glossary —
+plus `/pricing`. The other 66 paths resolve to a page that says it is part of
+the replicated navigation and not part of this build, and links to what is.
+
+A 404 would have said the build was broken and an invented page would have said
+it was complete. `npm run audit:links` regenerates that list from `dist/`, and
+`--check` fails if it has drifted.
+
+## Pricing, without JavaScript
+
+`/pricing` has three independent axes: use case, deployment and billing period.
+The original holds them as data attributes on `<main>` and flips them with
+JavaScript. Here they are radio inputs and the filtering is `:has()`, so the
+page works with JavaScript off, ships nothing for the interaction, and keeps the
+browser's own keyboard and screen-reader handling of a radio group.
+
+The content model follows from the same observation: a plan declares which
+deployments and use cases it belongs to, so five records cover a matrix that
+would otherwise need twenty near-duplicates. Use cases are the relation the case
+studies already filter on, not a second copy of the same vocabulary.
+
 ## Performance
 
 Measured with the PageSpeed Insights API, same pages, same day.
@@ -154,5 +179,7 @@ with a matching `imagesrcset`.
 - [x] Deploy the front end
 - [x] Optimise and record PageSpeed results
 - [x] Match the homepage, blog and case studies against measured values
-- [ ] `/pricing` and the product pages — linked from the nav, not yet built
+- [x] Build `/pricing` and model its plans in Strapi
+- [x] Give the rest of the replicated navigation somewhere to land
 - [ ] Glossary is 24 terms against the original's 167
+- [ ] The product and feature pages are stubs, not builds
