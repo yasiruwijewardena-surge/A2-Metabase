@@ -44,7 +44,7 @@ const ANSWERS = {
 ---
 <div class="hchat" data-hero-chat>
   <div class="hchat__head">
-    <h3>Chat with Metabot</h3>
+    <p class="hchat__heading">Chat with Metabot</p>
     <button type="button" class="hchat__clear" data-hero-clear hidden>Clear chat</button>
   </div>
 
@@ -92,7 +92,7 @@ const ANSWERS = {
 <style is:global>
   .hchat { display: flex; flex-direction: column; height: 100%; min-height: 0; font-size: 0.8125rem; }
   .hchat__head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.9rem; }
-  .hchat__head h3 { margin: 0; font-size: 0.875rem; font-weight: 700; }
+  .hchat__heading { margin: 0; font-size: 0.875rem; font-weight: 700; }
   .hchat__clear {
     border: 0; background: none; cursor: pointer;
     font-size: 0.75rem; color: var(--color-brand-hover); font-weight: 700;

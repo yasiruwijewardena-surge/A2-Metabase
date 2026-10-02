@@ -63,11 +63,11 @@ const orderArea = `${oPadL},${oH - oPadB} ${orderLine} ${ox(ORDERS.length - 1)},
       </aside>
 
       <div class="eadash__main">
-        <h3 class="eadash__title">Inventory performance</h3>
+        <p class="eadash__title">Inventory performance</p>
 
         <div class="eadash__row">
           <section class="eadash__card">
-            <h4>New products launched this year</h4>
+            <p>New products launched this year</p>
             <p class="eadash__big">10</p>
             <p class="eadash__delta">
               <b>↑ 400%</b> <span>vs. previous year: 2</span>
@@ -75,7 +75,7 @@ const orderArea = `${oPadL},${oH - oPadB} ${orderLine} ${ox(ORDERS.length - 1)},
           </section>
 
           <section class="eadash__card">
-            <h4>Orders in the last 3 months</h4>
+            <p>Orders in the last 3 months</p>
             <svg viewBox={`0 0 ${oW} ${oH}`} role="img" aria-label="Daily orders over the last three months">
               {[0, 2, 4, 6, 8, 10, 12].map((t) => (
                 <>
@@ -93,7 +93,7 @@ const orderArea = `${oPadL},${oH - oPadB} ${orderLine} ${ox(ORDERS.length - 1)},
         </div>
 
         <section class="eadash__card eadash__card--wide">
-          <h4>Best selling products</h4>
+          <p>Best selling products</p>
           <ul class="eadash__legend">
             {SERIES.map((s) => (
               <li><i style={`background:${s.colour}`}></i>{s.name}</li>
@@ -202,7 +202,7 @@ const orderArea = `${oPadL},${oH - oPadB} ${orderLine} ${ox(ORDERS.length - 1)},
   .eadash__title { margin: 0 0 0.85rem; font-size: 19px; }
   .eadash__row { display: grid; grid-template-columns: 1fr 1.5fr; gap: 0.7rem; margin-bottom: 0.7rem; }
   .eadash__card { border: 1px solid var(--color-line); border-radius: 0.5rem; padding: 0.7rem; }
-  .eadash__card h4 { margin: 0 0 0.5rem; font-size: 11px; font-weight: 700; }
+  .eadash__card > p:first-child { margin: 0 0 0.5rem; font-size: 11px; font-weight: 700; }
   .eadash__big { margin: 0.5rem 0 0; font-size: 34px; font-weight: 900; line-height: 1; text-align: center; }
   .eadash__delta { margin: 0.4rem 0 0; text-align: center; font-size: 10px; }
   .eadash__delta b { color: var(--color-ok-strong); }

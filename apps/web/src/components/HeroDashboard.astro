@@ -53,7 +53,7 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
       <div class="mb-4 grid gap-4 sm:grid-cols-[minmax(0,260px)_1fr]">
         <!-- Big number -->
         <section class="rounded-xl border border-(--color-line) bg-white p-5">
-          <h3 class="mb-5 text-base font-bold text-(--color-brand-hover)">Total Accounts</h3>
+          <p class="mb-5 text-base font-bold text-(--color-brand-hover)">Total Accounts</p>
           <p class="text-center text-[3.25rem] leading-none font-black tracking-tight" data-countup="1228">0</p>
           <p class="mt-3 text-center text-sm font-bold text-(--color-ink-2)">Jun 2026</p>
           <p class="mt-1 text-center text-sm text-(--color-ink-3)">
@@ -63,7 +63,7 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
 
         <!-- Stacked bars -->
         <section class="rounded-xl border border-(--color-line) bg-white p-5">
-          <h3 class="mb-3 text-base font-bold text-(--color-brand-hover)">Accounts added per year, by source</h3>
+          <p class="mb-3 text-base font-bold text-(--color-brand-hover)">Accounts added per year, by source</p>
           <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
             {SOURCES.map((s) => (
               <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
@@ -103,7 +103,7 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
 
       <!-- Dense quarterly series -->
       <section class="rounded-xl border border-(--color-line) bg-white p-5">
-        <h3 class="mb-3 text-base font-bold text-(--color-brand-hover)">Payments received per quarter by plan</h3>
+        <p class="mb-3 text-base font-bold text-(--color-brand-hover)">Payments received per quarter by plan</p>
         <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
           {PLANS.map((p) => (
             <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
