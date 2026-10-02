@@ -19,9 +19,8 @@ const pullQuotes = testimonials
   .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
 
 const social = testimonials
-  .filter((t) => t.variant === 'social' && t.featured)
-  .sort((a, b) => a.displayOrder - b.displayOrder)
-  .slice(0, 9);
+  .filter((t) => t.variant === 'social')
+  .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
 
 
 /** The customer logo strip, matching the original's row. */
@@ -308,22 +307,30 @@ const biPoints = [
 
   <!-- Social wall -->
   {social.length > 0 && (
-    <section class="bg-(--color-brand-faint) py-16">
+    <section class="love-revamp">
       <div class="container-mb">
-        <h2 class="mb-10 text-center text-3xl">Analytics that people straight up love</h2>
-        <div class="columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
+        <div class="love-head">
+          <h2 class="love-title">Analytics that people straight up love</h2>
+        </div>
+
+        <div class="love-masonry">
           {social.map((t) => (
-            <figure class="rounded-xl border border-(--color-line) bg-white p-5">
-              <blockquote class="mb-3 text-(--color-ink-2)">{t.quote}</blockquote>
-              <figcaption class="flex items-center gap-2 text-sm">
-                <Avatar image={t.person?.avatar} name={t.person?.name} size={28} class="h-7 w-7 bg-(--color-surface)" />
-                <b class="font-bold text-(--color-ink-2)">{t.person?.name}</b>
+            <figure class="love-card">
+              <blockquote class="love-quote">{t.quote}</blockquote>
+              <figcaption class="love-author">
+                <Avatar image={t.person?.avatar} name={t.person?.name} size={36} class="love-avatar" />
+                <span class="love-name">
+                  {t.sourceUrl
+                    ? <a class="love-name-link" href={t.sourceUrl} target="_blank" rel="noopener noreferrer">{t.person?.name}</a>
+                    : t.person?.name}
+                </span>
               </figcaption>
             </figure>
           ))}
         </div>
-        <p class="mt-8 text-center">
-          <a href="/love" class="font-bold text-(--color-brand-hover) hover:underline">See more love for Metabase →</a>
+
+        <p class="love-more">
+          <a class="love-more-link" href="/love">See more love for Metabase <span aria-hidden="true">›</span></a>
         </p>
       </div>
     </section>
