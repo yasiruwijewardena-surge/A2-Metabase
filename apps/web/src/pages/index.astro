@@ -88,10 +88,10 @@ const biPoints = [
   description="Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
 >
   <!-- Hero -->
-  <section class="bg-(--color-brand-faint) pb-16 pt-16">
+  <section class="hero-band">
     <div class="container-mb">
       <div class="mx-auto max-w-[780px] text-center">
-        <h1 class="mb-5 text-[2.75rem] leading-[1.08] md:text-[3.5rem]">
+        <h1 class="mb-5">
           Open source AI analytics<br />you can verify
         </h1>
         <p class="mx-auto mb-8 max-w-[620px] text-lg text-(--color-ink-2)">
@@ -99,10 +99,10 @@ const biPoints = [
           logic — whether reached by an agent or a teammate. Inspect the query behind every answer.
         </p>
         <div class="flex flex-wrap justify-center gap-3">
-          <a href="/start" class="rounded-md bg-(--color-brand) px-6 py-3 font-bold text-white hover:bg-(--color-brand-hover)">
+          <a href="/start" class="btn-primary">
             Try Metabase Cloud free
           </a>
-          <a href="/open-source" class="rounded-md border border-(--color-brand-border) px-6 py-3 font-bold text-(--color-brand-hover) hover:bg-(--color-brand-muted)">
+          <a href="/open-source" class="btn-secondary">
             Deploy Metabase Open Source
           </a>
         </div>
@@ -140,35 +140,39 @@ const biPoints = [
   </section>
 
   <!-- Deploy -->
-  <section class="py-16">
+  <section class="pt-[120px] pb-[140px]">
     <div class="container-mb">
-      <h2 class="mb-3 text-3xl">Deploy in minutes, scale infinitely</h2>
-      <p class="mb-10 max-w-[560px] text-(--color-ink-2)">
-        Start simple. Keep your data secure and compliant as you grow, from pre-seed to post-IPO.
-      </p>
+      {/* Centred with an 840px standfirst at 20/28, as every section header on
+          the original is. */}
+      <header class="mb-14 text-center">
+        <h2 class="mb-6">Deploy in minutes, scale infinitely</h2>
+        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
+          Start simple. Keep your data secure and compliant as you grow. From pre-seed to post-IPO.
+        </p>
+      </header>
       <div class="grid gap-8 md:grid-cols-3">
         <div>
-          <div class="mb-6 grid h-60 place-items-center overflow-hidden rounded-xl bg-(--color-brand-faint) px-2">
+          <div class="frontier-visual px-2">
             <CopyCommand command="docker run -d -p 3000:3000 metabase/metabase" />
           </div>
-          <h3 class="mb-2 text-xl">Always open source</h3>
-          <p class="text-(--color-ink-2)">
+          <h3 class="mb-2">Always open source</h3>
+          <p class="frontier-text">
             Run the script to spin up your free, self-hosted instance in minutes. Ships with AI
             features. Used by millions worldwide.
           </p>
         </div>
         <div>
-          <div class="mb-6 h-60 overflow-hidden rounded-xl bg-(--color-brand-faint) py-6">
+          <div class="frontier-visual py-6">
             <DataSourceMarquee />
           </div>
-          <h3 class="mb-2 text-xl">Connect your data and your tools</h3>
-          <p class="text-(--color-ink-2)">
+          <h3 class="mb-2">Connect your data and your tools</h3>
+          <p class="frontier-text">
             Query and visualize data from your database or warehouse. Work with your data via the
             MCP server, CLI, APIs, Slack, and more.
           </p>
         </div>
         <div>
-          <div class="mb-6 grid h-60 place-items-center rounded-xl bg-(--color-brand-faint) p-6">
+          <div class="frontier-visual p-6">
             <div class="grid grid-cols-2 gap-5">
               {[
                 ['soc-2-type-1-badge', 'SOC 2 Type 1'],
@@ -183,8 +187,8 @@ const biPoints = [
               ))}
             </div>
           </div>
-          <h3 class="mb-2 text-xl">Enterprise-grade security</h3>
-          <p class="text-(--color-ink-2)">
+          <h3 class="mb-2">Enterprise-grade security</h3>
+          <p class="frontier-text">
             We treat your data the way we'd want ours — it's secure and compliant (SOC1, SOC2,
             GDPR, CCPA, and more).
           </p>
@@ -194,14 +198,14 @@ const biPoints = [
   </section>
 
   <!-- Business Intelligence -->
-  <section class="py-20">
+  <section class="pt-24 pb-0">
     <div class="container-mb">
       <header class="mx-auto mb-14 max-w-[760px] text-center">
-        <a href="/product/business-intelligence" class="mb-4 inline-flex items-center gap-2 font-bold text-(--color-brand-hover) hover:underline">
+        <a href="/product/business-intelligence" class="eyebrow-link">
           Business Intelligence
           <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
         </a>
-        <h2 class="mb-5 text-[2.5rem] leading-[1.1]">Analytics your team will use and trust</h2>
+        <h2 class="mb-5">Analytics your team will use and trust</h2>
         <p class="text-lg text-(--color-ink-2)">
           Teams can explore data on their own, guided to correct answers with a trustworthy
           foundation. Your data team can curate a governed semantic layer of canonical tables
@@ -213,7 +217,7 @@ const biPoints = [
         {biPoints.map((point, i) => (
           <div class="grid items-center gap-10 rounded-3xl bg-gradient-to-b from-white to-(--color-brand-faint) p-10 lg:grid-cols-2">
             <div>
-              <h3 class="mb-3 text-[1.375rem] leading-snug font-bold">{point.title}</h3>
+              <h3 class="mb-3">{point.title}</h3>
               <p class="mb-5 text-(--color-ink-2)">{point.body}</p>
               <a href={point.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{point.link[0]} →</a>
 
@@ -245,14 +249,14 @@ const biPoints = [
   </section>
 
   <!-- Embedded Analytics -->
-  <section class="bg-(--color-brand-faint) py-20">
+  <section class="pt-24 pb-0">
     <div class="container-mb">
       <header class="mx-auto mb-12 max-w-[760px] text-center">
-        <a href="/product/embedded-analytics" class="mb-4 inline-flex items-center gap-2 font-bold text-(--color-brand-hover) hover:underline">
+        <a href="/product/embedded-analytics" class="eyebrow-link">
           Embedded Analytics
           <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
         </a>
-        <h2 class="mb-5 text-[2.5rem] leading-[1.1]">Put production-grade analytics into your app without drama</h2>
+        <h2 class="mb-5">Put production-grade analytics into your app without drama</h2>
         <p class="text-lg text-(--color-ink-2)">
           Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
           Multi-tenant, customizable analytics components, with plumbing and permissions built in.
@@ -264,7 +268,7 @@ const biPoints = [
       <div class="mt-24 grid gap-10 md:grid-cols-3">
         {eaFeatures.map(([title, body]) => (
           <div>
-            <h3 class="mb-2 text-lg leading-snug">{title}</h3>
+            <h3 class="mb-2">{title}</h3>
             <p class="text-(--color-ink-2)">{body}</p>
           </div>
         ))}
@@ -279,24 +283,26 @@ const biPoints = [
   </section>
 
   <!-- Metabase scales as you grow -->
-  <section class="py-20">
+  <section class="pt-[120px] pb-[120px]">
     <div class="container-mb">
       <header class="mx-auto mb-14 max-w-[700px] text-center">
-        <h2 class="mb-4 text-[2.5rem] leading-[1.1]">Metabase scales as you grow</h2>
-        <p class="text-lg text-(--color-ink-2)">
+        <h2 class="mb-4 leading-[48px]">Metabase scales as you grow</h2>
+        <p class="text-[18px] leading-[32px] text-(--color-ink-2)">
           Advanced features for managing lots of users and compliance. Flexible even as your
           tooling or workflow evolves.
         </p>
       </header>
 
-      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      {/* Cards, not bare text: 24px padding, 12px radius, white on a 1px
+          border, in a 3-up grid with a 20px gutter. */}
+      <div class="scale-grid">
         {scaleCards.map((c) => (
-          <div>
+          <div class="scale-card">
             <ScaleIcon name={c.icon} />
-            <h3 class="mb-2 mt-4 text-lg leading-snug">{c.title}</h3>
-            <p class="text-(--color-ink-2)">
+            <h4 class="scale-card__title">{c.title}</h4>
+            <p class="scale-card__body">
               {c.lead}
-              {c.link && <a href={c.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{c.link[0]}</a>}
+              {c.link && <a href={c.link[1]} class="scale-card__link">{c.link[0]}</a>}
               {c.tail}
             </p>
           </div>
@@ -337,15 +343,15 @@ const biPoints = [
   )}
 
   <!-- Final CTA -->
-  <section class="py-20 text-center">
+  <section class="bg-white py-[100px] text-center">
     <div class="container-mb">
-      <h2 class="mb-3 text-3xl">Ready to get started?</h2>
-      <p class="mx-auto mb-8 max-w-[520px] text-(--color-ink-2)">
+      <h2 class="mb-6">Ready to get started?</h2>
+      <p class="mx-auto mb-8 max-w-[600px] text-[20px] leading-[28px] text-(--color-ink-2)">
         We could keep typing, or you could just try it. AI on all plans. 100k+ teams already love it.
       </p>
       <div class="flex flex-wrap justify-center gap-3">
-        <a href="/start" class="rounded-md bg-(--color-brand) px-6 py-3 font-bold text-white hover:bg-(--color-brand-hover)">Try Metabase Cloud free</a>
-        <a href="/open-source" class="rounded-md border border-(--color-brand-border) px-6 py-3 font-bold text-(--color-brand-hover) hover:bg-(--color-brand-muted)">Deploy Metabase Open Source</a>
+        <a href="/start" class="btn-primary">Try Metabase Cloud free</a>
+        <a href="/open-source" class="btn-secondary">Deploy Metabase Open Source</a>
       </div>
       <ul class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-(--color-ink-3)">
         <li class="flex items-center gap-1.5"><span aria-hidden="true">✓</span> Free 14-day trial</li>

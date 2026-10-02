@@ -55,14 +55,18 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* The original uses weight 900 for headings, which is a large part of why it
-     reads the way it does. */
+  /* Measured off the original rather than inferred from its token list: every
+     heading is weight 700, h1 is 60/60, h2 is 36/40 and h3 is 22/30. An
+     earlier guess of 900 made the whole page read heavier than the original. */
   h1, h2, h3, h4 {
     color: var(--color-ink);
-    font-weight: 900;
-    line-height: 1.11;
+    font-weight: 700;
     text-wrap: balance;
   }
+  h1 { font-size: 60px; line-height: 60px; }
+  h2 { font-size: 36px; line-height: 40px; }
+  h3 { font-size: 22px; line-height: 30px; }
+  h4 { font-size: 18px; line-height: 25px; }
 
   a { color: inherit; text-decoration: none; }
 
@@ -187,4 +191,64 @@
     /* The original hides everything past the fifth card on the narrowest layout. */
     .love-card:nth-of-type(n + 6) { display: none; }
   }
+}
+
+@layer components {
+  /* "Metabase scales as you grow" — measured off the original: three 378px
+     columns on a 20px gutter, each card 24px padded with a 12px radius. */
+  .scale-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .scale-card {
+    border: 1px solid var(--color-line); border-radius: 12px;
+    background: #fff; padding: 24px;
+  }
+  .scale-card__title { margin: 28px 0 8px; font-size: 18px; line-height: 25px; font-weight: 700; }
+  .scale-card__body { font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
+  .scale-card__link { font-weight: 700; color: var(--color-brand-hover); }
+  .scale-card__link:hover { text-decoration: underline; }
+
+  @media (max-width: 991px) { .scale-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .scale-grid { grid-template-columns: 1fr; } }
+}
+
+@layer components {
+  /* Section rhythm, measured off the original: it breathes far more than a
+     default py-16/py-20 scale does. */
+  .hero-band { background: #f9fafb; padding-top: 80px; padding-bottom: 64px; }
+
+  /* Illustration panels in the deploy cards: 400 tall, 16 radius, #f9fafb. */
+  .frontier-visual {
+    display: grid; place-items: center; overflow: hidden;
+    height: 400px; margin-bottom: 24px; border-radius: 16px; background: #f9fafb;
+  }
+
+  /* The scales grid is capped narrower than the page container. */
+  .scale-grid { max-width: 1174px; margin-inline: auto; }
+
+  /* Buttons: 42px tall, 12px radius, 18px inline padding, 14px bold. */
+  .btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 42px; padding-inline: 18px; border-radius: 12px;
+    font-size: 14px; font-weight: 700; transition: background-color 150ms, border-color 150ms;
+  }
+  .btn-primary { background: var(--color-brand); color: #fff; }
+  .btn-primary:hover { background: var(--color-brand-hover); }
+  .btn-secondary { border: 1px solid var(--color-brand-border); color: var(--color-brand-hover); }
+  .btn-secondary:hover { background: var(--color-brand-muted); }
+
+  /* The original leaves the love section untinted. */
+  .love-revamp { background: transparent; padding-top: 140px; padding-bottom: 130px; }
+}
+
+@layer components {
+  /* Deploy card copy: 18/26, secondary ink. */
+  .frontier-text { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+}
+
+@layer components {
+  /* Section eyebrow link: 18px, weight 600, brand blue, with its circled arrow. */
+  .eyebrow-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    font-size: 18px; font-weight: 600; color: var(--color-brand);
+  }
+  .eyebrow-link:hover { text-decoration: underline; }
 }

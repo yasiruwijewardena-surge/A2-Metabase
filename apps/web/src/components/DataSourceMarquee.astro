@@ -10,8 +10,10 @@
  */
 import sources from '../data/data-sources.json';
 
-const half = Math.ceil(sources.length / 2);
-const rows = [sources.slice(0, half), sources.slice(half)];
+// Both rows carry the full list so their tracks are the same width — splitting
+// it left the shorter row running out mid-scroll. The second row is reversed so
+// the two never line up.
+const rows = [sources, [...sources].reverse()];
 ---
 <div class="ds">
   {rows.map((row, i) => (
