@@ -5,6 +5,29 @@ import type { Category, Post } from '../lib/types';
 interface Props { posts: Post[]; categories: Category[]; active?: string | null }
 const { posts, categories, active = null } = Astro.props;
 
+/**
+ * The original orders its category chips editorially, not alphabetically:
+ * Analytics and BI, News, Engineering, Product, Data explorations,
+ * Using Metabase. Strapi has no field for that, so the order lives here and
+ * anything unlisted falls to the end rather than disappearing.
+ */
+const CATEGORY_ORDER = [
+  'analytics-and-bi', 'news', 'engineering', 'product',
+  'data-explorations', 'using-metabase',
+];
+const ordered = [...categories].sort(
+  (a, b) =>
+    (CATEGORY_ORDER.indexOf(a.slug) + 1 || 99) - (CATEGORY_ORDER.indexOf(b.slug) + 1 || 99),
+);
+
+/* The original's sidebar lists recent releases. Not modelled in Strapi — a
+   release-notes type would be the proper home for this if the scope grew. */
+const releases = [
+  { date: 'Jul 2026', title: 'Metabase 63', body: 'A whole lot of wishlist items: treemap charts, 2FA, PDFs in dashboard subscriptions, one-step dashboard viewer invites, and more.' },
+  { date: 'Jun 2026', title: 'Metabase 62', body: 'A plugin SDK for building any chart type, interactive charts from the MCP server, the Metabase CLI for terminal-native workflows, and an interactive Schema Viewer.' },
+  { date: 'May 2026', title: 'Metabase 61', body: 'Granular AI controls, token and message limits, Metabot customization with system prompts, AI usage analytics, and dashboards-as-code.' },
+];
+
 const featured = posts.slice(0, 3);
 const rest = posts.slice(3);
 
@@ -16,9 +39,10 @@ for (const p of rest) {
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
 ---
-<div class="container-mb pt-10">
-  <section class="flex flex-col pb-2 lg:flex-row lg:items-center">
-    <h1 class="mb-4 text-4xl lg:mb-0">Blog</h1>
+<div class="page-tint">
+<div class="container-mb pt-4">
+  <section class="flex flex-col pt-8 pb-0 lg:flex-row lg:items-center">
+    <h1 class="mb-4 text-[2.25rem] leading-[1.11] lg:mb-0">Blog</h1>
     <div class="mx-8 hidden h-10 w-px bg-(--color-ink-4) lg:block"></div>
 
     <div class="flex flex-wrap items-center">
@@ -32,7 +56,7 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
           aria-current={active === null ? 'page' : undefined}
           class:list={['pill', active === null && 'pill-on']}
         >All</a>
-        {categories.map((c) => (
+        {ordered.map((c) => (
           <a
             href={`/blog/category/${c.slug}`}
             aria-current={active === c.slug ? 'page' : undefined}
@@ -45,7 +69,7 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
 
   <div class="flex flex-row flex-wrap -mx-3">
     <div class="w-full px-3 lg:w-2/3">
-      <section class="pt-8">
+      <section class="pt-8 lg:pe-30">
         {featured.map((post, i) => <PostCard post={post} featured eager={i === 0} />)}
         {featured.length === 0 && (
           <p class="rounded-lg border border-(--color-line) bg-(--color-brand-faint) p-8 text-center text-(--color-ink-2)">
@@ -55,16 +79,29 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
       </section>
     </div>
 
-    <aside class="w-full px-3 lg:w-1/3">
-      <div class="sticky top-24 rounded-xl border border-(--color-brand-border) bg-(--color-brand-faint) p-6">
-        <h2 class="mb-2 text-lg">Subscribe to newsletter</h2>
-        <p class="mb-4 text-sm text-(--color-ink-2)">Updates and news from Metabase.</p>
-        <form class="flex gap-2" onsubmit="event.preventDefault()">
+    <aside class="w-full px-3 pt-8 lg:w-1/3">
+      <h2 class="mb-6 text-[1.5rem] leading-[1.33]">Releases</h2>
+      <ul class="mb-10 space-y-7">
+        {releases.map((r) => (
+          <li>
+            <p class="mb-1 text-base text-(--color-ink-3)">{r.date}</p>
+            <h3 class="mb-2 text-[1.5rem] leading-[1.33] font-bold">{r.title}</h3>
+            <p class="text-base text-(--color-ink-2)">{r.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="rounded-lg bg-(--color-brand-faint) p-6">
+        <h2 class="mb-2 text-[1.5rem] leading-[1.33]">Subscribe to our newsletter</h2>
+        <p class="mb-4 text-base text-(--color-ink-2)">
+          Stay in touch with updates and news from Metabase. No spam, ever.
+        </p>
+        <form class="space-y-3" onsubmit="event.preventDefault()">
           <label for="nl" class="sr-only">Email address</label>
-          <input id="nl" type="email" required placeholder="you@company.com"
-                 class="min-w-0 flex-1 rounded-md border border-(--color-line) px-3 py-2 text-sm" />
-          <button type="submit" class="rounded-md bg-(--color-brand) px-3 py-2 text-sm font-bold text-white hover:bg-(--color-brand-hover)">
-            Sign up
+          <input id="nl" type="email" required placeholder="Email Address"
+                 class="w-full rounded-md border border-(--color-line) bg-white px-4 py-3 text-base" />
+          <button type="submit" class="w-full rounded-md bg-(--color-brand) px-4 py-3 text-base font-bold text-white transition-colors hover:bg-(--color-brand-hover)">
+            Sign Up
           </button>
         </form>
       </div>
@@ -94,17 +131,4 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
     </section>
   )}
 </div>
-
-<style>
-  .pill {
-    display: inline-block;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.5rem;
-    background: var(--color-surface);
-    color: var(--color-brand-strong);
-    font-size: 0.9375rem;
-    transition: background-color 120ms, color 120ms;
-  }
-  .pill:hover { background: var(--color-brand); color: #fff; }
-  .pill-on { background: var(--color-brand-strong); color: #fff; }
-</style>
+</div>

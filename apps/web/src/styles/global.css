@@ -75,6 +75,40 @@
 }
 
 @layer components {
+  /* Lifted from the original's .blog-card: radius .5rem, white on the tinted
+     page, 24px padding, and a 4px lift with a soft shadow on hover. */
+  .blog-card {
+    position: relative;
+    border-radius: 0.5rem;
+    background: #fff;
+    padding: 1.5rem;
+    transition: translate 300ms, box-shadow 300ms;
+  }
+  .blog-card:hover {
+    translate: 0 -4px;
+    box-shadow: 0 0.25rem 1.5rem rgb(0 0 0 / 0.1);
+  }
+
+  /* The original's page tint: white at the very top, settling to #fafbfe. */
+  .page-tint { background: linear-gradient(0deg, #fff 0%, var(--color-brand-faint) 5%); }
+
+  /* .category-filter, matched: neutral-95 chip, brand-blue label, brand fill on
+     hover, brand-strong when selected. */
+  .pill {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+    padding-inline: 0.75rem;
+    padding-block: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--color-brand);
+    transition: color 150ms, background-color 150ms;
+  }
+  .pill:hover { background: var(--color-brand); color: #fff; }
+  .pill-on { background: var(--color-brand-strong); color: #fff; }
+
   .container-mb {
     width: 100%;
     margin-inline: auto;

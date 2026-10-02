@@ -10,29 +10,31 @@ const date = new Date(post.publishedDate).toLocaleDateString('en-GB', {
   day: 'numeric', month: 'short', year: 'numeric',
 });
 ---
-<article class={featured ? 'mb-10' : ''}>
+<article class={featured ? 'mb-8' : ''}>
+  <div class={featured ? 'blog-card' : ''}>
   {featured && (
     <CldImage
       image={post.coverImage}
       priority={eager}
-      ratio={16 / 9}
-      class="mb-6 aspect-[16/9] w-full rounded-md object-cover"
+      class="mb-8 w-full rounded-md"
     />
   )}
 
-  <p class="mb-2 text-sm text-(--color-ink-3)">
-    {date}{post.category && <> in <b class="font-bold text-(--color-ink-2)">{post.category.name}</b></>}
-  </p>
+  <span class="mb-3 block text-base text-(--color-ink-3)">
+    {date}{post.category && <> in <b class="font-bold">{post.category.name}</b></>}
+  </span>
 
   {/* These cards sit directly under the page h1, so they are h2 — jumping
       straight to h3 is what PSI flags as a non-sequential heading order. */}
-  <h2 class={featured ? 'mb-3 text-2xl leading-tight' : 'mb-1 text-lg leading-snug'}>
+  {/* 24px / 1.33 / weight 700 — the original's card titles are bold, not the
+      900 its page headings use. */}
+  <h2 class={featured ? 'mb-4 text-[1.5rem] leading-[1.33] font-bold' : 'mb-1 text-lg leading-snug font-bold'}>
     <a href={`/blog/${post.slug}`} class="hover:text-(--color-brand-hover)">{post.title}</a>
   </h2>
 
-  {featured && <p class="mb-5 text-(--color-ink-2)">{post.excerpt}</p>}
+  {featured && <p class="mb-6 text-base text-(--color-ink-2)">{post.excerpt}</p>}
 
-  <div class="flex items-center gap-2 text-sm text-(--color-ink-3)">
+  <div class="flex flex-row items-center gap-2 text-base text-(--color-ink-3)">
     {featured && <Avatar image={post.author?.avatar} size={36} class="h-9 w-9" />}
     {post.author && (
       <a href={`/blog/authors/${post.author.slug}`} class="font-bold text-(--color-ink-2) hover:text-(--color-brand-hover)">
@@ -40,5 +42,6 @@ const date = new Date(post.publishedDate).toLocaleDateString('en-GB', {
       </a>
     )}
     {post.readTimeMinutes && <span>‧ {post.readTimeMinutes} min read</span>}
+  </div>
   </div>
 </article>
