@@ -16,6 +16,18 @@ const social = testimonials
   .slice(0, 9);
 
 const featuredCases = cases.filter((c) => c.featured).slice(0, 3);
+
+/**
+ * The original runs a row of customer logos under "Trusted by 100,000+
+ * companies". Rendered here as wordmarks drawn from the companies that
+ * actually have a case study, rather than reproducing real brand assets on a
+ * replica.
+ */
+const logos = cases
+  .map((c) => c.company?.name)
+  .filter((n): n is string => Boolean(n))
+  .filter((n, i, a) => a.indexOf(n) === i)
+  .slice(0, 8);
 const withMetrics = cases.filter((c) => c.metrics?.length).slice(0, 3);
 
 const biPoints = [
@@ -41,7 +53,7 @@ const biPoints = [
   description="Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
 >
   <!-- Hero -->
-  <section class="bg-gradient-to-b from-(--color-brand-faint) to-white pb-16 pt-16">
+  <section class="bg-(--color-brand-faint) pb-16 pt-16">
     <div class="container-mb">
       <div class="mx-auto max-w-[780px] text-center">
         <h1 class="mb-5 text-[2.75rem] leading-[1.08] md:text-[3.5rem]">
@@ -59,10 +71,49 @@ const biPoints = [
             Deploy Metabase Open Source
           </a>
         </div>
-        <p class="mt-10 text-sm font-bold uppercase tracking-wide text-(--color-ink-3)">
-          Trusted by 100,000+ companies
-        </p>
       </div>
+
+      <!-- Stands in for the original's product screenshot. -->
+      <div class="mx-auto mt-14 max-w-[1140px] overflow-hidden rounded-xl border border-(--color-line) bg-white shadow-sm">
+        <div class="grid gap-px bg-(--color-line) md:grid-cols-3">
+          <div class="bg-white p-6">
+            <p class="mb-3 text-sm font-bold text-(--color-ink-2)">Total Accounts</p>
+            <p class="text-5xl font-black">1,228</p>
+            <p class="mt-2 text-sm text-(--color-ink-3)">Jun 2026</p>
+            <p class="mt-1 text-sm font-bold text-(--color-ok-strong)">↑ 0.9% vs. previous month</p>
+          </div>
+          <div class="bg-white p-6">
+            <p class="mb-4 text-sm font-bold text-(--color-ink-2)">Accounts added per year, by source</p>
+            <div class="flex h-28 items-end gap-2" aria-hidden="true">
+              {[38, 62, 45, 80, 55, 94, 70].map((h) => (
+                <div class="flex-1 rounded-t bg-(--color-brand)" style={`height:${h}%`}></div>
+              ))}
+            </div>
+          </div>
+          <div class="bg-white p-6">
+            <p class="mb-3 text-sm font-bold text-(--color-ink-2)">Chat with Metabot</p>
+            <p class="mb-3 rounded-lg bg-(--color-surface) p-3 text-sm text-(--color-ink-2)">
+              Which source added the most accounts in 2026?
+            </p>
+            <p class="text-sm text-(--color-ink-2)">
+              <b class="font-bold text-(--color-ink)">Organic added the most in 2026: 62 accounts</b>,
+              ahead of Google at 30.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-14 text-center text-base text-(--color-ink-3)">Trusted by 100,000+ companies</p>
+      <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+        {logos.map((name) => (
+          <li class="text-lg font-black tracking-tight text-(--color-ink-4)">{name}</li>
+        ))}
+      </ul>
+
+      <a href="/demo" class="mt-12 flex items-center gap-4 rounded-xl border border-(--color-line) bg-white p-6 transition-shadow hover:shadow-md">
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-(--color-brand-muted) text-(--color-brand-hover)" aria-hidden="true">▶</span>
+        <span class="text-lg font-bold">Watch a 1-minute demo</span>
+      </a>
     </div>
   </section>
 
@@ -90,25 +141,47 @@ const biPoints = [
       <p class="mb-10 max-w-[560px] text-(--color-ink-2)">
         Start simple. Keep your data secure and compliant as you grow, from pre-seed to post-IPO.
       </p>
-      <div class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-xl border border-(--color-line) p-6">
-          <code class="mb-4 block overflow-x-auto rounded-md bg-(--color-ink) p-3 font-mono text-sm text-white">
-            docker run -d -p 3000:3000 metabase/metabase
-          </code>
-          <h3 class="mb-2 text-lg">Always open source</h3>
-          <p class="text-(--color-ink-2)">Spin up a free, self-hosted instance in minutes.</p>
-        </div>
-        <div class="rounded-xl border border-(--color-line) p-6">
-          <h3 class="mb-2 text-lg">Connect your data and your tools</h3>
+      <div class="grid gap-8 md:grid-cols-3">
+        <div>
+          <div class="mb-6 grid h-60 place-items-center rounded-xl bg-(--color-brand-faint) p-6">
+            <code class="rounded-md border border-(--color-line) bg-white px-3 py-2 font-mono text-sm text-(--color-ink-2)">
+              docker run -d -p 3000:3000 metabase/metabase
+            </code>
+          </div>
+          <h3 class="mb-2 text-xl">Always open source</h3>
           <p class="text-(--color-ink-2)">
-            Query and visualize data from your database or warehouse. Work with your data via
-            the MCP server, CLI, APIs, Slack, and more.
+            Run the script to spin up your free, self-hosted instance in minutes. Ships with AI
+            features. Used by millions worldwide.
           </p>
         </div>
-        <div class="rounded-xl border border-(--color-line) p-6">
-          <h3 class="mb-2 text-lg">Enterprise-grade security</h3>
+        <div>
+          <div class="mb-6 grid h-60 place-items-center rounded-xl bg-(--color-brand-faint) p-6">
+            <div class="grid grid-cols-5 gap-3" aria-hidden="true">
+              {Array.from({ length: 10 }).map(() => (
+                <span class="grid h-11 w-11 place-items-center rounded-full border border-(--color-line) bg-white">
+                  <span class="h-4 w-4 rounded-sm bg-(--color-brand-soft)"></span>
+                </span>
+              ))}
+            </div>
+          </div>
+          <h3 class="mb-2 text-xl">Connect your data and your tools</h3>
           <p class="text-(--color-ink-2)">
-            We treat your data the way we would want ours — secure and compliant.
+            Query and visualize data from your database or warehouse. Work with your data via the
+            MCP server, CLI, APIs, Slack, and more.
+          </p>
+        </div>
+        <div>
+          <div class="mb-6 grid h-60 place-items-center rounded-xl bg-(--color-brand-faint) p-6">
+            <div class="grid grid-cols-2 gap-4" aria-hidden="true">
+              {['SOC 1', 'SOC 2', 'GDPR', 'CCPA'].map((b) => (
+                <span class="grid h-20 w-20 place-items-center rounded-full bg-(--color-brand-strong) text-xs font-bold text-white">{b}</span>
+              ))}
+            </div>
+          </div>
+          <h3 class="mb-2 text-xl">Enterprise-grade security</h3>
+          <p class="text-(--color-ink-2)">
+            We treat your data the way we'd want ours — it's secure and compliant (SOC1, SOC2,
+            GDPR, CCPA, and more).
           </p>
         </div>
       </div>
@@ -129,15 +202,17 @@ const biPoints = [
               <p class="mb-4 text-(--color-ink-2)">{point.body}</p>
               <a href={point.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{point.link[0]} →</a>
             </div>
+            {/* The original sets its pull quotes italic, inline beneath the
+                section link, with the attribution directly under them. */}
             {pullQuotes[i] && (
-              <figure class="rounded-xl border border-(--color-brand-border) bg-white p-6">
-                <blockquote class="mb-4 text-lg leading-relaxed text-(--color-ink)">
-                  “{pullQuotes[i].quote}”
+              <figure class="rounded-xl bg-white p-8">
+                <blockquote class="mb-5 text-lg italic leading-relaxed text-(--color-ink-2)">
+                  "{pullQuotes[i].quote}"
                 </blockquote>
                 <figcaption class="flex items-center gap-3">
-                  <Avatar image={pullQuotes[i].person?.avatar} size={36} class="h-9 w-9 bg-(--color-surface)" />
-                  <span class="text-sm">
-                    <b class="block font-bold">{pullQuotes[i].person?.name}</b>
+                  <Avatar image={pullQuotes[i].person?.avatar} size={44} class="h-11 w-11 bg-(--color-surface)" />
+                  <span>
+                    <b class="block font-bold text-(--color-ink)">{pullQuotes[i].person?.name}</b>
                     <span class="text-(--color-ink-3)">
                       {pullQuotes[i].person?.role}{pullQuotes[i].person?.company?.name && <>, {pullQuotes[i].person.company.name}</>}
                     </span>
@@ -239,7 +314,11 @@ const biPoints = [
         <a href="/start" class="rounded-md bg-(--color-brand) px-6 py-3 font-bold text-white hover:bg-(--color-brand-hover)">Try Metabase Cloud free</a>
         <a href="/open-source" class="rounded-md border border-(--color-brand-border) px-6 py-3 font-bold text-(--color-brand-hover) hover:bg-(--color-brand-muted)">Deploy Metabase Open Source</a>
       </div>
-      <p class="mt-6 text-sm text-(--color-ink-3)">Free 14-day trial · Super-fast setup · Open source</p>
+      <ul class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-(--color-ink-3)">
+        <li class="flex items-center gap-1.5"><span aria-hidden="true">✓</span> Free 14-day trial</li>
+        <li class="flex items-center gap-1.5"><span aria-hidden="true">◷</span> Super-fast setup</li>
+        <li class="flex items-center gap-1.5"><span aria-hidden="true">◆</span> Open source</li>
+      </ul>
     </div>
   </section>
 </BaseLayout>
