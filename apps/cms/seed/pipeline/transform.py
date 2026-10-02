@@ -107,6 +107,7 @@ for c in cases:
         "employees": c.get("employees"),
         "headquarters": c.get("headquarters"),
         "description": c.get("companyDescription"),
+        "logoUrl": c.get("companyLogo"),
     })
 
 # fictional companies + people, used only for testimonials

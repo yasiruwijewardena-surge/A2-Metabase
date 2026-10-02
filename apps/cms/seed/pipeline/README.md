@@ -15,7 +15,14 @@ Factual metadata only, never article text:
 - Post titles, slugs, excerpts, categories, publication dates, read times,
   cover image URLs, author names and avatars
 - Case study titles, company names, industries, employee counts, headquarters,
-  hero image URLs
+  cover image URLs and the company logo shown in the fact panel
+
+The cover is deliberately not `og:image`. That asset is the social card, with
+the claim text baked into the artwork, and using it put a second copy of the
+headline inside the page's own hero. The page uses two other images: a 142px
+logo in the fact panel (the only `img` carrying `max-h-20`) and a 3:1 cover
+above the body (the first `h-full w-full object-cover`). `scrape.py` takes
+both, and keeps `og:image` separately for the social card it is.
 - The six blog category names
 
 ## What is written here

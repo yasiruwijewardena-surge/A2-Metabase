@@ -112,12 +112,20 @@ async function main() {
     }
 
     // ---- 2. companies, then people --------------------------------------
-    const companyMap = byName(await Promise.all(companies.map((c) =>
-      upsert(app, 'api::company.company', { slug: slugify(c.name) }, {
-        ...c,
+    // Sequential rather than Promise.all: each company may upload a logo, and
+    // firing 54 uploads at Cloudinary at once is how the earlier runs timed out.
+    const companyList = [];
+    for (const c of companies) {
+      const { logoUrl, ...rest } = c;
+      const logo = await uploadFromUrl(app, logoUrl, { skip: NO_MEDIA });
+      companyList.push(await upsert(app, 'api::company.company', { slug: slugify(c.name) }, {
+        ...rest,
         slug: slugify(c.name),
         industry: industries[c.industry]?.documentId,
-      }))));
+        ...(logo ? { logo } : {}),
+      }));
+    }
+    const companyMap = byName(companyList);
 
     const personMap = byName(await Promise.all(people.map((p) =>
       upsert(app, 'api::person.person', { slug: slugify(p.name) }, {

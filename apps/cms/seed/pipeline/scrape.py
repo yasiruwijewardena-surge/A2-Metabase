@@ -57,11 +57,22 @@ def case_meta(url):
     og = re.search(r'<meta property="og:title" content="([^"]*)"', doc)
     desc = re.search(r'<meta name="description" content="([^"]*)"', doc)
     img = re.search(r'<meta property="og:image" content="([^"]*)"', doc)
+    # The og:image is the social card, with the claim baked into the artwork.
+    # The page itself uses two other assets: a 142px company logo in the fact
+    # panel (the only img carrying `max-h-20`) and a 3:1 cover above the body
+    # (the first `h-full w-full object-cover`). Both are wanted; the related
+    # strip lower down reuses the same classes, so take the first of each.
+    logo = re.search(r'<img[^>]*class="[^"]*max-h-20[^"]*"[^>]*src="([^"]+)"', doc) \
+        or re.search(r'<img[^>]*src="([^"]+)"[^>]*class="[^"]*max-h-20[^"]*"', doc)
+    cover = re.search(r'<img[^>]*class="h-full w-full object-cover"[^>]*src="([^"]+)"', doc) \
+        or re.search(r'<img[^>]*src="([^"]+)"[^>]*class="h-full w-full object-cover"', doc)
     return {
         "slug": url.rsplit("/", 1)[-1],
         "title": html.unescape(og.group(1)) if og else None,
         "headline": html.unescape(desc.group(1)) if desc else None,
-        "heroImage": img.group(1) if img else None,
+        "ogImage": img.group(1) if img else None,
+        "heroImage": (cover.group(1) if cover else None) or (img.group(1) if img else None),
+        "companyLogo": logo.group(1) if logo else None,
         "companyDescription": field("Company", "Industry"),
         "industry": field("Industry", "Employees|Headquarters|Key use"),
         "employees": field("Employees", "Headquarters|Key use|Industry"),
