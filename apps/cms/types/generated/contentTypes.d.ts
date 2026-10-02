@@ -731,6 +731,45 @@ export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
+  collectionName: 'plans';
+  info: {
+    description: "A pricing tier. The original's pricing page is three independent axes \u2014 use case, deployment and billing period \u2014 so a plan declares which combinations it belongs to rather than existing once per combination.";
+    displayName: 'Plan';
+    pluralName: 'plans';
+    singularName: 'plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Component<'shared.cta', false>;
+    deployments: Schema.Attribute.JSON & Schema.Attribute.Required;
+    displayOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    features: Schema.Attribute.JSON & Schema.Attribute.Required;
+    featuresLead: Schema.Attribute.String;
+    footnote: Schema.Attribute.String;
+    highlighted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::plan.plan'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    priceMonthly: Schema.Attribute.Integer;
+    priceNote: Schema.Attribute.String;
+    priceYearly: Schema.Attribute.Integer;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    tagline: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    useCases: Schema.Attribute.Relation<'manyToMany', 'api::use-case.use-case'>;
+  };
+}
+
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: 'posts';
   info: {
@@ -1405,6 +1444,7 @@ declare module '@strapi/strapi' {
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
       'api::industry.industry': ApiIndustryIndustry;
       'api::person.person': ApiPersonPerson;
+      'api::plan.plan': ApiPlanPlan;
       'api::post.post': ApiPostPost;
       'api::tag.tag': ApiTagTag;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;

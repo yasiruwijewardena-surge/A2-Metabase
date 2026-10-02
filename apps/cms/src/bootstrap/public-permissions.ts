@@ -16,6 +16,7 @@ const PUBLIC_READ_APIS = [
   'api::glossary-term.glossary-term',
   'api::industry.industry',
   'api::person.person',
+  'api::plan.plan',
   'api::post.post',
   'api::tag.tag',
   'api::testimonial.testimonial',

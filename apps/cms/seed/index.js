@@ -59,6 +59,7 @@ async function wipe(app, uid) {
 }
 
 const ORDER = [
+  'api::plan.plan',
   'api::testimonial.testimonial',
   'api::case-study.case-study',
   'api::post.post',
@@ -91,6 +92,7 @@ async function main() {
     const caseStudies = read('case-studies.json');
     const testimonials = read('testimonials.json').filter((x) => x.quote);
     const glossary = read('glossary.json');
+    const plans = read('plans.json');
 
     // ---- 1. independent taxonomies -------------------------------------
     const byName = (list) => Object.fromEntries(list.map((d) => [d.name, d]));
@@ -118,6 +120,20 @@ async function main() {
       authors[a.name] = await upsert(app, 'api::author.author',
         { slug: a.slug || slugify(a.name) },
         { ...rest, slug: a.slug || slugify(a.name), avatar });
+    }
+
+    /*
+     * Pricing tiers. The original's page is three independent axes — use case,
+     * deployment and billing period — so a plan declares which combinations it
+     * belongs to and the page filters, rather than storing one row per
+     * combination. Use cases are the same vocabulary the case studies filter
+     * on, not a parallel enum.
+     */
+    for (const p of plans) {
+      await upsert(app, 'api::plan.plan', { slug: p.slug }, {
+        ...p,
+        useCases: (p.useCases ?? []).map((n) => useCases[n]?.documentId).filter(Boolean),
+      });
     }
 
     for (const g of glossary) {

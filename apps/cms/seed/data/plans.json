@@ -1,0 +1,151 @@
+[
+  {
+    "name": "Open Source",
+    "slug": "open-source",
+    "tagline": "Self-host it yourself, free forever.",
+    "priceMonthly": null,
+    "priceYearly": null,
+    "priceNote": "Free",
+    "deployments": [
+      "self-hosted"
+    ],
+    "features": [
+      "Ask questions with AI",
+      "SQL generation",
+      "20+ supported data sources",
+      "Unlimited questions & dashboards",
+      "Write SQL or explore just by clicking",
+      "Community support"
+    ],
+    "footnote": "Runs anywhere Docker or a JAR does",
+    "cta": {
+      "label": "Deploy Metabase Open Source",
+      "url": "/open-source",
+      "style": "secondary"
+    },
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "displayOrder": 0
+  },
+  {
+    "name": "Starter",
+    "slug": "starter",
+    "tagline": "Everything a team needs to answer its own questions.",
+    "priceMonthly": 100,
+    "priceYearly": 90,
+    "deployments": [
+      "cloud"
+    ],
+    "features": [
+      "Ask questions with AI",
+      "SQL generation",
+      "20+ supported data sources",
+      "Unlimited questions & dashboards",
+      "Write SQL or explore just by clicking",
+      "3-day support via email, support form, Slack, or Teams"
+    ],
+    "footnote": "Set up in 2 minutes",
+    "cta": {
+      "label": "Get started",
+      "url": "/start",
+      "style": "primary"
+    },
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "displayOrder": 1
+  },
+  {
+    "name": "Pro",
+    "slug": "pro-business-intelligence",
+    "tagline": "Governance, permissions and embedding for growing teams.",
+    "priceMonthly": 575,
+    "priceYearly": 517,
+    "deployments": [
+      "cloud",
+      "self-hosted"
+    ],
+    "featuresLead": "All Starter features, plus:",
+    "features": [
+      "Row and column level permissions",
+      "SSO",
+      "Caching controls",
+      "Usage analytics & auditing",
+      "Multi-tenant embedded analytics",
+      "Whitelabel ready",
+      "AI usage auditing and controls"
+    ],
+    "footnote": "Set up in 2 minutes",
+    "cta": {
+      "label": "Get started",
+      "url": "/start",
+      "style": "primary"
+    },
+    "highlighted": true,
+    "useCases": [
+      "Business Intelligence"
+    ],
+    "displayOrder": 2
+  },
+  {
+    "name": "Pro",
+    "slug": "pro-embedded-analytics",
+    "tagline": "Customer-facing analytics, multi-tenant from day one.",
+    "priceMonthly": 575,
+    "priceYearly": 517,
+    "deployments": [
+      "cloud",
+      "self-hosted"
+    ],
+    "features": [
+      "Embed unlimited charts and dashboards with tailored interactivity",
+      "Let customers ask questions with AI",
+      "Multi tenant data segregation, including row- and column level security",
+      "Fully customize to your brand",
+      "Row and column level permissions"
+    ],
+    "footnote": "Set up in 2 minutes",
+    "cta": {
+      "label": "Get started",
+      "url": "/start",
+      "style": "primary"
+    },
+    "highlighted": true,
+    "useCases": [
+      "Embedded Analytics"
+    ],
+    "displayOrder": 3
+  },
+  {
+    "name": "Enterprise",
+    "slug": "enterprise",
+    "tagline": "For the scale, procurement and compliance a large org needs.",
+    "priceMonthly": null,
+    "priceYearly": null,
+    "priceNote": "Custom pricing",
+    "deployments": [
+      "cloud",
+      "self-hosted"
+    ],
+    "featuresLead": "All Pro features, plus:",
+    "features": [
+      "Custom pricing aligned with your business model",
+      "Our help with procurement",
+      "Dedicated success engineer",
+      "Air gap available",
+      "1-day support SLA"
+    ],
+    "footnote": "Price starts at $20,000 / year",
+    "cta": {
+      "label": "Talk to sales",
+      "url": "/start",
+      "style": "secondary"
+    },
+    "useCases": [
+      "Business Intelligence",
+      "Embedded Analytics"
+    ],
+    "displayOrder": 4
+  }
+]

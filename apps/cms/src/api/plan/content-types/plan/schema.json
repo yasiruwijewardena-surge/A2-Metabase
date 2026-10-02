@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "plans",
+  "info": {
+    "singularName": "plan",
+    "pluralName": "plans",
+    "displayName": "Plan",
+    "description": "A pricing tier. The original's pricing page is three independent axes — use case, deployment and billing period — so a plan declares which combinations it belongs to rather than existing once per combination."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "priceMonthly": {
+      "type": "integer",
+      "description": "USD per month. Null means the tier is free or quoted, which priceNote explains."
+    },
+    "priceYearly": {
+      "type": "integer",
+      "description": "USD per month when billed yearly. The original advertises 'Save 10%'."
+    },
+    "priceNote": {
+      "type": "string",
+      "description": "Shown in place of a figure: 'Custom pricing', 'Free', 'Price starts at $20,000 / year'."
+    },
+    "deployments": {
+      "type": "json",
+      "required": true,
+      "description": "Which deployment toggles show this plan: [\"cloud\"], [\"self-hosted\"] or both."
+    },
+    "featuresLead": {
+      "type": "string",
+      "description": "'All Starter features, plus:'"
+    },
+    "features": {
+      "type": "json",
+      "required": true,
+      "description": "The bullet list, in order."
+    },
+    "footnote": {
+      "type": "string",
+      "description": "'Set up in 2 minutes'"
+    },
+    "cta": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.cta"
+    },
+    "highlighted": {
+      "type": "boolean",
+      "default": false,
+      "description": "The tier the original visually promotes."
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "useCases": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::use-case.use-case",
+      "description": "Reuses the existing Business Intelligence / Embedded Analytics vocabulary rather than duplicating it as an enum."
+    }
+  }
+}
