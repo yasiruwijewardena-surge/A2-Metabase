@@ -235,7 +235,10 @@
   }
   .btn-primary { background: var(--color-brand); color: #fff; }
   .btn-primary:hover { background: var(--color-brand-hover); }
-  .btn-secondary { border: 1px solid var(--color-brand-border); color: var(--color-brand-hover); }
+  /* The original's outline button is a neutral hairline, not a blue one; its
+     label is #509ee3, which is 3.1:1 and fails AA at 14px bold, so the label
+     steps down the ramp as elsewhere. */
+  .btn-secondary { border: 1px solid rgb(198 201 210 / 0.5); background: #fff; color: var(--color-brand-hover); }
   .btn-secondary:hover { background: var(--color-brand-muted); }
 
   /* The original leaves the love section untinted. */
