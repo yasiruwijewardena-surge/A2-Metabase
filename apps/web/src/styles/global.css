@@ -472,9 +472,14 @@
    * standfirst and the reassurance row 20px under the buttons.
    */
   .final-cta-section { background: #fff; }
+  /* Full-bleed: the original centres its contents with the flex box rather
+     than capping the block, because the illustration under them runs edge to
+     edge. The gradient fades #f9fafb into the white the footer sits on. */
   .final-cta {
-    max-width: 1320px; margin-inline: auto; padding: 56px 28px 0;
-    border-top: 1px solid var(--color-line); text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 56px 0 0; border-top: 1px solid var(--color-line);
+    background-image: linear-gradient(#f9fafb, #fff);
+    text-align: center;
   }
   .final-cta-title { margin-bottom: 16px; line-height: 39.6px; }
   .final-cta-sub {
@@ -491,4 +496,67 @@
   .final-cta-point-icon { display: flex; align-items: center; width: 18px; height: 18px; }
   .final-cta-point-icon svg { width: 100%; height: 100%; }
   .final-cta-point-icon svg[viewBox="0 0 14 14"] { width: 14px; height: 14px; margin-inline: auto; }
+}
+
+@layer components {
+  /*
+   * Site footer. Measured off the original: five columns laid out
+   * space-between on a 32px gutter, each column stacking one or two labelled
+   * groups, over a hairline-ruled bottom bar. The original's heading colour is
+   * #8d93a5 — 2.6:1 at 12px bold — so headings take the tertiary ink and the
+   * links stay secondary, keeping the hierarchy and clearing AA.
+   */
+  .site-footer { position: relative; background: #fff; }
+  .site-footer-inner { margin-inline: 96px; padding-inline: 24px; }
+  .site-footer-cols { display: flex; justify-content: space-between; gap: 32px; padding-block: 40px; }
+  /* The original floors each column at 150 so the short ones do not collapse
+     to their longest word. */
+  .site-footer-col { min-width: 150px; }
+  .site-footer-group { margin-bottom: 28px; }
+  .site-footer-group:last-child { margin-bottom: 0; }
+  .site-footer-heading {
+    display: block; margin-bottom: 12px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.48px;
+    color: var(--color-ink-3);
+  }
+  .site-footer-group a {
+    display: flex; align-items: center; gap: 6px; padding-block: 8px;
+    font-size: 14px; color: var(--color-ink-2);
+  }
+  .site-footer-group a:hover { color: var(--color-brand-hover); }
+  .site-footer-badge {
+    border-radius: 4px; background: var(--color-surface); padding: 1px 6px;
+    font-size: 11px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .site-footer-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-ok); }
+
+  .site-footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-inline: 96px; padding: 24px; border-top: 1px solid var(--color-line);
+  }
+  .site-footer-brand { display: flex; align-items: center; gap: 16px; font-size: 14px; color: var(--color-ink-2); }
+  .site-footer-mark { display: flex; }
+  .site-footer-social { display: flex; align-items: center; gap: 16px; }
+  .site-footer-social a { display: flex; color: var(--color-ink-3); }
+  .site-footer-social a:hover { color: var(--color-brand-hover); }
+  /* Not on the original: this build is a replica and says so. */
+  .site-footer-note {
+    margin-inline: 96px; padding: 0 24px 24px;
+    font-size: 13px; color: var(--color-ink-3);
+  }
+
+  @media (max-width: 1199px) {
+    .site-footer-inner, .site-footer-bottom, .site-footer-note { margin-inline: 24px; }
+    .site-footer-cols { flex-wrap: wrap; }
+    .site-footer-col { flex: 1 1 180px; }
+  }
+  @media (max-width: 639px) {
+    .site-footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+}
+
+@layer components {
+  /* The CTA sits on a full-bleed line illustration, lazily loaded. */
+  .final-cta-illustration-wrap { width: 100%; max-width: 1520px; margin-top: 40px; }
+  .final-cta-illustration { display: block; width: 100%; height: auto; }
 }

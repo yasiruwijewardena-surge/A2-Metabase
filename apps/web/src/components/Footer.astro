@@ -1,62 +1,115 @@
 ---
-const columns = [
-  { title: 'Product', links: [
-    ['Watch Demo', '/demo'], ['Data Sources', '/data-sources'], ['Security', '/security'],
-    ['Cloud', '/cloud'], ['Roadmap', '/roadmap'], ["What's New", '/releases'],
-  ]},
-  { title: 'Pricing', links: [['Plans', '/pricing'], ['Open Source', '/open-source']] },
-  { title: 'Use cases', links: [
-    ['Self-Service Business Intelligence', '/product/business-intelligence'],
-    ['Embedded Analytics', '/product/embedded-analytics'],
-  ]},
-  { title: 'Metabase plans', links: [
-    ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
-  ]},
-  { title: 'Features', links: [
-    ['Metabase AI', '/features/metabase-ai'], ['Query Builder', '/features/query-builder'],
-    ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
-    ['Dashboards and reporting', '/features/analytics-dashboards'],
-    ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
-    ['Embedded analytics SDK', '/features/embedded-analytics-sdk'],
-  ]},
-  { title: 'Company', links: [
-    ['Jobs', '/jobs'], ['Privacy Policies', '/privacy'], ['Terms of Service', '/terms'],
-    ['License', '/license'], ['Brand Guidelines', '/brand'],
-  ]},
-  { title: 'Support', links: [
-    ['Documentation', '/docs'], ['Help', '/help'],
-    ['Professional Services', '/professional-services'], ['Status', '/status'],
-  ]},
-  { title: 'Resources', links: [
-    ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Learn', '/learn'],
-    ['Community Stories', '/community-posts'], ['Partners', '/partners'],
-    ['Example Dashboards', '/dashboards'],
-  ]},
-  { title: 'Comparisons', links: [
-    ['Metabase vs. Tableau', '/vs/tableau'], ['Metabase vs. Looker', '/vs/looker'],
-    ['Metabase vs. Looker Studio', '/vs/looker-studio'], ['Metabase vs. PowerBI', '/vs/power-bi'],
-    ['Metabase vs. Superset', '/vs/superset'], ['Metabase vs. Omni', '/vs/omni'],
-  ]},
+/*
+ * Site footer, measured off the original: five columns laid out
+ * space-between, each holding one or two labelled groups, over a bottom bar
+ * ruled off with a hairline.
+ */
+const columns: { title: string; links: [string, string][]; badge?: string; dot?: string }[][] = [
+  [
+    { title: 'Product', links: [
+      ['Watch Demo', '/demo'], ['Data Sources', '/data-sources'], ['Security', '/security'],
+      ['Cloud', '/cloud'], ['Roadmap', '/roadmap'], ["What's New", '/releases'],
+    ]},
+    { title: 'Pricing', links: [['Plans', '/pricing'], ['Open Source', '/open-source']] },
+  ],
+  [
+    { title: 'Use cases', links: [
+      ['Self-Service Business Intelligence', '/product/business-intelligence'],
+      ['Embedded Analytics', '/product/embedded-analytics'],
+    ]},
+    { title: 'Metabase plans', links: [
+      ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
+    ]},
+  ],
+  [
+    { title: 'Features', links: [
+      ['Metabase AI', '/features/metabase-ai'], ['Query Builder', '/features/query-builder'],
+      ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
+      ['Dashboards and reporting', '/features/analytics-dashboards'],
+      ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
+      ['Embedded analytics SDK', '/features/embedded-analytics-sdk'],
+    ]},
+  ],
+  [
+    { title: 'Company', badge: 'Jobs', links: [
+      ['Jobs', '/jobs'], ['Privacy Policies', '/privacy'], ['Terms of Service', '/terms'],
+      ['License', '/license'], ['Brand Guidelines', '/brand'],
+    ]},
+    { title: 'Support', dot: 'Status', links: [
+      ['Documentation', '/docs'], ['Help', '/help'],
+      ['Professional Services', '/professional-services'], ['Status', '/status'],
+    ]},
+  ],
+  [
+    { title: 'Resources', links: [
+      ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Learn', '/learn'],
+      ['Community Stories', '/community-posts'], ['Partners', '/partners'],
+      ['Example Dashboards', '/dashboards'],
+    ]},
+    { title: 'Comparisons', links: [
+      ['Metabase vs. Tableau', '/vs/tableau'], ['Metabase vs. Looker', '/vs/looker'],
+      ['Metabase vs. Looker Studio', '/vs/looker-studio'], ['Metabase vs. PowerBI', '/vs/power-bi'],
+      ['Metabase vs. Superset', '/vs/superset'], ['Metabase vs. Omni', '/vs/omni'],
+    ]},
+  ],
+];
+
+const social: [string, string, string][] = [
+  ['YouTube', 'https://www.youtube.com/@metabasedata',
+   'M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 0 0 .5 6.5C0 8.4 0 12 0 12s0 3.6.5 5.5a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.5.5-5.5s0-3.6-.5-5.5ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z'],
+  ['GitHub', 'https://github.com/metabase',
+   'M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.3-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.82 1.18 1.85 1.18 3.11 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z'],
+  ['X', 'https://x.com/metabase',
+   'M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.04l12.04 15.64Z'],
+  ['LinkedIn', 'https://www.linkedin.com/company/metabase/',
+   'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14Zm1.78 13.02H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z'],
 ];
 ---
-<footer class="border-t border-(--color-line) bg-(--color-brand-faint) py-14">
-  <div class="container-mb">
-    <div class="grid grid-cols-2 gap-x-6 gap-y-9 md:grid-cols-3 lg:grid-cols-5">
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-cols">
       {columns.map((col) => (
-        <div>
-          <h3 class="mb-3 text-sm font-bold text-(--color-ink)">{col.title}</h3>
-          <ul class="space-y-2">
-            {col.links.map(([label, href]) => (
-              <li>
-                <a href={href} class="text-sm text-(--color-ink-2) hover:text-(--color-brand-hover)">{label}</a>
-              </li>
-            ))}
-          </ul>
+        <div class="site-footer-col">
+          {col.map((group) => (
+            <div class="site-footer-group">
+              <span class="site-footer-heading">{group.title}</span>
+              {group.links.map(([label, href]) => (
+                <a href={href}>
+                  {label}
+                  {group.badge === label && <span class="site-footer-badge">We're hiring!</span>}
+                  {group.dot === label && <span class="site-footer-dot" aria-hidden="true"></span>}
+                </a>
+              ))}
+            </div>
+          ))}
         </div>
       ))}
     </div>
-    <p class="mt-12 border-t border-(--color-line) pt-6 text-sm text-(--color-ink-2)">
-      © Metabase {new Date().getFullYear()} — replica built for an assignment, not affiliated with Metabase, Inc.
-    </p>
   </div>
+
+  <div class="site-footer-bottom">
+    <div class="site-footer-brand">
+      <a href="/" aria-label="Metabase home" class="site-footer-mark">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
+          <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
+          <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
+          <circle cx="5" cy="19" r="2.6"/><circle cx="12" cy="20" r="2.2" opacity=".75"/><circle cx="19" cy="19" r="2.6"/>
+        </svg>
+      </a>
+      <span>© Metabase {new Date().getFullYear()}</span>
+    </div>
+
+    <div class="site-footer-social">
+      {social.map(([label, href, d]) => (
+        <a href={href} aria-label={label} rel="noopener noreferrer" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d} /></svg>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <p class="site-footer-note">
+    Replica built for an assignment. Not affiliated with Metabase, Inc.
+  </p>
 </footer>
