@@ -27,19 +27,24 @@ const href = (useCase: string | null, industry: string | null) => {
 // Counts come from the data, so an industry with nothing to show is never
 // offered as a filter — another thing the original gets wrong, where 11 of its
 // 17 industry buttons return a single result.
+/*
+ * The card is a 167px media panel, the claim sentence and the link — no
+ * border, no eyebrow, no metrics, matching the original. Metrics stay on the
+ * case-study page, which is where the original puts them too.
+ */
 const countFor = (industrySlug: string) =>
   cases.filter((c) => c.company?.industry?.slug === industrySlug).length;
 ---
 <div class="container-mb pt-12">
   <header class="mx-auto mb-2 flex max-w-[760px] flex-col items-center text-center">
-    <h1 class="mb-3 text-4xl">Real companies, real data, real stories</h1>
-    <p class="m-0 max-w-[540px] text-(--color-ink-2)">
+    <h1 class="mb-3 text-4xl leading-[1.11] font-black">Real companies, real data, real stories</h1>
+    <p class="m-0 max-w-[540px] text-base leading-6">
       Over 100,000 organizations use Metabase to make working with data easy for everyone on
       their team. Explore what real businesses have built with Metabase.
     </p>
   </header>
 
-  <section id="browser" aria-label="Customer stories" class="mt-9 mb-16 rounded-xl border border-(--color-brand-border) p-6">
+  <section id="browser" aria-label="Customer stories" class="mt-9 mb-[72px] rounded-xl border border-(--color-brand-border) p-6">
     <div
       class="mx-auto mt-[-44px] mb-10 grid w-full max-w-[600px] grid-cols-3 gap-1 rounded-lg border border-(--color-brand-soft) bg-white p-1"
       role="group" aria-label="Filter by use case"
@@ -74,39 +79,24 @@ const countFor = (industrySlug: string) =>
     ) : (
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {cases.map((c, i) => (
-          <article class="group flex flex-col overflow-hidden rounded-xl border border-(--color-line) bg-white transition-shadow hover:shadow-lg">
-            <CldImage
-              image={c.heroImage}
-              widths={[300, 480, 760]}
-              sizes="(max-width: 768px) 100vw, 360px"
-              ratio={16 / 9}
-              priority={i === 0}
-              class="aspect-[16/9] w-full object-cover"
-            />
-            <div class="flex flex-1 flex-col p-5">
-              {c.company?.industry && (
-                <p class="mb-2 text-xs font-bold uppercase tracking-wide text-(--color-ink-3)">
-                  {c.company.industry.name}
-                </p>
-              )}
-              <h2 class="mb-3 text-lg leading-snug">
-                <a href={`/case-studies/${c.slug}`} class="hover:text-(--color-brand-hover)">{c.title}</a>
-              </h2>
-              {c.metrics?.length > 0 && (
-                <dl class="mb-4 flex flex-wrap gap-x-5 gap-y-1">
-                  {c.metrics.slice(0, 2).map((m) => (
-                    <div>
-                      <dt class="sr-only">{m.label}</dt>
-                      <dd class="text-xl font-black text-(--color-brand-hover)">{m.value}</dd>
-                      <dd class="text-xs text-(--color-ink-3)">{m.label}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              <a href={`/case-studies/${c.slug}`} class="mt-auto text-sm font-bold text-(--color-brand-hover)">
-                Read the case study →
-              </a>
+          <article class="cs-card">
+            <div class="cs-card-media">
+              <CldImage
+                image={c.heroImage}
+                widths={[300, 480, 760]}
+                sizes="(max-width: 768px) 100vw, 390px"
+                ratio={16 / 9}
+                priority={i === 0}
+                class="cs-card-img"
+              />
             </div>
+            <p class="cs-card-claim">{c.title}</p>
+            <a href={`/case-studies/${c.slug}`} class="cs-card-link">
+              Read the case study
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M5.5 3.5L9 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
           </article>
         ))}
       </div>
@@ -115,6 +105,22 @@ const countFor = (industrySlug: string) =>
 </div>
 
 <style>
+  /* Measured off the original: a 167px media panel at a 12px radius, the claim
+     sentence at 16/24 twelve clear of it, then the link. */
+  .cs-card { border-radius: 12px; background: #fff; padding-bottom: 12px; }
+  .cs-card-media {
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    width: 100%; height: 167px; border-radius: 12px; background: var(--color-brand-faint);
+  }
+  .cs-card-img { width: 100%; height: 100%; object-fit: cover; }
+  .cs-card-claim { margin: 12px 0; font-size: 16px; line-height: 24px; color: var(--color-ink); }
+  /* The original's #509ee3 is 3.1:1 at 16px bold on white. */
+  .cs-card-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .cs-card-link:hover { text-decoration: underline; }
+
   .seg {
     display: grid; place-items: center; height: 34px;
     border-radius: 0.375rem; font-size: 0.9375rem; font-weight: 700;

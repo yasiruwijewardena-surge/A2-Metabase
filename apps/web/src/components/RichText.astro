@@ -9,12 +9,17 @@ import type { Block, Inline } from '../lib/types';
 import '@fontsource/merriweather/latin-400.css';
 import '@fontsource/merriweather/latin-700.css';
 
-interface Props { blocks: Block[] }
-const { blocks = [] } = Astro.props;
+/*
+ * `variant` picks the measure: the blog sets body copy in Merriweather 18/32,
+ * but the case-study pages are Lato 18/26 in secondary ink. Same markup, two
+ * different type settings on the original.
+ */
+interface Props { blocks: Block[]; variant?: 'serif' | 'sans' }
+const { blocks = [], variant = 'serif' } = Astro.props;
 
 const inlines = (children: unknown[] = []) => (children as Inline[]).filter((c) => c?.type === 'text');
 ---
-<div class="prose-mb">
+<div class:list={[variant === 'serif' ? 'prose-mb' : 'prose-cs']}>
   {blocks.map((block) => {
     if (block.type === 'heading') {
       const level = Math.min(Math.max((block as any).level ?? 2, 2), 4);

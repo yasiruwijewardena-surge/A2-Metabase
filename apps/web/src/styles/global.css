@@ -623,3 +623,58 @@
     .post-title { font-size: 36px; line-height: 42px; }
   }
 }
+
+@layer components {
+  /*
+   * Case-study page. Measured off the original: a 12-column grid at a 24px
+   * column gutter and 32px row gutter, the back link on 3 columns beside an
+   * 8-column title, then a 3-column fact panel beside the 8-column article.
+   */
+  .cs-main { padding-top: 48px; padding-bottom: 72px; }
+  .cs-grid { display: grid; gap: 32px 24px; }
+  @media (min-width: 992px) { .cs-grid { grid-template-columns: repeat(12, 1fr); } }
+
+  .cs-back-col { grid-column: span 3; }
+  .cs-back {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .cs-back:hover { text-decoration: underline; }
+
+  .cs-title { grid-column: span 8; margin: 0 0 88px; font-size: 36px; line-height: 40px; font-weight: 900; }
+  .cs-facts {
+    grid-column: 1 / span 3; height: fit-content;
+    border-radius: 8px; background: var(--color-surface-2); padding: 20px 20px 24px;
+  }
+  .cs-facts-logo { display: block; width: 142px; max-height: 80px; margin-bottom: 32px; object-fit: contain; object-position: left; }
+  .cs-facts dt { margin-bottom: 8px; font-weight: 700; color: var(--color-ink); }
+  .cs-facts dd { margin: 0 0 20px; font-size: 16px; line-height: 24px; color: var(--color-ink); }
+  .cs-metric { font-weight: 900; color: var(--color-brand-hover); }
+
+  .cs-article { grid-column: span 8; min-width: 0; }
+  .cs-hero { margin-bottom: 64px; aspect-ratio: 3 / 1; width: 100%; overflow: hidden; border-radius: 12px; }
+  .cs-hero-img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 991px) {
+    .cs-back-col, .cs-title, .cs-facts, .cs-article { grid-column: auto; }
+    .cs-title { margin-bottom: 0; font-size: 30px; line-height: 36px; }
+    .cs-hero { margin-bottom: 40px; }
+  }
+}
+
+@layer components {
+  /* Case-study body: Lato 18/26 in secondary ink over a 32px drop — the
+     original reserves the Merriweather measure for the blog. */
+  .prose-cs :where(p), .prose-cs :where(li) {
+    font-size: 18px; line-height: 26px; color: var(--color-ink-2);
+  }
+  .prose-cs :where(p) { margin: 0 0 32px; }
+  .prose-cs :where(strong) { color: var(--color-ink); }
+  .prose-cs :where(h2), .prose-cs :where(h3) { margin: 48px 0 16px; }
+  .prose-cs :where(ul), .prose-cs :where(ol) { margin: 0 0 32px; padding-left: 1.25rem; }
+  .prose-cs :where(li) { margin-bottom: 8px; }
+  .prose-cs :where(ul) { list-style: disc; }
+  .prose-cs :where(ol) { list-style: decimal; }
+  .prose-cs :where(a) { font-weight: 700; color: var(--color-brand-hover); }
+  .prose-cs :where(a):hover { text-decoration: underline; }
+}
