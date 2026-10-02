@@ -27,7 +27,7 @@ const features = [
 
     <ul class="hidden items-center gap-1 lg:flex" data-menu-root>
       <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="product">Product</button>
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="product">Product<svg class="nav-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
         <div class="nav-panel w-[420px]" data-panel="product" hidden>
           <div>
             <div>
@@ -51,7 +51,7 @@ const features = [
       </li>
 
       <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="features">Features</button>
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="features">Features<svg class="nav-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
         <div class="nav-panel w-[520px]" data-panel="features" hidden>
           <p class="nav-eyebrow">Features</p>
           <div class="grid grid-cols-2 gap-x-3">
@@ -66,7 +66,7 @@ const features = [
       </li>
 
       <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="docs">Docs</button>
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="docs">Docs<svg class="nav-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
         <div class="nav-panel w-[420px]" data-panel="docs" hidden>
           <p class="nav-eyebrow">Learn</p>
           <a href="/docs" class="nav-item"><span class="font-bold">Documentation</span><span class="nav-sub">The Metabase manual</span></a>
@@ -80,7 +80,7 @@ const features = [
       </li>
 
       <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="resources">Resources</button>
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="resources">Resources<svg class="nav-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
         <div class="nav-panel w-[620px]" data-panel="resources" hidden>
           <div class="grid grid-cols-2 gap-6">
             <div>
@@ -100,7 +100,7 @@ const features = [
       </li>
 
       <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="pricing">Pricing</button>
+        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="pricing">Pricing<svg class="nav-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button>
         <div class="nav-panel w-[380px]" data-panel="pricing" hidden>
           <a href="/pricing" class="nav-item">
             <span class="font-bold">Business Intelligence pricing</span>
@@ -149,6 +149,9 @@ const features = [
 
 <style>
   .nav-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
     padding: 0.5rem 0.75rem;
     font-size: 0.9375rem;
     font-weight: 700;
@@ -174,6 +177,8 @@ const features = [
     color: var(--color-ink); font-size: 0.9375rem;
   }
   .nav-item:hover { background: var(--color-brand-faint); color: var(--color-brand-hover); }
+  .nav-chevron { transition: rotate 150ms; }
+  .nav-trigger[aria-expanded='true'] .nav-chevron { rotate: 180deg; }
   .nav-sub { display: block; font-size: 0.8125rem; font-weight: 400; color: var(--color-ink-3); }
 </style>
 
