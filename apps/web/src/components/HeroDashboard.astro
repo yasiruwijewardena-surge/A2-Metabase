@@ -2,10 +2,12 @@
 /**
  * The hero's product panel: a Metabase dashboard beside a Metabot chat.
  *
- * The original draws its charts with client-side JavaScript. This renders the
- * same composition as static SVG so the page still ships no JS at all, and the
- * panel costs nothing on the critical path.
+ * Charts are static SVG rather than drawn at runtime, so they are in the first
+ * paint. The entrance - the headline number counting up and the bars growing
+ * from the baseline - runs once on scroll, matching the original's behaviour
+ * without redrawing anything.
  */
+import HeroChat from './demos/HeroChat.astro';
 
 // Accounts added per year, by source — stacked, read from the original.
 const SOURCES = [
@@ -44,7 +46,7 @@ const quarters = Array.from({ length: 48 }, (_, i) => {
 });
 const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
 ---
-<div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white shadow-[0_1px_3px_rgba(0,0,0,.04)]">
+<div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white shadow-[0_1px_3px_rgba(0,0,0,.04)]" data-hero-dash>
   <div class="grid lg:grid-cols-[1fr_380px]">
     <!-- Dashboard -->
     <div class="bg-(--color-brand-faint) p-5">
@@ -52,7 +54,7 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
         <!-- Big number -->
         <section class="rounded-xl border border-(--color-line) bg-white p-5">
           <h3 class="mb-5 text-base font-bold text-(--color-brand-hover)">Total Accounts</h3>
-          <p class="text-center text-[3.25rem] leading-none font-black tracking-tight">1,228</p>
+          <p class="text-center text-[3.25rem] leading-none font-black tracking-tight" data-countup="1228">0</p>
           <p class="mt-3 text-center text-sm font-bold text-(--color-ink-2)">Jun 2026</p>
           <p class="mt-1 text-center text-sm text-(--color-ink-3)">
             <span class="font-bold text-(--color-ok-strong)">↑ 0.9%</span> vs. previous month: 1,217
@@ -89,7 +91,7 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
                     const h = scale(v);
                     const y = AX_H - PAD_B - scale(acc) - h;
                     acc += v;
-                    return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} />;
+                    return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} class="hd-bar" style={`--d:${i * 70}ms`} />;
                   })}
                   <text x={x + barW / 2} y={AX_H - 8} text-anchor="middle" font-size="12" fill="#8d93a5">{row.year}</text>
                 </>
@@ -127,9 +129,9 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
             const hu = (q.business / maxQ) * 140;
             return (
               <>
-                <rect x={x} y={150 - hu} width={bw} height={hu} fill="#2d6fbf" />
-                <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#ec7b72" />
-                <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#9cc9f0" />
+                <rect x={x} y={150 - hu} width={bw} height={hu} fill="#2d6fbf" class="hd-bar" style={`--d:${i * 9}ms`} />
+                <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#ec7b72" class="hd-bar" style={`--d:${i * 9}ms`} />
+                <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#9cc9f0" class="hd-bar" style={`--d:${i * 9}ms`} />
               </>
             );
           })}
@@ -142,35 +144,63 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
       </section>
     </div>
 
-    <!-- Metabot -->
-    <aside class="border-t border-(--color-line) bg-white p-5 lg:border-l lg:border-t-0">
-      <h3 class="mb-5 text-base font-bold">Chat with Metabot</h3>
-
-      <p class="ms-auto mb-6 w-fit rounded-xl border border-(--color-line) px-4 py-3 text-sm text-(--color-ink)">
-        Which source added the most accounts in 2026?
-      </p>
-
-      <p class="mb-4 text-sm leading-relaxed text-(--color-ink-2)">
-        <b class="font-bold text-(--color-ink)">Organic added the most in 2026: 62 accounts,</b>{' '}
-        ahead of Google at 30. LinkedIn, Invite, and Facebook make up the rest.
-      </p>
-
-      <div class="mb-4 rounded-lg border border-(--color-line)">
-        <p class="border-b border-(--color-line) px-3 py-2 text-sm font-bold text-(--color-ink-2)">Data Sources</p>
-        <div class="px-3 py-2">
-          <p class="text-sm font-bold text-(--color-ink)">Accounts</p>
-          <p class="text-xs text-(--color-ink-3)">Data library</p>
-        </div>
-      </div>
-
-      <p class="mb-4 text-sm leading-relaxed text-(--color-ink-2)">
-        The bigger signal is that 2026 is tracking below recent years across every source, so even
-        the top channel is down on its usual pace.
-      </p>
-
-      <p class="rounded-full border border-(--color-line) px-4 py-3 text-sm text-(--color-ink-3)">
-        Ask about your data
-      </p>
+    <aside class="hero-dash__chat">
+      <HeroChat />
     </aside>
   </div>
 </div>
+
+<style is:global>
+  .hero-dash__chat { border-top: 1px solid var(--color-line); background: #fff; padding: 1.25rem; }
+  @media (min-width: 1024px) {
+    .hero-dash__chat { border-top: 0; border-inline-start: 1px solid var(--color-line); }
+  }
+
+  /* Bars grow from the baseline once the panel scrolls into view. */
+  [data-hero-dash] .hd-bar { transform-box: fill-box; transform-origin: bottom; scale: 1 0; }
+  [data-hero-dash][data-shown='true'] .hd-bar {
+    scale: 1 1;
+    transition: scale 600ms cubic-bezier(.2,.7,.3,1);
+    transition-delay: var(--d, 0ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-hero-dash] .hd-bar { scale: 1 1; transition: none; }
+  }
+</style>
+
+<script>
+  // Entrance: the headline number counts up and the bars grow in, once.
+  document.querySelectorAll<HTMLElement>('[data-hero-dash]').forEach((root) => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const num = root.querySelector<HTMLElement>('[data-countup]');
+    const target = Number(num?.dataset.countup ?? 0);
+
+    if (reduced) {
+      root.dataset.shown = 'true';
+      if (num) num.textContent = target.toLocaleString('en-US');
+      return;
+    }
+
+    let done = false;
+    new IntersectionObserver((entries, obs) => {
+      for (const e of entries) {
+        if (!e.isIntersecting || done) continue;
+        done = true;
+        obs.disconnect();
+        root.dataset.shown = 'true';
+
+        if (!num) return;
+        const DUR = 1100;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min((now - start) / DUR, 1);
+          // ease-out so it settles rather than stopping dead
+          const v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          num.textContent = v.toLocaleString('en-US');
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.35 }).observe(root);
+  });
+</script>

@@ -1,0 +1,245 @@
+---
+/**
+ * The Metabot chat beside the hero dashboard.
+ *
+ * Not a picture: the original ships a real form with suggestion chips, a
+ * typing state and three canned answers, plus a clear-chat control and
+ * feedback votes. Same here. The answers are the original's own copy, kept in
+ * templates so the markup stays declarative.
+ */
+const SUGGESTIONS = [
+  ['revenue', 'Which plan drives the most revenue?'],
+  ['sources', 'Which source added the most accounts in 2026?'],
+  ['growth', 'How much did total accounts grow last year?'],
+] as const;
+
+const ANSWERS = {
+  revenue: {
+    lead: 'Basic drives the most by a wide margin: $4.27M, 64% of total revenue.',
+    source: 'Invoices',
+    body: [
+      'Business is second at $2.23M (33%), and Premium trails at $205K (3%).',
+      "That's the inverse of what you'd expect. The lowest tier pulls in the most revenue, likely on customer volume alone. Could be an opening to upsell Basic accounts into Business.",
+    ],
+    followUp: ['Want me to scope ', '@Total Revenue by Plan', ' to a specific time period?'],
+  },
+  sources: {
+    lead: 'Organic added the most in 2026: 62 accounts,',
+    leadTail: ' ahead of Google at 30. LinkedIn, Invite, and Facebook make up the rest.',
+    source: 'Accounts',
+    body: [
+      'The bigger signal is that 2026 is tracking below recent years across every source, so even the top channel is down on its usual pace. The slowdown is broad, not one channel falling off.',
+    ],
+    followUp: ['Want me to compare ', '@New Accounts by Source', ', 2026 vs 2025?'],
+  },
+  growth: {
+    lead: 'Total accounts grew 11% last year, from 1,098 to 1,217, adding 119 net new accounts.',
+    source: 'Accounts',
+    body: [
+      "That's a step down from the prior year's pace, so growth is still positive but decelerating. Most of the gain landed in the back half of the year.",
+    ],
+    followUp: ['Want me to break ', '@Total Accounts', ' down by source or plan?'],
+  },
+} as const;
+---
+<div class="hchat" data-hero-chat>
+  <div class="hchat__head">
+    <h3>Chat with Metabot</h3>
+    <button type="button" class="hchat__clear" data-hero-clear hidden>Clear chat</button>
+  </div>
+
+  <div class="hchat__thread" data-hero-thread role="log" aria-live="polite" aria-label="Conversation with Metabot"></div>
+
+  <div class="hchat__suggestions" data-hero-suggestions>
+    <p class="hchat__hint">Try one of these</p>
+    {SUGGESTIONS.map(([id, text]) => (
+      <button type="button" class="hchat__chip" data-ask={id}>{text}</button>
+    ))}
+  </div>
+
+  <form class="hchat__form" data-hero-form>
+    <label class="sr-only" for="hero-chat-input">Ask about your data</label>
+    <input id="hero-chat-input" type="text" placeholder="Ask about your data" autocomplete="off" data-hero-input />
+    <button type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
+  </form>
+
+  {Object.entries(ANSWERS).map(([id, a]) => (
+    <template data-answer={id}>
+      <p class="hchat__lead"><b>{a.lead}</b>{'leadTail' in a ? a.leadTail : ''}</p>
+      <div class="hchat__source">
+        <p class="hchat__source-head">Data Sources</p>
+        <div class="hchat__source-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M9 9v11" />
+          </svg>
+          <span><b>{a.source}</b><small>Data library</small></span>
+          <span class="hchat__votes">
+            <button type="button" aria-label="Good answer" data-vote="up">👍</button>
+            <button type="button" aria-label="Bad answer" data-vote="down">👎</button>
+          </span>
+        </div>
+      </div>
+      {a.body.map((p) => <p>{p}</p>)}
+      <p class="hchat__follow">{a.followUp[0]}<span class="hchat__metric">{a.followUp[1]}</span>{a.followUp[2]}</p>
+    </template>
+  ))}
+</div>
+
+<style is:global>
+  .hchat { display: flex; flex-direction: column; height: 100%; min-height: 0; font-size: 0.8125rem; }
+  .hchat__head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.9rem; }
+  .hchat__head h3 { margin: 0; font-size: 0.875rem; font-weight: 700; }
+  .hchat__clear {
+    border: 0; background: none; cursor: pointer;
+    font-size: 0.75rem; color: var(--color-brand-hover); font-weight: 700;
+  }
+  .hchat__clear:hover { text-decoration: underline; }
+
+  .hchat__thread { flex: 1; min-height: 0; overflow-y: auto; }
+  .hchat__thread:empty { flex: 0; }
+  .hchat__user {
+    margin: 0 0 0.9rem; margin-inline-start: auto; width: fit-content; max-width: 85%;
+    border: 1px solid var(--color-line); border-radius: 0.75rem; padding: 0.55rem 0.85rem;
+  }
+  .hchat__bot { margin-bottom: 1.1rem; }
+  .hchat__bot p { margin: 0 0 0.6rem; color: var(--color-ink-2); line-height: 1.55; }
+  .hchat__lead b { color: var(--color-ink); font-weight: 700; }
+  .hchat__metric {
+    border-radius: 0.25rem; background: var(--color-brand-muted);
+    padding: 0.05rem 0.3rem; color: var(--color-brand-hover); font-weight: 700;
+  }
+  .hchat__follow { color: var(--color-ink-3) !important; }
+
+  .hchat__source { margin-bottom: 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; }
+  .hchat__source-head { margin: 0 !important; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--color-line); font-weight: 700; color: var(--color-ink-2) !important; }
+  .hchat__source-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; }
+  .hchat__source-row svg { width: 15px; height: 15px; color: var(--color-brand); flex-shrink: 0; }
+  .hchat__source-row b { display: block; font-weight: 700; }
+  .hchat__source-row small { color: var(--color-ink-3); }
+  .hchat__votes { margin-inline-start: auto; display: flex; gap: 0.25rem; }
+  .hchat__votes button { border: 0; background: none; cursor: pointer; opacity: 0.45; font-size: 0.8125rem; }
+  .hchat__votes button:hover, .hchat__votes button[data-on='true'] { opacity: 1; }
+
+  .hchat__typing { display: flex; gap: 4px; padding: 0.3rem 0 1rem; }
+  .hchat__typing span { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-ink-4); animation: hchat-dot 1.2s infinite; }
+  .hchat__typing span:nth-child(2) { animation-delay: 0.15s; }
+  .hchat__typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes hchat-dot { 0%,60%,100% { opacity: 0.35; } 30% { opacity: 1; } }
+
+  .hchat__suggestions { display: grid; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .hchat__hint { margin: 0 0 0.1rem; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-ink-3); }
+  .hchat__chip {
+    text-align: start; border: 1px solid var(--color-line); border-radius: 0.5rem;
+    background: #fff; padding: 0.5rem 0.7rem; cursor: pointer; font-size: 0.8125rem;
+    color: var(--color-ink); transition: border-color 120ms, background-color 120ms;
+  }
+  .hchat__chip:hover { border-color: var(--color-brand); background: var(--color-brand-faint); }
+
+  .hchat__form { display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--color-line); border-radius: 9999px; padding: 0.4rem 0.4rem 0.4rem 0.9rem; }
+  .hchat__form input { flex: 1; min-width: 0; border: 0; outline: 0; font-size: 0.8125rem; background: none; }
+  .hchat__form button {
+    display: grid; place-items: center; width: 28px; height: 28px; flex-shrink: 0;
+    border: 0; border-radius: 9999px; background: var(--color-brand-muted);
+    color: var(--color-brand-hover); cursor: pointer;
+  }
+  .hchat__form button svg { width: 14px; height: 14px; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hero-chat]').forEach((root) => {
+    const thread = root.querySelector<HTMLElement>('[data-hero-thread]')!;
+    const sugg = root.querySelector<HTMLElement>('[data-hero-suggestions]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-hero-form]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-hero-input]')!;
+    const clear = root.querySelector<HTMLButtonElement>('[data-hero-clear]')!;
+
+    let busy = false;
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const toBottom = () => { thread.scrollTop = thread.scrollHeight; };
+
+    function user(text: string) {
+      const p = document.createElement('p');
+      p.className = 'hchat__user';
+      p.textContent = text;
+      thread.append(p);
+      toBottom();
+    }
+
+    function typing() {
+      const d = document.createElement('div');
+      d.className = 'hchat__typing';
+      d.setAttribute('aria-label', 'Metabot is thinking');
+      d.innerHTML = '<span></span><span></span><span></span>';
+      thread.append(d);
+      toBottom();
+      return d;
+    }
+
+    function wireVotes(scope: HTMLElement) {
+      scope.querySelectorAll<HTMLButtonElement>('[data-vote]').forEach((b) =>
+        b.addEventListener('click', () => {
+          scope.querySelectorAll<HTMLElement>('[data-vote]').forEach((o) => (o.dataset.on = 'false'));
+          b.dataset.on = 'true';
+        })
+      );
+    }
+
+    async function answer(id: string) {
+      const tpl = root.querySelector<HTMLTemplateElement>(`template[data-answer="${id}"]`);
+      const dots = typing();
+      await sleep(1100);
+      dots.remove();
+
+      const wrap = document.createElement('div');
+      wrap.className = 'hchat__bot';
+      if (tpl) {
+        wrap.append(tpl.content.cloneNode(true));
+      } else {
+        // Anything typed that is not one of the three canned questions.
+        wrap.innerHTML =
+          '<p>To explore your own data with Metabot, try ' +
+          '<a href="/start" style="color:var(--color-brand-hover);font-weight:700">Metabase Cloud free</a>.</p>';
+      }
+      thread.append(wrap);
+      wireVotes(wrap);
+      toBottom();
+      clear.hidden = false;
+    }
+
+    async function ask(text: string, id?: string) {
+      if (busy) return;
+      busy = true;
+      sugg.hidden = true;
+      user(text);
+      await answer(id ?? '');
+      busy = false;
+    }
+
+    root.querySelectorAll<HTMLButtonElement>('[data-ask]').forEach((chip) =>
+      chip.addEventListener('click', () => ask(chip.textContent!.trim(), chip.dataset.ask))
+    );
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      // Match a typed question back to a canned answer where we can.
+      const hit = [...root.querySelectorAll<HTMLButtonElement>('[data-ask]')].find((c) =>
+        c.textContent!.trim().toLowerCase() === text.toLowerCase()
+      );
+      ask(text, hit?.dataset.ask);
+    });
+
+    clear.addEventListener('click', () => {
+      thread.innerHTML = '';
+      sugg.hidden = false;
+      clear.hidden = true;
+      input.focus();
+    });
+  });
+</script>
