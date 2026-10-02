@@ -1,0 +1,101 @@
+---
+/**
+ * Static stand-ins for the product screenshots in the Business Intelligence
+ * section.
+ *
+ * The original animates these: the section is scroll-pinned and each mock
+ * draws itself in as you scroll past. That is a bespoke scroll-driven
+ * animation, and reproducing it would mean adding scroll listeners to a page
+ * that currently ships no JavaScript at all. These match the settled state of
+ * each panel instead.
+ */
+interface Props { kind: 'ai' | 'dashboard' | 'semantic' }
+const { kind } = Astro.props;
+
+const line = [18, 24, 22, 34, 40, 38, 52, 58, 56, 68, 74, 72, 84];
+const pts = line.map((v, i) => `${20 + i * 29},${120 - v}`).join(' ');
+---
+<div class="overflow-hidden rounded-xl border border-(--color-line) bg-white p-5 shadow-sm">
+  {kind === 'ai' && (
+    <>
+      <p class="ms-auto mb-5 w-fit rounded-xl border border-(--color-line) px-4 py-2 text-sm">
+        show me orders over time
+      </p>
+      <p class="mb-3 text-sm font-bold">Orders over time (monthly)</p>
+      <svg viewBox="0 0 400 130" class="w-full" role="img" aria-label="Line chart of orders over time">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <line x1="20" x2="396" y1={16 + i * 26} y2={16 + i * 26} stroke="#e2e4e9" stroke-width="1" />
+        ))}
+        <polyline points={pts} fill="none" stroke="#509ee3" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+        {line.map((v, i) => (
+          <circle cx={20 + i * 29} cy={120 - v} r="3" fill="#fff" stroke="#509ee3" stroke-width="2" />
+        ))}
+      </svg>
+      <div class="mt-4 rounded-lg border border-(--color-line) px-3 py-2">
+        <p class="text-xs font-bold text-(--color-ink-2)">Data source used</p>
+        <p class="text-sm font-bold">Orders + People</p>
+        <p class="text-xs text-(--color-ink-3)">Model · Data library</p>
+      </div>
+    </>
+  )}
+
+  {kind === 'dashboard' && (
+    <>
+      <div class="mb-4 flex flex-wrap gap-2">
+        {['Time grouping: Month', 'Plan', 'Source'].map((f) => (
+          <span class="rounded-md border border-(--color-line) px-2.5 py-1 text-xs text-(--color-ink-2)">{f}</span>
+        ))}
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-lg border border-(--color-line) p-3">
+          <p class="mb-2 text-xs font-bold text-(--color-brand-hover)">Revenue</p>
+          <p class="text-2xl font-black">$4.27M</p>
+          <p class="text-xs text-(--color-ok-strong)">↑ 12.4%</p>
+        </div>
+        <div class="rounded-lg border border-(--color-line) p-3">
+          <p class="mb-2 text-xs font-bold text-(--color-brand-hover)">Orders by plan</p>
+          <svg viewBox="0 0 120 56" class="w-full" role="img" aria-label="Bar chart of orders by plan">
+            {[38, 52, 30, 46, 24].map((h, i) => (
+              <rect x={6 + i * 23} y={56 - h} width="14" height={h} rx="2" fill="#509ee3" opacity={0.45 + i * 0.12} />
+            ))}
+          </svg>
+        </div>
+        <div class="col-span-2 rounded-lg border border-(--color-line) p-3">
+          <p class="mb-2 text-xs font-bold text-(--color-brand-hover)">Orders over time</p>
+          <svg viewBox="0 0 360 60" class="w-full" role="img" aria-label="Area chart of orders over time">
+            <polyline points="4,52 34,44 64,46 94,34 124,30 154,32 184,22 214,18 244,20 274,12 304,8 334,10 356,4"
+                      fill="none" stroke="#509ee3" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+    </>
+  )}
+
+  {kind === 'semantic' && (
+    <>
+      <p class="mb-4 text-sm font-bold">Data library</p>
+      <ul class="space-y-2">
+        {[
+          ['Total Revenue', 'Metric · verified'],
+          ['Active Accounts', 'Metric · verified'],
+          ['Orders + People', 'Model · canonical'],
+          ['Churn Rate', 'Metric · draft'],
+        ].map(([name, meta], i) => (
+          <li class="flex items-center justify-between rounded-lg border border-(--color-line) px-3 py-2">
+            <span>
+              <span class="block text-sm font-bold">{name}</span>
+              <span class="block text-xs text-(--color-ink-3)">{meta}</span>
+            </span>
+            <span
+              class:list={[
+                'rounded-full px-2 py-0.5 text-[10px] font-bold',
+                i === 3 ? 'bg-(--color-surface) text-(--color-ink-3)' : 'bg-(--color-ok-faint) text-(--color-ok-strong)',
+              ]}
+            >{i === 3 ? 'Draft' : 'Verified'}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</div>

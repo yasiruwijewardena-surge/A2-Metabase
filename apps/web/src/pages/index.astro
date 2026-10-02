@@ -4,6 +4,7 @@ import Avatar from '../components/Avatar.astro';
 import CldImage from '../components/CldImage.astro';
 import { getCaseStudies, getTestimonials } from '../lib/strapi';
 import HeroDashboard from '../components/HeroDashboard.astro';
+import ProductMock from '../components/ProductMock.astro';
 
 const [cases, testimonials] = await Promise.all([getCaseStudies(), getTestimonials()]);
 
@@ -34,16 +35,19 @@ const sources = [
 
 const biPoints = [
   {
+    mock: 'ai' as const,
     title: 'Query data in plain English with AI',
     body: 'AI on all plans so anyone can explore data, visualize results, and answer their own questions. Click on charts to find the "why" with built-in drilldowns, or build a no-code query with the visual query builder.',
     link: ['Explore Metabase AI', '/features/metabase-ai'],
   },
   {
+    mock: 'dashboard' as const,
     title: 'Share reports and create custom insights',
     body: 'Filter and break out interactive dashboards. Combine charts with text for collaborative reporting. Set up subscriptions and alerts to keep everyone in the loop.',
     link: ['Explore interactive dashboards', '/features/analytics-dashboards'],
   },
   {
+    mock: 'semantic' as const,
     title: 'Guide people to the right answers',
     body: 'Curate your semantic layer to make data usable and correct for humans and AI. Define trusted, reusable metrics, and mark vetted sources so everyone builds on consistent foundations.',
     link: ['Explore Data Studio', '/product/data-studio'],
@@ -167,38 +171,49 @@ const biPoints = [
     </div>
   </section>
 
-  <!-- Business Intelligence, with pull quotes interleaved as the original does -->
-  <section class="bg-(--color-brand-faint) py-16">
+  <!-- Business Intelligence -->
+  <section class="py-20">
     <div class="container-mb">
-      <p class="mb-2 text-sm font-bold uppercase tracking-wide text-(--color-brand-hover)">Business Intelligence</p>
-      <h2 class="mb-10 max-w-[640px] text-3xl">Analytics your team will use and trust</h2>
+      <header class="mx-auto mb-14 max-w-[760px] text-center">
+        <a href="/product/business-intelligence" class="mb-4 inline-flex items-center gap-2 font-bold text-(--color-brand-hover) hover:underline">
+          Business Intelligence
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
+        </a>
+        <h2 class="mb-5 text-[2.5rem] leading-[1.1]">Analytics your team will use and trust</h2>
+        <p class="text-lg text-(--color-ink-2)">
+          Teams can explore data on their own, guided to correct answers with a trustworthy
+          foundation. Your data team can curate a governed semantic layer of canonical tables
+          and metrics in Data Studio.
+        </p>
+      </header>
 
-      <div class="space-y-12">
+      <div class="space-y-8">
         {biPoints.map((point, i) => (
-          <div class="grid items-start gap-8 lg:grid-cols-2">
+          <div class="grid items-center gap-10 rounded-3xl bg-gradient-to-b from-white to-(--color-brand-faint) p-10 lg:grid-cols-2">
             <div>
-              <h3 class="mb-3 text-xl">{point.title}</h3>
-              <p class="mb-4 text-(--color-ink-2)">{point.body}</p>
+              <h3 class="mb-3 text-[1.375rem] leading-snug font-bold">{point.title}</h3>
+              <p class="mb-5 text-(--color-ink-2)">{point.body}</p>
               <a href={point.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{point.link[0]} →</a>
-            </div>
-            {/* The original sets its pull quotes italic, inline beneath the
-                section link, with the attribution directly under them. */}
-            {pullQuotes[i] && (
-              <figure class="rounded-xl bg-white p-8">
-                <blockquote class="mb-5 text-lg italic leading-relaxed text-(--color-ink-2)">
-                  "{pullQuotes[i].quote}"
-                </blockquote>
-                <figcaption class="flex items-center gap-3">
-                  <Avatar image={pullQuotes[i].person?.avatar} size={44} class="h-11 w-11 bg-(--color-surface)" />
-                  <span>
-                    <b class="block font-bold text-(--color-ink)">{pullQuotes[i].person?.name}</b>
-                    <span class="text-(--color-ink-3)">
-                      {pullQuotes[i].person?.role}{pullQuotes[i].person?.company?.name && <>, {pullQuotes[i].person.company.name}</>}
+
+              {pullQuotes[i] && (
+                <figure class="mt-10">
+                  <blockquote class="mb-5 italic leading-relaxed text-(--color-ink-2)">
+                    "{pullQuotes[i].quote}"
+                  </blockquote>
+                  <figcaption class="flex items-center gap-3">
+                    <Avatar image={pullQuotes[i].person?.avatar} name={pullQuotes[i].person?.name} size={44} class="h-11 w-11 bg-white" />
+                    <span>
+                      <b class="block font-bold text-(--color-ink)">{pullQuotes[i].person?.name}</b>
+                      <span class="text-sm text-(--color-ink-3)">
+                        {pullQuotes[i].person?.role}{pullQuotes[i].person?.company?.name && <>, {pullQuotes[i].person.company.name}</>}
+                      </span>
                     </span>
-                  </span>
-                </figcaption>
-              </figure>
-            )}
+                  </figcaption>
+                </figure>
+              )}
+            </div>
+
+            <ProductMock kind={point.mock} />
           </div>
         ))}
       </div>
@@ -206,20 +221,52 @@ const biPoints = [
   </section>
 
   <!-- Embedded Analytics -->
-  <section class="py-16">
-    <div class="container-mb grid items-center gap-10 lg:grid-cols-2">
-      <div>
-        <p class="mb-2 text-sm font-bold uppercase tracking-wide text-(--color-brand-hover)">Embedded Analytics</p>
-        <h2 class="mb-4 text-3xl">Put production-grade analytics into your app without drama</h2>
-        <p class="mb-6 text-(--color-ink-2)">
-          Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
-          Multi-tenant, customizable components, with plumbing and permissions built in.
-        </p>
-        <a href="/case-studies/use-case/embedded-analytics" class="font-bold text-(--color-brand-hover) hover:underline">
-          See who embeds Metabase →
+  <section class="bg-(--color-brand-faint) py-20">
+    <div class="container-mb">
+      <header class="mx-auto mb-12 max-w-[760px] text-center">
+        <a href="/product/embedded-analytics" class="mb-4 inline-flex items-center gap-2 font-bold text-(--color-brand-hover) hover:underline">
+          Embedded Analytics
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
         </a>
-      </div>
-      <pre class="overflow-x-auto rounded-xl bg-(--color-ink) p-6 font-mono text-sm leading-relaxed text-white"><code>{`import {
+        <h2 class="mb-5 text-[2.5rem] leading-[1.1]">Put production-grade analytics into your app without drama</h2>
+        <p class="text-lg text-(--color-ink-2)">
+          Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
+          Multi-tenant, customizable analytics components, with plumbing and permissions built in.
+        </p>
+      </header>
+
+      <div class="relative mx-auto max-w-[1140px]">
+        <div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white">
+          <div class="grid md:grid-cols-[220px_1fr]">
+            <aside class="border-b border-(--color-line) p-5 md:border-b-0 md:border-r">
+              <p class="mb-6 font-black">ProficiencyLabs</p>
+              <p class="mb-3 text-sm font-bold text-(--color-ink-2)">Courses</p>
+              <ul class="space-y-2 text-sm text-(--color-ink-2)">
+                {['New courses', 'Leadership Training', 'Technical Skills', 'Soft Skills'].map((c) => <li>{c}</li>)}
+              </ul>
+            </aside>
+            <div class="p-6">
+              <h3 class="mb-5 text-2xl">Inventory performance</h3>
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-lg border border-(--color-line) p-4">
+                  <p class="mb-3 text-sm font-bold">New products launched this year</p>
+                  <p class="text-4xl font-black">10</p>
+                  <p class="mt-1 text-sm"><span class="font-bold text-(--color-ok-strong)">↑ 400%</span>
+                    <span class="text-(--color-ink-3)"> vs. previous year: 2</span></p>
+                </div>
+                <div class="rounded-lg border border-(--color-line) p-4">
+                  <p class="mb-3 text-sm font-bold">Orders in the last 3 months</p>
+                  <svg viewBox="0 0 300 70" class="w-full" role="img" aria-label="Orders in the last three months">
+                    <polyline fill="none" stroke="#2f9e8f" stroke-width="1.5"
+                      points={Array.from({ length: 60 }, (_, i) => `${i * 5},${60 - (Math.sin(i / 1.7) * 14 + (i === 14 ? 34 : 18))}`).join(' ')} />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <pre class="absolute -bottom-6 left-4 hidden w-[430px] overflow-x-auto rounded-xl bg-(--color-ink) p-5 font-mono text-xs leading-relaxed text-white shadow-xl lg:block"><code>{`import {
   MetabaseProvider,
   InteractiveQuestion,
 } from "@metabase/embedding-sdk-react";
@@ -227,6 +274,13 @@ const biPoints = [
 <MetabaseProvider config={config}>
   <InteractiveQuestion questionId={42} />
 </MetabaseProvider>`}</code></pre>
+      </div>
+
+      <p class="mt-20 text-center">
+        <a href="/case-studies/use-case/embedded-analytics" class="font-bold text-(--color-brand-hover) hover:underline">
+          See who embeds Metabase →
+        </a>
+      </p>
     </div>
   </section>
 
@@ -269,7 +323,7 @@ const biPoints = [
             <figure class="rounded-xl border border-(--color-line) bg-white p-5">
               <blockquote class="mb-3 text-(--color-ink-2)">{t.quote}</blockquote>
               <figcaption class="flex items-center gap-2 text-sm">
-                <Avatar image={t.person?.avatar} size={28} class="h-7 w-7 bg-(--color-surface)" />
+                <Avatar image={t.person?.avatar} name={t.person?.name} size={28} class="h-7 w-7 bg-(--color-surface)" />
                 <b class="font-bold text-(--color-ink-2)">{t.person?.name}</b>
               </figcaption>
             </figure>

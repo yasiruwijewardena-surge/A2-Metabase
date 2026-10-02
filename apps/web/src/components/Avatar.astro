@@ -2,14 +2,36 @@
 import { avatarSet } from '../lib/image';
 import type { StrapiImage } from '../lib/types';
 
-interface Props { image: StrapiImage | null | undefined; size?: number; alt?: string; class?: string }
-const { image, size = 36, alt = '', class: className = '' } = Astro.props;
-if (!image?.url) return null;
-const { src, srcset } = avatarSet(image.url, size);
+interface Props {
+  image: StrapiImage | null | undefined;
+  size?: number;
+  alt?: string;
+  class?: string;
+  /** Falls back to initials when there is no photo, so the row keeps its shape. */
+  name?: string | null;
+}
+const { image, size = 36, alt = '', class: className = '', name = null } = Astro.props;
+
+const initials = (name ?? '')
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((w) => w[0]?.toUpperCase())
+  .join('');
+
+const photo = image?.url ? avatarSet(image.url, size) : null;
 ---
+{!photo && initials && (
+  <span
+    class={`grid shrink-0 place-items-center rounded-full bg-(--color-brand-muted) font-bold text-(--color-brand-strong) ${className}`}
+    style={`width:${size}px;height:${size}px;font-size:${Math.round(size * 0.36)}px`}
+    aria-hidden="true"
+  >{initials}</span>
+)}
+{photo && (
 <img
-  src={src}
-  srcset={srcset}
+  src={photo.src}
+  srcset={photo.srcset}
   width={size}
   height={size}
   alt={alt}
@@ -17,3 +39,4 @@ const { src, srcset } = avatarSet(image.url, size);
   decoding="async"
   class={`rounded-full object-cover ${className}`}
 />
+)}

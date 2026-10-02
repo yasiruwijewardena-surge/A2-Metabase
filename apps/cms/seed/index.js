@@ -176,6 +176,24 @@ async function main() {
     for (const t of testimonials) {
       const person = personMap[t.person];
       const personCompany = people.find((p) => p.name === t.person)?.company;
+
+      // Reconcile a relation that was not resolvable when the entry was first
+      // seeded. Two testimonials pointed at people who only became `person`
+      // records later, leaving the quotes on the page with no attribution.
+      const existing = await app.documents('api::testimonial.testimonial').findFirst({
+        filters: { quote: t.quote }, populate: ['person'],
+      });
+      if (existing && person && !existing.person) {
+        await app.documents('api::testimonial.testimonial').update({
+          documentId: existing.documentId,
+          data: { person: person.documentId, company: companyMap[personCompany]?.documentId },
+          status: 'published',
+        });
+        console.log(`    linked ${t.person} to an existing testimonial`);
+        stats.linked++;
+        continue;
+      }
+
       await upsert(app, 'api::testimonial.testimonial', { quote: t.quote }, {
         quote: t.quote,
         variant: t.variant,
