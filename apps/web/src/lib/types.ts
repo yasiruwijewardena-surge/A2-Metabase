@@ -111,3 +111,21 @@ export interface GlossaryTerm {
   topic: string;
   body?: Block[];
 }
+
+export interface Plan {
+  name: string;
+  slug: string;
+  tagline?: string | null;
+  priceMonthly?: number | null;
+  priceYearly?: number | null;
+  priceNote?: string | null;
+  /** ["cloud"], ["self-hosted"] or both. */
+  deployments: string[];
+  featuresLead?: string | null;
+  features: string[];
+  footnote?: string | null;
+  cta?: { label: string; url: string; style?: string } | null;
+  highlighted?: boolean;
+  displayOrder: number;
+  useCases?: UseCase[];
+}

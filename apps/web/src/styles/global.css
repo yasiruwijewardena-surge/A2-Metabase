@@ -699,3 +699,101 @@
   .stub-list a:hover { text-decoration: underline; }
   .stub-list span { font-size: 16px; color: var(--color-ink-2); }
 }
+
+@layer components {
+  /*
+   * Pricing. Measured off the original: a 1320 container at 48/32 padding, the
+   * title at 24/33 over a 48px drop, the deployment row on a 24px gap and the
+   * plan columns divided by hairlines rather than carrying their own borders.
+   *
+   * All three toggles filter in CSS through `:has()` on real radio inputs. The
+   * original does it in JavaScript; this way the page still works without any,
+   * and the keyboard and screen-reader behaviour is the browser's.
+   */
+  .pricing { padding-block: 48px 96px; }
+  .pricing-title { margin-bottom: 48px; font-size: 24px; line-height: 33px; font-weight: 700; }
+  .pricing-title-uc { display: none; }
+
+  .pricing-axis { border: 0; padding: 0; margin: 0 0 32px; display: flex; gap: 4px; }
+  .pricing-tab {
+    cursor: pointer; border-radius: 8px; padding: 8px 14px;
+    font-size: 15px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .pricing-tab:hover { background: var(--color-brand-muted); }
+
+  .pricing-row { display: flex; gap: 24px; margin-bottom: 24px; }
+  .pricing-row-head { font-size: 16px; font-weight: 700; color: var(--color-ink); }
+  .pricing-row > .pricing-row-head, .pricing-aside { flex: 0 0 180px; }
+
+  .pricing-deploys { display: flex; flex: 1; gap: 24px; border: 0; padding: 0; margin: 0; }
+  .pricing-deploy {
+    display: flex; flex: 1; align-items: center; gap: 12px; cursor: pointer;
+    border: 1px solid var(--color-line); border-radius: 12px; padding: 16px 20px;
+  }
+  .pricing-deploy-dot {
+    flex: none; width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--color-ink-4); background: #fff;
+  }
+  .pricing-deploy-title { display: block; font-weight: 700; color: var(--color-ink); }
+  .pricing-deploy-note { display: block; font-size: 14px; color: var(--color-ink-2); }
+
+  .pricing-billing { border: 0; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; font-size: 14px; }
+  /* Each input and its label are one row; as bare grid children they each took
+     a cell of their own and the radio sat above its text. */
+  .pricing-billing-opt { display: flex; align-items: center; gap: 8px; }
+  .pricing-billing label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .pricing-save {
+    border-radius: 4px; background: var(--color-ok-faint); padding: 1px 6px;
+    font-size: 12px; font-weight: 700; color: var(--color-ok-strong);
+  }
+
+  .pricing-plans { display: flex; flex: 1; border: 1px solid var(--color-line); border-radius: 12px; }
+  .plan { flex: 1; min-width: 0; padding: 32px; border-right: 1px solid rgb(0 0 0 / 0.1); display: flex; flex-direction: column; }
+  .plan:last-child { border-right: 0; }
+  .plan--on { background: var(--color-brand-faint); }
+  .plan-name { margin-bottom: 6px; font-size: 16px; line-height: 20px; font-weight: 700; }
+  .plan-price { margin-bottom: 16px; font-size: 24px; line-height: 32px; }
+  .plan-price-figure { color: var(--color-ink); font-weight: 700; }
+  .plan-price-unit { color: var(--color-ink-2); }
+  .plan-tagline { margin-bottom: 16px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
+  .plan-lead { margin-bottom: 12px; font-size: 14px; font-weight: 700; color: var(--color-ink); }
+  .plan-features { display: grid; gap: 10px; margin-bottom: 24px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
+  .plan-features li { display: flex; gap: 8px; }
+  .plan-features li::before { content: "·"; color: var(--color-ink-4); }
+  .plan-cta { margin-top: auto; width: 100%; }
+  .plan-foot { margin-top: 10px; text-align: center; font-size: 12px; color: var(--color-ink-2); }
+
+  .pricing-note { margin-top: 48px; font-size: 14px; color: var(--color-ink-2); }
+
+  /* --- the three axes, filtered without JavaScript ------------------------ */
+
+  /* Checked radios get the selected treatment. */
+  .pricing input[name="use-case"]:checked + .pricing-tab { background: var(--color-brand-muted); color: var(--color-brand-strong); }
+  .pricing input[name="deployment"]:checked + .pricing-deploy { border-color: var(--color-brand); box-shadow: 0 0 0 1px var(--color-brand); }
+  .pricing input[name="deployment"]:checked + .pricing-deploy .pricing-deploy-dot { border-color: var(--color-brand); border-width: 6px; }
+  /* The inputs are visually hidden, so the focus ring has to live on the label. */
+  .pricing input:focus-visible + label { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+
+  /* Title half, and plans, follow the use-case radio. */
+  .pricing:has(#uc-business-intelligence:checked) .pricing-title-uc[data-uc="business-intelligence"],
+  .pricing:has(#uc-embedded-analytics:checked) .pricing-title-uc[data-uc="embedded-analytics"] { display: inline; }
+  .pricing:has(#uc-business-intelligence:checked) .plan:not([data-uc~="business-intelligence"]),
+  .pricing:has(#uc-embedded-analytics:checked) .plan:not([data-uc~="embedded-analytics"]) { display: none; }
+
+  /* Plans follow the deployment radio. */
+  .pricing:has(#dep-cloud:checked) .plan:not([data-deploy~="cloud"]),
+  .pricing:has(#dep-self-hosted:checked) .plan:not([data-deploy~="self-hosted"]) { display: none; }
+
+  /* Prices follow the billing radio. */
+  .plan-price-when { display: none; }
+  .pricing:has(#bill-monthly:checked) .plan-price-when[data-billing="monthly"],
+  .pricing:has(#bill-yearly:checked) .plan-price-when[data-billing="yearly"] { display: inline; }
+
+  @media (max-width: 991px) {
+    .pricing-row, .pricing-deploys { flex-direction: column; }
+    .pricing-row > .pricing-row-head, .pricing-aside { flex: 0 0 auto; }
+    .pricing-plans { flex-direction: column; }
+    .plan { border-right: 0; border-bottom: 1px solid rgb(0 0 0 / 0.1); }
+    .plan:last-child { border-bottom: 0; }
+  }
+}

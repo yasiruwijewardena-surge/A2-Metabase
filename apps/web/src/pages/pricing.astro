@@ -1,0 +1,133 @@
+---
+/*
+ * Pricing.
+ *
+ * Three independent axes — use case, deployment and billing period. The
+ * original holds them as data attributes on <main> and flips them with
+ * JavaScript, hiding and showing variants through CSS. Here the controls are
+ * real radio inputs and the filtering is done with `:has()`, so the page works
+ * with JavaScript switched off and the keyboard and screen-reader behaviour is
+ * the browser's own rather than something re-implemented.
+ *
+ * Plans come from Strapi: one record per tier, declaring which deployments and
+ * use cases it belongs to, rather than one record per combination.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPlans, getUseCases } from '../lib/strapi';
+
+const [plans, useCases] = await Promise.all([getPlans(), getUseCases()]);
+
+const slugOf = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const money = (n: number) => `$${n.toLocaleString('en-US')}`;
+---
+
+<BaseLayout
+  title="Pricing | Metabase"
+  description="Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
+>
+  <main class="pricing container-mb">
+    <h1 class="pricing-title">
+      <span class="pricing-title-uc" data-uc="business-intelligence">Business intelligence</span>
+      <span class="pricing-title-uc" data-uc="embedded-analytics">Embedded analytics</span>{' '}
+      pricing
+    </h1>
+
+    <fieldset class="pricing-axis pricing-axis--uc">
+      <legend class="sr-only">What are you pricing?</legend>
+      {useCases.map((u, i) => (
+        <>
+          <input class="sr-only" type="radio" name="use-case" id={`uc-${u.slug}`} value={u.slug} checked={i === 0} />
+          <label class="pricing-tab" for={`uc-${u.slug}`}>{u.name}</label>
+        </>
+      ))}
+    </fieldset>
+
+    <section class="pricing-row">
+      <h2 class="pricing-row-head">Deployment</h2>
+      <fieldset class="pricing-deploys">
+        <legend class="sr-only">Where should Metabase run?</legend>
+        {[
+          ['cloud', 'Cloud deployment', 'Metabase handles setup, backups, and upgrades'],
+          ['self-hosted', 'Self-hosted', 'Manage your own infrastructure'],
+        ].map(([value, title, note], i) => (
+          <>
+            <input class="sr-only" type="radio" name="deployment" id={`dep-${value}`} value={value} checked={i === 0} />
+            <label class="pricing-deploy" for={`dep-${value}`}>
+              <span class="pricing-deploy-dot" aria-hidden="true"></span>
+              <span>
+                <span class="pricing-deploy-title">{title}</span>
+                <span class="pricing-deploy-note">{note}</span>
+              </span>
+            </label>
+          </>
+        ))}
+      </fieldset>
+    </section>
+
+    <section class="pricing-row pricing-row--plans">
+      <div class="pricing-aside">
+        <h2 class="pricing-row-head">Plans</h2>
+        <fieldset class="pricing-billing">
+          <legend class="sr-only">Billing period</legend>
+          {[['monthly', 'Monthly billing', null], ['yearly', 'Yearly', 'Save 10%']].map(([value, label, badge], i) => (
+            <span class="pricing-billing-opt">
+              <input type="radio" name="billing" id={`bill-${value}`} value={value} checked={i === 0} />
+              <label for={`bill-${value}`}>
+                {label}
+                {badge && <span class="pricing-save">{badge}</span>}
+              </label>
+            </span>
+          ))}
+        </fieldset>
+      </div>
+
+      <div class="pricing-plans">
+        {plans.map((p) => (
+          <article
+            class:list={['plan', p.highlighted && 'plan--on']}
+            data-deploy={(p.deployments ?? []).join(' ')}
+            data-uc={(p.useCases ?? []).map((u) => u.slug ?? slugOf(u.name)).join(' ')}
+          >
+            <h3 class="plan-name">{p.name}</h3>
+
+            <p class="plan-price">
+              {p.priceMonthly == null ? (
+                <span class="plan-price-figure">{p.priceNote}</span>
+              ) : (
+                <>
+                  <span class="plan-price-when" data-billing="monthly">
+                    <span class="plan-price-figure">{money(p.priceMonthly)}</span>
+                    <span class="plan-price-unit"> / month</span>
+                  </span>
+                  <span class="plan-price-when" data-billing="yearly">
+                    <span class="plan-price-figure">{money(p.priceYearly ?? p.priceMonthly)}</span>
+                    <span class="plan-price-unit"> / month, billed yearly</span>
+                  </span>
+                </>
+              )}
+            </p>
+
+            {p.tagline && <p class="plan-tagline">{p.tagline}</p>}
+            {p.featuresLead && <p class="plan-lead">{p.featuresLead}</p>}
+
+            <ul class="plan-features">
+              {(p.features ?? []).map((f) => <li>{f}</li>)}
+            </ul>
+
+            {p.cta && (
+              <a href={p.cta.url} class:list={[p.cta.style === 'primary' ? 'btn-primary' : 'btn-secondary', 'plan-cta']}>
+                {p.cta.label}
+              </a>
+            )}
+            {p.footnote && <p class="plan-foot">{p.footnote}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <p class="pricing-note">
+      Prices and tiers mirror metabase.com. This is a replica built for an assignment —
+      nothing here can be purchased.
+    </p>
+  </main>
+</BaseLayout>

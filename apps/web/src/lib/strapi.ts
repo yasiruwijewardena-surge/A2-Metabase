@@ -1,5 +1,5 @@
 import type {
-  Author, CaseStudy, Category, GlossaryTerm, Industry, Post, Tag, Testimonial, UseCase,
+  Author, CaseStudy, Category, GlossaryTerm, Industry, Plan, Post, Tag, Testimonial, UseCase,
 } from './types';
 
 const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
@@ -147,3 +147,10 @@ export const getTestimonials = () =>
   });
 
 export const getGlossary = () => all<GlossaryTerm>('glossary-terms', { sort: 'term:asc' });
+
+export const getPlans = () =>
+  all<Plan>('plans', {
+    'populate[useCases]': 'true',
+    'populate[cta]': 'true',
+    sort: 'displayOrder:asc',
+  });
