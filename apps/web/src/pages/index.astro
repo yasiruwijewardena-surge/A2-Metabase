@@ -4,8 +4,9 @@ import Avatar from '../components/Avatar.astro';
 import CldImage from '../components/CldImage.astro';
 import { getCaseStudies, getTestimonials } from '../lib/strapi';
 import HeroDashboard from '../components/HeroDashboard.astro';
-import ProductMock from '../components/ProductMock.astro';
 import PaymentsDashboard from '../components/demos/PaymentsDashboard.astro';
+import DataStudioAccount from '../components/demos/DataStudioAccount.astro';
+import MetabotChat from '../components/demos/MetabotChat.astro';
 import CopyCommand from '../components/CopyCommand.astro';
 import DataSourceMarquee from '../components/DataSourceMarquee.astro';
 
@@ -203,7 +204,9 @@ const biPoints = [
               )}
             </div>
 
-            {point.mock === 'dashboard' ? <PaymentsDashboard /> : <ProductMock kind={point.mock} />}
+            {point.mock === 'ai' && <MetabotChat />}
+            {point.mock === 'dashboard' && <PaymentsDashboard />}
+            {point.mock === 'semantic' && <DataStudioAccount />}
           </div>
         ))}
       </div>
