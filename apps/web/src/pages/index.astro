@@ -11,6 +11,17 @@ import EmbeddedDashboard from '../components/demos/EmbeddedDashboard.astro';
 import ScaleIcon from '../components/ScaleIcon.astro';
 import CopyCommand from '../components/CopyCommand.astro';
 import DataSourceMarquee from '../components/DataSourceMarquee.astro';
+import EyebrowArrow from '../components/EyebrowArrow.astro';
+import EaFeatureIcon from '../components/EaFeatureIcon.astro';
+import { thumbSet } from '../lib/image';
+
+/*
+ * The pull-quote portraits are a landscape 84x50 slot on the original. These
+ * people are fictional personas, so there is no photograph to put in it —
+ * initials fill the same slot rather than collapsing the row's geometry.
+ */
+const initialsOf = (name?: string | null) =>
+  (name ?? '').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('');
 
 const [cases, testimonials] = await Promise.all([getCaseStudies(), getTestimonials()]);
 
@@ -31,14 +42,17 @@ const logos = [
 ];
 
 
-/** The three supporting points under Embedded Analytics. */
+/** The three supporting points under Embedded Analytics, each on its own card. */
 const eaFeatures = [
-  ['Way less engineering overhead than rolling your own in-app reporting',
-   'Data teams and non-technical teammates can work with data without bugging devs.'],
-  ['Self-host or deploy on Metabase Cloud',
-   'Start with simple charts, embed full dashboards, or use the SDK for advanced setups as your needs grow.'],
-  ['Customizable to fit your product',
-   'White-labeling, dynamic styling, and interactive controls from view-only to full data discovery with a low-code integration.'],
+  { icon: 'window' as const,
+    title: 'Way less engineering overhead than rolling your own in-app reporting',
+    body: 'Data teams and non-technical teammates can work with data without bugging devs.' },
+  { icon: 'package' as const,
+    title: 'Self-host or deploy on Metabase Cloud',
+    body: 'Start with simple charts, embed full dashboards, or use the SDK for advanced setups as your needs grow.' },
+  { icon: 'shield' as const,
+    title: 'Customizable to fit your product',
+    body: 'White-labeling, dynamic styling, and interactive controls from view-only to full data discovery with a low-code integration.' },
 ];
 
 /** "Metabase scales as you grow" — six cards, each with an inline feature link. */
@@ -65,20 +79,23 @@ const scaleCards = [
 const biPoints = [
   {
     mock: 'ai' as const,
+    frame: 'query' as const,
     title: 'Query data in plain English with AI',
-    body: 'AI on all plans so anyone can explore data, visualize results, and answer their own questions. Click on charts to find the "why" with built-in drilldowns, or build a no-code query with the visual query builder.',
+    body: 'AI on all plans so anyone can explore data, visualize results, and answer their own questions. Ask Metabot AI or connect to the MCP server, click on charts to find the "why" with built-in drilldowns, or spin up a no-code query with the visual query builder.',
     link: ['Explore Metabase AI', '/features/metabase-ai'],
   },
   {
     mock: 'dashboard' as const,
+    frame: 'share' as const,
     title: 'Share reports and create custom insights',
-    body: 'Filter and break out interactive dashboards. Combine charts with text for collaborative reporting. Set up subscriptions and alerts to keep everyone in the loop.',
+    body: 'Filter and breakout interactive dashboards. Combine charts with text in Documents for collaborative reporting. Set up subscriptions and alerts to keep everyone in the loop.',
     link: ['Explore interactive dashboards', '/features/analytics-dashboards'],
   },
   {
     mock: 'semantic' as const,
+    frame: 'guide' as const,
     title: 'Guide people to the right answers',
-    body: 'Curate your semantic layer to make data usable and correct for humans and AI. Define trusted, reusable metrics, and mark vetted sources so everyone builds on consistent foundations.',
+    body: 'Curate your semantic layer in Data Studio to make your data usable and correct for humans and AI. Define trusted, reusable metrics, and mark vetted data sources so everyone builds on consistent, accurate foundations.',
     link: ['Explore Data Studio', '/product/data-studio'],
   },
 ];
@@ -112,7 +129,7 @@ const biPoints = [
         <HeroDashboard />
       </div>
 
-      <p class="mt-14 text-center text-base text-(--color-ink-3)">Trusted by 100,000+ companies</p>
+      <p class="mt-14 text-center text-base text-(--color-ink-2)">Trusted by 100,000+ companies</p>
       <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-14 gap-y-8">
         {logos.map(([file, name]) => (
           <li>
@@ -198,39 +215,57 @@ const biPoints = [
   </section>
 
   <!-- Business Intelligence -->
-  <section class="pt-24 pb-0">
+  <section class="pt-24 pb-14">
     <div class="container-mb">
-      <header class="mx-auto mb-14 max-w-[760px] text-center">
+      <header class="mx-auto mb-14 text-center">
         <a href="/product/business-intelligence" class="eyebrow-link">
           Business Intelligence
-          <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
+          <EyebrowArrow />
         </a>
-        <h2 class="mb-5">Analytics your team will use and trust</h2>
-        <p class="text-lg text-(--color-ink-2)">
+        <h2 class="mb-6">Analytics your team will use and trust</h2>
+        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
           Teams can explore data on their own, guided to correct answers with a trustworthy
           foundation. Your data team can curate a governed semantic layer of canonical tables
           and metrics in Data Studio.
         </p>
       </header>
 
-      <div class="space-y-8">
+      <div>
         {biPoints.map((point, i) => (
-          <div class="grid items-center gap-10 rounded-3xl bg-gradient-to-b from-white to-(--color-brand-faint) p-10 lg:grid-cols-2">
-            <div>
-              <h3 class="mb-3">{point.title}</h3>
-              <p class="mb-5 text-(--color-ink-2)">{point.body}</p>
-              <a href={point.link[1]} class="font-bold text-(--color-brand-hover) hover:underline">{point.link[0]} →</a>
+          <article class:list={['bi-panel', i % 2 === 1 && 'bi-panel--reverse']}>
+            <div class="panel-copy">
+              <h3 class="panel-heading">{point.title}</h3>
+              <p class="panel-text">{point.body}</p>
+              <a href={point.link[1]} class="panel-cta">
+                {point.link[0]}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M5.5 3.5L9 7L5.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
 
               {pullQuotes[i] && (
-                <figure class="mt-10">
-                  <blockquote class="mb-5 italic leading-relaxed text-(--color-ink-2)">
-                    "{pullQuotes[i].quote}"
-                  </blockquote>
-                  <figcaption class="flex items-center gap-3">
-                    <Avatar image={pullQuotes[i].person?.avatar} name={pullQuotes[i].person?.name} size={44} class="h-11 w-11 bg-white" />
-                    <span>
-                      <b class="block font-bold text-(--color-ink)">{pullQuotes[i].person?.name}</b>
-                      <span class="text-sm text-(--color-ink-3)">
+                <figure class="panel-quote">
+                  <blockquote>"{pullQuotes[i].quote}"</blockquote>
+                  <figcaption>
+                    {pullQuotes[i].person?.avatar?.url ? (
+                      <img
+                        class="quote-thumb"
+                        src={thumbSet(pullQuotes[i].person.avatar.url, 84, 50).src}
+                        srcset={thumbSet(pullQuotes[i].person.avatar.url, 84, 50).srcset}
+                        width="84"
+                        height="50"
+                        alt={`Photo of ${pullQuotes[i].person?.name}`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <span class="quote-thumb quote-thumb--initials" aria-hidden="true">
+                        {initialsOf(pullQuotes[i].person?.name)}
+                      </span>
+                    )}
+                    <span class="quote-meta">
+                      <span class="quote-author">{pullQuotes[i].person?.name}</span>
+                      <span class="quote-company">
                         {pullQuotes[i].person?.role}{pullQuotes[i].person?.company?.name && <>, {pullQuotes[i].person.company.name}</>}
                       </span>
                     </span>
@@ -239,10 +274,14 @@ const biPoints = [
               )}
             </div>
 
-            {point.mock === 'ai' && <MetabotChat />}
-            {point.mock === 'dashboard' && <PaymentsDashboard />}
-            {point.mock === 'semantic' && <DataStudioAccount />}
-          </div>
+            <div class="panel-media">
+              <div class:list={['bi-frame', `bi-frame--${point.frame}`]}>
+                {point.mock === 'ai' && <MetabotChat />}
+                {point.mock === 'dashboard' && <PaymentsDashboard />}
+                {point.mock === 'semantic' && <DataStudioAccount />}
+              </div>
+            </div>
+          </article>
         ))}
       </div>
     </div>
@@ -251,13 +290,15 @@ const biPoints = [
   <!-- Embedded Analytics -->
   <section class="pt-24 pb-0">
     <div class="container-mb">
-      <header class="mx-auto mb-12 max-w-[760px] text-center">
+      <header class="mb-10 text-center">
         <a href="/product/embedded-analytics" class="eyebrow-link">
           Embedded Analytics
-          <span class="grid h-6 w-6 place-items-center rounded-full bg-(--color-brand-muted) text-sm" aria-hidden="true">→</span>
+          <EyebrowArrow />
         </a>
-        <h2 class="mb-5">Put production-grade analytics into your app without drama</h2>
-        <p class="text-lg text-(--color-ink-2)">
+        <h2 class="mx-auto mb-6 max-w-[640px]">
+          Put production-grade analytics into your app without drama
+        </h2>
+        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
           Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
           Multi-tenant, customizable analytics components, with plumbing and permissions built in.
         </p>
@@ -265,20 +306,15 @@ const biPoints = [
 
       <EmbeddedDashboard />
 
-      <div class="mt-24 grid gap-10 md:grid-cols-3">
-        {eaFeatures.map(([title, body]) => (
-          <div>
-            <h3 class="mb-2">{title}</h3>
-            <p class="text-(--color-ink-2)">{body}</p>
+      <div class="ea-features">
+        {eaFeatures.map((f) => (
+          <div class="ea-feature">
+            <span class="ea-feature-icon"><EaFeatureIcon name={f.icon} /></span>
+            <h3 class="ea-feature-title">{f.title}</h3>
+            <p class="ea-feature-text">{f.body}</p>
           </div>
         ))}
       </div>
-
-      <p class="mt-14 text-center">
-        <a href="/case-studies/use-case/embedded-analytics" class="font-bold text-(--color-brand-hover) hover:underline">
-          See who embeds Metabase →
-        </a>
-      </p>
     </div>
   </section>
 

@@ -179,7 +179,7 @@
   .love-more { margin-top: 2.75rem; text-align: center; }
   .love-more-link {
     display: inline-flex; align-items: center; gap: 0.375rem;
-    font-size: 1rem; font-weight: 600; color: var(--color-brand);
+    font-size: 1rem; font-weight: 600; color: var(--color-brand-hover);
   }
   .love-more-link:hover { text-decoration: underline; }
 
@@ -247,8 +247,121 @@
 @layer components {
   /* Section eyebrow link: 18px, weight 600, brand blue, with its circled arrow. */
   .eyebrow-link {
-    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
-    font-size: 18px; font-weight: 600; color: var(--color-brand);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    font-size: 18px; font-weight: 600; color: var(--color-brand-hover);
   }
   .eyebrow-link:hover { text-decoration: underline; }
+}
+
+@layer components {
+  /* The circled arrow that follows every section eyebrow: a 28px rounded
+     square filled with the faint blue, carrying a 1.5px brand chevron. */
+  .eyebrow-arrow { display: block; flex: none; width: 28px; height: 28px; }
+
+  /* Embedded Analytics supporting points. Measured off the original: three
+     equal columns on a 24px gutter, each a #f9fafb card with a 16px radius,
+     28px of padding and a 1px #f1f2f4 hairline. The 22px icon sits above the
+     title in brand blue, 16px clear of it. */
+  .ea-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+  .ea-feature {
+    border: 1px solid var(--color-surface); border-radius: 16px;
+    background: #f9fafb; padding: 28px;
+  }
+  .ea-feature-icon {
+    display: inline-flex; align-items: center; margin-bottom: 16px;
+    color: var(--color-brand);
+  }
+  .ea-feature-title { margin: 0 0 8px; font-size: 18px; line-height: 25px; font-weight: 700; text-wrap: initial; }
+  .ea-feature-text { margin: 0; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+
+  @media (max-width: 991px) { .ea-features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .ea-features { grid-template-columns: 1fr; } }
+}
+
+@layer components {
+  /*
+   * The three Business Intelligence panels. Measured off the original: a
+   * #f9fafb slab with a 24px radius, 80px/56px of padding and a 24px gutter
+   * between panels, copy in a 5-of-12 column and the product mock in a 7.
+   * The second panel runs media-first.
+   */
+  .bi-panel {
+    display: flex; flex-wrap: wrap; align-items: center;
+    margin-bottom: 24px; border-radius: 24px; background: #f9fafb;
+    padding: 80px 56px;
+  }
+  .bi-panel--reverse { flex-direction: row-reverse; }
+
+  .panel-copy { flex: 0 0 41.6667%; max-width: 41.6667%; padding: 0 40px 0 12px; }
+  .panel-media { flex: 0 0 58.3333%; max-width: 58.3333%; padding: 0 12px; }
+
+  .panel-heading { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 700; }
+  .panel-text { margin: 0 0 12px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  /* The original's CTA is #509ee3, which is 2.8:1 on the panel and fails AA on
+     16px text. Taken down to the next blue in the same ramp, as with
+     --color-ink-3; at this size the two are hard to tell apart. */
+  .panel-cta {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .panel-cta:hover { color: var(--color-brand-strong); }
+
+  .panel-quote { margin: 36px 0 0; }
+  .panel-quote blockquote {
+    margin: 0 0 16px; padding-left: 18px;
+    font-size: 17px; line-height: 26px; font-style: italic; color: var(--color-admin);
+  }
+  .panel-quote figcaption { display: flex; align-items: center; gap: 14px; }
+  .quote-thumb { display: block; flex: none; }
+  .quote-meta { display: flex; flex-direction: column; }
+  .quote-author { font-size: 15px; line-height: 19.5px; font-weight: 700; color: var(--color-ink); }
+  /* The original's #8d93a5 is 2.6:1 on the panel; --color-ink-3 is still only
+     4.39:1 against #f9fafb, so the small print here steps up to secondary. */
+  .quote-company { font-size: 14px; line-height: 18.2px; color: var(--color-ink-2); }
+
+  /* The mock sits in a white device frame: hairline, deep soft shadow, clipped. */
+  .bi-frame {
+    display: flex; flex-direction: column; overflow: hidden;
+    border: 1px solid var(--color-line); border-radius: 16px; background: #fff;
+    box-shadow: 0 1px 2px rgb(16 24 40 / 0.05), 0 12px 32px -12px rgb(16 24 40 / 0.16);
+  }
+  /* The first panel's frame is the one rounded at 24; the other two sit at 16. */
+  .bi-frame--query { border-radius: 24px; aspect-ratio: 647 / 692; }
+  .bi-frame--share { aspect-ratio: 647 / 681; }
+  .bi-frame--guide { aspect-ratio: 647 / 578; }
+  /* The demo keeps its own internals but gives up its card chrome to the frame. */
+  .bi-frame > * { flex: 1; min-height: 0; }
+
+  @media (max-width: 991px) {
+    .bi-panel, .bi-panel--reverse { flex-direction: column; padding: 48px 24px; }
+    .panel-copy, .panel-media { flex: 0 0 auto; max-width: 100%; width: 100%; padding: 0; }
+    .panel-copy { margin-bottom: 40px; }
+    .bi-frame--query, .bi-frame--share, .bi-frame--guide { aspect-ratio: auto; }
+  }
+}
+
+/*
+ * Inside a BI panel the frame owns the card chrome, so the demo island gives
+ * its own up. Two cascade details force the shape of this rule:
+ *   - it is unlayered, because each island declares its chrome in an
+ *     `is:global` block and unlayered declarations beat `@layer components`
+ *     whatever the specificity;
+ *   - it names the islands rather than using `> *`, because `*` contributes
+ *     nothing to specificity, so `.bi-frame > *` ties with `.mbot` and loses
+ *     on document order.
+ */
+.bi-frame > .mbot,
+.bi-frame > .pdash,
+.bi-frame > .dstudio {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@layer components {
+  .quote-thumb--initials {
+    display: grid; place-items: center; width: 84px; height: 50px; border-radius: 10px;
+    background: var(--color-brand-muted); font-size: 16px; font-weight: 700;
+    color: var(--color-brand-strong);
+  }
 }

@@ -42,6 +42,12 @@ export function avatarSet(url: string, size: number): { src: string; srcset: str
   return { src: t(size), srcset: `${t(size)} 1x, ${t(size * 2)} 2x` };
 }
 
+/** Fixed-size landscape crops, such as the 84x50 portraits beside the BI pull quotes. */
+export function thumbSet(url: string, w: number, h: number): { src: string; srcset: string } {
+  const t = (s: number) => cld(url, `f_auto,q_auto,c_fill,g_face,w_${w * s},h_${h * s}`);
+  return { src: t(1), srcset: `${t(1)} 1x, ${t(2)} 2x` };
+}
+
 export interface PreloadAttrs { href: string; imagesrcset: string; imagesizes: string }
 
 /**
