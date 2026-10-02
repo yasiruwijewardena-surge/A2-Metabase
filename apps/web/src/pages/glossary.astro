@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getGlossary } from '../lib/strapi';
+
+const terms = await getGlossary();
+const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))].sort();
+const grouped = letters.map((l) => ({
+  letter: l,
+  items: terms.filter((t) => t.term[0].toUpperCase() === l),
+}));
+---
+<BaseLayout
+  title="Data and Business Intelligence Glossary | Metabase"
+  description="Definitions for the data and business intelligence terms you will run into."
+>
+  <div class="container-mb max-w-[860px] py-12">
+    <h1 class="mb-6 text-4xl">Data and Business Intelligence Glossary Terms</h1>
+
+    <div class="mb-8">
+      <label for="q" class="sr-only">Search the glossary</label>
+      <input
+        id="q"
+        type="search"
+        placeholder="Search the glossary"
+        autocomplete="off"
+        class="w-full rounded-lg border border-[--color-line] px-4 py-3 text-base"
+        data-glossary-search
+      />
+    </div>
+
+    {/* Anchors, not a JS filter: jumping to a letter works without script. */}
+    <nav class="mb-10 flex flex-wrap gap-2" aria-label="Jump to letter">
+      {grouped.map(({ letter }) => (
+        <a href={`#${letter}`} class="rounded-md bg-[--color-surface] px-3 py-1.5 text-sm font-bold text-[--color-brand-strong] hover:bg-[--color-brand] hover:text-white">
+          {letter}
+        </a>
+      ))}
+    </nav>
+
+    <p class="mb-6 hidden text-[--color-ink-2]" data-empty>No terms match that search.</p>
+
+    {grouped.map(({ letter, items }) => (
+      <section id={letter} class="mb-10 scroll-mt-24" data-letter-group>
+        <h2 class="mb-4 border-b border-[--color-line] pb-2 text-2xl text-[--color-brand]">{letter}</h2>
+        <dl>
+          {items.map((t) => (
+            <div class="mb-6" data-term data-name={t.term.toLowerCase()} data-definition={t.definition.toLowerCase()}>
+              <dt class="mb-1 text-lg font-bold">{t.term}</dt>
+              <dd class="text-[--color-ink-2]">{t.definition}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<script>
+  // Progressive enhancement: the full list is in the HTML and usable without
+  // this. Search only narrows what is already there.
+  const input = document.querySelector<HTMLInputElement>('[data-glossary-search]');
+  const terms = [...document.querySelectorAll<HTMLElement>('[data-term]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('[data-letter-group]')];
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+
+    terms.forEach((el) => {
+      const hit = !q
+        || el.dataset.name!.includes(q)
+        || el.dataset.definition!.includes(q);
+      el.hidden = !hit;
+      if (hit) shown += 1;
+    });
+
+    // Hide a letter heading once nothing under it matches.
+    groups.forEach((g) => {
+      g.hidden = ![...g.querySelectorAll<HTMLElement>('[data-term]')].some((t) => !t.hidden);
+    });
+
+    if (empty) empty.classList.toggle('hidden', shown > 0);
+  });
+</script>

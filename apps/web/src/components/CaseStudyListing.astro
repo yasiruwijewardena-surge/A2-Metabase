@@ -1,0 +1,132 @@
+---
+import CldImage from './CldImage.astro';
+import type { CaseStudy, Industry, UseCase } from '../lib/types';
+
+interface Props {
+  cases: CaseStudy[];
+  industries: Industry[];
+  useCases: UseCase[];
+  activeIndustry?: string | null;
+  activeUseCase?: string | null;
+}
+const { cases, industries, useCases, activeIndustry = null, activeUseCase = null } = Astro.props;
+
+/**
+ * Both filter dimensions are real URLs, generated at build time, so a filtered
+ * view is shareable and indexable and needs no JavaScript. The original filters
+ * by toggling DOM visibility, which leaves 17 industries with no page of their
+ * own (SITE-ANALYSIS.md §6.4).
+ */
+const href = (useCase: string | null, industry: string | null) => {
+  if (useCase && industry) return `/case-studies/use-case/${useCase}/industry/${industry}`;
+  if (useCase) return `/case-studies/use-case/${useCase}`;
+  if (industry) return `/case-studies/industry/${industry}`;
+  return '/case-studies';
+};
+
+// Counts come from the data, so an industry with nothing to show is never
+// offered as a filter — another thing the original gets wrong, where 11 of its
+// 17 industry buttons return a single result.
+const countFor = (industrySlug: string) =>
+  cases.filter((c) => c.company?.industry?.slug === industrySlug).length;
+---
+<div class="container-mb pt-12">
+  <header class="mx-auto mb-2 flex max-w-[760px] flex-col items-center text-center">
+    <h1 class="mb-3 text-4xl">Real companies, real data, real stories</h1>
+    <p class="m-0 max-w-[540px] text-[--color-ink-2]">
+      Over 100,000 organizations use Metabase to make working with data easy for everyone on
+      their team. Explore what real businesses have built with Metabase.
+    </p>
+  </header>
+
+  <section id="browser" aria-label="Customer stories" class="mt-9 mb-16 rounded-xl border border-[--color-brand-border] p-6">
+    <div
+      class="mx-auto mt-[-44px] mb-10 grid w-full max-w-[600px] grid-cols-3 gap-1 rounded-lg border border-[--color-brand-soft] bg-white p-1"
+      role="group" aria-label="Filter by use case"
+    >
+      <a href={href(null, activeIndustry)} aria-current={!activeUseCase ? 'page' : undefined}
+         class:list={['seg', !activeUseCase && 'seg-on']}>All</a>
+      {useCases.map((u) => (
+        <a href={href(u.slug, activeIndustry)} aria-current={activeUseCase === u.slug ? 'page' : undefined}
+           class:list={['seg', activeUseCase === u.slug && 'seg-on']}>{u.name}</a>
+      ))}
+    </div>
+
+    <div class="mb-8 flex flex-wrap justify-center gap-3" role="group" aria-label="Filter by industry">
+      <a href={href(activeUseCase, null)} aria-current={!activeIndustry ? 'page' : undefined}
+         class:list={['pill', !activeIndustry && 'pill-on']}>All Stories</a>
+      {industries.map((i) => (
+        <a href={href(activeUseCase, i.slug)} aria-current={activeIndustry === i.slug ? 'page' : undefined}
+           class:list={['pill', activeIndustry === i.slug && 'pill-on']}>
+          {i.name}
+        </a>
+      ))}
+    </div>
+
+    <p class="mb-6 text-center text-sm text-[--color-ink-3]" aria-live="polite">
+      {cases.length} {cases.length === 1 ? 'story' : 'stories'}
+    </p>
+
+    {cases.length === 0 ? (
+      <p class="rounded-lg bg-[--color-brand-faint] p-10 text-center text-[--color-ink-2]">
+        No stories match that combination yet.
+      </p>
+    ) : (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {cases.map((c, i) => (
+          <article class="group flex flex-col overflow-hidden rounded-xl border border-[--color-line] bg-white transition-shadow hover:shadow-lg">
+            <CldImage
+              image={c.heroImage}
+              widths={[300, 480, 760]}
+              sizes="(max-width: 768px) 100vw, 360px"
+              ratio={16 / 9}
+              priority={i === 0}
+              class="aspect-[16/9] w-full object-cover"
+            />
+            <div class="flex flex-1 flex-col p-5">
+              {c.company?.industry && (
+                <p class="mb-2 text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">
+                  {c.company.industry.name}
+                </p>
+              )}
+              <h2 class="mb-3 text-lg leading-snug">
+                <a href={`/case-studies/${c.slug}`} class="hover:text-[--color-brand-hover]">{c.title}</a>
+              </h2>
+              {c.metrics?.length > 0 && (
+                <dl class="mb-4 flex flex-wrap gap-x-5 gap-y-1">
+                  {c.metrics.slice(0, 2).map((m) => (
+                    <div>
+                      <dt class="sr-only">{m.label}</dt>
+                      <dd class="text-xl font-black text-[--color-brand-hover]">{m.value}</dd>
+                      <dd class="text-xs text-[--color-ink-3]">{m.label}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              <a href={`/case-studies/${c.slug}`} class="mt-auto text-sm font-bold text-[--color-brand-hover]">
+                Read the case study →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+</div>
+
+<style>
+  .seg {
+    display: grid; place-items: center; height: 34px;
+    border-radius: 0.375rem; font-size: 0.9375rem; font-weight: 700;
+    color: var(--color-brand-strong); transition: background-color 120ms, color 120ms;
+  }
+  .seg:hover { background: var(--color-brand-muted); }
+  .seg-on { background: var(--color-brand-muted); }
+  .pill {
+    border-radius: 0.5rem; background: var(--color-surface);
+    padding: 0.5rem 0.75rem; font-size: 0.9375rem; color: var(--color-brand-strong);
+    transition: background-color 120ms, color 120ms;
+  }
+  .pill:hover { background: var(--color-brand); color: #fff; }
+  .pill-on { background: var(--color-brand-strong); color: #fff; }
+</style>

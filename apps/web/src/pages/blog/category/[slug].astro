@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { src as atWidth } from '../../../lib/image';
+import { preloadFor } from '../../../lib/image';
 import BlogListing from '../../../components/BlogListing.astro';
 import { getPosts, getCategories } from '../../../lib/strapi';
 
@@ -21,7 +21,7 @@ const { category, categories, posts } = Astro.props;
 <BaseLayout
   title={`${category.name} | Metabase Blog`}
   description={category.description ?? `Posts in ${category.name}.`}
-  preloadImage={posts[0]?.coverImage ? atWidth(posts[0].coverImage.url, 760) : null}
+  preload={preloadFor(posts[0]?.coverImage?.url)}
 >
   <BlogListing posts={posts} categories={categories} active={category.slug} />
 </BaseLayout>

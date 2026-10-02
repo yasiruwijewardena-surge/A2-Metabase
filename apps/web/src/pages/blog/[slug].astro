@@ -1,7 +1,7 @@
 ---
 import CldImage from '../../components/CldImage.astro';
 import Avatar from '../../components/Avatar.astro';
-import { src as atWidth } from '../../lib/image';
+import { preloadFor } from '../../lib/image';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RichText from '../../components/RichText.astro';
 import { getPosts, getPost } from '../../lib/strapi';
@@ -34,7 +34,7 @@ const jsonLd = {
   description={post.excerpt}
   seo={post.seo}
   ogImage={post.coverImage?.url}
-  preloadImage={post.coverImage ? atWidth(post.coverImage.url, 760) : null}
+  preload={preloadFor(post.coverImage?.url, [400, 760, 1140], '(max-width: 800px) 100vw, 760px')}
 >
   <article class="container-mb max-w-[760px] py-10">
     <a href="/blog" class="text-sm font-bold text-[--color-brand-hover]">← All posts</a>

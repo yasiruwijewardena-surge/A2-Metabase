@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CaseStudyListing from '../../../../../components/CaseStudyListing.astro';
+import { getCaseStudies, getIndustries, getUseCases } from '../../../../../lib/strapi';
+import { filterCases } from '../../../../../lib/filters';
+import { preloadFor } from '../../../../../lib/image';
+
+/** Both dimensions at once: every combination is a real, indexable page. */
+export async function getStaticPaths() {
+  const [cases, industries, useCases] = await Promise.all([
+    getCaseStudies(), getIndustries(), getUseCases(),
+  ]);
+  return useCases.flatMap((useCase) =>
+    industries.map((industry) => ({
+      params: { useCase: useCase.slug, industry: industry.slug },
+      props: {
+        useCase, industry, industries, useCases,
+        cases: filterCases(cases, industry.slug, useCase.slug),
+      },
+    }))
+  );
+}
+
+const { useCase, industry, industries, useCases, cases } = Astro.props;
+---
+<BaseLayout
+  title={`${industry.name} · ${useCase.name} | Metabase customer stories`}
+  description={`${industry.name} teams using Metabase for ${useCase.name}.`}
+  preload={preloadFor(cases[0]?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px')}
+  noIndex={cases.length === 0}
+>
+  <CaseStudyListing
+    cases={cases}
+    industries={industries}
+    useCases={useCases}
+    activeIndustry={industry.slug}
+    activeUseCase={useCase.slug}
+  />
+</BaseLayout>

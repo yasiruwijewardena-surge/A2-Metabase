@@ -1,17 +1,245 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Avatar from '../components/Avatar.astro';
+import CldImage from '../components/CldImage.astro';
+import { getCaseStudies, getTestimonials } from '../lib/strapi';
 
+const [cases, testimonials] = await Promise.all([getCaseStudies(), getTestimonials()]);
+
+const pullQuotes = testimonials
+  .filter((t) => t.variant === 'pull-quote')
+  .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
+
+const social = testimonials
+  .filter((t) => t.variant === 'social' && t.featured)
+  .sort((a, b) => a.displayOrder - b.displayOrder)
+  .slice(0, 9);
+
+const featuredCases = cases.filter((c) => c.featured).slice(0, 3);
+const withMetrics = cases.filter((c) => c.metrics?.length).slice(0, 3);
+
+const biPoints = [
+  {
+    title: 'Query data in plain English with AI',
+    body: 'AI on all plans so anyone can explore data, visualize results, and answer their own questions. Click on charts to find the "why" with built-in drilldowns, or build a no-code query with the visual query builder.',
+    link: ['Explore Metabase AI', '/features/metabase-ai'],
+  },
+  {
+    title: 'Share reports and create custom insights',
+    body: 'Filter and break out interactive dashboards. Combine charts with text for collaborative reporting. Set up subscriptions and alerts to keep everyone in the loop.',
+    link: ['Explore interactive dashboards', '/features/analytics-dashboards'],
+  },
+  {
+    title: 'Guide people to the right answers',
+    body: 'Curate your semantic layer to make data usable and correct for humans and AI. Define trusted, reusable metrics, and mark vetted sources so everyone builds on consistent foundations.',
+    link: ['Explore Data Studio', '/product/data-studio'],
+  },
+];
 ---
+<BaseLayout
+  title="Metabase | Open source Business Intelligence and Embedded Analytics"
+  description="Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
+>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-[--color-brand-faint] to-white pb-16 pt-16">
+    <div class="container-mb">
+      <div class="mx-auto max-w-[780px] text-center">
+        <h1 class="mb-5 text-[2.75rem] leading-[1.08] md:text-[3.5rem]">
+          Open source AI analytics<br />you can verify
+        </h1>
+        <p class="mx-auto mb-8 max-w-[620px] text-lg text-[--color-ink-2]">
+          Metabase gives you answers guided by your semantic layer — your metrics and business
+          logic — whether reached by an agent or a teammate. Inspect the query behind every answer.
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/start" class="rounded-md bg-[--color-brand] px-6 py-3 font-bold text-white hover:bg-[--color-brand-hover]">
+            Try Metabase Cloud free
+          </a>
+          <a href="/open-source" class="rounded-md border border-[--color-brand-border] px-6 py-3 font-bold text-[--color-brand-hover] hover:bg-[--color-brand-muted]">
+            Deploy Metabase Open Source
+          </a>
+        </div>
+        <p class="mt-10 text-sm font-bold uppercase tracking-wide text-[--color-ink-3]">
+          Trusted by 100,000+ companies
+        </p>
+      </div>
+    </div>
+  </section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <!-- Proof: real outcomes from the case studies -->
+  {withMetrics.length > 0 && (
+    <section class="border-y border-[--color-line] bg-white py-12">
+      <div class="container-mb grid gap-8 text-center md:grid-cols-3">
+        {withMetrics.map((c) => (
+          <div>
+            <p class="text-4xl font-black text-[--color-brand-hover]">{c.metrics[0].value}</p>
+            <p class="mt-1 text-[--color-ink-2]">{c.metrics[0].label}</p>
+            <a href={`/case-studies/${c.slug}`} class="mt-2 inline-block text-sm font-bold text-[--color-brand-hover] hover:underline">
+              {c.company?.name} →
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Deploy -->
+  <section class="py-16">
+    <div class="container-mb">
+      <h2 class="mb-3 text-3xl">Deploy in minutes, scale infinitely</h2>
+      <p class="mb-10 max-w-[560px] text-[--color-ink-2]">
+        Start simple. Keep your data secure and compliant as you grow, from pre-seed to post-IPO.
+      </p>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-xl border border-[--color-line] p-6">
+          <code class="mb-4 block overflow-x-auto rounded-md bg-[--color-ink] p-3 font-mono text-sm text-white">
+            docker run -d -p 3000:3000 metabase/metabase
+          </code>
+          <h3 class="mb-2 text-lg">Always open source</h3>
+          <p class="text-[--color-ink-2]">Spin up a free, self-hosted instance in minutes.</p>
+        </div>
+        <div class="rounded-xl border border-[--color-line] p-6">
+          <h3 class="mb-2 text-lg">Connect your data and your tools</h3>
+          <p class="text-[--color-ink-2]">
+            Query and visualize data from your database or warehouse. Work with your data via
+            the MCP server, CLI, APIs, Slack, and more.
+          </p>
+        </div>
+        <div class="rounded-xl border border-[--color-line] p-6">
+          <h3 class="mb-2 text-lg">Enterprise-grade security</h3>
+          <p class="text-[--color-ink-2]">
+            We treat your data the way we would want ours — secure and compliant.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Intelligence, with pull quotes interleaved as the original does -->
+  <section class="bg-[--color-brand-faint] py-16">
+    <div class="container-mb">
+      <p class="mb-2 text-sm font-bold uppercase tracking-wide text-[--color-brand-hover]">Business Intelligence</p>
+      <h2 class="mb-10 max-w-[640px] text-3xl">Analytics your team will use and trust</h2>
+
+      <div class="space-y-12">
+        {biPoints.map((point, i) => (
+          <div class="grid items-start gap-8 lg:grid-cols-2">
+            <div>
+              <h3 class="mb-3 text-xl">{point.title}</h3>
+              <p class="mb-4 text-[--color-ink-2]">{point.body}</p>
+              <a href={point.link[1]} class="font-bold text-[--color-brand-hover] hover:underline">{point.link[0]} →</a>
+            </div>
+            {pullQuotes[i] && (
+              <figure class="rounded-xl border border-[--color-brand-border] bg-white p-6">
+                <blockquote class="mb-4 text-lg leading-relaxed text-[--color-ink]">
+                  “{pullQuotes[i].quote}”
+                </blockquote>
+                <figcaption class="flex items-center gap-3">
+                  <Avatar image={pullQuotes[i].person?.avatar} size={36} class="h-9 w-9 bg-[--color-surface]" />
+                  <span class="text-sm">
+                    <b class="block font-bold">{pullQuotes[i].person?.name}</b>
+                    <span class="text-[--color-ink-3]">
+                      {pullQuotes[i].person?.role}{pullQuotes[i].person?.company?.name && <>, {pullQuotes[i].person.company.name}</>}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded Analytics -->
+  <section class="py-16">
+    <div class="container-mb grid items-center gap-10 lg:grid-cols-2">
+      <div>
+        <p class="mb-2 text-sm font-bold uppercase tracking-wide text-[--color-brand-hover]">Embedded Analytics</p>
+        <h2 class="mb-4 text-3xl">Put production-grade analytics into your app without drama</h2>
+        <p class="mb-6 text-[--color-ink-2]">
+          Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
+          Multi-tenant, customizable components, with plumbing and permissions built in.
+        </p>
+        <a href="/case-studies/use-case/embedded-analytics" class="font-bold text-[--color-brand-hover] hover:underline">
+          See who embeds Metabase →
+        </a>
+      </div>
+      <pre class="overflow-x-auto rounded-xl bg-[--color-ink] p-6 font-mono text-sm leading-relaxed text-white"><code>{`import {
+  MetabaseProvider,
+  InteractiveQuestion,
+} from "@metabase/embedding-sdk-react";
+
+<MetabaseProvider config={config}>
+  <InteractiveQuestion questionId={42} />
+</MetabaseProvider>`}</code></pre>
+    </div>
+  </section>
+
+  <!-- Featured customer stories -->
+  {featuredCases.length > 0 && (
+    <section class="border-t border-[--color-line] py-16">
+      <div class="container-mb">
+        <div class="mb-8 flex items-end justify-between gap-6">
+          <h2 class="text-3xl">Real companies, real data, real stories</h2>
+          <a href="/case-studies" class="shrink-0 font-bold text-[--color-brand-hover] hover:underline">See all stories →</a>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+          {featuredCases.map((c) => (
+            <article class="overflow-hidden rounded-xl border border-[--color-line]">
+              <CldImage image={c.heroImage} widths={[300, 480, 760]} sizes="(max-width: 768px) 100vw, 360px"
+                        ratio={16 / 9} class="aspect-[16/9] w-full object-cover" />
+              <div class="p-5">
+                {c.company?.industry && (
+                  <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">{c.company.industry.name}</p>
+                )}
+                <h3 class="mb-3 text-base leading-snug">
+                  <a href={`/case-studies/${c.slug}`} class="hover:text-[--color-brand-hover]">{c.title}</a>
+                </h3>
+                <a href={`/case-studies/${c.slug}`} class="text-sm font-bold text-[--color-brand-hover]">Read the case study →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Social wall -->
+  {social.length > 0 && (
+    <section class="bg-[--color-brand-faint] py-16">
+      <div class="container-mb">
+        <h2 class="mb-10 text-center text-3xl">Analytics that people straight up love</h2>
+        <div class="columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">
+          {social.map((t) => (
+            <figure class="rounded-xl border border-[--color-line] bg-white p-5">
+              <blockquote class="mb-3 text-[--color-ink-2]">{t.quote}</blockquote>
+              <figcaption class="flex items-center gap-2 text-sm">
+                <Avatar image={t.person?.avatar} size={28} class="h-7 w-7 bg-[--color-surface]" />
+                <b class="font-bold text-[--color-ink-2]">{t.person?.name}</b>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="mt-8 text-center">
+          <a href="/love" class="font-bold text-[--color-brand-hover] hover:underline">See more love for Metabase →</a>
+        </p>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA -->
+  <section class="py-20 text-center">
+    <div class="container-mb">
+      <h2 class="mb-3 text-3xl">Ready to get started?</h2>
+      <p class="mx-auto mb-8 max-w-[520px] text-[--color-ink-2]">
+        We could keep typing, or you could just try it. AI on all plans. 100k+ teams already love it.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/start" class="rounded-md bg-[--color-brand] px-6 py-3 font-bold text-white hover:bg-[--color-brand-hover]">Try Metabase Cloud free</a>
+        <a href="/open-source" class="rounded-md border border-[--color-brand-border] px-6 py-3 font-bold text-[--color-brand-hover] hover:bg-[--color-brand-muted]">Deploy Metabase Open Source</a>
+      </div>
+      <p class="mt-6 text-sm text-[--color-ink-3]">Free 14-day trial · Super-fast setup · Open source</p>
+    </div>
+  </section>
+</BaseLayout>

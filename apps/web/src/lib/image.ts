@@ -41,3 +41,26 @@ export function avatarSet(url: string, size: number): { src: string; srcset: str
   const t = (w: number) => cld(url, `f_auto,q_auto,c_fill,g_face,w_${w},h_${w}`);
   return { src: t(size), srcset: `${t(size)} 1x, ${t(size * 2)} 2x` };
 }
+
+export interface PreloadAttrs { href: string; imagesrcset: string; imagesizes: string }
+
+/**
+ * Preload descriptor for an LCP image.
+ *
+ * A bare `href` preload is a trap when the <img> carries a srcset: the browser
+ * preloads one candidate and then picks a different one from the srcset,
+ * downloading the image twice. `imagesrcset`/`imagesizes` must mirror the <img>
+ * exactly, so both come from the same helpers CldImage uses.
+ */
+export function preloadFor(
+  url: string | null | undefined,
+  widths: number[] = [400, 760, 1140],
+  sizes = '(max-width: 992px) 100vw, 760px',
+): PreloadAttrs | null {
+  if (!url) return null;
+  return {
+    href: at(url, widths[widths.length - 1]),
+    imagesrcset: srcset(url, widths),
+    imagesizes: sizes,
+  };
+}

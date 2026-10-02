@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Avatar from '../components/Avatar.astro';
+import { getTestimonials } from '../lib/strapi';
+
+const social = (await getTestimonials())
+  .filter((t) => t.variant === 'social')
+  .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
+---
+<BaseLayout
+  title="Love for Metabase"
+  description="What people say about Metabase."
+>
+  <div class="container-mb py-14">
+    <header class="mb-12 flex flex-col items-center gap-6 md:flex-row md:justify-between">
+      <h1 class="max-w-[640px] text-center text-3xl md:text-start">
+        <span class="text-[--color-brand]">The data is clear:</span> people everywhere love Metabase.
+      </h1>
+      <p class="rounded-full bg-[--color-brand-muted] px-5 py-3 text-sm font-bold text-[--color-brand-strong]">
+        Loving Metabase?
+      </p>
+    </header>
+
+    {/* CSS columns rather than a masonry library. The original loads Bootstrap,
+        Masonry.js and List.js from a CDN to lay out this one page
+        (SITE-ANALYSIS.md §6.8); this needs no JavaScript at all. */}
+    <div class="columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6 [&>*]:break-inside-avoid">
+      {social.map((t) => (
+        <figure class="rounded-xl border border-[--color-line] bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center gap-3">
+            <Avatar image={t.person?.avatar} size={36} class="h-9 w-9 bg-[--color-surface]" />
+            <figcaption class="leading-tight">
+              <span class="block text-sm font-bold text-[--color-ink-2]">{t.person?.name}</span>
+              <span class="block text-xs text-[--color-ink-3]">
+                {t.person?.company?.name ?? t.company?.name ?? t.person?.role}
+              </span>
+            </figcaption>
+          </div>
+          <blockquote class="text-[--color-ink-2]">{t.quote}</blockquote>
+        </figure>
+      ))}
+    </div>
+
+    <p class="mt-10 text-center text-sm text-[--color-ink-3]">
+      Quotes and the people quoted here are fictional sample content; see the repository README.
+    </p>
+  </div>
+</BaseLayout>

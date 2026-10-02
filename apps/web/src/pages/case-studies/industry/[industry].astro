@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudyListing from '../../../components/CaseStudyListing.astro';
+import { getCaseStudies, getIndustries, getUseCases } from '../../../lib/strapi';
+import { filterCases } from '../../../lib/filters';
+import { preloadFor } from '../../../lib/image';
+
+export async function getStaticPaths() {
+  const [cases, industries, useCases] = await Promise.all([
+    getCaseStudies(), getIndustries(), getUseCases(),
+  ]);
+  return industries.map((industry) => ({
+    params: { industry: industry.slug },
+    props: { industry, industries, useCases, cases: filterCases(cases, industry.slug) },
+  }));
+}
+
+const { industry, industries, useCases, cases } = Astro.props;
+---
+<BaseLayout
+  title={`${industry.name} customer stories | Metabase`}
+  description={industry.description ?? `How ${industry.name} teams use Metabase.`}
+  preload={preloadFor(cases[0]?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px')}
+>
+  <CaseStudyListing cases={cases} industries={industries} useCases={useCases} activeIndustry={industry.slug} />
+</BaseLayout>

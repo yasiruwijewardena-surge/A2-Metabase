@@ -13,16 +13,42 @@ const cache = new Map<string, unknown>();
 
 interface Paged<T> { data: T[]; meta: { pagination: { page: number; pageCount: number; total: number } } }
 
-async function fetchPage<T>(path: string, params: URLSearchParams): Promise<Paged<T>> {
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** 502/503/504 mean the CMS is restarting rather than wrong; those are worth retrying. */
+const TRANSIENT = new Set([408, 429, 500, 502, 503, 504]);
+
+async function fetchPage<T>(path: string, params: URLSearchParams, attempt = 1): Promise<Paged<T>> {
   const url = `${BASE}/api/${path}?${params}`;
-  const res = await fetch(url);
+  const MAX = 4;
+
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch (err) {
+    // Network-level failure: the container may be cycling.
+    if (attempt < MAX) {
+      await sleep(attempt * 2000);
+      return fetchPage<T>(path, params, attempt + 1);
+    }
+    throw new Error(`Strapi unreachable at ${BASE} after ${MAX} attempts\n  ${(err as Error).message}`);
+  }
+
   if (!res.ok) {
+    if (TRANSIENT.has(res.status) && attempt < MAX) {
+      // Railway cycles the service occasionally; a build should survive it
+      // rather than failing outright.
+      console.warn(`  Strapi ${res.status} for ${path}, retrying (${attempt}/${MAX - 1})`);
+      await sleep(attempt * 3000);
+      return fetchPage<T>(path, params, attempt + 1);
+    }
     throw new Error(
       `Strapi ${res.status} ${res.statusText} for ${path}\n` +
       `  ${url}\n` +
       `  Is STRAPI_URL correct and the content published?`
     );
   }
+
   return res.json() as Promise<Paged<T>>;
 }
 

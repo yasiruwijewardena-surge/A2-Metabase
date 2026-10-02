@@ -3,20 +3,23 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import type { Seo } from '../lib/types';
+import type { PreloadAttrs } from '../lib/image';
 
 interface Props {
   title: string;
   description?: string;
   seo?: Seo | null;
   ogImage?: string | null;
-  /** Absolute URL of the LCP image, preloaded so it is discovered in the first
-      HTML scan rather than after layout. The original does the opposite: its
-      blog LCP image is lazy-loaded. See SITE-ANALYSIS.md §2. */
-  preloadImage?: string | null;
+  /** LCP image descriptor, preloaded so it is discovered in the first HTML scan
+      rather than after layout. Built by `preloadFor` so imagesrcset and
+      imagesizes mirror the <img> exactly; without them the browser preloads one
+      candidate and downloads a different one. The original does the opposite
+      again — its blog LCP image is lazy-loaded. See SITE-ANALYSIS.md §2. */
+  preload?: PreloadAttrs | null;
   noIndex?: boolean;
 }
 
-const { title, description, seo, ogImage, preloadImage, noIndex } = Astro.props;
+const { title, description, seo, ogImage, preload, noIndex } = Astro.props;
 
 const metaTitle = seo?.metaTitle || title;
 const metaDesc = seo?.metaDescription || description || '';
@@ -51,7 +54,16 @@ const blocked = noIndex || seo?.noIndex;
       href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Merriweather:wght@400;700&display=swap"
     />
 
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+    {preload && (
+      <link
+        rel="preload"
+        as="image"
+        href={preload.href}
+        imagesrcset={preload.imagesrcset}
+        imagesizes={preload.imagesizes}
+        fetchpriority="high"
+      />
+    )}
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>

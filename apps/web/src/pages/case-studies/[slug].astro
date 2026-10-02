@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CldImage from '../../components/CldImage.astro';
+import RichText from '../../components/RichText.astro';
+import { getCaseStudies, getCaseStudy } from '../../lib/strapi';
+import { preloadFor } from '../../lib/image';
+
+export async function getStaticPaths() {
+  const cases = await getCaseStudies();
+  return cases.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const cs = await getCaseStudy(Astro.params.slug!);
+if (!cs) return Astro.redirect('/404');
+
+const facts = [
+  ['Industry', cs.company?.industry?.name],
+  ['Employees', cs.company?.employees],
+  ['Headquarters', cs.company?.headquarters],
+  ['Key use cases', cs.useCases.map((u) => u.name).join(', ')],
+].filter(([, v]) => Boolean(v)) as [string, string][];
+---
+<BaseLayout
+  title={`${cs.company?.name ?? cs.title} | Metabase customer story`}
+  description={cs.headline}
+  seo={cs.seo}
+  ogImage={cs.heroImage?.url}
+  preload={preloadFor(cs.heroImage?.url, [600, 1140, 1600], '(max-width: 1200px) 100vw, 1140px')}
+>
+  <article class="container-mb py-10">
+    <a href="/case-studies" class="text-sm font-bold text-[--color-brand-hover]">← Back to all case studies</a>
+
+    <h1 class="mt-6 mb-8 max-w-[900px] text-4xl leading-tight">{cs.title}</h1>
+
+    <CldImage
+      image={cs.heroImage}
+      priority
+      widths={[600, 1140, 1600]}
+      sizes="(max-width: 1200px) 100vw, 1140px"
+      ratio={16 / 7}
+      class="mb-10 aspect-[16/7] w-full rounded-xl object-cover"
+    />
+
+    <div class="grid gap-10 lg:grid-cols-[260px_1fr]">
+      <aside class="lg:sticky lg:top-24 lg:self-start">
+        <div class="rounded-xl border border-[--color-line] bg-[--color-brand-faint] p-5">
+          {cs.company?.description && (
+            <>
+              <h2 class="mb-1 text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">Company</h2>
+              <p class="mb-5 text-sm text-[--color-ink-2]">{cs.company.description}</p>
+            </>
+          )}
+          <dl class="space-y-4">
+            {facts.map(([label, value]) => (
+              <div>
+                <dt class="text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">{label}</dt>
+                <dd class="text-sm text-[--color-ink]">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {cs.metrics?.length > 0 && (
+          <div class="mt-5 rounded-xl border border-[--color-brand-border] bg-white p-5">
+            <h2 class="mb-4 text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">Results</h2>
+            <dl class="space-y-4">
+              {cs.metrics.map((m) => (
+                <div>
+                  <dd class="text-3xl font-black leading-none text-[--color-brand-hover]">{m.value}</dd>
+                  <dt class="mt-1 text-sm text-[--color-ink-2]">{m.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+      </aside>
+
+      <div class="max-w-[720px]">
+        <div class="mb-10 space-y-5">
+          {cs.challenge && (
+            <p class="text-[--color-ink-2]"><strong class="text-[--color-ink]">The Challenge:</strong> {cs.challenge}</p>
+          )}
+          {cs.solution && (
+            <p class="text-[--color-ink-2]"><strong class="text-[--color-ink]">The Solution:</strong> {cs.solution}</p>
+          )}
+          {cs.results && (
+            <p class="rounded-lg border-l-4 border-[--color-brand] bg-[--color-brand-faint] p-5 text-[--color-ink-2]">
+              <strong class="text-[--color-ink]">The Results:</strong> {cs.results}
+            </p>
+          )}
+        </div>
+
+        <RichText blocks={cs.body} />
+      </div>
+    </div>
+  </article>
+
+  {cs.relatedCaseStudies && cs.relatedCaseStudies.length > 0 && (
+    <section class="border-t border-[--color-line] bg-[--color-brand-faint] py-14">
+      <div class="container-mb">
+        <h2 class="mb-8 text-2xl">Explore more customer stories</h2>
+        <div class="grid gap-6 md:grid-cols-3">
+          {cs.relatedCaseStudies.slice(0, 3).map((r) => (
+            <article class="rounded-xl border border-[--color-line] bg-white p-5">
+              {r.company?.name && <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[--color-ink-3]">{r.company.name}</p>}
+              <h3 class="mb-3 text-base leading-snug">
+                <a href={`/case-studies/${r.slug}`} class="hover:text-[--color-brand-hover]">{r.title}</a>
+              </h3>
+              <a href={`/case-studies/${r.slug}`} class="text-sm font-bold text-[--color-brand-hover]">Read the case study →</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
