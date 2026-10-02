@@ -202,7 +202,7 @@
     border: 1px solid var(--color-line); border-radius: 12px;
     background: #fff; padding: 24px;
   }
-  .scale-card__title { margin: 28px 0 8px; font-size: 18px; line-height: 25px; font-weight: 700; }
+  .scale-card__title { margin: 28px 0 16px; font-size: 18px; line-height: 25px; font-weight: 700; }
   .scale-card__body { font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
   .scale-card__link { font-weight: 700; color: var(--color-brand-hover); }
   .scale-card__link:hover { text-decoration: underline; }
@@ -216,10 +216,12 @@
      default py-16/py-20 scale does. */
   .hero-band { background: #f9fafb; padding-top: 80px; padding-bottom: 64px; }
 
-  /* Illustration panels in the deploy cards: 400 tall, 16 radius, #f9fafb. */
+  /* Illustration panels in the deploy cards: 400 square, 16 radius, #f9fafb,
+     24px of padding — uniform across all three, as on the original. */
   .frontier-visual {
     display: grid; place-items: center; overflow: hidden;
-    height: 400px; margin-bottom: 24px; border-radius: 16px; background: #f9fafb;
+    height: 400px; padding: 24px; margin-bottom: 24px;
+    border-radius: 16px; background: #f9fafb;
   }
 
   /* The scales grid is capped narrower than the page container. */
@@ -242,7 +244,7 @@
 
 @layer components {
   /* Deploy card copy: 18/26, secondary ink. */
-  .frontier-text { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  .frontier-text { margin-bottom: 12px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
 }
 
 @layer components {
@@ -416,4 +418,74 @@
     .hero-tour { height: auto; padding: 20px 24px; }
     .hero-tour__media { display: none; }
   }
+}
+
+@layer components {
+  /*
+   * Section standfirst. The original carries an inline max-width of 840px that
+   * never binds: the paragraph sits in an 8-of-12 column inside a 10-of-12
+   * header, so it actually renders 692 wide. That is the number to match.
+   */
+  .section-standfirst {
+    max-width: 692px; margin-inline: auto;
+    font-size: 20px; line-height: 28px; color: var(--color-ink-2);
+  }
+}
+
+@layer components {
+  /*
+   * "Metabase scales as you grow". The original does not run this full bleed:
+   * it is a #fafbfe slab inset 60px from the viewport with a 12px radius and
+   * 80/72 of padding. The air above it comes from the Embedded Analytics
+   * section's 168px bottom margin.
+   */
+  .scales-section { padding-top: 168px; padding-inline: 60px; }
+  .scales-slab {
+    max-width: 1320px; margin-inline: auto; padding: 80px 72px;
+    border-radius: 12px; background: #fafbfe;
+  }
+  .scales-title {
+    max-width: 640px; margin: 0 auto 24px;
+    font-size: 36px; line-height: 48px; text-align: center;
+  }
+  .scales-standfirst {
+    margin: 0 auto 16px; font-size: 18px; line-height: 32px;
+    text-align: center; color: var(--color-ink-2);
+  }
+  .scale-grid { margin-top: 48px; }
+  /* The card hairline is the faint brand blue, not the neutral line. */
+  .scale-card { border-color: var(--color-brand-muted); }
+
+  @media (max-width: 991px) {
+    .scales-section { padding-top: 96px; padding-inline: 24px; }
+    .scales-slab { padding: 48px 24px; }
+  }
+}
+
+@layer components {
+  /*
+   * Final CTA. Measured off the original: a hairline rule, 56px of padding
+   * above and none below, title at 36/39.6 with a 16px drop, a 600px
+   * standfirst and the reassurance row 20px under the buttons.
+   */
+  .final-cta-section { background: #fff; }
+  .final-cta {
+    max-width: 1320px; margin-inline: auto; padding: 56px 28px 0;
+    border-top: 1px solid var(--color-line); text-align: center;
+  }
+  .final-cta-title { margin-bottom: 16px; line-height: 39.6px; }
+  .final-cta-sub {
+    max-width: 600px; margin: 0 auto 28px;
+    font-size: 20px; line-height: 28px; color: var(--color-ink-2);
+  }
+  .final-cta-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+  /* The original's #8d93a5 is 2.6:1 at 14px. */
+  .final-cta-points {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px;
+    margin-top: 20px; font-size: 14px; font-weight: 500; color: var(--color-ink-2);
+  }
+  .final-cta-points li { display: flex; align-items: center; gap: 7px; }
+  .final-cta-point-icon { display: flex; align-items: center; width: 18px; height: 18px; }
+  .final-cta-point-icon svg { width: 100%; height: 100%; }
+  .final-cta-point-icon svg[viewBox="0 0 14 14"] { width: 14px; height: 14px; margin-inline: auto; }
 }

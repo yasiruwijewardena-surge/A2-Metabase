@@ -155,13 +155,13 @@ const biPoints = [
           the original is. */}
       <header class="mb-14 text-center">
         <h2 class="mb-6">Deploy in minutes, scale infinitely</h2>
-        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
+        <p class="section-standfirst">
           Start simple. Keep your data secure and compliant as you grow. From pre-seed to post-IPO.
         </p>
       </header>
       <div class="grid gap-8 md:grid-cols-3">
         <div>
-          <div class="frontier-visual px-2">
+          <div class="frontier-visual">
             <CopyCommand command="docker run -d -p 3000:3000 metabase/metabase" />
           </div>
           <h3 class="mb-2">Always open source</h3>
@@ -171,7 +171,7 @@ const biPoints = [
           </p>
         </div>
         <div>
-          <div class="frontier-visual py-6">
+          <div class="frontier-visual">
             <DataSourceMarquee />
           </div>
           <h3 class="mb-2">Connect your data and your tools</h3>
@@ -181,8 +181,8 @@ const biPoints = [
           </p>
         </div>
         <div>
-          <div class="frontier-visual p-6">
-            <div class="grid grid-cols-2 gap-5">
+          <div class="frontier-visual">
+            <div class="grid grid-cols-2 gap-2">
               {[
                 ['soc-2-type-1-badge', 'SOC 2 Type 1'],
                 ['soc-2-type-2-badge', 'SOC 2 Type 2'],
@@ -190,8 +190,8 @@ const biPoints = [
                 ['ccpa-certificate-badge', 'CCPA Certificate'],
               ].map(([file, label]) => (
                 <a href="/security" class="badge-link" aria-label={label}>
-                  <img src={`/images/home/${file}.png`} alt={label} width="84" height="84"
-                       class="h-[84px] w-[84px] object-contain" loading="lazy" decoding="async" />
+                  <img src={`/images/home/${file}.png`} alt={label} width="93" height="93"
+                       class="h-[93px] w-[93px] object-contain" loading="lazy" decoding="async" />
                 </a>
               ))}
             </div>
@@ -215,7 +215,7 @@ const biPoints = [
           <EyebrowArrow />
         </a>
         <h2 class="mb-6">Analytics your team will use and trust</h2>
-        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
+        <p class="section-standfirst">
           Teams can explore data on their own, guided to correct answers with a trustworthy
           foundation. Your data team can curate a governed semantic layer of canonical tables
           and metrics in Data Studio.
@@ -290,7 +290,7 @@ const biPoints = [
         <h2 class="mx-auto mb-6 max-w-[640px]">
           Put production-grade analytics into your app without drama
         </h2>
-        <p class="mx-auto max-w-[840px] text-[20px] leading-[28px] text-(--color-ink-2)">
+        <p class="section-standfirst">
           Embed dashboards, visualizations, and self-serve reporting in your SaaS app.
           Multi-tenant, customizable analytics components, with plumbing and permissions built in.
         </p>
@@ -311,15 +311,15 @@ const biPoints = [
   </section>
 
   <!-- Metabase scales as you grow -->
-  <section class="pt-[120px] pb-[120px]">
-    <div class="container-mb">
-      <header class="mx-auto mb-14 max-w-[700px] text-center">
-        <h2 class="mb-4 leading-[48px]">Metabase scales as you grow</h2>
-        <p class="text-[18px] leading-[32px] text-(--color-ink-2)">
-          Advanced features for managing lots of users and compliance. Flexible even as your
-          tooling or workflow evolves.
-        </p>
-      </header>
+  {/* Not a plain section on the original but a tinted slab inset 60px from
+      the viewport, with its own 80/72 padding and a 12px radius. */}
+  <section class="scales-section">
+    <div class="scales-slab">
+      <h2 class="scales-title">Metabase scales as you grow</h2>
+      <p class="scales-standfirst">
+        Advanced features for managing lots of users and compliance. Flexible even as your
+        tooling or workflow evolves.
+      </p>
 
       {/* Cards, not bare text: 24px padding, 12px radius, white on a 1px
           border, in a 3-up grid with a 20px gutter. */}
@@ -371,20 +371,45 @@ const biPoints = [
   )}
 
   <!-- Final CTA -->
-  <section class="bg-white py-[100px] text-center">
-    <div class="container-mb">
-      <h2 class="mb-6">Ready to get started?</h2>
-      <p class="mx-auto mb-8 max-w-[600px] text-[20px] leading-[28px] text-(--color-ink-2)">
+  {/* The original has no bottom padding here and rules the top off with a
+      hairline; the air below comes from the footer. */}
+  <section class="final-cta-section">
+    <div class="final-cta">
+      <h2 class="final-cta-title">Ready to get started?</h2>
+      <p class="final-cta-sub">
         We could keep typing, or you could just try it. AI on all plans. 100k+ teams already love it.
       </p>
-      <div class="flex flex-wrap justify-center gap-3">
+      <div class="final-cta-actions">
         <a href="/start" class="btn-primary">Try Metabase Cloud free</a>
         <a href="/open-source" class="btn-secondary">Deploy Metabase Open Source</a>
       </div>
-      <ul class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-(--color-ink-3)">
-        <li class="flex items-center gap-1.5"><span aria-hidden="true">✓</span> Free 14-day trial</li>
-        <li class="flex items-center gap-1.5"><span aria-hidden="true">◷</span> Super-fast setup</li>
-        <li class="flex items-center gap-1.5"><span aria-hidden="true">◆</span> Open source</li>
+      <ul class="final-cta-points">
+        <li>
+          <span class="final-cta-point-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M4.75 12C4.75 7.99594 7.99594 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9.75 12.75L10.1837 13.6744C10.5275 14.407 11.5536 14.4492 11.9564 13.7473L14.25 9.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          Free 14-day trial
+        </li>
+        <li>
+          <span class="final-cta-point-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path stroke="currentColor" stroke-width="1.5" d="M12 19.25a7.25 7.25 0 1 0 0-14.5 7.25 7.25 0 0 0 0 14.5Z" />
+              <path stroke="currentColor" stroke-width="1.5" d="M12 8v4l2 2" />
+            </svg>
+          </span>
+          Super-fast setup
+        </li>
+        <li>
+          <span class="final-cta-point-icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+              <path d="M5.91993 10.1186C4.11523 9.8953 2.84374 8.56942 2.84374 6.85274C2.84374 6.15491 3.08984 5.40124 3.5 4.8988C3.32227 4.43823 3.34961 3.46127 3.55469 3.05652C4.10156 2.98674 4.83984 3.27982 5.27734 3.68457C5.79687 3.51709 6.34374 3.43335 7.01367 3.43335C7.6836 3.43335 8.23047 3.51709 8.72266 3.67061C9.14649 3.27982 9.89844 2.98674 10.4453 3.05652C10.6367 3.43335 10.6641 4.41032 10.4863 4.88485C10.9238 5.4152 11.1562 6.127 11.1562 6.85274C11.1562 8.56942 9.88477 9.86739 8.05273 10.1047C8.51757 10.4117 8.83203 11.0816 8.83203 11.8493V13.3007C8.83203 13.7194 9.17383 13.9567 9.58399 13.7892C12.0586 12.8262 14 10.3 14 7.17375C14 3.224 10.8555 0 6.98633 0C3.11719 0 0 3.224 0 7.17375C0 10.2721 1.92773 12.8402 4.52539 13.8032C4.89453 13.9427 5.25 13.6915 5.25 13.3147V12.1982C5.0586 12.2819 4.8125 12.3377 4.59374 12.3377C3.6914 12.3377 3.1582 11.8353 2.77539 10.9002C2.625 10.5234 2.46094 10.3 2.14649 10.2582C1.98243 10.2442 1.92773 10.1744 1.92773 10.0907C1.92773 9.92321 2.20117 9.79761 2.47461 9.79761C2.8711 9.79761 3.21289 10.0488 3.56836 10.5652C3.8418 10.97 4.1289 11.1514 4.4707 11.1514C4.8125 11.1514 5.03124 11.0258 5.3457 10.7048C5.57813 10.4675 5.75586 10.2582 5.91993 10.1186Z" />
+            </svg>
+          </span>
+          Open source
+        </li>
       </ul>
     </div>
   </section>

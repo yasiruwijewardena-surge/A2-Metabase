@@ -23,7 +23,10 @@ const paths: Record<string, string[]> = {
 };
 const d = paths[name] ?? paths.grid;
 ---
-<svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+{/* The original declares 42x42 but forces the box to 24 high in CSS, with no
+    viewBox, so the artwork draws at its natural 24 and sits left in a 42-wide
+    slot. Same result, stated directly. */}
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
   {d.map((p) => (
     <path d={p} stroke="var(--color-brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
   ))}
