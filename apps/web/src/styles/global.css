@@ -797,3 +797,42 @@
     .plan:last-child { border-bottom: 0; }
   }
 }
+
+@layer components {
+  /*
+   * Nav row. The original lays it out as logo | menu | actions, where the menu
+   * column takes the remaining width and centres its items in it — which is
+   * what places the first link at x=464 on a 1512 viewport rather than hard up
+   * against the wordmark.
+   */
+  /*
+   * The row is 1320 wide with 8px of inline padding, which puts its edges at
+   * 104 and 1408 on a 1512 viewport — the original's figures. Each column then
+   * carries 12px of its own padding.
+   *
+   * The logo column is a fixed 218 rather than its content width. That is the
+   * share the original's grid gives it, and it is what decides where the menu
+   * ends up: the menu centres in the space between the logo column and the
+   * actions, so a logo column sized to its content would pull every link ~33px
+   * left of the original.
+   */
+  .nav-row {
+    display: flex; align-items: center; height: 74px;
+    max-width: 1320px; margin-inline: auto; padding-inline: 8px;
+  }
+  .nav-logo { display: flex; flex: 0 0 218px; align-items: center; gap: 7px; padding-inline: 12px; color: var(--color-ink); }
+  .nav-logo-word { font-size: 20px; font-weight: 900; letter-spacing: -0.01em; }
+  .nav-menu { flex: 1; align-items: center; justify-content: center; gap: 10px; padding-inline: 12px; }
+  .nav-actions { display: flex; flex: none; align-items: center; justify-content: flex-end; gap: 12px; padding-inline: 12px; }
+  /* The stars block carries 8px of its own inline padding and sits 16px from
+     the buttons, not 12. Without it the actions column is 19px narrow, and
+     since the menu centres in what the column leaves, every link drifts 10px
+     right of the original. */
+  .nav-stars { padding-inline: 8px; margin-right: 4px; }
+
+  @media (max-width: 1199px) {
+    .nav-row { padding-inline: 20px; }
+    .nav-logo { flex: none; padding-inline: 0; }
+    .nav-actions { margin-left: auto; padding-inline: 0; }
+  }
+}
