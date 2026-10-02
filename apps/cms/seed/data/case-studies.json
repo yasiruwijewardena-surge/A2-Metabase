@@ -98,7 +98,7 @@
     "title": "How Metabase helps every team at Bdeo get insights from their data.",
     "slug": "bdeo",
     "headline": "Bdeo develops Visual Intelligence technology for the insurance industry, both motor and home insurance, for policy underwriting and claims management processes.",
-    "company": "How Metabase",
+    "company": "Bdeo",
     "useCases": [
       "Business Intelligence"
     ],
@@ -114,7 +114,7 @@
     "title": "Billing company embeds Metabase in their SaaS platform to give people easy-to-use analytics.",
     "slug": "billing-saas",
     "headline": "Billing platform transforms the way SaaS companies operate, offering an all-in-one billing and RevOps solution that seamlessly manages billing, quoting, self-service, tenant management, advanced analytics, and revenue recognition with effortless precision.",
-    "company": "Billing",
+    "company": "Billing SaaS",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -130,7 +130,7 @@
     "title": "How CaseWhen helped Buena to transform their data analysis with Metabase.",
     "slug": "buena",
     "headline": "Buena is a modern, digital platform for managing apartments (viewings, payments, maintenance) for both landlords and tenants.",
-    "company": "How CaseWhen",
+    "company": "Buena",
     "useCases": [
       "Business Intelligence"
     ],
@@ -162,7 +162,7 @@
     "title": "Metabase helps Cetec ERP deliver white-labeled, enterprise-grade BI to manufacturers.",
     "slug": "cetec-erp",
     "headline": "Cetec ERP provides a full suite ERP software for manufacturers and distributors that is practical, intuitive, robust, and flexible to the needs of any manufacturing company.",
-    "company": "Metabase",
+    "company": "Cetec ERP",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -178,7 +178,7 @@
     "title": "How Chromatic replaced ad-hoc SQL with shared, self-serve analytics",
     "slug": "chromatic",
     "headline": "Chromatic replaced Google Data Studio with Metabase to give the whole company a unified, intuitive workspace for product and business analytics\u2014and is now embedding Metabase for customer-facing insights.",
-    "company": "How Chromatic",
+    "company": "Chromatic",
     "useCases": [
       "Business Intelligence",
       "Embedded Analytics"
@@ -259,7 +259,7 @@
     "title": "How Faros.ai embeds Metabase into their multi-tenant SaaS product.",
     "slug": "faros",
     "headline": "Faros AI is an engineering operations platform that brings all engineering data in one place to give engineering leaders a single-pane view of their entire software development lifecycle.",
-    "company": "How Faros.ai",
+    "company": "Faros.ai",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -382,7 +382,7 @@
     "title": "How KLog uses Metabase to deliver shipping reports to their clients.",
     "slug": "klog",
     "headline": "KLog provides freight-forwarding services and a digital platform for international commerce administration. KLog.co is a bootstrapped business, and they\u2019ve already served over 3,000 clients to yield $100M in Revenue.",
-    "company": "How KLog",
+    "company": "KLog",
     "useCases": [
       "Business Intelligence",
       "Embedded Analytics"
@@ -399,7 +399,7 @@
     "title": "Kula and Standard Co team up to empower female entrepreneurs with Metabase.",
     "slug": "kula-project",
     "headline": "Kula Project is a nonprofit aiming to eradicate poverty by developing women entrepreneurs in Rwanda.",
-    "company": "Kula",
+    "company": "Kula Project",
     "useCases": [
       "Business Intelligence"
     ],
@@ -447,7 +447,7 @@
     "title": "How Marketfuel got to proof of concept on their in-app reporting in under 30 days",
     "slug": "marketfuel",
     "headline": "Marketfuel is an all-in-one eCommerce platform designed for promotional marketing agencies to create their own online store within a single afternoon. The platform enables agencies to manage inventory, order fulfillment, label printing, and more through a single application.",
-    "company": "How Marketfuel",
+    "company": "Marketfuel",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -489,7 +489,7 @@
     "title": "Metabase helps myAgro enable true self-service analytics.",
     "slug": "myagro",
     "headline": "myAgro is a non-profit agritech social enterprise based in West Africa. myAgro has developed a mobile savings model that allows farmers to invest their own funds in high-quality seed, fertilizer, and agricultural training to increase their harvest and income by 50-100%.",
-    "company": "Myagro",
+    "company": "myAgro",
     "useCases": [
       "Business Intelligence"
     ],
@@ -521,7 +521,7 @@
     "title": "With Metabase, Onecom delivers real-time, embedded analytics to thousands of customers - without relying on engineering.",
     "slug": "onecom",
     "headline": "Onecom is a managed service provider delivering telecoms, cloud, and data services to enterprise customers across the UK. They offer an integrated customer portal where users can access everything from billing to performance metrics. To support that experience, Onecom needed a reliable, flexible\u2026",
-    "company": "With Metabase",
+    "company": "Onecom",
     "useCases": [
       "Business Intelligence",
       "Embedded Analytics"
@@ -554,7 +554,7 @@
     "title": "How Owlery cut time iterating on Embedded Analytics from 2 Days of engineering to 2 hours in CS",
     "slug": "owlery",
     "headline": "Founded in 2021, Owlery helps manufacturers and brands optimize their supply chain operations. Their platform integrates with customers' supply chain partners and ERPs to create cohesive workflows that save time, reduce costs, and increase efficiency.",
-    "company": "How Owlery",
+    "company": "Owlery",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -618,7 +618,7 @@
     "title": "How Sincera uses Metabase embedding to provide their customers with digital advertising and media insights.",
     "slug": "sincera",
     "headline": "Sincera is a modern verification service that helps companies accelerate their competitive velocity. It provides data and infrastructure to answer novel questions in media and advertising with hard, accurate data.",
-    "company": "How Sincera",
+    "company": "Sincera",
     "useCases": [
       "Embedded Analytics"
     ],
@@ -682,7 +682,7 @@
     "title": "Treebo Hotels makes metrics and KPIs a part of their daily routine with Metabase.",
     "slug": "treebo",
     "headline": "Treebo Hotels is an Indian budget hotel chain that operates on franchising. As of January 2020, Treebo Hotel has over 600 hotels in 113 cities in India.",
-    "company": "Treebo Hotels",
+    "company": "Treebo",
     "useCases": [
       "Business Intelligence"
     ],
@@ -730,7 +730,7 @@
     "title": "Metabase helps Yellow Card scale self-serve analytics across a 200+ person fintech team.",
     "slug": "yellowcard",
     "headline": "Yellow Card is the largest and first licensed Stablecoin payments orchestrator, empowering businesses across emerging markets with international payments, treasury management, and USD liquidity",
-    "company": "Yellowcard",
+    "company": "Yellow Card",
     "useCases": [
       "Business Intelligence"
     ],
