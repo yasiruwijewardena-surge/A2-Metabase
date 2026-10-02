@@ -235,6 +235,49 @@ on a machine where the toolchain is known good.
 
 ---
 
+## Step 9 — The Astro front end
+
+A second Railway service from the same repository.
+
+1. **New → GitHub Repository**, pick the same repo.
+2. **Settings → Source → Root Directory**: `apps/web`
+3. **Settings → Networking → Generate Domain**
+4. **Variables**:
+
+| Variable | Value |
+|---|---|
+| `STRAPI_URL` | `https://<your cms domain>` — the **public** URL |
+| `SITE_URL` | `https://${{RAILWAY_PUBLIC_DOMAIN}}` |
+
+`apps/web/railway.json` supplies the build and start commands.
+
+### Why the public Strapi URL, not the private one
+
+Astro reads `STRAPI_URL` during `astro build`, and Railway's private network is
+only available at runtime — not in the build container. Pointing it at
+`*.railway.internal` fails with `fetch failed`. Leaving it unset fails the same
+way, because the client falls back to `localhost:1337`:
+
+```
+Strapi unreachable at http://localhost:1337 after 4 attempts
+```
+
+The traffic is a handful of API calls per build, so the egress is negligible.
+
+### Serving the build
+
+A static Astro build has no server, so `apps/web/server.mjs` provides one. It
+exists rather than a one-line CLI because the cache headers matter: everything
+under `/_astro` is fingerprinted and served `immutable` for a year, while HTML
+must revalidate so a deploy actually reaches people.
+
+### Then point CORS back at it
+
+On the **CMS** service, set `FRONTEND_URL` to the Astro domain so browser
+requests from the site are allowed.
+
+---
+
 ## Step 8 — Verify
 
 ```bash
