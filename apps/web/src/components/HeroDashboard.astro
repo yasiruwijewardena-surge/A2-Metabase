@@ -1,0 +1,176 @@
+---
+/**
+ * The hero's product panel: a Metabase dashboard beside a Metabot chat.
+ *
+ * The original draws its charts with client-side JavaScript. This renders the
+ * same composition as static SVG so the page still ships no JS at all, and the
+ * panel costs nothing on the critical path.
+ */
+
+// Accounts added per year, by source — stacked, read from the original.
+const SOURCES = [
+  { name: 'Organic',  color: '#6b5fbf' },
+  { name: 'Facebook', color: '#4a9be8' },
+  { name: 'Google',   color: '#ec7b72' },
+  { name: 'Invite',   color: '#e8905c' },
+  { name: 'LinkedIn', color: '#f0d04e' },
+];
+const YEARS = [
+  { year: 2021, v: [118, 42, 58, 34, 52] },
+  { year: 2022, v: [ 88, 30, 42, 26, 44] },
+  { year: 2023, v: [ 96, 34, 48, 28, 50] },
+  { year: 2024, v: [ 78, 28, 38, 24, 42] },
+  { year: 2025, v: [104, 32, 50, 30, 56] },
+  { year: 2026, v: [ 62, 18, 30, 20, 32] },
+];
+
+const AX_W = 720, AX_H = 210, PAD_L = 42, PAD_B = 26;
+const maxTotal = Math.max(...YEARS.map((y) => y.v.reduce((a, b) => a + b, 0)));
+const scale = (v: number) => ((AX_H - PAD_B) * v) / 400;
+const bandW = (AX_W - PAD_L) / YEARS.length;
+const barW = bandW * 0.56;
+
+// Payments received per quarter by plan — a denser series, as on the original.
+const PLANS = [
+  { name: 'Basic',    color: '#9cc9f0' },
+  { name: 'Premium',  color: '#ec7b72' },
+  { name: 'Business', color: '#2d6fbf' },
+];
+const quarters = Array.from({ length: 48 }, (_, i) => {
+  const cycle = i % 8;
+  const growth = 1 + Math.floor(i / 8) * 0.22;
+  const basic = (14 + cycle * 11) * growth;
+  return { basic, premium: basic * 0.06, business: basic * (cycle > 5 ? 0.62 : 0.3) };
+});
+const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
+---
+<div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white shadow-[0_1px_3px_rgba(0,0,0,.04)]">
+  <div class="grid lg:grid-cols-[1fr_380px]">
+    <!-- Dashboard -->
+    <div class="bg-(--color-brand-faint) p-5">
+      <div class="mb-4 grid gap-4 sm:grid-cols-[minmax(0,260px)_1fr]">
+        <!-- Big number -->
+        <section class="rounded-xl border border-(--color-line) bg-white p-5">
+          <h3 class="mb-5 text-base font-bold text-(--color-brand-hover)">Total Accounts</h3>
+          <p class="text-center text-[3.25rem] leading-none font-black tracking-tight">1,228</p>
+          <p class="mt-3 text-center text-sm font-bold text-(--color-ink-2)">Jun 2026</p>
+          <p class="mt-1 text-center text-sm text-(--color-ink-3)">
+            <span class="font-bold text-(--color-ok-strong)">↑ 0.9%</span> vs. previous month: 1,217
+          </p>
+        </section>
+
+        <!-- Stacked bars -->
+        <section class="rounded-xl border border-(--color-line) bg-white p-5">
+          <h3 class="mb-3 text-base font-bold text-(--color-brand-hover)">Accounts added per year, by source</h3>
+          <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
+            {SOURCES.map((s) => (
+              <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
+                <span class="h-2.5 w-2.5 rounded-full" style={`background:${s.color}`}></span>{s.name}
+              </li>
+            ))}
+          </ul>
+          <svg viewBox={`0 0 ${AX_W} ${AX_H}`} class="w-full" role="img"
+               aria-label="Stacked bar chart of accounts added per year by source">
+            {[0, 100, 200, 300, 400].map((t) => {
+              const y = AX_H - PAD_B - scale(t);
+              return (
+                <>
+                  <line x1={PAD_L} x2={AX_W} y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" />
+                  <text x={PAD_L - 8} y={y + 4} text-anchor="end" font-size="12" fill="#8d93a5">{t}</text>
+                </>
+              );
+            })}
+            {YEARS.map((row, i) => {
+              let acc = 0;
+              const x = PAD_L + i * bandW + (bandW - barW) / 2;
+              return (
+                <>
+                  {row.v.map((v, si) => {
+                    const h = scale(v);
+                    const y = AX_H - PAD_B - scale(acc) - h;
+                    acc += v;
+                    return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} />;
+                  })}
+                  <text x={x + barW / 2} y={AX_H - 8} text-anchor="middle" font-size="12" fill="#8d93a5">{row.year}</text>
+                </>
+              );
+            })}
+          </svg>
+        </section>
+      </div>
+
+      <!-- Dense quarterly series -->
+      <section class="rounded-xl border border-(--color-line) bg-white p-5">
+        <h3 class="mb-3 text-base font-bold text-(--color-brand-hover)">Payments received per quarter by plan</h3>
+        <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
+          {PLANS.map((p) => (
+            <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
+              <span class="h-2.5 w-2.5 rounded-full" style={`background:${p.color}`}></span>{p.name}
+            </li>
+          ))}
+        </ul>
+        <svg viewBox="0 0 960 170" class="w-full" role="img"
+             aria-label="Stacked bar chart of payments received per quarter by plan">
+          {[0, 1, 2, 3, 4, 5].map((t) => {
+            const y = 150 - (t / 5) * 140;
+            return <line x1="56" x2="960" y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" />;
+          })}
+          {['250,000','200,000','150,000','100,000','50,000','0'].map((lbl, i) => (
+            <text x="48" y={150 - ((5 - i) / 5) * 140 + 4} text-anchor="end" font-size="11" fill="#8d93a5">{lbl}</text>
+          ))}
+          {quarters.map((q, i) => {
+            const w = (960 - 56) / quarters.length;
+            const x = 56 + i * w;
+            const bw = w * 0.72;
+            const hb = (q.basic / maxQ) * 140;
+            const hp = (q.premium / maxQ) * 140;
+            const hu = (q.business / maxQ) * 140;
+            return (
+              <>
+                <rect x={x} y={150 - hu} width={bw} height={hu} fill="#2d6fbf" />
+                <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#ec7b72" />
+                <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#9cc9f0" />
+              </>
+            );
+          })}
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <text x={56 + i * 150 + 30} y="166" text-anchor="middle" font-size="11" fill="#8d93a5">
+              Jan {2021 + i}
+            </text>
+          ))}
+        </svg>
+      </section>
+    </div>
+
+    <!-- Metabot -->
+    <aside class="border-t border-(--color-line) bg-white p-5 lg:border-l lg:border-t-0">
+      <h3 class="mb-5 text-base font-bold">Chat with Metabot</h3>
+
+      <p class="ms-auto mb-6 w-fit rounded-xl border border-(--color-line) px-4 py-3 text-sm text-(--color-ink)">
+        Which source added the most accounts in 2026?
+      </p>
+
+      <p class="mb-4 text-sm leading-relaxed text-(--color-ink-2)">
+        <b class="font-bold text-(--color-ink)">Organic added the most in 2026: 62 accounts,</b>{' '}
+        ahead of Google at 30. LinkedIn, Invite, and Facebook make up the rest.
+      </p>
+
+      <div class="mb-4 rounded-lg border border-(--color-line)">
+        <p class="border-b border-(--color-line) px-3 py-2 text-sm font-bold text-(--color-ink-2)">Data Sources</p>
+        <div class="px-3 py-2">
+          <p class="text-sm font-bold text-(--color-ink)">Accounts</p>
+          <p class="text-xs text-(--color-ink-3)">Data library</p>
+        </div>
+      </div>
+
+      <p class="mb-4 text-sm leading-relaxed text-(--color-ink-2)">
+        The bigger signal is that 2026 is tracking below recent years across every source, so even
+        the top channel is down on its usual pace.
+      </p>
+
+      <p class="rounded-full border border-(--color-line) px-4 py-3 text-sm text-(--color-ink-3)">
+        Ask about your data
+      </p>
+    </aside>
+  </div>
+</div>
