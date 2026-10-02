@@ -1,0 +1,117 @@
+[
+  {
+    "name": "Amazon Athena",
+    "href": "/data-sources/amazon-athena",
+    "img": "/images/datasources/aws-athena.webp"
+  },
+  {
+    "name": "Amazon Redshift",
+    "href": "/data-sources/amazon-redshift",
+    "img": "/images/datasources/amazon-redshift.webp"
+  },
+  {
+    "name": "Apache Pinot",
+    "href": "/data-sources/apache-pinot",
+    "img": "/images/datasources/apache-pinot-logo.jpeg"
+  },
+  {
+    "name": "BigQuery",
+    "href": "/data-sources/bigquery",
+    "img": "/images/datasources/big-query.webp"
+  },
+  {
+    "name": "ClickHouse",
+    "href": "/data-sources/clickhouse",
+    "img": "/images/datasources/clickhouse.png"
+  },
+  {
+    "name": "Cube",
+    "href": "/data-sources/cube-js",
+    "img": "/images/datasources/cube-js.webp"
+  },
+  {
+    "name": "Databricks",
+    "href": "/data-sources/databricks",
+    "img": "/images/datasources/databricks.webp"
+  },
+  {
+    "name": "Dremio",
+    "href": "/data-sources/dremio",
+    "img": "/images/datasources/dremio.webp"
+  },
+  {
+    "name": "Druid",
+    "href": "/data-sources/druid",
+    "img": "/images/datasources/druid.webp"
+  },
+  {
+    "name": "DuckDB",
+    "href": "/data-sources/duckdb",
+    "img": "/images/datasources/duckdb.png"
+  },
+  {
+    "name": "Exasol",
+    "href": "/data-sources/exasol",
+    "img": "/images/datasources/exasol.webp"
+  },
+  {
+    "name": "Firebolt",
+    "href": "/data-sources/firebolt",
+    "img": "/images/datasources/firebolt.png"
+  },
+  {
+    "name": "Hydra",
+    "href": "/data-sources/hydra",
+    "img": "/images/datasources/hydra.webp"
+  },
+  {
+    "name": "MariaDB",
+    "href": "/data-sources/mariadb",
+    "img": "/images/datasources/mariadb-circle.webp"
+  },
+  {
+    "name": "Materialize",
+    "href": "/data-sources/materialize",
+    "img": "/images/datasources/materialize-logo.webp"
+  },
+  {
+    "name": "Microsoft SQL Server",
+    "href": "/data-sources/microsoft-sql-server",
+    "img": "/images/datasources/microsoft-server.webp"
+  },
+  {
+    "name": "MongoDB",
+    "href": "/data-sources/mongo-db",
+    "img": "/images/datasources/mongo-db.webp"
+  },
+  {
+    "name": "MySQL",
+    "href": "/data-sources/mysql",
+    "img": "/images/datasources/mysql.webp"
+  },
+  {
+    "name": "Ocient",
+    "href": "/data-sources/ocient",
+    "img": "/images/datasources/ocient.webp"
+  },
+  {
+    "name": "Oracle",
+    "href": "/data-sources/oracle",
+    "img": "/images/datasources/oracle.webp"
+  },
+  {
+    "name": "PostgreSQL",
+    "href": "/data-sources/postgresql",
+    "img": "/images/datasources/post-gre.webp"
+  },
+  {
+    "name": "Presto",
+    "href": "/data-sources/presto",
+    "img": "/images/datasources/presto.webp"
+  },
+  {
+    "name": "Snowflake",
+    "href": "/data-sources/snowflake",
+    "img": "/images/datasources/snowflake.webp"
+  }
+]

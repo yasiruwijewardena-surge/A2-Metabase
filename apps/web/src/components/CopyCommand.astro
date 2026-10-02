@@ -1,0 +1,80 @@
+---
+/**
+ * The install command, copyable.
+ *
+ * The original wraps it in a tooltip that says "Copy to clipboard" and copies
+ * on click. Replicated here including the keyboard path, which the original
+ * supports via role="button" and tabindex.
+ */
+interface Props { command: string }
+const { command } = Astro.props;
+---
+<div class="copy-cmd">
+  <button type="button" class="copy-cmd__btn" data-copy={command} aria-label={`Copy "${command}" to clipboard`}>
+    <span class="copy-cmd__tip" aria-hidden="true">Copy to clipboard</span>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" />
+      <path d="M10.5 3.5v-1a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h1" />
+    </svg>
+    <code class="copy-cmd__text">{command}</code>
+  </button>
+  <span class="sr-only" role="status" data-copy-status></span>
+</div>
+
+<style>
+  /* The command stays on one line, as on the original, and is allowed to run
+     wider than the card's padding rather than wrapping. */
+  .copy-cmd { display: grid; place-items: center; width: 100%; }
+  .copy-cmd__btn {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 0.625rem;
+    border: 1px solid var(--color-line); border-radius: 0.5rem;
+    background: #fff; padding: 0.75rem 1rem;
+    font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-ink);
+    cursor: pointer; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+    white-space: nowrap; max-width: none;
+  }
+  .copy-cmd__btn svg { color: var(--color-brand); flex-shrink: 0; }
+  .copy-cmd__text { white-space: nowrap; }
+  .copy-cmd__tip {
+    position: absolute; bottom: calc(100% + 10px); left: 50%; translate: -50% 0;
+    white-space: nowrap; border-radius: 0.375rem;
+    background: var(--color-ink); color: #fff;
+    padding: 0.4rem 0.7rem; font-family: var(--font-sans); font-size: 0.8125rem;
+    opacity: 0; transition: opacity 120ms; pointer-events: none;
+  }
+  .copy-cmd__tip::after {
+    content: ''; position: absolute; top: 100%; left: 50%; translate: -50% 0;
+    border: 5px solid transparent; border-top-color: var(--color-ink);
+  }
+  .copy-cmd__btn:hover .copy-cmd__tip,
+  .copy-cmd__btn:focus-visible .copy-cmd__tip { opacity: 1; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const tip = btn.querySelector<HTMLElement>('.copy-cmd__tip');
+    const status = btn.parentElement?.querySelector<HTMLElement>('[data-copy-status]');
+    const label = tip?.textContent ?? '';
+
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy!;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // Clipboard API needs a secure context; fall back to a selection copy.
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } finally { ta.remove(); }
+      }
+      if (tip) tip.textContent = 'Copied';
+      if (status) status.textContent = 'Copied to clipboard';
+      setTimeout(() => {
+        if (tip) tip.textContent = label;
+        if (status) status.textContent = '';
+      }, 1600);
+    });
+  });
+</script>

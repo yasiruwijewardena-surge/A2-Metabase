@@ -1,0 +1,83 @@
+---
+/**
+ * The scrolling wall of supported data sources.
+ *
+ * Each logo is a real link to its data-source page, as on the original, and
+ * hovering one announces its name through an aria-live region. Two rows run in
+ * opposite directions. The animation is pure CSS — duplicating the row once and
+ * translating by -50% gives a seamless loop with no JavaScript — and it stops
+ * for anyone who asks for reduced motion.
+ */
+import sources from '../data/data-sources.json';
+
+const half = Math.ceil(sources.length / 2);
+const rows = [sources.slice(0, half), sources.slice(half)];
+---
+<div class="ds">
+  {rows.map((row, i) => (
+    <div class="ds__row" data-dir={i === 0 ? 'left' : 'right'}>
+      <ul class="ds__track">
+        {[...row, ...row].map((s, j) => (
+          <li>
+            <a
+              href={s.href}
+              class="ds__item"
+              title={s.name}
+              data-name={s.name}
+              aria-hidden={j >= row.length ? 'true' : undefined}
+              tabindex={j >= row.length ? -1 : undefined}
+            >
+              <img src={s.img} alt={j >= row.length ? '' : s.name} width="40" height="40" loading="lazy" decoding="async" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+  <p class="ds__label" aria-live="polite" data-ds-label>&nbsp;</p>
+</div>
+
+<style>
+  .ds { display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; height: 100%; overflow: hidden; }
+  .ds__row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+             mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .ds__track { display: flex; width: max-content; gap: 1.25rem; list-style: none; padding: 0.25rem 0; margin: 0; }
+  .ds__row[data-dir='left'] .ds__track  { animation: ds-left  46s linear infinite; }
+  .ds__row[data-dir='right'] .ds__track { animation: ds-right 46s linear infinite; }
+  .ds:hover .ds__track { animation-play-state: paused; }
+
+  .ds__item {
+    display: grid; place-items: center;
+    width: 64px; height: 64px; border-radius: 9999px;
+    background: #fff; box-shadow: 0 2px 8px rgb(34 36 43 / 0.08);
+    transition: transform 150ms, box-shadow 150ms;
+  }
+  .ds__item:hover, .ds__item:focus-visible { transform: translateY(-3px); box-shadow: 0 6px 18px rgb(34 36 43 / 0.14); }
+  .ds__item img { width: 36px; height: 36px; object-fit: contain; }
+
+  .ds__label { min-height: 1.25rem; text-align: center; font-size: 0.8125rem; color: var(--color-ink-3); }
+
+  /* The track is the row duplicated once, so -50% lands exactly on the seam. */
+  @keyframes ds-left  { to { transform: translateX(-50%); } }
+  @keyframes ds-right { from { transform: translateX(-50%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds__track { animation: none !important; }
+    .ds__row { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
+  }
+</style>
+
+<script>
+  // Mirrors the original, which names the hovered source in a live region.
+  const label = document.querySelector<HTMLElement>('[data-ds-label]');
+  if (label) {
+    document.querySelectorAll<HTMLAnchorElement>('.ds__item').forEach((el) => {
+      const show = () => { label.textContent = el.dataset.name ?? ''; };
+      const clear = () => { label.textContent = ' '; };
+      el.addEventListener('mouseenter', show);
+      el.addEventListener('focus', show);
+      el.addEventListener('mouseleave', clear);
+      el.addEventListener('blur', clear);
+    });
+  }
+</script>
