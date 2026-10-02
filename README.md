@@ -18,12 +18,16 @@ and the front end built in Astro.
 .
 ├── apps/
 │   ├── cms/              Strapi 5 — content model, admin, REST API
-│   └── web/              Astro front end (not started)
+│   │   └── seed/         Idempotent seeder + the pipeline that produced its data
+│   └── web/              Astro front end — 179 static routes
+│       ├── src/components/demos/   The homepage's interactive islands
+│       ├── src/lib/      Strapi client, Cloudinary helpers
+│       └── src/styles/   Design tokens and component layers
 ├── SITE-ANALYSIS.md      Analysis of the original: stack, IA, content model,
 │                         user journeys, PageSpeed baseline, improvements
-├── psi-baseline.json     Measured PSI scores for the original, for later
-│                         before/after comparison
-└── README.md
+├── DEPLOYMENT.md         Railway runbook for both services
+├── psi-baseline.json     Measured PSI scores for the original
+└── psi-results.json      The same pages on this replica, for comparison
 ```
 
 ## Getting started
@@ -34,10 +38,21 @@ cd apps/cms
 cp .env.example .env      # fill in the secrets
 npm install
 npm run develop           # http://localhost:1337/admin
+npm run seed              # content: taxonomies, posts, case studies, testimonials
+
+# Front end, in a second shell
+cd apps/web
+cp .env.example .env      # STRAPI_URL, SITE_URL
+npm install
+npm run dev               # http://localhost:4321
 ```
 
+The front end reads Strapi at build time and emits static HTML, so the CMS has
+to be reachable when `npm run build` runs — there is no runtime dependency on
+it afterwards.
+
 See [`apps/cms/README.md`](apps/cms/README.md) for the full content model and
-deployment notes.
+[`DEPLOYMENT.md`](DEPLOYMENT.md) for the Railway runbook.
 
 ## Why this site
 
@@ -51,7 +66,33 @@ It is also, usefully, **already built in Astro**. Replicating it in Astro means
 the static-first, islands-light architecture the assignment asks for is the
 natural way to build it.
 
-## Approach
+## How the design was matched
+
+Screenshots are not good enough to replicate a layout from — they show that
+something is off without saying what. Every section here was built by reading
+computed styles off metabase.com with devtools and diffing them against the
+same selectors on this build, until the numbers agreed:
+
+```js
+getComputedStyle(el)   // font size, line height, weight, tracking, colour,
+el.getBoundingClientRect()   // margins, padding, radius, border, gap, measured box
+```
+
+That is how the panels, cards and grids here end up on the original's exact
+figures — the hero product panel at 1264×684, the BI panels' 5-of-12 and
+7-of-12 columns, the blog post's 322/644/620 measure, the footer's
+150/204/160/150/167 columns. It also caught things a screenshot never would:
+the hero h1 tracks at -0.04em and nothing else on the site does; the section
+standfirsts carry an inline `max-width: 840px` that never binds because they
+sit in an 8-of-12 column and actually render 692 wide.
+
+Where the original fails WCAG AA, this build steps one stop down the same
+colour ramp rather than copying the failure — the tertiary ink, the category
+pills, the panel CTAs. Each departure is commented at the rule. The one
+exception is the brand CTA button: white on `#509ee3` is 2.86:1, and that is
+Metabase's own brand colour on their most prominent control, so it stays.
+
+## Content model
 
 The brief asks for the design to match the original, so the judgement is shown
 in the content model rather than the visuals. `SITE-ANALYSIS.md` §6 documents
@@ -107,8 +148,11 @@ with a matching `imagesrcset`.
 - [x] Measure the PageSpeed baseline
 - [x] Scaffold Strapi and define the content model
 - [x] Deploy Strapi + Postgres to Railway
-- [x] Seed content (279 entries + 136 images, `npm run seed`)
+- [x] Seed content (`npm run seed`, idempotent — safe to re-run)
 - [x] Scaffold Astro with the design tokens
 - [x] Build the pages (180 static routes)
 - [x] Deploy the front end
 - [x] Optimise and record PageSpeed results
+- [x] Match the homepage, blog and case studies against measured values
+- [ ] `/pricing` and the product pages — linked from the nav, not yet built
+- [ ] Glossary is 24 terms against the original's 167

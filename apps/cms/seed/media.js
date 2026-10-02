@@ -37,7 +37,10 @@ async function uploadFromUrl(app, url, { skip = false } = {}) {
 
   let buf;
   try {
-    const res = await fetch(url);
+    // Bounded: a CDN that accepts the connection and then never sends a body
+    // will hang the whole run, and an unattended seed looks identical to a
+    // slow one. 30s is far more than any of these assets needs.
+    const res = await fetch(url, { signal: AbortSignal.timeout(30_000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     buf = Buffer.from(await res.arrayBuffer());
   } catch (err) {
