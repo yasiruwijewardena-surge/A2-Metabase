@@ -1,0 +1,104 @@
+{
+  "measuredAt": "2026-10-02",
+  "source": "PageSpeed Insights API v5",
+  "original": "https://www.metabase.com",
+  "replica": "https://elegant-spontaneity-production-28e1.up.railway.app",
+  "comparison": [
+    {
+      "page": "/",
+      "strategy": "mobile",
+      "original": {
+        "performance": 56,
+        "accessibility": 95,
+        "bestPractices": 92,
+        "seo": 100,
+        "lcp": "14.7\u00a0s",
+        "cls": "0.001",
+        "tbt": "250\u00a0ms",
+        "totalBytes": "Total size was 1,502\u00a0KiB"
+      },
+      "replica": {
+        "performance": 99,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": "1.2\u00a0s",
+        "cls": "0",
+        "tbt": "0\u00a0ms",
+        "totalBytes": "Total size was 82\u00a0KiB"
+      }
+    },
+    {
+      "page": "/",
+      "strategy": "desktop",
+      "original": {
+        "performance": 81,
+        "accessibility": 92,
+        "bestPractices": 92,
+        "seo": 100,
+        "lcp": "0.8\u00a0s",
+        "cls": "0.009",
+        "tbt": "410\u00a0ms",
+        "totalBytes": "Total size was 1,864\u00a0KiB"
+      },
+      "replica": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": "0.3\u00a0s",
+        "cls": "0",
+        "tbt": "0\u00a0ms",
+        "totalBytes": "Total size was 117\u00a0KiB"
+      }
+    },
+    {
+      "page": "/blog",
+      "strategy": "mobile",
+      "original": {
+        "performance": 47,
+        "accessibility": 86,
+        "bestPractices": 96,
+        "seo": 92,
+        "lcp": "16.4\u00a0s",
+        "cls": "0.122",
+        "tbt": "360\u00a0ms",
+        "totalBytes": "Total size was 2,358\u00a0KiB"
+      },
+      "replica": {
+        "performance": 98,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": "1.8\u00a0s",
+        "cls": "0",
+        "tbt": "0\u00a0ms",
+        "totalBytes": "Total size was 153\u00a0KiB"
+      }
+    },
+    {
+      "page": "/case-studies",
+      "strategy": "mobile",
+      "original": {
+        "performance": 56,
+        "accessibility": 96,
+        "bestPractices": 96,
+        "seo": 100,
+        "lcp": "15.3\u00a0s",
+        "cls": "0",
+        "tbt": "290\u00a0ms",
+        "totalBytes": "Total size was 2,040\u00a0KiB"
+      },
+      "replica": {
+        "performance": 98,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "lcp": "1.8\u00a0s",
+        "cls": "0",
+        "tbt": "0\u00a0ms",
+        "totalBytes": "Total size was 288\u00a0KiB"
+      }
+    }
+  ]
+}

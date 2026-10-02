@@ -10,7 +10,7 @@ and the front end built in Astro.
 | **CMS** | Strapi 5 → Railway, with Postgres |
 | **Front end** | Astro → Railway |
 | **Live CMS** | https://a2-metabase-production.up.railway.app/admin |
-| **Live site** | _not deployed yet_ |
+| **Live site** | https://elegant-spontaneity-production-28e1.up.railway.app |
 
 ## Repository layout
 
@@ -78,12 +78,28 @@ changing how a page looks. The ones acted on so far:
 
 ## Performance
 
-The original scores **56 mobile / 81 desktop** on PageSpeed Insights, largely
-because 78% of its homepage payload is third-party (679 KB of Google Tag
-Manager across five containers, plus Hotjar and five ad pixels). Its `/blog`
-scores 47, with the LCP image shipped `loading="lazy"` and no preload.
+Measured with the PageSpeed Insights API, same pages, same day.
 
-Target here is 90+ desktop / 80+ mobile. Full baseline in `SITE-ANALYSIS.md` §2.
+| Page | Device | Original | This replica |
+|---|---|---:|---:|
+| `/` | mobile | 56 | **99** |
+| `/` | desktop | 81 | **100** |
+| `/blog` | mobile | 47 | **98** |
+| `/case-studies` | mobile | 56 | **98** |
+
+Accessibility, Best Practices and SEO are 100 across all four. CLS is 0 and
+total blocking time is 0 ms.
+
+The brief asks for 90+ desktop and 80+ mobile. Raw numbers in
+`psi-results.json`, the original's baseline and the reasoning in
+`SITE-ANALYSIS.md` §2.
+
+The gap is not cleverness. The original carries 78% of its homepage payload as
+third-party script — 679 KB of Google Tag Manager across five containers, plus
+Hotjar and five ad pixels — lazy-loads its own LCP image, and ships images
+without dimensions. This replica ships no third-party JavaScript at all, no
+external JavaScript files of any kind, 28 KB of CSS, and preloads the LCP image
+with a matching `imagesrcset`.
 
 ## Status
 
@@ -92,7 +108,7 @@ Target here is 90+ desktop / 80+ mobile. Full baseline in `SITE-ANALYSIS.md` §2
 - [x] Scaffold Strapi and define the content model
 - [x] Deploy Strapi + Postgres to Railway
 - [x] Seed content (279 entries + 136 images, `npm run seed`)
-- [ ] Scaffold Astro with the design tokens
-- [ ] Build the pages
-- [ ] Deploy the front end
-- [ ] Optimise and record PageSpeed results
+- [x] Scaffold Astro with the design tokens
+- [x] Build the pages (180 static routes)
+- [x] Deploy the front end
+- [x] Optimise and record PageSpeed results
