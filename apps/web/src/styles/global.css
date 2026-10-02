@@ -63,8 +63,7 @@
     font-weight: 700;
     text-wrap: balance;
   }
-  /* The display size is the only one the original tracks tight: -2.4px at 60. */
-  h1 { font-size: 60px; line-height: 60px; letter-spacing: -0.04em; }
+  h1 { font-size: 60px; line-height: 60px; }
   h2 { font-size: 36px; line-height: 40px; }
   h3 { font-size: 22px; line-height: 30px; }
   h4 { font-size: 18px; line-height: 25px; }
@@ -111,10 +110,11 @@
     padding-block: 0.5rem;
     font-size: 1rem;
     line-height: 1.5rem;
-    color: var(--color-brand);
+    /* The original's #509ee3 on #f1f2f4 is 2.9:1; one stop down the ramp. */
+    color: var(--color-brand-hover);
     transition: color 150ms, background-color 150ms;
   }
-  .pill:hover { background: var(--color-brand); color: #fff; }
+  .pill:hover { background: var(--color-brand-hover); color: #fff; }
   .pill-on { background: var(--color-brand-strong); color: #fff; }
 
   .container-mb {
@@ -384,8 +384,11 @@
     max-width: 640px; margin: 0 auto 80px; text-align: center;
   }
   /* The title carries its own line break, so leave the breaking alone: the
-     base rule's text-wrap: balance would re-split the first line. */
-  .hero-content h1 { text-wrap: initial; }
+     base rule's text-wrap: balance would re-split the first line. The -2.4px
+     tracking belongs here rather than on every h1 — the blog and case-study
+     titles are the same element at 36px and the original leaves those at
+     normal. */
+  .hero-content h1 { text-wrap: initial; letter-spacing: -0.04em; }
   .hero-sub { font-size: 24px; line-height: 32px; color: var(--color-ink-2); }
   .hero-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
 
@@ -559,4 +562,64 @@
   /* The CTA sits on a full-bleed line illustration, lazily loaded. */
   .final-cta-illustration-wrap { width: 100%; max-width: 1520px; margin-top: 40px; }
   .final-cta-illustration { display: block; width: 100%; height: auto; }
+}
+
+@layer components {
+  /*
+   * Blog post page. Measured off the original: a header row of a 1/4 back-link
+   * column beside a 3/4 title column, the cover at the container's full 1264,
+   * then a 1/4 share rail beside a 1/2 body column — which lands the measure
+   * at 620, the width the original sets its prose to.
+   */
+  .post-head-row { display: flex; flex-wrap: wrap; margin-inline: -12px; margin-bottom: 64px; align-items: flex-start; }
+  .post-head-aside { flex: 0 0 25%; max-width: 25%; padding-inline: 12px; }
+  .post-head-main { flex: 0 0 75%; max-width: 75%; padding-inline: 12px; }
+
+  .post-back {
+    display: inline-flex; align-items: center; gap: 4px; margin-bottom: 32px;
+    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .post-back:hover { text-decoration: underline; }
+
+  .post-title { margin-bottom: 32px; font-size: 48px; line-height: 56px; font-weight: 900; }
+  .post-byline { display: flex; align-items: center; gap: 8px; font-size: 16px; color: var(--color-ink-2); }
+  .post-byline-name { font-weight: 700; color: var(--color-ink); }
+  .post-byline-name:hover { color: var(--color-brand-hover); }
+  .post-byline-cat { font-weight: 700; color: var(--color-ink-2); }
+  .post-byline-cat:hover { color: var(--color-brand-hover); }
+  .post-byline-meta { color: var(--color-ink-2); }
+
+  .post-cover { display: block; width: 100%; border-radius: 8px; object-fit: cover; aspect-ratio: 16 / 9; }
+
+  .post-body-row { display: flex; flex-wrap: wrap; margin-inline: -12px; padding-block: 32px; }
+  .post-rail { order: 1; flex: 0 0 100%; max-width: 100%; padding-inline: 12px; margin-top: 48px; }
+  .post-body { order: 0; flex: 0 0 100%; max-width: 100%; padding-inline: 12px; }
+  @media (min-width: 992px) {
+    .post-rail { order: 0; flex: 0 0 25%; max-width: 25%; margin-top: 0; }
+    .post-body { order: 1; flex: 0 0 50%; max-width: 50%; }
+  }
+  /* Clears the 74px sticky bar with room to spare, as on the original. */
+  .post-rail-sticky { position: sticky; top: 136px; display: flex; flex-direction: column; }
+  .post-rail-title { margin-bottom: 12px; font-size: 16px; font-weight: 700; color: var(--color-ink-2); }
+
+  /* Bare glyphs on the original, no button chrome: 12px apart, filled in the
+     faint ink. The focus ring replaces the box for keyboard users. */
+  .post-share { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .post-share-btn {
+    display: grid; place-items: center; width: 24px; height: 24px;
+    border: 0; border-radius: 4px; padding: 0;
+    color: var(--color-ink-4); background: none; cursor: pointer;
+  }
+  .post-share-btn:hover { color: var(--color-brand); }
+  .post-share-btn:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+  .post-share-note { font-size: 13px; color: var(--color-ink-2); }
+
+  /* Lead paragraph: Lato 24/32 over a 48px drop, before the serif body. */
+  .post-lead { margin: 0 0 48px; font-size: 24px; line-height: 32px; color: var(--color-ink); }
+
+  @media (max-width: 991px) {
+    .post-head-aside, .post-head-main { flex: 0 0 100%; max-width: 100%; }
+    .post-head-row { margin-bottom: 48px; }
+    .post-title { font-size: 36px; line-height: 42px; }
+  }
 }

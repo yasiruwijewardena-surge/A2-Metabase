@@ -4,6 +4,7 @@ import Avatar from '../../components/Avatar.astro';
 import { preloadFor } from '../../lib/image';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RichText from '../../components/RichText.astro';
+import ShareLinks from '../../components/ShareLinks.astro';
 import { getPosts, getPost } from '../../lib/strapi';
 
 export async function getStaticPaths() {
@@ -36,44 +37,73 @@ const jsonLd = {
   ogImage={post.coverImage?.url}
   preload={preloadFor(post.coverImage?.url, [400, 760, 1140], '(max-width: 800px) 100vw, 760px')}
 >
-  <article class="container-mb max-w-[760px] py-10">
-    <a href="/blog" class="text-sm font-bold text-(--color-brand-hover)">← All posts</a>
-
-    <p class="mt-6 mb-3 text-sm text-(--color-ink-3)">
-      {date}{post.category && <> in <a href={`/blog/category/${post.category.slug}`} class="font-bold text-(--color-ink-2) hover:text-(--color-brand-hover)">{post.category.name}</a></>}
-      {post.readTimeMinutes && <> ‧ {post.readTimeMinutes} min read</>}
-    </p>
-
-    <h1 class="mb-6 text-4xl leading-tight">{post.title}</h1>
-
-    <div class="mb-8 flex items-center gap-3">
-      <Avatar image={post.author?.avatar} size={40} class="h-10 w-10" />
-      {post.author && (
-        <div>
-          <a href={`/blog/authors/${post.author.slug}`} class="block font-bold hover:text-(--color-brand-hover)">{post.author.name}</a>
-          {post.author.role && <span class="text-sm text-(--color-ink-3)">{post.author.role}</span>}
+  {/*
+    Post layout, measured off the original: a 1320 container holding a header
+    row of a 1/4 back-link column beside a 3/4 title column, then the cover at
+    the full 1264, then the body as a 1/4 share rail beside a 1/2 column whose
+    measure lands at 620.
+  */}
+  <div class="page-tint">
+  <div class="container-mb pt-4">
+    <section class="py-8">
+      <div class="post-head-row">
+        <div class="post-head-aside">
+          <a href="/blog" class="post-back">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M8.5 3.5L5 7l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            All posts
+          </a>
         </div>
-      )}
-    </div>
 
-    <CldImage
-      image={post.coverImage}
-      priority
-      ratio={16 / 9}
-      sizes="(max-width: 800px) 100vw, 760px"
-      class="mb-10 aspect-[16/9] w-full rounded-md object-cover"
-    />
-
-    <RichText blocks={post.body} />
-
-    {post.tags?.length > 0 && (
-      <div class="mt-10 flex flex-wrap gap-2 border-t border-(--color-line) pt-6">
-        {post.tags.map((t) => (
-          <span class="rounded-md bg-(--color-surface) px-2.5 py-1 text-sm text-(--color-ink-2)">{t.name}</span>
-        ))}
+        <div class="post-head-main">
+          <h1 class="post-title">{post.title}</h1>
+          <div class="post-byline">
+            <Avatar image={post.author?.avatar} name={post.author?.name} size={36} class="h-9 w-9" />
+            {post.author && (
+              <a href={`/blog/authors/${post.author.slug}`} class="post-byline-name">{post.author.name}</a>
+            )}
+            <span class="post-byline-meta">
+              ‧ {date}{post.category && <> in <a href={`/blog/category/${post.category.slug}`} class="post-byline-cat">{post.category.name}</a></>}
+              {post.readTimeMinutes && <> ‧ {post.readTimeMinutes} min read</>}
+            </span>
+          </div>
+        </div>
       </div>
-    )}
-  </article>
+
+      <CldImage
+        image={post.coverImage}
+        priority
+        ratio={16 / 9}
+        widths={[640, 1264, 1900]}
+        sizes="(max-width: 1199px) 100vw, 1264px"
+        class="post-cover"
+      />
+    </section>
+
+    <section class="post-body-row">
+      <aside class="post-rail">
+        <div class="post-rail-sticky">
+          <h2 class="post-rail-title">Share this article</h2>
+          <ShareLinks title={post.title} path={`/blog/${post.slug}`} />
+        </div>
+      </aside>
+
+      <div class="post-body">
+        {post.excerpt && <p class="post-lead">{post.excerpt}</p>}
+        <RichText blocks={post.body} />
+
+        {post.tags?.length > 0 && (
+          <div class="mt-10 flex flex-wrap gap-2 border-t border-(--color-line) pt-6">
+            {post.tags.map((t) => (
+              <span class="rounded-md bg-(--color-surface) px-2.5 py-1 text-sm text-(--color-ink-2)">{t.name}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+  </div>
 
   {post.relatedPosts && post.relatedPosts.length > 0 && (
     <section class="border-t border-(--color-line) bg-(--color-brand-faint) py-14">
@@ -82,7 +112,7 @@ const jsonLd = {
         <div class="grid gap-8 md:grid-cols-2">
           {post.relatedPosts.map((r) => (
             <article>
-              <p class="mb-2 text-sm text-(--color-ink-3)">
+              <p class="mb-2 text-sm text-(--color-ink-2)">
                 {new Date(r.publishedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 {r.category && <> in {r.category.name}</>}
               </p>

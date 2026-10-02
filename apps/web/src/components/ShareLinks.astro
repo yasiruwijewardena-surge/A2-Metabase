@@ -1,0 +1,52 @@
+---
+/*
+ * The post page's share rail. The original offers X, LinkedIn and a
+ * copy-link button that swaps its label to "Copied to clipboard".
+ */
+interface Props { title: string; path: string; }
+const { title, path } = Astro.props;
+const site = (import.meta.env.SITE_URL ?? '').replace(/\/$/, '');
+const url = `${site}${path}`;
+---
+
+<div class="post-share" data-share data-url={url}>
+  <a class="post-share-btn" aria-label="Share on X" rel="noopener noreferrer" target="_blank"
+     href={`https://x.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.04l12.04 15.64Z" />
+    </svg>
+  </a>
+  <a class="post-share-btn" aria-label="Share on LinkedIn" rel="noopener noreferrer" target="_blank"
+     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14Zm1.78 13.02H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
+    </svg>
+  </a>
+  <button type="button" class="post-share-btn" data-share-copy aria-label="Copy link to this article">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h8" />
+    </svg>
+  </button>
+  <span class="post-share-note" data-share-note role="status" aria-live="polite"></span>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-share]').forEach((root) => {
+    const btn = root.querySelector<HTMLButtonElement>('[data-share-copy]');
+    const note = root.querySelector<HTMLElement>('[data-share-note]');
+    const url = root.dataset.url || location.href;
+    let timer: number | undefined;
+
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        if (note) note.textContent = 'Copied to clipboard';
+      } catch {
+        // Clipboard access can be refused; say so rather than claiming success.
+        if (note) note.textContent = 'Press ⌘C to copy';
+      }
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => { if (note) note.textContent = ''; }, 2400);
+    });
+  });
+</script>
