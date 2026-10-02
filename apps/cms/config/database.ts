@@ -49,8 +49,22 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
           rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
         },
         schema: env('DATABASE_SCHEMA', 'public'),
+        /*
+         * Seeding over the Railway tunnel uploads each image to Cloudinary
+         * between writes, which leaves the socket idle for seconds at a time;
+         * without a keepalive the tunnel drops it mid-insert and the run dies
+         * on "Connection terminated unexpectedly". Harmless in production,
+         * where the hop is a private network.
+         */
+        keepAlive: true,
+        keepAliveInitialDelayMillis: env.int('DATABASE_KEEPALIVE_DELAY', 10000),
       },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
+      pool: {
+        min: env.int('DATABASE_POOL_MIN', 2),
+        max: env.int('DATABASE_POOL_MAX', 10),
+        // Reap before the tunnel does, so a dead socket is never handed out.
+        idleTimeoutMillis: env.int('DATABASE_POOL_IDLE_TIMEOUT', 30000),
+      },
     },
     sqlite: {
       client: 'sqlite',
