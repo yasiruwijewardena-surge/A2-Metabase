@@ -1,0 +1,475 @@
+---
+/**
+ * The interactive payments dashboard from the Business Intelligence section.
+ *
+ * The original serves this as a self-contained page inside an iframe. Built
+ * here as an island instead: same behaviour, no extra document, and the charts
+ * inherit the page's own tokens.
+ *
+ * Two filters drive three cards. Time grouping switches the series between
+ * day / week / month / year; Plan narrows every card to one plan. Both are
+ * operable by mouse and keyboard, and an idle loop demonstrates them with a
+ * simulated cursor until someone interacts or asks for reduced motion.
+ */
+import data from '../../data/payments-demo.json';
+
+const PLANS = ['Basic', 'Business', 'Premium'];
+const UNITS = [
+  ['day', 'Day'], ['week', 'Week'], ['month', 'Month'], ['year', 'Year'],
+] as const;
+---
+<div class="pdash" data-pdash>
+  <div class="pdash__filters">
+    <div class="pdash__filter" data-filter="time">
+      <button class="pdash__pill" type="button" data-pill="time" aria-haspopup="listbox" aria-expanded="false">
+        <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" /><path stroke-linecap="round" d="M12 7v5l3 2" />
+        </svg>
+        <span class="pdash__pill-body">
+          <span class="pdash__pill-name">Time grouping:</span>
+          <span class="pdash__pill-value" data-time-value>Month</span>
+        </span>
+        <span class="pdash__clear" data-time-clear role="button" tabindex="0" aria-label="Reset time grouping">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </span>
+      </button>
+      <div class="pdash__dd" data-dd="time" role="listbox" aria-label="Time grouping" hidden>
+        {UNITS.map(([unit, label]) => (
+          <div class="pdash__opt" role="option" tabindex="0" data-unit={unit} aria-selected={unit === 'month'}>{label}</div>
+        ))}
+      </div>
+    </div>
+
+    <div class="pdash__filter" data-filter="plan">
+      <button class="pdash__pill" type="button" data-pill="plan" aria-haspopup="dialog" aria-expanded="false">
+        <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 5h16M4 5v2M20 5v2M12 5v13M9 20h6" />
+        </svg>
+        <span class="pdash__pill-body" data-plan-body><span class="pdash__pill-name">Plan</span></span>
+        <svg class="pdash__chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M2.5 4.5 6 8l3.5-3.5" />
+        </svg>
+      </button>
+      <div class="pdash__dd pdash__dd--plan" data-dd="plan" role="dialog" aria-label="Filter by plan" hidden>
+        <div class="pdash__search">
+          <label class="sr-only" for="pdash-plan-search">Search the list</label>
+          <input id="pdash-plan-search" type="text" placeholder="Search the list" autocomplete="off" data-plan-search />
+        </div>
+        <ul class="pdash__list" data-plan-list>
+          {PLANS.map((p) => (
+            <li><button type="button" class="pdash__plan" data-plan={p}>{p}</button></li>
+          ))}
+        </ul>
+        <div class="pdash__foot">
+          <button type="button" class="pdash__add" data-plan-add disabled>Add filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pdash__grid">
+    <section class="pdash__card pdash__card--pie">
+      <h4 class="pdash__card-title">Payments amounts by plan</h4>
+      <div class="pdash__pie-row">
+        <ul class="pdash__legend" data-pie-legend></ul>
+        <div class="pdash__pie-wrap">
+          <svg viewBox="0 0 160 160" class="pdash__pie" role="img" aria-label="Payment amounts by plan" data-pie></svg>
+          <div class="pdash__pie-center">
+            <strong data-pie-total>$4.7M</strong>
+            <span>Total</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pdash__card pdash__card--trend">
+      <h4 class="pdash__card-title">Total Payments</h4>
+      <p class="pdash__trend-value" data-trend-value>1,148</p>
+      <p class="pdash__trend-period" data-trend-period>2026</p>
+      <p class="pdash__trend-compare" data-trend-compare></p>
+    </section>
+
+    <section class="pdash__card pdash__card--bar">
+      <h4 class="pdash__card-title">Payment amounts over time</h4>
+      <div class="pdash__bar-wrap">
+        <svg class="pdash__bar" role="img" aria-label="Payment amounts over time" data-bar></svg>
+      </div>
+      <p class="pdash__axis-label">Date Received</p>
+    </section>
+  </div>
+
+  <span class="pdash__cursor" data-cursor aria-hidden="true"></span>
+  <script type="application/json" data-pdash-data set:html={JSON.stringify(data)} />
+</div>
+
+<!-- is:global because the legend, bars and comparison are injected at runtime:
+     Astro's scoping stamps an attribute on template elements only, so scoped
+     rules never reach innerHTML content. Every selector is .pdash-prefixed. -->
+<style is:global>
+  .pdash {
+    position: relative;
+    border-radius: 1rem; border: 1px solid var(--color-line);
+    background: var(--color-brand-faint); padding: 1rem;
+    font-size: 0.8125rem;
+  }
+  .pdash__filters { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .pdash__filter { position: relative; }
+
+  .pdash__pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--color-line); border-radius: 0.5rem;
+    background: #fff; padding: 0.55rem 0.75rem; cursor: pointer;
+    font-size: 0.8125rem; color: var(--color-ink);
+  }
+  .pdash__pill[aria-expanded='true'] { border-color: var(--color-brand); box-shadow: 0 0 0 2px var(--color-brand-muted); }
+  .pdash__ic, .pdash__chev { width: 14px; height: 14px; color: var(--color-ink-3); }
+  .pdash__pill-body { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .pdash__pill-name { color: var(--color-ink-2); }
+  .pdash__pill-value { font-weight: 700; color: var(--color-brand); }
+  .pdash__clear { display: none; color: var(--color-brand); }
+  .pdash__clear svg { width: 11px; height: 11px; }
+  .pdash__pill[data-dirty='true'] .pdash__clear { display: inline-flex; }
+
+  .pdash__dd {
+    position: absolute; top: calc(100% + 6px); left: 0; z-index: 5; min-width: 190px;
+    border: 1px solid var(--color-line); border-radius: 0.5rem; background: #fff;
+    box-shadow: 0 10px 28px rgb(34 36 43 / 0.14); padding: 0.35rem;
+  }
+  .pdash__dd--plan { min-width: 250px; }
+  .pdash__opt, .pdash__plan {
+    display: block; width: 100%; text-align: start;
+    padding: 0.5rem 0.6rem; border: 0; background: none; border-radius: 0.375rem;
+    cursor: pointer; font-size: 0.8125rem; color: var(--color-ink);
+  }
+  .pdash__opt:hover, .pdash__plan:hover,
+  .pdash__opt:focus-visible, .pdash__plan:focus-visible { background: var(--color-brand-faint); }
+  .pdash__opt[aria-selected='true'], .pdash__plan[data-on='true'] { color: var(--color-brand); font-weight: 700; }
+  .pdash__search { padding: 0.35rem; }
+  .pdash__search input {
+    width: 100%; border: 1px solid var(--color-brand); border-radius: 0.375rem;
+    padding: 0.5rem 0.6rem; font-size: 0.8125rem;
+  }
+  .pdash__list { list-style: none; margin: 0; padding: 0; max-height: 160px; overflow-y: auto; }
+  .pdash__foot { padding: 0.35rem; }
+  .pdash__add {
+    width: 100%; border: 0; border-radius: 0.375rem; padding: 0.6rem;
+    background: var(--color-surface); color: var(--color-ink-3); font-weight: 700; font-size: 0.8125rem;
+  }
+  .pdash__add:not([disabled]) { background: var(--color-brand); color: #fff; cursor: pointer; }
+
+  .pdash__grid { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) {
+    .pdash__grid { grid-template-columns: 1.4fr 1fr; }
+    .pdash__card--bar { grid-column: 1 / -1; }
+  }
+  .pdash__card { border: 1px solid var(--color-line); border-radius: 0.625rem; background: #fff; padding: 0.85rem; }
+  .pdash__card-title { margin: 0 0 0.6rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-ink); }
+
+  .pdash__pie-row { display: flex; align-items: center; gap: 0.75rem; }
+  .pdash__legend { flex: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+  .pdash__legend li { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 0.5rem; }
+  .pdash__legend i { width: 10px; height: 10px; border-radius: 9999px; }
+  .pdash__legend b { font-weight: 700; }
+  .pdash__legend span { color: var(--color-ink-2); }
+  .pdash__pie-wrap { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
+  .pdash__pie { width: 112px; height: 112px; }
+  .pdash__pie-center {
+    position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1.15;
+  }
+  .pdash__pie-center strong { display: block; font-size: 0.9375rem; font-weight: 900; }
+  .pdash__pie-center span { font-size: 0.6875rem; color: var(--color-ink-3); }
+
+  .pdash__trend-value { margin: 0.3rem 0 0; font-size: 2.75rem; line-height: 1; font-weight: 900; letter-spacing: -0.02em; }
+  .pdash__trend-period { margin: 0.5rem 0 0; font-weight: 700; color: var(--color-ink-2); }
+  .pdash__trend-compare { margin: 0.2rem 0 0; color: var(--color-ink-3); }
+  .pdash__trend-compare b { font-weight: 700; }
+  .pdash__trend-compare b[data-dir='up'] { color: var(--color-ok-strong); }
+  .pdash__trend-compare b[data-dir='down'] { color: #c0392b; }
+
+  .pdash__bar-wrap { height: 150px; }
+  .pdash__bar { width: 100%; height: 100%; }
+  .pdash__axis-label { margin: 0.35rem 0 0; text-align: center; color: var(--color-ink-3); font-size: 0.6875rem; }
+
+  .pdash__cursor {
+    position: absolute; top: 0; left: 0; width: 18px; height: 18px; z-index: 20;
+    pointer-events: none; opacity: 0; transition: opacity 200ms;
+    background: no-repeat center/contain
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 10-6 1 3 7-3 1-3-7-5 4z' fill='%2322242b' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E");
+  }
+  .pdash__cursor[data-on='true'] { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) { .pdash__cursor { display: none; } }
+</style>
+
+<script>
+  type Trend = { v: number; p: number; d: string };
+  type Data = {
+    bar: Record<string, Record<string, number[]>>;
+    barYears: Record<string, string[]>;
+    barMonths: Record<string, string[]>;
+    trend: Record<string, Record<string, Trend>>;
+  };
+
+  const COLOURS: Record<string, string> = { Basic: '#51528d', Business: '#509ee3', Premium: '#ef8c8c' };
+  const SHARES: Record<string, number> = { Basic: 60.78, Business: 36.79, Premium: 2.43 };
+  const TOTAL = 4_700_000;
+
+  document.querySelectorAll<HTMLElement>('[data-pdash]').forEach((root) => {
+    const raw = root.querySelector<HTMLScriptElement>('[data-pdash-data]')?.textContent;
+    if (!raw) return;
+    const data: Data = JSON.parse(raw);
+
+    const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+    const state = { unit: 'month', plan: 'all' as string };
+
+    // ---- rendering ---------------------------------------------------------
+    const money = (n: number) =>
+      n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(1)}M` : `$${Math.round(n / 1000)}K`;
+
+    function renderPie() {
+      const svg = q<SVGSVGElement>('[data-pie]');
+      const legend = q('[data-pie-legend]');
+      const shown = state.plan === 'all' ? Object.keys(SHARES) : [state.plan];
+      const sum = shown.reduce((a, k) => a + SHARES[k], 0);
+
+      legend.innerHTML = shown
+        .map((k) => `<li><i style="background:${COLOURS[k]}"></i><b>${k}</b><span>${((SHARES[k] / sum) * 100).toFixed(2)}%</span></li>`)
+        .join('');
+
+      const R = 62, r = 38, cx = 80, cy = 80;
+      let a0 = -Math.PI / 2;
+      svg.innerHTML = shown
+        .map((k) => {
+          const frac = SHARES[k] / sum;
+          const a1 = a0 + frac * Math.PI * 2;
+          const large = frac > 0.5 ? 1 : 0;
+          const pt = (ang: number, rad: number) => `${cx + Math.cos(ang) * rad} ${cy + Math.sin(ang) * rad}`;
+          // A near-full ring cannot be drawn as one arc; nudge it closed.
+          const end = frac > 0.999 ? a1 - 0.001 : a1;
+          const d = `M ${pt(a0, R)} A ${R} ${R} 0 ${large} 1 ${pt(end, R)} L ${pt(end, r)} A ${r} ${r} 0 ${large} 0 ${pt(a0, r)} Z`;
+          a0 = a1;
+          return `<path d="${d}" fill="${COLOURS[k]}" />`;
+        })
+        .join('');
+
+      const share = shown.reduce((a, k) => a + SHARES[k], 0) / 100;
+      q('[data-pie-total]').textContent = money(TOTAL * share);
+    }
+
+    function renderTrend() {
+      const t = data.trend[state.unit]?.[state.plan];
+      if (!t) return;
+      q('[data-trend-value]').textContent = t.v.toLocaleString('en-US');
+
+      const d = new Date(t.d);
+      const period =
+        state.unit === 'year' ? String(d.getFullYear())
+        : state.unit === 'month' ? d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+        : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+      q('[data-trend-period]').textContent = period;
+
+      const prev = t.p || 0;
+      const pct = prev ? ((t.v - prev) / prev) * 100 : 0;
+      const dir = pct >= 0 ? 'up' : 'down';
+      const prevLabel =
+        state.unit === 'year' ? String(d.getFullYear() - 1) : `previous ${state.unit}`;
+      q('[data-trend-compare]').innerHTML =
+        `<b data-dir="${dir}">${dir === 'up' ? '↑' : '↓'} ${Math.abs(pct).toFixed(2)}%</b> vs. ${prevLabel}`;
+    }
+
+    function niceMax(v: number) {
+      const mag = Math.pow(10, Math.floor(Math.log10(v || 1)));
+      return Math.ceil(v / mag) * mag;
+    }
+
+    function renderBar() {
+      const svg = q<SVGSVGElement>('[data-bar]');
+      const series = data.bar[state.unit]?.[state.plan] ?? [];
+      const labels =
+        state.unit === 'year' ? data.barYears[state.plan] ?? []
+        : state.unit === 'month' ? data.barMonths[state.plan] ?? []
+        : [];
+
+      const W = svg.clientWidth || 640, H = 150;
+      const padL = 54, padB = 20, padT = 6;
+      const max = niceMax(Math.max(...series, 1));
+      const plotH = H - padB - padT;
+      const bw = (W - padL) / Math.max(series.length, 1);
+
+      const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(max * f));
+      const grid = ticks
+        .map((t) => {
+          const y = padT + plotH - (t / max) * plotH;
+          return `<line x1="${padL}" x2="${W}" y1="${y}" y2="${y}" stroke="#e2e4e9"/>` +
+                 `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#8d93a5">$${t.toLocaleString('en-US')}</text>`;
+        })
+        .join('');
+
+      const bars = series
+        .map((v, i) => {
+          const h = (v / max) * plotH;
+          return `<rect x="${padL + i * bw + bw * 0.12}" y="${padT + plotH - h}" width="${Math.max(bw * 0.76, 1)}" height="${h}" fill="#509ee3"/>`;
+        })
+        .join('');
+
+      // Thin the axis labels so they never collide.
+      const step = Math.max(1, Math.ceil(labels.length / 7));
+      const axis = labels
+        .map((l, i) =>
+          i % step
+            ? ''
+            : `<text x="${padL + i * bw + bw / 2}" y="${H - 6}" text-anchor="middle" font-size="9" fill="#8d93a5">${
+                state.unit === 'month' ? new Date(l + '-01').toLocaleDateString('en-US', { month: 'short', year: '2-digit' }) : l
+              }</text>`
+        )
+        .join('');
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.innerHTML = grid + bars + axis;
+    }
+
+    const renderAll = () => { renderPie(); renderTrend(); renderBar(); };
+
+    // ---- filter wiring -----------------------------------------------------
+    const closeAll = () => {
+      root.querySelectorAll<HTMLElement>('[data-dd]').forEach((d) => (d.hidden = true));
+      root.querySelectorAll<HTMLElement>('[data-pill]').forEach((p) => p.setAttribute('aria-expanded', 'false'));
+    };
+
+    const toggle = (name: string) => {
+      const dd = root.querySelector<HTMLElement>(`[data-dd="${name}"]`)!;
+      const pill = root.querySelector<HTMLElement>(`[data-pill="${name}"]`)!;
+      const open = !dd.hidden;
+      closeAll();
+      dd.hidden = open;
+      pill.setAttribute('aria-expanded', String(!open));
+    };
+
+    root.querySelectorAll<HTMLElement>('[data-pill]').forEach((pill) =>
+      pill.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('[data-time-clear]')) return;
+        stopDemo();
+        toggle(pill.dataset.pill!);
+      })
+    );
+
+    const setUnit = (unit: string, label: string) => {
+      state.unit = unit;
+      q('[data-time-value]').textContent = label;
+      root.querySelectorAll<HTMLElement>('[data-unit]').forEach((o) =>
+        o.setAttribute('aria-selected', String(o.dataset.unit === unit))
+      );
+      q('[data-pill="time"]').dataset.dirty = String(unit !== 'month');
+      renderAll();
+    };
+
+    root.querySelectorAll<HTMLElement>('[data-unit]').forEach((opt) => {
+      const pick = () => { stopDemo(); setUnit(opt.dataset.unit!, opt.textContent!.trim()); closeAll(); };
+      opt.addEventListener('click', pick);
+      opt.addEventListener('keydown', (e) => {
+        if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') { e.preventDefault(); pick(); }
+      });
+    });
+
+    q('[data-time-clear]').addEventListener('click', (e) => { e.stopPropagation(); stopDemo(); setUnit('month', 'Month'); });
+
+    const setPlan = (plan: string) => {
+      state.plan = plan;
+      const body = q('[data-plan-body]');
+      body.innerHTML = plan === 'all'
+        ? '<span class="pdash__pill-name">Plan</span>'
+        : `<span class="pdash__pill-name">Plan is</span> <span class="pdash__pill-value">${plan}</span>`;
+      root.querySelectorAll<HTMLElement>('[data-plan]').forEach((b) =>
+        (b.dataset.on = String(b.dataset.plan === plan))
+      );
+      q<HTMLButtonElement>('[data-plan-add]').disabled = plan === 'all';
+      renderAll();
+    };
+
+    root.querySelectorAll<HTMLElement>('[data-plan]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        stopDemo();
+        setPlan(state.plan === btn.dataset.plan ? 'all' : btn.dataset.plan!);
+      })
+    );
+
+    q('[data-plan-add]').addEventListener('click', () => { stopDemo(); closeAll(); });
+
+    q<HTMLInputElement>('[data-plan-search]').addEventListener('input', (e) => {
+      const term = (e.target as HTMLInputElement).value.trim().toLowerCase();
+      root.querySelectorAll<HTMLElement>('[data-plan]').forEach((b) => {
+        (b.parentElement as HTMLElement).hidden = !b.dataset.plan!.toLowerCase().includes(term);
+      });
+    });
+
+    document.addEventListener('click', (e) => { if (!root.contains(e.target as Node)) closeAll(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+    window.addEventListener('resize', renderBar);
+
+    // ---- idle demonstration -------------------------------------------------
+    // The original drives its own controls on a loop so the panel is never
+    // static. Stops for good on the first real interaction.
+    const cursor = q('[data-cursor]');
+    let demoTimer: number | undefined;
+    let demoOn = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function stopDemo() {
+      demoOn = false;
+      window.clearTimeout(demoTimer);
+      cursor.dataset.on = 'false';
+    }
+
+    const sleep = (ms: number) => new Promise<void>((r) => { demoTimer = window.setTimeout(r, ms); });
+
+    function moveTo(el: Element) {
+      const a = root.getBoundingClientRect(), b = el.getBoundingClientRect();
+      cursor.dataset.on = 'true';
+      cursor.style.transition = 'translate 700ms cubic-bezier(.4,0,.2,1), opacity 200ms';
+      cursor.style.translate = `${b.left - a.left + b.width / 2}px ${b.top - a.top + b.height / 2}px`;
+    }
+
+    async function runDemo() {
+      const steps: Array<[string, () => void]> = [
+        ['[data-pill="plan"]', () => toggle('plan')],
+        ['[data-plan="Business"]', () => setPlan('Business')],
+        ['[data-plan-add]', () => closeAll()],
+        ['[data-pill="time"]', () => toggle('time')],
+        ['[data-unit="year"]', () => { setUnit('year', 'Year'); closeAll(); }],
+        ['[data-time-clear]', () => setUnit('month', 'Month')],
+        ['[data-pill="plan"]', () => toggle('plan')],
+        ['[data-plan="Business"]', () => setPlan('all')],
+        ['[data-plan-add]', () => closeAll()],
+      ];
+
+      while (demoOn) {
+        for (const [sel, act] of steps) {
+          if (!demoOn) return;
+          const el = root.querySelector(sel);
+          if (!el) continue;
+          moveTo(el);
+          await sleep(900);
+          if (!demoOn) return;
+          act();
+          await sleep(1100);
+        }
+        cursor.dataset.on = 'false';
+        await sleep(1600);
+      }
+    }
+
+    // Only run while the panel is on screen.
+    renderAll();
+    setPlan('all');
+
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && demoOn && !demoTimer) runDemo();
+        else if (!e.isIntersecting) window.clearTimeout(demoTimer);
+      }
+    }, { threshold: 0.4 });
+    io.observe(root);
+  });
+</script>

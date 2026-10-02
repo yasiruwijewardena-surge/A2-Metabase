@@ -5,6 +5,7 @@ import CldImage from '../components/CldImage.astro';
 import { getCaseStudies, getTestimonials } from '../lib/strapi';
 import HeroDashboard from '../components/HeroDashboard.astro';
 import ProductMock from '../components/ProductMock.astro';
+import PaymentsDashboard from '../components/demos/PaymentsDashboard.astro';
 import CopyCommand from '../components/CopyCommand.astro';
 import DataSourceMarquee from '../components/DataSourceMarquee.astro';
 
@@ -202,7 +203,7 @@ const biPoints = [
               )}
             </div>
 
-            <ProductMock kind={point.mock} />
+            {point.mock === 'dashboard' ? <PaymentsDashboard /> : <ProductMock kind={point.mock} />}
           </div>
         ))}
       </div>
