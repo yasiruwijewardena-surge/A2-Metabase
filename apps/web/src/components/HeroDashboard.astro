@@ -2,6 +2,11 @@
 /**
  * The hero's product panel: a Metabase dashboard beside a Metabot chat.
  *
+ * Chrome and type are measured off the original rather than inferred: the
+ * panel is a 24px-radius #fafbfe slab with 24px of padding, the dashboard
+ * takes 68% of it with a 28px gutter before the 388px chat, and the three
+ * cards sit on a 3-column grid of 242px and 380px rows at a 12px gap.
+ *
  * Charts are static SVG rather than drawn at runtime, so they are in the first
  * paint. The entrance - the headline number counting up and the bars growing
  * from the baseline - runs once on scroll, matching the original's behaviour
@@ -9,13 +14,13 @@
  */
 import HeroChat from './demos/HeroChat.astro';
 
-// Accounts added per year, by source — stacked, read from the original.
+// Accounts added per year, by source — the original's five series and colours.
 const SOURCES = [
-  { name: 'Organic',  color: '#6b5fbf' },
-  { name: 'Facebook', color: '#4a9be8' },
-  { name: 'Google',   color: '#ec7b72' },
-  { name: 'Invite',   color: '#e8905c' },
-  { name: 'LinkedIn', color: '#f0d04e' },
+  { name: 'Organic',  color: '#7172AD' },
+  { name: 'Facebook', color: '#509EE3' },
+  { name: 'Google',   color: '#EF8C8C' },
+  { name: 'Invite',   color: '#F2A86F' },
+  { name: 'LinkedIn', color: '#F9D45C' },
 ];
 const YEARS = [
   { year: 2021, v: [118, 42, 58, 34, 52] },
@@ -27,16 +32,15 @@ const YEARS = [
 ];
 
 const AX_W = 720, AX_H = 210, PAD_L = 42, PAD_B = 26;
-const maxTotal = Math.max(...YEARS.map((y) => y.v.reduce((a, b) => a + b, 0)));
 const scale = (v: number) => ((AX_H - PAD_B) * v) / 400;
 const bandW = (AX_W - PAD_L) / YEARS.length;
 const barW = bandW * 0.56;
 
 // Payments received per quarter by plan — a denser series, as on the original.
 const PLANS = [
-  { name: 'Basic',    color: '#9cc9f0' },
-  { name: 'Premium',  color: '#ec7b72' },
-  { name: 'Business', color: '#2d6fbf' },
+  { name: 'Basic',    color: '#87BCEC' },
+  { name: 'Premium',  color: '#EF8C8C' },
+  { name: 'Business', color: '#227FD2' },
 ];
 const quarters = Array.from({ length: 48 }, (_, i) => {
   const cycle = i % 8;
@@ -46,115 +50,154 @@ const quarters = Array.from({ length: 48 }, (_, i) => {
 });
 const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
 ---
-<div class="overflow-hidden rounded-2xl border border-(--color-line) bg-white shadow-[0_1px_3px_rgba(0,0,0,.04)]" data-hero-dash>
-  <div class="grid lg:grid-cols-[1fr_380px]">
-    <!-- Dashboard -->
-    <div class="bg-(--color-brand-faint) p-5">
-      <div class="mb-4 grid gap-4 sm:grid-cols-[minmax(0,260px)_1fr]">
-        <!-- Big number -->
-        <section class="rounded-xl border border-(--color-line) bg-white p-5">
-          <p class="mb-5 text-base font-bold text-(--color-brand-hover)">Total Accounts</p>
-          <p class="text-center text-[3.25rem] leading-none font-black tracking-tight" data-countup="1228">0</p>
-          <p class="mt-3 text-center text-sm font-bold text-(--color-ink-2)">Jun 2026</p>
-          <p class="mt-1 text-center text-sm text-(--color-ink-3)">
-            <span class="font-bold text-(--color-ok-strong)">↑ 0.9%</span> vs. previous month: 1,217
-          </p>
-        </section>
 
-        <!-- Stacked bars -->
-        <section class="rounded-xl border border-(--color-line) bg-white p-5">
-          <p class="mb-3 text-base font-bold text-(--color-brand-hover)">Accounts added per year, by source</p>
-          <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
+<div class="hero-demo-panel" data-hero-dash>
+  <div class="hd-viz">
+    <div class="hd-grid">
+      <!-- Total Accounts -->
+      <section class="hd-card hd-card-trend">
+        <div class="hd-card-head"><div class="hd-card-title">Total Accounts</div></div>
+        <div class="hd-card-body">
+          <div class="hd-trend">
+            <div class="hd-trend-value" data-countup="1228">0</div>
+            <div class="hd-trend-period">Jun 2026</div>
+            <div class="hd-trend-compare">
+              <span class="hd-delta up"><span class="hd-arr" aria-hidden="true">&#8593;</span>0.9%</span>
+              <span class="hd-ref">vs. previous month: 1,217</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accounts added per year, by source -->
+      <section class="hd-card hd-card-accounts">
+        <div class="hd-card-head"><div class="hd-card-title">Accounts added per year, by source</div></div>
+        <div class="hd-card-body">
+          <div class="hd-bar-legend">
             {SOURCES.map((s) => (
-              <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
-                <span class="h-2.5 w-2.5 rounded-full" style={`background:${s.color}`}></span>{s.name}
-              </li>
+              <span class="hd-legend-item"><span class="hd-dot" style={`background:${s.color}`}></span>{s.name}</span>
             ))}
-          </ul>
-          <svg viewBox={`0 0 ${AX_W} ${AX_H}`} class="w-full" role="img"
-               aria-label="Stacked bar chart of accounts added per year by source">
-            {[0, 100, 200, 300, 400].map((t) => {
-              const y = AX_H - PAD_B - scale(t);
-              return (
-                <>
-                  <line x1={PAD_L} x2={AX_W} y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" />
-                  <text x={PAD_L - 8} y={y + 4} text-anchor="end" font-size="12" fill="#8d93a5">{t}</text>
-                </>
-              );
-            })}
-            {YEARS.map((row, i) => {
-              let acc = 0;
-              const x = PAD_L + i * bandW + (bandW - barW) / 2;
-              return (
-                <>
-                  {row.v.map((v, si) => {
-                    const h = scale(v);
-                    const y = AX_H - PAD_B - scale(acc) - h;
-                    acc += v;
-                    return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} class="hd-bar" style={`--d:${i * 70}ms`} />;
-                  })}
-                  <text x={x + barW / 2} y={AX_H - 8} text-anchor="middle" font-size="12" fill="#8d93a5">{row.year}</text>
-                </>
-              );
-            })}
-          </svg>
-        </section>
-      </div>
+          </div>
+          <div class="hd-bar-wrap">
+            <svg viewBox={`0 0 ${AX_W} ${AX_H}`} preserveAspectRatio="none" role="img"
+                 aria-label="Stacked bar chart of accounts added per year by source">
+              {[0, 100, 200, 300, 400].map((t) => {
+                const y = AX_H - PAD_B - scale(t);
+                return (
+                  <>
+                    <line x1={PAD_L} x2={AX_W} y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" vector-effect="non-scaling-stroke" />
+                    <text x={PAD_L - 8} y={y + 4} text-anchor="end" font-size="12" fill="#8d93a5">{t}</text>
+                  </>
+                );
+              })}
+              {YEARS.map((row, i) => {
+                let acc = 0;
+                const x = PAD_L + i * bandW + (bandW - barW) / 2;
+                return (
+                  <>
+                    {row.v.map((v, si) => {
+                      const h = scale(v);
+                      const y = AX_H - PAD_B - scale(acc) - h;
+                      acc += v;
+                      return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} class="hd-bar" style={`--d:${i * 70}ms`} />;
+                    })}
+                    <text x={x + barW / 2} y={AX_H - 8} text-anchor="middle" font-size="12" fill="#8d93a5">{row.year}</text>
+                  </>
+                );
+              })}
+            </svg>
+          </div>
+        </div>
+      </section>
 
-      <!-- Dense quarterly series -->
-      <section class="rounded-xl border border-(--color-line) bg-white p-5">
-        <p class="mb-3 text-base font-bold text-(--color-brand-hover)">Payments received per quarter by plan</p>
-        <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1">
-          {PLANS.map((p) => (
-            <li class="flex items-center gap-1.5 text-xs text-(--color-ink-2)">
-              <span class="h-2.5 w-2.5 rounded-full" style={`background:${p.color}`}></span>{p.name}
-            </li>
-          ))}
-        </ul>
-        <svg viewBox="0 0 960 170" class="w-full" role="img"
-             aria-label="Stacked bar chart of payments received per quarter by plan">
-          {[0, 1, 2, 3, 4, 5].map((t) => {
-            const y = 150 - (t / 5) * 140;
-            return <line x1="56" x2="960" y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" />;
-          })}
-          {['250,000','200,000','150,000','100,000','50,000','0'].map((lbl, i) => (
-            <text x="48" y={150 - ((5 - i) / 5) * 140 + 4} text-anchor="end" font-size="11" fill="#8d93a5">{lbl}</text>
-          ))}
-          {quarters.map((q, i) => {
-            const w = (960 - 56) / quarters.length;
-            const x = 56 + i * w;
-            const bw = w * 0.72;
-            const hb = (q.basic / maxQ) * 140;
-            const hp = (q.premium / maxQ) * 140;
-            const hu = (q.business / maxQ) * 140;
-            return (
-              <>
-                <rect x={x} y={150 - hu} width={bw} height={hu} fill="#2d6fbf" class="hd-bar" style={`--d:${i * 9}ms`} />
-                <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#ec7b72" class="hd-bar" style={`--d:${i * 9}ms`} />
-                <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#9cc9f0" class="hd-bar" style={`--d:${i * 9}ms`} />
-              </>
-            );
-          })}
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <text x={56 + i * 150 + 30} y="166" text-anchor="middle" font-size="11" fill="#8d93a5">
-              Jan {2021 + i}
-            </text>
-          ))}
-        </svg>
+      <!-- Payments received per quarter by plan -->
+      <section class="hd-card hd-card-pay">
+        <div class="hd-card-head"><div class="hd-card-title">Payments received per quarter by plan</div></div>
+        <div class="hd-card-body">
+          <div class="hd-bar-legend">
+            {PLANS.map((p) => (
+              <span class="hd-legend-item"><span class="hd-dot" style={`background:${p.color}`}></span>{p.name}</span>
+            ))}
+          </div>
+          <div class="hd-bar-wrap">
+            <svg viewBox="0 0 960 170" preserveAspectRatio="none" role="img"
+                 aria-label="Stacked bar chart of payments received per quarter by plan">
+              {[0, 1, 2, 3, 4, 5].map((t) => {
+                const y = 150 - (t / 5) * 140;
+                return <line x1="56" x2="960" y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" vector-effect="non-scaling-stroke" />;
+              })}
+              {['250,000','200,000','150,000','100,000','50,000','0'].map((lbl, i) => (
+                <text x="48" y={150 - ((5 - i) / 5) * 140 + 4} text-anchor="end" font-size="11" fill="#8d93a5">{lbl}</text>
+              ))}
+              {quarters.map((q, i) => {
+                const w = (960 - 56) / quarters.length;
+                const x = 56 + i * w;
+                const bw = w * 0.72;
+                const hb = (q.basic / maxQ) * 140;
+                const hp = (q.premium / maxQ) * 140;
+                const hu = (q.business / maxQ) * 140;
+                return (
+                  <>
+                    <rect x={x} y={150 - hu} width={bw} height={hu} fill="#227FD2" class="hd-bar" style={`--d:${i * 9}ms`} />
+                    <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#EF8C8C" class="hd-bar" style={`--d:${i * 9}ms`} />
+                    <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#87BCEC" class="hd-bar" style={`--d:${i * 9}ms`} />
+                  </>
+                );
+              })}
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <text x={56 + i * 150 + 30} y="166" text-anchor="middle" font-size="11" fill="#8d93a5">
+                  Jan {2021 + i}
+                </text>
+              ))}
+            </svg>
+          </div>
+        </div>
       </section>
     </div>
-
-    <aside class="hero-dash__chat">
-      <HeroChat />
-    </aside>
   </div>
+
+  <aside class="hd-chat">
+    <HeroChat />
+  </aside>
 </div>
 
 <style is:global>
-  .hero-dash__chat { border-top: 1px solid var(--color-line); background: #fff; padding: 1.25rem; }
-  @media (min-width: 1024px) {
-    .hero-dash__chat { border-top: 0; border-inline-start: 1px solid var(--color-line); }
+  /* All measured off the original at a 1440 viewport. */
+  .hero-demo-panel {
+    display: flex;
+    border: 1px solid var(--color-line); border-radius: 24px; background: #fafbfe;
+    padding: 24px;
+    box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.04), 0 8px 48px rgb(0 0 0 / 0.05);
   }
+  .hd-viz { flex: 1 1 68%; min-width: 0; padding-right: 28px; }
+  .hd-chat { flex: 0 0 388px; min-width: 0; }
+
+  .hd-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 242px 380px; gap: 12px; }
+  .hd-card-trend { grid-column: span 1; }
+  .hd-card-accounts { grid-column: span 2; }
+  .hd-card-pay { grid-column: 1 / -1; }
+
+  .hd-card {
+    display: flex; flex-direction: column; min-width: 0;
+    border: 1px solid var(--color-line); border-radius: 16px; background: #fff;
+    padding: 14px 16px; box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+  }
+  .hd-card-head { display: flex; padding-bottom: 10px; }
+  .hd-card-title { font-size: 14px; line-height: 17.5px; font-weight: 700; color: var(--color-admin); }
+  .hd-card-body { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+  .hd-trend { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .hd-trend-value { font-size: 58px; line-height: 55px; font-weight: 700; color: var(--color-ink); }
+  .hd-trend-period { margin-top: 12px; font-size: 14px; font-weight: 700; color: var(--color-ink); }
+  .hd-trend-compare { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; margin-top: 8px; font-size: 13px; color: var(--color-ink-2); }
+  .hd-delta { display: flex; gap: 3px; font-weight: 700; }
+  .hd-delta.up { color: #4e7527; }  /* the original's #669438 is 2.6:1 here */
+
+  .hd-bar-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--color-ink); }
+  .hd-legend-item { display: flex; align-items: center; gap: 6px; }
+  .hd-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .hd-bar-wrap { flex: 1; min-height: 0; margin-top: 10px; }
+  .hd-bar-wrap svg { display: block; width: 100%; height: 100%; }
 
   /* Bars grow from the baseline once the panel scrolls into view. */
   [data-hero-dash] .hd-bar { transform-box: fill-box; transform-origin: bottom; scale: 1 0; }
@@ -165,6 +208,17 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
   }
   @media (prefers-reduced-motion: reduce) {
     [data-hero-dash] .hd-bar { scale: 1 1; transition: none; }
+  }
+
+  /* Below the panel's two-column width the chat drops under the dashboard. */
+  @media (max-width: 1199px) {
+    .hero-demo-panel { flex-direction: column; padding: 16px; border-radius: 16px; }
+    .hd-viz { flex: 1 1 auto; padding-right: 0; }
+    .hd-chat { flex: 1 1 auto; margin-top: 12px; }
+    .hd-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+    .hd-card-accounts, .hd-card-pay { grid-column: 1 / -1; }
+    .hd-card-accounts, .hd-card-pay { min-height: 280px; }
+    .hd-card-trend { min-height: 220px; }
   }
 </style>
 

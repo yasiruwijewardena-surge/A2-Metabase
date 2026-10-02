@@ -63,7 +63,8 @@
     font-weight: 700;
     text-wrap: balance;
   }
-  h1 { font-size: 60px; line-height: 60px; }
+  /* The display size is the only one the original tracks tight: -2.4px at 60. */
+  h1 { font-size: 60px; line-height: 60px; letter-spacing: -0.04em; }
   h2 { font-size: 36px; line-height: 40px; }
   h3 { font-size: 22px; line-height: 30px; }
   h4 { font-size: 18px; line-height: 25px; }
@@ -363,5 +364,56 @@
     display: grid; place-items: center; width: 84px; height: 50px; border-radius: 10px;
     background: var(--color-brand-muted); font-size: 16px; font-weight: 700;
     color: var(--color-brand-strong);
+  }
+}
+
+@layer components {
+  /*
+   * Hero. Measured off the original: the copy column is capped at 640 with a
+   * 24px rhythm between title, standfirst and buttons, then 80px of air before
+   * the product panel, 80 again before the logo row and 56 before the tour
+   * card.
+   */
+  .hero-content {
+    display: flex; flex-direction: column; gap: 24px;
+    max-width: 640px; margin: 0 auto 80px; text-align: center;
+  }
+  /* The title carries its own line break, so leave the breaking alone: the
+     base rule's text-wrap: balance would re-split the first line. */
+  .hero-content h1 { text-wrap: initial; }
+  .hero-sub { font-size: 24px; line-height: 32px; color: var(--color-ink-2); }
+  .hero-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+
+  .hero-trust { margin-top: 80px; text-align: center; }
+  /* The original's label is #8d93a5, which is 2.6:1 on the band. */
+  .hero-trust-label { margin-bottom: 24px; font-size: 16px; color: var(--color-ink-2); }
+  .hero-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; }
+  .hero-logos img { width: 135px; height: 38px; object-fit: contain; opacity: 0.6; }
+
+  .hero-tour {
+    display: flex; align-items: center; gap: 16px;
+    max-width: 1100px; height: 96px; margin: 56px auto 0; padding: 0 32px;
+    border: 1px solid var(--color-line); border-radius: 12px; background: #fff;
+    transition: box-shadow 150ms;
+  }
+  .hero-tour:hover { box-shadow: 0 4px 16px rgb(16 24 40 / 0.08); }
+  .hero-tour__play { display: flex; color: var(--color-ink-2); }
+  .hero-tour__label { font-size: 18px; color: var(--color-ink-2); }
+  .hero-tour__media { position: relative; width: 480px; height: 94px; margin-left: auto; align-self: flex-end; }
+  .hero-tour__media img:first-child {
+    position: absolute; bottom: 0; left: 0; width: 380px; height: auto;
+    border-radius: 8px 8px 0 0; box-shadow: 0 0 0 1px rgb(0 0 0 / 0.05);
+  }
+  .hero-tour__media img:last-child {
+    position: absolute; bottom: 0; right: 40px; width: 104px; height: 104px;
+    border-radius: 50%; object-fit: cover;
+  }
+
+  @media (max-width: 767px) {
+    .hero-content { margin-bottom: 48px; }
+    .hero-sub { font-size: 20px; line-height: 28px; }
+    .hero-cta > * { width: 100%; }
+    .hero-tour { height: auto; padding: 20px 24px; }
+    .hero-tour__media { display: none; }
   }
 }
