@@ -14,7 +14,8 @@
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
     "seed": "node seed/index.js",
-    "seed:fresh": "node seed/index.js --fresh"
+    "seed:fresh": "node seed/index.js --fresh",
+    "prune": "node seed/prune.js"
   },
   "dependencies": {
     "@strapi/database": "5.56.0",
