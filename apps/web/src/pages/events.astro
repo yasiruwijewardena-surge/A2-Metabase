@@ -2,21 +2,36 @@
 /*
  * /events
  *
- * Measured off the original at 1512 (`npm run metrics -- <url> --root div.events`)
- * and from its own markup:
- *   hero band   #fafbfe, h1 48/58/900 "Events" mb 8, standfirst 20/28 mb 8
- *   event card  800 wide, white, radius 24, 1px border, padding 24, 24 apart,
- *               a 160x160 thumbnail at radius 12, 24 of gap, then a 16/24
- *               date in #8d93a5 (mb 8), a 24/32/700 title (mb 16), and a
- *               brand button 130x48 at radius 8
- *               hover: border -> blue-85, background -> neutral-99
- *   watch now   white band, h2 36/43/900 mb 8, standfirst 20/28 mb 16,
- *               a "Pick a series" control, then the recordings
+ * Measured off the original at 1512 with `npm run metrics`, `npm run assets`
+ * and a hover/click probe. The numbers below are read, not guessed:
  *
- * The original splits on a `data-starts-at` attribute and filters recordings
- * by `data-category` with JavaScript. Here the split is done at build time
- * from `startsAt`, and the series filter is radio inputs read with `:has()`,
- * so the page ships no JavaScript and the filter does not reload anything.
+ *   .upcoming-events  #fafbfe, padding 64/32/96, column, centred
+ *     > .hero         max-width 580, margin-block 64, padding-inline 32
+ *         h1 48/57.6/900 #22242b mb 8, h2 20/28/400 #5a6072 mb 8
+ *   .past-events      white, padding 0/0/96
+ *     > .hero         max-width 580, padding-block 64
+ *         h2 36/43.2/900 mb 8, p 20/28/400 mb 16,
+ *         p 16/26/700 "Pick a series" mt 32 mb 16 with a curved arrow
+ *     > carousel      1512x480, relative, clipped, margin-top -45
+ *         track       absolute, inset-block 65, 350 tall, gap 32, pad-left 312
+ *         card        280x350 r16, cover, shadow 16/24/40 .05 0 1 2
+ *                     hover: translateY(-65px), shadow .094 0 8 8 -4
+ *         tagline     absolute inset 0, flex-end, p 18/26/400 centred #5a6072
+ *                     rest opacity 0 translateY(20), hover opacity 1 translateY(0)
+ *                     transition opacity/transform .3s ease-in-out
+ *         fader       two 90px white edge gradients, pointer-events none
+ *     > .events-entry 800x210 white r24, 1px #e4ecfb, pad 24, gap 24, mb 24
+ *         img 160x160 r12, p 16/24/400 #8d93a5, h3 24/32/700 #22242b,
+ *         button pad 12/18 r8 #509ee3 white 16/24/700
+ *         hover: bg #fcfcfd, border #c2daf0, button #1c6bb0
+ *
+ * Both bands use the same card; only the date format and the button label
+ * differ ("Register now" with a full date, "Learn more" with "30 Sept 2026").
+ *
+ * The original filters the recordings in JavaScript: clicking a poster shows
+ * only that series, and clicking it again shows everything. Here the posters
+ * are labels for hidden checkboxes read with `:has()`, so the behaviour is the
+ * same -- including toggling back off -- with no JavaScript and no reload.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEvents, getEventCategories } from '../lib/strapi';
@@ -27,34 +42,52 @@ const now = Date.now();
 const upcoming = events
   .filter((e) => new Date(e.startsAt).getTime() >= now)
   .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
-const past = events.filter((e) => new Date(e.startsAt).getTime() < now);
+const past = events
+  .filter((e) => new Date(e.startsAt).getTime() < now)
+  .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt));
 
-/* Only offer a series that has a recording to show. */
-const shown = series.filter((s) => past.some((e) => e.category?.slug === s.slug));
-
-/* The carousel is the series index, so it shows all ten posters — including
- * the two that have no recording yet. The filter chips below only offer the
- * ones that would actually return something. */
 const ART = '/images/events/categories';
 
+/* A series with no recording yet is still a poster, as on the original, but
+ * picking it would leave the list empty with nothing to explain why. */
+const empty = series.filter((s) => !past.some((e) => e.category?.slug === s.slug));
+
+/* One loop is the width of a single copy of the row: each slide is 280 wide
+ * with 32 of gap. The row is rendered twice so the wrap has no seam. */
+const LOOP = series.length * (280 + 32);
+const SECONDS = LOOP / 60; /* the 60px a second the original runs at */
+
 const filterCss = [
-  ...shown.map((s) =>
-    `.ev:has(#es-${s.slug}:checked) .ev-card:not([data-series="${s.slug}"]),` +
-    `.ev:has(#es-${s.slug}:checked) .ev-blurb:not([data-series="${s.slug}"])` +
-    `{display:none}`),
-  `.ev:has(#es-all:checked) .ev-blurb:not([data-series="all"]){display:none}`,
-  ...['all', ...shown.map((s) => s.slug)].map((s) =>
-    `.ev:has(#es-${s}:checked) .ev-chip[for="es-${s}"]{background:var(--color-brand-hover);color:#fff}`),
+  /* Nothing picked shows everything. Once anything is picked, hide the lot and
+   * put back only the series that are checked -- which stays correct if more
+   * than one ends up checked. */
+  `.ev:has(.ev-pick-input:checked) .ev-card--past{display:none}`,
+  ...series.map((s) =>
+    `.ev:has(#es-${s.slug}:checked) .ev-card--past[data-series="${s.slug}"]{display:flex}`),
+  /* The original gives the picked poster no marker of its own, so it borrows
+   * the hover treatment rather than inventing a new one. */
+  ...series.map((s) =>
+    `.ev:has(#es-${s.slug}:checked) .ev-slide[data-series="${s.slug}"] .ev-poster` +
+    `{transform:translateY(-65px);box-shadow:0 8px 8px -4px rgb(16 24 40 / 0.094)}` +
+    `.ev:has(#es-${s.slug}:checked) .ev-slide[data-series="${s.slug}"] .ev-tagline` +
+    `{opacity:1;transform:translateY(0)}`),
+  ...empty.map((s) => `.ev:has(#es-${s.slug}:checked) .ev-empty{display:block}`),
 ].join('');
 
-/* The original prints the viewer's own timezone. A static build has no
- * viewer, so this is fixed to UTC and labelled, rather than silently
- * rendering the build machine's clock. */
-const fmt = (iso: string) =>
+/* The original prints the viewer's own timezone from the browser. A static
+ * build has no viewer, so this is fixed to UTC and says so, rather than
+ * silently baking in the build machine's clock. */
+const fmtFull = (iso: string) =>
   new Intl.DateTimeFormat('en-GB', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
     hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false,
-  }).format(new Date(iso)).replace(' at ', ' at ') + ' (UTC)';
+  }).format(new Date(iso)) + ' (UTC)';
+
+/* Recordings carry the short form the original uses: "30 Sept 2026". */
+const fmtShort = (iso: string) =>
+  new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(iso));
 ---
 
 <BaseLayout
@@ -62,89 +95,85 @@ const fmt = (iso: string) =>
   description="Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
 >
   <div class="ev">
-    <section class="ev-hero">
-      <h1 class="ev-h1">Events</h1>
-      <h2 class="ev-sub">Register for an upcoming event or stream a past recording.</h2>
+    <section class="ev-upcoming">
+      <div class="ev-head">
+        <h1 class="ev-h1">Events</h1>
+        <h2 class="ev-sub">Register for an upcoming event or stream a past recording.</h2>
+      </div>
 
       {upcoming.length === 0 ? (
-        <p class="ev-none">No events on the calendar right now — the recordings below are all free to stream.</p>
-      ) : upcoming.map((e) => (
-        <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
+        <p class="ev-none">
+          No events on the calendar right now &mdash; the recordings below are all free to stream.
+        </p>
+      ) : upcoming.map((e, i) => (
+        <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`}>
           <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
-               width="160" height="160" alt="" loading="eager" decoding="async" />
-          <span class="ev-body">
-            <span class="ev-date">{fmt(e.startsAt)}</span>
-            <span class="ev-title">{e.title}</span>
-            {e.location && <span class="ev-loc">{e.location}</span>}
+               width="160" height="160" alt=""
+               loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          <div class="ev-body">
+            <p class="ev-date">{fmtFull(e.startsAt)}</p>
+            <h3 class="ev-title">{e.title}</h3>
             <span class="ev-btn">Register now</span>
-          </span>
+          </div>
         </a>
       ))}
     </section>
 
     <section class="ev-watch">
-      <h2 class="ev-watch-h">Watch now</h2>
-      <p class="ev-watch-sub">
-        Miss an event? No worries. Stream recordings of previous events — no email
-        registration required.
-      </p>
+      <div class="ev-watch-head">
+        <h2 class="ev-watch-h">Watch now</h2>
+        <p class="ev-watch-sub">
+          Miss an event? No worries. Stream recordings of previous events&mdash;no
+          email registration required.
+        </p>
+        <p class="ev-pick">
+          <svg class="ev-pick-arrow" width="15" height="18" viewBox="0 0 15 18" fill="none"
+               stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <path d="M6.6 14.4S5.39 12.87 5.39 6.19C5.39-.49 13.9 1.64 13.9 1.64" />
+            <path d="M10.42 10.26 7.21 16.12 1.5 12.64" />
+          </svg>
+          Pick a series
+        </p>
+      </div>
 
-      <fieldset class="ev-radios">
-        <legend class="sr-only">Pick a series</legend>
-        <input type="radio" name="ev-series" id="es-all" checked />
-        {shown.map((s) => <input type="radio" name="ev-series" id={`es-${s.slug}`} />)}
+      {/* The posters are labels for these. Checkboxes rather than radios so a
+          second click clears the filter, as the original does. */}
+      <fieldset class="ev-picker">
+        <legend>Pick a series to filter the recordings</legend>
+        {series.map((s) => (
+          <input class="ev-pick-input" type="checkbox" id={`es-${s.slug}`} />
+        ))}
       </fieldset>
 
-      <p class="ev-pick">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" stroke="currentColor"
-             stroke-width="1.6" aria-hidden="true">
-          <path d="M9 1.5C9 7 3 6 3 11.5" stroke-linecap="round" />
-          <path d="M.8 9.3 3 11.9l2.4-2.4" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        Pick a series
-      </p>
-
-      {/* 280x350 posters at radius 16, 32 apart, in a track that scrolls. The
-          original drives this from JavaScript; here it is a CSS animation that
-          stops dead for prefers-reduced-motion. The row is duplicated so the
-          loop has no seam, and the copy is hidden from assistive tech. */}
       <div class="ev-carousel">
-        {[0, 1].map((copy) => (
-          <ul class="ev-track" aria-hidden={copy === 1 ? 'true' : undefined}>
-            {series.map((s) => (
-              <li class="ev-slide">
-                <label class:list={['ev-poster', !shown.some((x) => x.slug === s.slug) && 'ev-poster--empty']}
-                       for={shown.some((x) => x.slug === s.slug) ? `es-${s.slug}` : undefined}
-                       style={`background-image:url(${ART}/${s.slug}-tall.webp)`}>
-                  <span class="sr-only">{s.name}</span>
-                </label>
-                <span class="ev-tagline">{s.description}</span>
-              </li>
-            ))}
-          </ul>
-        ))}
+        <div class="ev-track" style={`--ev-loop:${LOOP}px;--ev-dur:${SECONDS}s`}>
+          {[0, 1].map((copy) => series.map((s) => (
+            <div class="ev-slide" data-series={s.slug} aria-hidden={copy === 1 ? 'true' : undefined}>
+              <span class="ev-tagline"><span>{s.description}</span></span>
+              <label class="ev-poster" for={`es-${s.slug}`}
+                     style={`--ev-art:url(${ART}/${s.slug}-tall.webp)`}>
+                <span class="sr-only">{s.name}</span>
+              </label>
+            </div>
+          )))}
+        </div>
+        <div class="ev-fade" aria-hidden="true"></div>
       </div>
 
-      <div class="ev-chips">
-        <label class="ev-chip" for="es-all">All series</label>
-        {shown.map((s) => <label class="ev-chip" for={`es-${s.slug}`}>{s.name}</label>)}
-      </div>
-
-      {/* Each series' own sentence, swapped with the filter. */}
-      <p class="ev-blurb" data-series="all">Every session we have recorded, newest first.</p>
-      {shown.map((s) => <p class="ev-blurb" data-series={s.slug}>{s.description}</p>)}
+      <p class="ev-empty">No recordings in this series yet &mdash; pick another.</p>
 
       <div class="ev-list">
         {past.map((e) => (
-          <a class="ev-card" href={e.recordingUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
+          <a class="ev-card ev-card--past" href={e.recordingUrl ?? `/events/${e.slug}`}
+             data-series={e.category?.slug}>
             <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
                  width="160" height="160" alt="" loading="lazy" decoding="async" />
-            <span class="ev-body">
-              <span class="ev-date">{fmt(e.startsAt)}</span>
-              <span class="ev-title">{e.title}</span>
-              {e.description && <span class="ev-desc">{e.description}</span>}
-              <span class="ev-btn ev-btn--ghost">Watch the recording</span>
-            </span>
+            <div class="ev-body">
+              <p class="ev-date">{fmtShort(e.startsAt)}</p>
+              <h3 class="ev-title">{e.title}</h3>
+              <span class="ev-btn">Learn more</span>
+            </div>
           </a>
         ))}
       </div>

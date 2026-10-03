@@ -2543,29 +2543,29 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
- * /events
- *
- * Measured off the original: an 800-wide card, white, radius 24, 1px border,
- * 24 of padding, 24 apart, with a 160x160 thumbnail at radius 12 and 24 of
- * gap. Date 16/24 in #8d93a5 with 8 under it, title 24/32/700 with 16, then a
- * 130x48 brand button at radius 8. Hover moves the border to blue-85 and the
- * background to neutral-99.
+/* events ---------------------------------------------------------------------
+ * Measured off metabase.com/events at 1512. Upcoming band #fafbfe with
+ * 64/32/96 of padding and a 580 column inside it; the "Watch now" band is
+ * white with no top padding, its own 580 column, then a full-bleed 480-tall
+ * carousel pulled up 45. The card is 800x210, white, radius 24, 1px
+ * #e4ecfb, 24 of padding and gap, a 160 square at radius 12, then a 16/24
+ * date, a 24/32/700 title and a solid brand button -- "Register now" above,
+ * "Learn more" below. Hover moves the border to blue-85, the background to
+ * neutral-99 and the button to blue-40.
  * ------------------------------------------------------------------------ */
 @layer components {
-  .ev-hero {
+  /* --- upcoming band ---------------------------------------------------- */
+  .ev-upcoming {
     display: flex; flex-direction: column; align-items: center;
     padding: 64px 32px 96px; text-align: center;
     background: var(--color-brand-faint);
   }
-  .ev-h1 { margin-bottom: 8px; font-size: 48px; line-height: 58px; font-weight: 900; color: var(--color-ink); }
-  .ev-sub {
-    max-width: 580px; margin-bottom: 40px;
-    font-size: 20px; line-height: 28px; font-weight: 400; color: var(--color-ink-2);
-  }
+  .ev-head { width: 100%; max-width: 580px; margin-block: 64px; padding-inline: 32px; }
+  .ev-h1 { margin-bottom: 8px; font-size: 48px; line-height: 57.6px; font-weight: 900; color: var(--color-ink); }
+  .ev-sub { margin-bottom: 8px; font-size: 20px; line-height: 28px; font-weight: 400; color: var(--color-ink-2); }
   .ev-none {
-    max-width: 800px; padding: 24px; border-radius: 24px;
-    background: #fff; border: 1px solid var(--color-line); color: var(--color-ink-2);
+    width: 100%; max-width: 800px; padding: 24px; border-radius: 24px;
+    background: #fff; border: 1px solid var(--color-brand-muted); color: var(--color-ink-2);
   }
 
   /* --- the card, shared by both bands ----------------------------------- */
@@ -2579,117 +2579,122 @@
     transition: border-color 200ms ease, background-color 200ms ease;
   }
   .ev-card:hover { border-color: var(--color-brand-border); background: var(--color-surface-2); }
-  /* The series' own square artwork, as on the original. */
   .ev-thumb {
-    flex: none; width: 160px; height: 160px; border-radius: 12px;
-    object-fit: cover; background: var(--color-brand-muted);
+    flex: none; width: 160px; height: 160px; border-radius: 12px; object-fit: cover;
   }
-  .ev-body { display: flex; flex-direction: column; min-width: 0; }
+  .ev-body { display: block; min-width: 0; }
   /* The original sets this #8d93a5, which is 2.9:1 on white and fails AA at
      16px, so it steps down the ramp as the product and feature pages do. */
   .ev-date { margin-bottom: 8px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
   .ev-title { margin-bottom: 16px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
-  .ev-loc, .ev-desc {
-    margin-top: -8px; margin-bottom: 16px;
-    font-size: 16px; line-height: 24px; color: var(--color-ink-2);
-  }
   .ev-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    align-self: flex-start; height: 48px; padding-inline: 18px;
-    border-radius: 8px; background: var(--color-brand);
+    padding: 12px 18px; border-radius: 8px; background: var(--color-brand);
     font-size: 16px; line-height: 24px; font-weight: 700; color: #fff;
     transition: background-color 150ms ease;
   }
   .ev-card:hover .ev-btn { background: var(--color-brand-hover); }
-  .ev-btn--ghost {
-    background: transparent; color: var(--color-brand-hover);
-    border: 1px solid var(--color-brand-border);
-  }
-  .ev-card:hover .ev-btn--ghost { background: var(--color-brand-muted); }
 
   /* --- watch now -------------------------------------------------------- */
   .ev-watch {
     display: flex; flex-direction: column; align-items: center;
-    padding: 72px 32px 96px; text-align: center; background: #fff;
+    padding: 0 0 96px; text-align: center; background: #fff;
   }
-  .ev-watch-h { margin-bottom: 8px; font-size: 36px; line-height: 43px; font-weight: 900; color: var(--color-ink); }
-  .ev-watch-sub {
-    max-width: 580px; margin-bottom: 16px;
-    font-size: 20px; line-height: 28px; color: var(--color-ink-2);
+  .ev-watch-head { width: 100%; max-width: 580px; padding: 64px 0; }
+  .ev-watch-h { margin-bottom: 8px; font-size: 36px; line-height: 43.2px; font-weight: 900; color: var(--color-ink); }
+  .ev-watch-sub { margin-bottom: 16px; font-size: 20px; line-height: 28px; color: var(--color-ink-2); }
+  .ev-pick {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    margin-top: 32px; margin-bottom: 16px;
+    font-size: 16px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
   }
-  .ev-radios { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  .ev-pick { margin-top: 32px; margin-bottom: 16px; font-size: 16px; line-height: 26px; font-weight: 700; color: var(--color-ink); }
-  .ev-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 800px; }
-  .ev-chip {
-    padding: 8px 14px; border-radius: 8px; cursor: pointer;
-    background: var(--color-surface); color: var(--color-ink-2);
-    font-size: 15px; line-height: 22px;
-    transition: background-color 150ms ease, color 150ms ease;
-  }
-  .ev-chip:hover { background: var(--color-brand-muted); color: var(--color-brand-hover); }
-  .ev-blurb { margin-top: 20px; margin-bottom: 8px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  /* The arrow is brand blue on the original, not the colour of the text. */
+  .ev-pick-arrow { flex: none; color: var(--color-brand); }
+
+  /* The posters drive these; they never need to be seen. */
+  .ev-picker { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+  .ev-empty { display: none; margin-bottom: 24px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
 
   /* --- the series carousel ---------------------------------------------- */
-  /* Full-bleed, clipped, and pulled up 45 as the original has it. Two copies
-     of the row scroll as one so the loop has no seam. */
+  /* 480 tall and clipped, pulled up 45 so the curved arrow points into it.
+     The track is inset 65 top and bottom, which is exactly the distance a
+     card lifts on hover, so a lifted card is never cut off. */
   .ev-carousel {
-    display: flex; gap: 32px;
-    width: 100vw; max-width: 100vw; margin-top: -45px; margin-bottom: 8px;
-    overflow: hidden;
-    /* 100vw inside a centred column needs pulling back to the viewport edge. */
-    margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
-    mask: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    position: relative; height: 480px; overflow: hidden;
+    width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+    margin-top: -45px;
   }
   .ev-track {
-    display: flex; flex: none; gap: 32px; padding-block: 56px;
-    animation: ev-marquee 60s linear infinite;
+    position: absolute; top: 65px; left: 0; height: 350px;
+    display: flex; gap: 32px;
+    /* --ev-dur is the loop width at 60px a second, the rate the original
+       runs at; CSS cannot derive a time from a length, so it is passed in. */
+    animation: ev-marquee var(--ev-dur, 52s) linear infinite;
   }
+  /* One copy of the row, so the wrap lands on an identical frame. */
+  @keyframes ev-marquee { to { transform: translateX(calc(var(--ev-loop) * -1)); } }
+  /* The original eases down to a crawl; stopping is steadier and makes the
+     poster you are aiming at hold still. */
   .ev-carousel:hover .ev-track { animation-play-state: paused; }
-  @keyframes ev-marquee { to { transform: translateX(calc(-100% - 32px)); } }
 
-  .ev-slide { display: flex; flex-direction: column; align-items: center; width: 280px; }
-  .ev-poster {
-    display: block; width: 280px; height: 350px;
-    border-radius: 16px; background-size: cover; background-position: center;
-    cursor: pointer;
-    transition: transform 300ms ease, box-shadow 300ms ease;
-  }
-  .ev-poster:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.18);
-  }
-  /* A series with nothing to show yet is still in the index, but it is not a
-     filter, so it does not pretend to be clickable. */
-  .ev-poster--empty { cursor: default; }
-  .ev-poster--empty:hover { transform: none; box-shadow: none; }
-  /* The sentence under each poster appears on hover, as on the original. */
+  .ev-slide { position: relative; flex: none; width: 280px; height: 350px; }
+  /* Behind the poster, so it is revealed as the poster lifts away. */
   .ev-tagline {
-    max-width: 280px; margin-top: 12px; text-align: center;
-    font-size: 16px; line-height: 24px; color: var(--color-ink-2);
-    opacity: 0; transition: opacity 300ms ease;
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   }
-  .ev-slide:hover .ev-tagline { opacity: 1; }
+  .ev-tagline > span { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  .ev-poster {
+    position: absolute; inset: 0; display: block; border-radius: 16px;
+    background-color: #fff;
+    background-image: var(--ev-art); background-size: cover; background-position: center;
+    box-shadow: 0 1px 2px 0 rgb(16 24 40 / 0.05);
+    cursor: pointer;
+    transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
+  }
+  .ev-slide:hover .ev-poster {
+    transform: translateY(-65px);
+    box-shadow: 0 8px 8px -4px rgb(16 24 40 / 0.094);
+  }
+  .ev-slide:hover .ev-tagline { opacity: 1; transform: translateY(0); }
+  .ev-poster:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
 
-  .ev-pick { display: flex; align-items: center; justify-content: center; gap: 6px; }
-  .ev-pick svg { color: var(--color-brand); }
+  /* Two 90px gradients that fade the row into the white band. */
+  .ev-fade { position: absolute; inset: 0; pointer-events: none; }
+  .ev-fade::before, .ev-fade::after { content: ''; position: absolute; top: 0; bottom: 0; width: 90px; }
+  .ev-fade::before { left: 0; background: linear-gradient(90deg, #fff, rgb(255 255 255 / 0)); }
+  .ev-fade::after { right: 0; background: linear-gradient(90deg, rgb(255 255 255 / 0), #fff); }
+
+  .ev-list { display: flex; flex-direction: column; align-items: center; width: 100%; padding-inline: 20px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .ev-track { animation: none; }
-    .ev-carousel { overflow-x: auto; mask: none; }
-    .ev-track[aria-hidden='true'] { display: none; }
-    .ev-poster:hover { transform: none; }
-    .ev-tagline { opacity: 1; }
+    .ev-track {
+      position: static; animation: none;
+      overflow-x: auto; max-width: 100vw; padding-block: 8px;
+      scroll-snap-type: x mandatory;
+    }
+    .ev-carousel { height: auto; overflow: visible; margin-top: 0; }
+    .ev-slide[aria-hidden='true'] { display: none; }
+    .ev-slide { scroll-snap-align: center; }
+    .ev-slide:hover .ev-poster { transform: none; }
+    .ev-tagline { display: none; }
+    .ev-fade { display: none; }
   }
-  .ev-list { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 24px; }
 
   @media (max-width: 991px) {
-    .ev-hero { padding: 40px 20px 56px; }
+    .ev-upcoming { padding: 40px 20px 56px; }
+    .ev-head { margin-block: 24px; padding-inline: 0; }
     .ev-h1 { font-size: 34px; line-height: 42px; }
     .ev-sub, .ev-watch-sub { font-size: 18px; line-height: 28px; }
-    .ev-watch { padding: 48px 20px 64px; }
+    .ev-watch-head { padding: 48px 20px 0; }
+    .ev-watch { padding-bottom: 64px; }
     .ev-watch-h { font-size: 28px; line-height: 36px; }
     .ev-card { flex-direction: column; align-items: flex-start; gap: 16px; }
     .ev-thumb { width: 96px; height: 96px; }
     .ev-title { font-size: 20px; line-height: 28px; }
+    .ev-carousel { height: 400px; }
   }
 }
