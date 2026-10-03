@@ -1,15 +1,30 @@
 ---
 /*
  * The pair of hero buttons plus the ticked reassurance row beneath them.
- * The original repeats this verbatim in the hero and in the closing CTA, so
- * it lives in one place. Ticks are #8d93a5 on the original, not green.
+ * Both product pages repeat this verbatim in the hero and again in the
+ * closing CTA, so it lives in one place.
+ *
+ * Measured: buttons 14/21 with 12/18 padding (45 tall, 47 with the border);
+ * ticks at 14px, the last icon a size smaller than the first two. The
+ * closing CTA on Embedded Analytics sets the same row a notch down — 43
+ * tall with 12px labels — which is what `small` does.
  */
+interface Props {
+  primary?: { href: string; label: string };
+  secondary?: { href: string; label: string };
+  small?: boolean;
+}
+const {
+  primary = { href: '/start', label: 'Try Metabase Cloud free' },
+  secondary = { href: '/open-source', label: 'Deploy Metabase Open Source' },
+  small = false,
+} = Astro.props;
 ---
-<div class="pp-cta-row">
-  <a href="/start" class="btn-primary pp-btn">Try Metabase Cloud free</a>
-  <a href="/open-source" class="btn-secondary pp-btn">Deploy Metabase Open Source</a>
+<div class:list={['pp-cta-row', small && 'pp-cta-row--sm']}>
+  <a href={primary.href} class="btn-primary pp-btn">{primary.label}</a>
+  <a href={secondary.href} class="btn-secondary pp-btn">{secondary.label}</a>
 </div>
-<p class="pp-points">
+<p class:list={['pp-points', small && 'pp-points--sm']}>
   {[['Free 14-day trial', 24], ['Super-fast setup', 24], ['Open source', 20]].map(([label, size]) => (
     <span class="pp-point">
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">

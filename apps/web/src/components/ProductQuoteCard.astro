@@ -1,0 +1,38 @@
+---
+/*
+ * The inline quote the Embedded Analytics page sets beneath each section's
+ * copy: body 18/26, then a 48px circular portrait overlapped by the company
+ * mark, then name 16/24/700 and role 16/24 in the muted grey.
+ *
+ * Distinct from ProductQuote (the Business Intelligence page's centred
+ * 84x50 variant), so the two are kept as separate components.
+ */
+import Avatar from './Avatar.astro';
+import { avatarSet } from '../lib/image';
+
+interface Props { quote: any; width?: number }
+const { quote, width } = Astro.props;
+const person = quote?.person;
+const company = quote?.company ?? person?.company;
+const logo = company?.logo?.url ? avatarSet(company.logo.url, 48) : null;
+---
+{quote && (
+  <blockquote class="pq-card" style={width ? `max-width:${width}px` : undefined}>
+    <p class="pq-body">{quote.quote}</p>
+    <footer class="pq-foot">
+      <span class="pq-marks">
+        <Avatar image={person?.avatar} name={person?.name} size={48} class="pq-face" />
+        {logo && (
+          <img class="pq-logo" src={logo.src} srcset={logo.srcset} width="48" height="48"
+               alt={`${company.name} logo`} loading="lazy" decoding="async" />
+        )}
+      </span>
+      <span class="pq-who">
+        <span class="pq-name">{person?.name}</span>
+        <span class="pq-role">
+          {person?.role}{company?.name && <>, {company.name}</>}
+        </span>
+      </span>
+    </footer>
+  </blockquote>
+)}

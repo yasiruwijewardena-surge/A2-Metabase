@@ -1,0 +1,31 @@
+---
+/*
+ * One card in the support-team marquee: a 14/22 quote on white, then a 44px
+ * portrait with the company mark tucked against it, the name at 14/700 and
+ * the role at 14 in the muted grey.
+ */
+import Avatar from './Avatar.astro';
+import { avatarSet } from '../lib/image';
+
+interface Props { quote: any }
+const { quote } = Astro.props;
+const person = quote?.person;
+const company = quote?.company ?? person?.company;
+const logo = company?.logo?.url ? avatarSet(company.logo.url, 40) : null;
+---
+<figure class="sq-card">
+  <p class="sq-body">&ldquo;{quote.quote}&rdquo;</p>
+  <figcaption class="sq-foot">
+    <span class="sq-marks">
+      <Avatar image={person?.avatar} name={person?.name} size={44} class="sq-face" />
+      {logo && (
+        <img class="sq-logo" src={logo.src} width="40" height="40"
+             alt={`${company.name} logo`} loading="lazy" decoding="async" />
+      )}
+    </span>
+    <span class="sq-who">
+      <span class="sq-name">{person?.name}</span>
+      <span class="sq-role">{person?.role}{company?.name && <>, {company.name}</>}</span>
+    </span>
+  </figcaption>
+</figure>
