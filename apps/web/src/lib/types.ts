@@ -129,3 +129,22 @@ export interface Plan {
   displayOrder: number;
   useCases?: UseCase[];
 }
+
+export interface Faq {
+  question: string;
+  slug: string;
+  answer: string;
+  page: string;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  displayOrder: number;
+}
+
+export interface PricingAddon {
+  name: string;
+  slug: string;
+  body: string;
+  rate?: string | null;
+  included?: string | null;
+  displayOrder: number;
+}

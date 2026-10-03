@@ -1,5 +1,6 @@
 import type {
-  Author, CaseStudy, Category, GlossaryTerm, Industry, Plan, Post, Tag, Testimonial, UseCase,
+  Author, CaseStudy, Category, Faq, GlossaryTerm, Industry, Plan, Post, PricingAddon, Tag,
+  Testimonial, UseCase,
 } from './types';
 
 const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
@@ -154,3 +155,9 @@ export const getPlans = () =>
     'populate[cta]': 'true',
     sort: 'displayOrder:asc',
   });
+
+export const getFaqs = (page = 'pricing') =>
+  all<Faq>('faqs', { 'filters[page][$eq]': page, sort: 'displayOrder:asc' });
+
+export const getPricingAddons = () =>
+  all<PricingAddon>('pricing-addons', { sort: 'displayOrder:asc' });

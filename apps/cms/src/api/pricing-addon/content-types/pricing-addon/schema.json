@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pricing_addons",
+  "info": {
+    "singularName": "pricing-addon",
+    "pluralName": "pricing-addons",
+    "displayName": "Pricing Addon",
+    "description": "A usage-based line on the pricing page: what it is, what it costs beyond the included allowance."
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name" },
+    "body": { "type": "text", "required": true },
+    "rate": { "type": "string", "description": "Headline rate, e.g. '$0.01 per run'." },
+    "included": { "type": "string", "description": "What the plans include before the rate applies." },
+    "displayOrder": { "type": "integer", "default": 0 }
+  }
+}

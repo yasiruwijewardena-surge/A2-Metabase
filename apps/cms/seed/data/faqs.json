@@ -1,0 +1,34 @@
+[
+  {
+    "question": "What's the difference between Pro and Enterprise?",
+    "slug": "pro-vs-enterprise",
+    "answer": "Feature-wise, zero — it's the same software. What differs is support, procurement, pricing, and deployment options: Enterprise gets a dedicated success engineer and a 1-day SLA, help with procurement, and custom pricing built around your business model.",
+    "page": "pricing",
+    "displayOrder": 0
+  },
+  {
+    "question": "Does it cost more money to create more visualizations, run more queries, connect to additional data sources, etc.?",
+    "slug": "cost-of-more-content",
+    "answer": "No. You can make as many dashboards, visualizations, collections and queries as you like, and connect to as many data sources as you have. Metabase costs the same no matter what you make, or how much you explore.",
+    "page": "pricing",
+    "displayOrder": 1
+  },
+  {
+    "question": "How are users calculated?",
+    "slug": "how-are-users-calculated",
+    "answer": "Everyone who signs into your Metabase, logging in directly or via SSO, is a user for the purposes of billing. Licences are for individuals and are non-transferrable.",
+    "linkLabel": "How we define users",
+    "linkUrl": "/docs",
+    "page": "pricing",
+    "displayOrder": 2
+  },
+  {
+    "question": "Can I adjust the number of users I'm paying for?",
+    "slug": "adjust-user-count",
+    "answer": "Yes. In your instance you can add or deactivate any users, and your billing is automatically prorated.",
+    "linkLabel": "Billing for new or deactivated users",
+    "linkUrl": "/docs",
+    "page": "pricing",
+    "displayOrder": 3
+  }
+]

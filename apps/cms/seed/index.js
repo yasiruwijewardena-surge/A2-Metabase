@@ -59,6 +59,8 @@ async function wipe(app, uid) {
 }
 
 const ORDER = [
+  'api::faq.faq',
+  'api::pricing-addon.pricing-addon',
   'api::plan.plan',
   'api::testimonial.testimonial',
   'api::case-study.case-study',
@@ -93,6 +95,8 @@ async function main() {
     const testimonials = read('testimonials.json').filter((x) => x.quote);
     const glossary = read('glossary.json');
     const plans = read('plans.json');
+    const faqs = read('faqs.json');
+    const addons = read('pricing-addons.json');
 
     // ---- 1. independent taxonomies -------------------------------------
     const byName = (list) => Object.fromEntries(list.map((d) => [d.name, d]));
@@ -134,6 +138,15 @@ async function main() {
         ...p,
         useCases: (p.useCases ?? []).map((n) => useCases[n]?.documentId).filter(Boolean),
       });
+    }
+
+    // The pricing page's prose sections, so the copy is editable rather than
+    // compiled into the page.
+    for (const f of faqs) {
+      await upsert(app, 'api::faq.faq', { slug: f.slug }, f);
+    }
+    for (const a of addons) {
+      await upsert(app, 'api::pricing-addon.pricing-addon', { slug: a.slug }, a);
     }
 
     for (const g of glossary) {

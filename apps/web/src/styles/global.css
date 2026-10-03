@@ -836,3 +836,47 @@
     .nav-actions { margin-left: auto; padding-inline: 0; }
   }
 }
+
+@layer components {
+  /* The prose sections below the plan tables, all on the same label/content
+     split the Deployment and Plans rows use. */
+  .pricing-tax { margin-top: 8px; text-align: right; font-size: 12px; color: var(--color-ink-2); }
+  .pricing-row--block { margin-top: 40px; align-items: flex-start; }
+  .pricing-block { flex: 1; min-width: 0; }
+  .pricing-lede { max-width: 760px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+
+  .pricing-users { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
+  .pricing-users > div { flex: 1; min-width: 190px; }
+  .pricing-users b { display: block; font-size: 16px; color: var(--color-ink); }
+  .pricing-users span { font-size: 14px; color: var(--color-ink-2); }
+
+  .pricing-addons { display: grid; gap: 20px; grid-template-columns: repeat(2, 1fr); }
+  .pricing-addon { border: 1px solid var(--color-line); border-radius: 12px; padding: 20px; }
+  .pricing-addon-name { font-size: 20px; line-height: 28px; font-weight: 700; }
+  .pricing-addon-rate { margin-top: 2px; font-size: 16px; font-weight: 700; color: var(--color-brand-hover); }
+  .pricing-addon-body { margin-top: 10px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
+  .pricing-addon-inc { margin-top: 8px; font-size: 13px; color: var(--color-ink-2); }
+
+  .pricing-faq { display: grid; gap: 0; }
+  .pricing-faq-item { border-bottom: 1px solid var(--color-line); }
+  .pricing-faq-item summary {
+    cursor: pointer; padding: 18px 0; list-style: none;
+    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-ink);
+  }
+  .pricing-faq-item summary::-webkit-details-marker { display: none; }
+  /* A disclosure triangle drawn in CSS so the row reads as expandable without
+     an icon font. */
+  .pricing-faq-item summary::after {
+    content: ""; float: right; width: 9px; height: 9px; margin-top: 8px;
+    border-right: 2px solid var(--color-ink-3); border-bottom: 2px solid var(--color-ink-3);
+    rotate: 45deg; transition: rotate 150ms;
+  }
+  .pricing-faq-item[open] summary::after { rotate: 225deg; }
+  .pricing-faq-item p { padding-bottom: 18px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .pricing-faq-item a { font-weight: 700; color: var(--color-brand-hover); }
+
+  @media (max-width: 991px) {
+    .pricing-row--block { flex-direction: column; }
+    .pricing-addons { grid-template-columns: 1fr; }
+  }
+}

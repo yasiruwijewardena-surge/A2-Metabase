@@ -13,9 +13,11 @@
  * use cases it belongs to, rather than one record per combination.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPlans, getUseCases } from '../lib/strapi';
+import { getPlans, getUseCases, getFaqs, getPricingAddons } from '../lib/strapi';
 
-const [plans, useCases] = await Promise.all([getPlans(), getUseCases()]);
+const [plans, useCases, faqs, addons] = await Promise.all([
+  getPlans(), getUseCases(), getFaqs('pricing'), getPricingAddons(),
+]);
 
 const slugOf = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const money = (n: number) => `$${n.toLocaleString('en-US')}`;
@@ -122,6 +124,72 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
             {p.footnote && <p class="plan-foot">{p.footnote}</p>}
           </article>
         ))}
+      </div>
+    </section>
+
+    <p class="pricing-tax">Prices exclude any applicable taxes</p>
+
+    <section class="pricing-row pricing-row--block">
+      <h2 class="pricing-row-head">Users</h2>
+      <div class="pricing-block">
+        <p class="pricing-lede">
+          Both your internal team developing analytics and users of your embeds accessed
+          through your product count as users.
+        </p>
+        <div class="pricing-users">
+          <div><b>Free unlimited users</b><span>Open Source</span></div>
+          <div><b>+ $6 per user / month</b><span>$65 per user / year</span></div>
+          <div><b>First 5 users included</b><span>then $12 per user / month</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing-row pricing-row--block">
+      <h2 class="pricing-row-head">Everything else is optional</h2>
+      <div class="pricing-block">
+        <p class="pricing-lede">
+          Beyond hosting costs, our additional paid features are optional and have included
+          credits to get you started, with usage-based pricing once you use up your credits.
+        </p>
+      </div>
+    </section>
+
+    <section class="pricing-row pricing-row--block">
+      <h2 class="pricing-row-head">Usage-based pricing</h2>
+      <div class="pricing-block pricing-addons">
+        {addons.map((a) => (
+          <article class="pricing-addon">
+            <h3 class="pricing-addon-name">{a.name}</h3>
+            {a.rate && <p class="pricing-addon-rate">{a.rate}</p>}
+            <p class="pricing-addon-body">{a.body}</p>
+            {a.included && <p class="pricing-addon-inc">Includes {a.included}.</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="pricing-row pricing-row--block">
+      <h2 class="pricing-row-head">FAQ</h2>
+      <div class="pricing-block pricing-faq">
+        {faqs.map((f) => (
+          <details class="pricing-faq-item">
+            <summary>{f.question}</summary>
+            <p>
+              {f.answer}
+              {f.linkLabel && f.linkUrl && <> <a href={f.linkUrl}>{f.linkLabel}</a></>}
+            </p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="pricing-row pricing-row--block">
+      <h2 class="pricing-row-head">First-class compliance</h2>
+      <div class="pricing-block">
+        <p class="pricing-lede">
+          Metabase upholds SOC 2 Type II and SOC 1 certifications while ensuring full
+          compliance with regulations like GDPR and CCPA.
+        </p>
       </div>
     </section>
 
