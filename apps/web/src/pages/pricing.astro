@@ -45,7 +45,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
     </fieldset>
 
     <section class="pricing-row">
-      <h2 class="pricing-row-head">Deployment</h2>
+      <div class="pricing-label pricing-label--mid"><h2 class="pricing-row-head">Deployment</h2></div>
       <fieldset class="pricing-deploys">
         <legend class="sr-only">Where should Metabase run?</legend>
         {[
@@ -67,7 +67,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
     </section>
 
     <section class="pricing-row pricing-row--plans">
-      <div class="pricing-aside">
+      <div class="pricing-label">
         <h2 class="pricing-row-head">Plans</h2>
         <fieldset class="pricing-billing">
           <legend class="sr-only">Billing period</legend>
@@ -127,8 +127,6 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
       </div>
     </section>
 
-    <p class="pricing-tax">Prices exclude any applicable taxes</p>
-
     {/*
       Every row below is the same grid: a 240px column, a 24px gap, then the
       content — so every heading lands on the same left edge. The table rows
@@ -161,6 +159,8 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
         </div>
       </div>
     </section>
+
+    <p class="pricing-tax">Prices exclude any applicable taxes</p>
 
     <section class="pricing-row pricing-sec">
       <div class="pricing-spacer"></div>
@@ -231,6 +231,28 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
         {['soc-2-type-1-badge', 'soc-2-type-2-badge', 'gdpr-certificate-badge'].map((f) => (
           <img src={`/images/home/${f}.png`} alt="" width="80" height="80" loading="lazy" decoding="async" />
         ))}
+      </div>
+    </section>
+
+    {/* A cross-sell: the original shows this on the Business Intelligence view
+        and hides it once you switch to Embedded Analytics, since by then you
+        are already reading the thing it advertises. */}
+    <section class="pricing-row pricing-sec pricing-embed">
+      <div class="pricing-label"><h2 class="pricing-row-head">Embedding</h2></div>
+      <div class="pricing-embed-card">
+        <div class="pricing-embed-copy">
+          <h3 class="pricing-embed-title">Get in-product reporting in days, not sprints</h3>
+          <p class="pricing-embed-price">From $575 <span>/ month</span></p>
+          <p class="pricing-embed-note">
+            Advanced embedding features are available on the Pro and Enterprise plans,
+            with multi-tenant data segregation and full white-labelling.
+          </p>
+          <a href="/pricing" class="pricing-embed-link">Embedded analytics pricing</a>
+        </div>
+        <div class="pricing-embed-media" aria-hidden="true">
+          <img src="/images/home/embedding-promo.webp" alt="" width="471" height="267"
+               loading="lazy" decoding="async" />
+        </div>
       </div>
     </section>
 

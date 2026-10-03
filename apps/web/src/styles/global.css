@@ -725,7 +725,8 @@
 
   .pricing-row { display: flex; gap: 24px; margin-bottom: 24px; }
   .pricing-row-head { font-size: 16px; line-height: 22px; font-weight: 700; color: var(--color-ink); }
-  .pricing-row > .pricing-row-head, .pricing-aside { flex: 0 0 180px; }
+  /* The Deployment panel centres its single label; the taller ones top-align. */
+  .pricing-label--mid { display: flex; align-items: center; padding: 24px; }
 
   .pricing-deploys { display: flex; flex: 1; gap: 24px; border: 0; padding: 0; margin: 0; }
   .pricing-deploy {
@@ -739,7 +740,7 @@
   .pricing-deploy-title { display: block; font-weight: 700; color: var(--color-ink); }
   .pricing-deploy-note { display: block; font-size: 14px; color: var(--color-ink-2); }
 
-  .pricing-billing { border: 0; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; font-size: 14px; }
+  .pricing-billing { border: 0; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; font-size: 14px; }
   /* Each input and its label are one row; as bare grid children they each took
      a cell of their own and the radio sat above its text. */
   .pricing-billing-opt { display: flex; align-items: center; gap: 8px; }
@@ -910,5 +911,38 @@
     .pricing-card { padding: 24px; }
     .pricing-sec-title { font-size: 26px; line-height: 34px; }
     .pricing-badges { margin-left: 0; }
+  }
+}
+
+@layer components {
+  /*
+   * Embedding cross-sell. A tinted card rather than a bordered white one, with
+   * the copy in a 360 column and the artwork bleeding to the card's right edge
+   * — which is why the card pads only on its left.
+   */
+  .pricing-embed-card {
+    display: flex; flex: 1; min-width: 0; justify-content: space-between;
+    border: 1px solid var(--color-line); border-radius: 12px;
+    background: var(--color-brand-faint); padding-left: 48px; overflow: hidden;
+  }
+  .pricing-embed-copy { max-width: 360px; padding-block: 48px; }
+  .pricing-embed-title { font-size: 30px; line-height: 37.5px; font-weight: 700; }
+  .pricing-embed-price { margin-top: 16px; font-size: 18px; line-height: 28px; color: var(--color-ink); }
+  .pricing-embed-price span { color: var(--color-ink-3); }
+  .pricing-embed-note { margin-top: 12px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
+  .pricing-embed-link {
+    display: inline-block; margin-top: 16px;
+    font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .pricing-embed-link:hover { text-decoration: underline; }
+  .pricing-embed-media { align-self: flex-start; width: 471px; flex: none; }
+  .pricing-embed-media img { display: block; width: 100%; height: auto; }
+
+  /* Shown on Business Intelligence, hidden once Embedded Analytics is picked. */
+  .pricing:has(#uc-embedded-analytics:checked) .pricing-embed { display: none; }
+
+  @media (max-width: 991px) {
+    .pricing-embed-card { flex-direction: column; padding: 24px; }
+    .pricing-embed-media { width: 100%; }
   }
 }
