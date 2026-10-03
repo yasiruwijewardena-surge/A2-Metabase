@@ -1782,3 +1782,115 @@
     .fp-faq-h { font-size: 24px; line-height: 32px; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * /roadmap
+ *
+ * 824 of main beside a 232 sidebar inside the 1264 content column. Each stage
+ * is a #fafbfe block with a tinted header strip and a white body of 375-wide
+ * item cards, two up.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .rm { padding-block: 40px 96px; }
+
+  .rm-tabs { display: flex; gap: 8px; }
+  .rm-tab {
+    padding: 8px 12px; border-radius: 12px;
+    font-size: 16px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
+    transition: background-color 150ms, color 150ms;
+  }
+  .rm-tab:hover { background: var(--color-surface); }
+  .rm-tab--on { color: var(--color-brand-hover); background: #eef6fc; }
+
+  .rm-h1 {
+    padding-block: 24px 48px; margin-bottom: 8px;
+    font-size: 30px; line-height: 36px; font-weight: 700; color: var(--color-ink);
+  }
+
+  .rm-body { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; }
+  .rm-main { flex: 0 1 824px; min-width: 0; }
+  .rm-side { flex: 0 0 232px; }
+
+  .rm-group {
+    margin-bottom: 24px;
+    background: var(--color-brand-faint);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .rm-group-h {
+    padding: 24px;
+    font-size: 20px; line-height: normal; font-weight: 700;
+    border-radius: 12px;
+  }
+  .rm-group-h--green { color: #4a7a1f; background: #f5f9f0; }
+  .rm-group-h--amber { color: #8a6a00; background: #fef9e6; }
+  .rm-group-h--blue  { color: var(--color-brand-hover); background: var(--color-brand-muted); }
+
+  /* 2 x 375 inside a 776 content box leaves 26 of gutter. */
+  .rm-items {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px; padding: 24px; background: #fff;
+  }
+  .rm-item {
+    padding-top: 19px;
+    background: var(--color-brand-faint); border-radius: 12px;
+  }
+  /* Inline on the original, so its box is the text and its 28px line is what
+   * sets the row above the description. The 20 comes from a margin, not
+   * padding, or the box would measure 40 wider than the words. */
+  /* fit-content keeps the box the width of the words, as the original's is,
+   * while the 52 on the right still wraps the longer titles to two lines.
+   * The 14 beneath is what makes the common card 121 rather than 107. */
+  .rm-item strong {
+    display: block; width: fit-content;
+    margin: 0 52px 14px 20px;
+    font-size: 20px; line-height: 28px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .rm-item p {
+    margin: 0; padding: 0 52px 16px 20px;
+    font-size: 16px; line-height: 22px; color: var(--color-ink-2);
+  }
+
+  .rm-foot { font-size: 16px; line-height: 26px; color: var(--color-ink-2); }
+  .rm-foot a, .rm-card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-weight: 700; color: var(--color-brand-hover);
+  }
+  .rm-foot a:hover, .rm-card-link:hover { text-decoration: underline; }
+  .rm-foot svg, .rm-card-link svg { display: block; flex: none; }
+
+  .rm-stages { display: flex; flex-direction: column; align-items: flex-start; }
+  .rm-stage {
+    min-width: 101px; padding: 1px 6px 12px;
+    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .rm-stage:hover { text-decoration: underline; }
+
+  .rm-note {
+    margin-top: 12px; margin-bottom: 24px;
+    font-size: 16px; line-height: 24px; color: var(--color-ink-2);
+  }
+  .rm-card {
+    margin-bottom: 24px; padding: 24px;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  .rm-card b, .rm-card-h {
+    display: block; width: fit-content; max-width: 100%; margin-bottom: 8px;
+    font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .rm-card-h { font-size: 14px; line-height: 19px; color: var(--color-brand-hover); }
+  .rm-card p { margin-bottom: 16px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+
+  @media (max-width: 1199px) {
+    .rm-body { gap: 24px; }
+  }
+  @media (max-width: 991px) {
+    .rm { padding-block: 24px 56px; }
+    .rm-h1 { padding-block: 16px 24px; font-size: 26px; line-height: 32px; }
+    .rm-body { flex-direction: column; }
+    .rm-main, .rm-side { flex: 1 1 auto; width: 100%; }
+    .rm-items { grid-template-columns: 1fr; gap: 16px; }
+    .rm-stages { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .rm-stage { padding: 4px 8px; }
+  }
+}

@@ -1,0 +1,142 @@
+---
+/*
+ * /roadmap
+ *
+ * Measured off the original at 1512 with `npm run metrics --root div.roadmap`:
+ *   tabs       two pills, 42 tall, r12, padding 8/12, 8 apart; the active one
+ *              is brand text on #eef6fc
+ *   h1         1264x108 30/36/700, padding 24 top / 48 bottom, mb 8
+ *   body       824 main + 232 sidebar inside 1264, so 208 of gutter
+ *   group      824 wide, #fafbfe, r12, mb 24, made of
+ *                a 73-tall header strip at 20px/700, r12, padding 24, each
+ *                  stage in its own pair of colours
+ *                a white body padded 24, holding 375-wide item cards two up
+ *                  (#fafbfe, r12, 26 apart): strong 20/28/700 with 5 under
+ *                  it, then a 16/22 line padded 0/52/16/20
+ *   sidebar    three stage buttons (101x37, 16/700), a 182-wide note, then
+ *              232-wide white r12 cards padded 24
+ *
+ * The three stage buttons are a scroll-position indicator on the original
+ * (one is brand, the others grey). Reproducing that needs JavaScript to
+ * track the viewport, so here they are in-page anchor links instead: the
+ * same navigation, and they work before anything hydrates.
+ *
+ * The item titles are Metabase's own published roadmap, which is factual
+ * and public. The one-line descriptions are written here rather than
+ * copied, as elsewhere in the replica.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const groups = [
+  {
+    id: 'now', nav: 'Now', heading: 'Actively being built', tone: 'green',
+    items: [
+      ['Explorations', 'A new way to work through your data, with AI alongside you rather than in the way.'],
+      ['Transform indexes', 'Create indexes on your transforms and keep them persisted between runs.'],
+      ['Treemaps', 'A new tree map chart type, for when a pie has too many slices to read.'],
+      ['Dashboard invites', 'Share a dashboard with someone outside Metabase in a single click.'],
+      ['PDFs in subscriptions', 'Attach a dashboard to a subscription as a PDF, not just inline images.'],
+      ['More AI providers', 'Support for Azure and AWS Bedrock models alongside the current providers.'],
+    ],
+  },
+  {
+    id: 'soon', nav: 'Soon', heading: 'Planned for the next release or two', tone: 'amber',
+    items: [
+      ['Workspaces', 'Isolated data warehouse space for each agent, so one cannot disturb another.'],
+      ['Data apps', 'Custom applications built on top of the Metabase semantic layer.'],
+      ['Product analytics', 'Track and analyse product events natively, without a second tool to reconcile.'],
+      ['Content optimizer', 'Organise what already exists and surface the parts actually worth reading.'],
+      ['Transform improvements', 'Faster transforms, clearer error handling, and a number of smaller fixes.'],
+      ['Transform tests', 'Verification for the semantic layer, so a model can be trusted on sight.'],
+      ['Two-factor authentication (2FA)', 'Add support for two-factor authentication, where SSO is not the answer.'],
+    ],
+  },
+  {
+    id: 'later', nav: 'Later', heading: 'Coming in the next 6 months or so', tone: 'blue',
+    items: [
+      ['Data catalog', 'Track lineage, PII and data quality, and help people find the right table.'],
+      ['Data warehouse cost insights', 'Know what your queries cost, and optimise or stop the expensive ones.'],
+      ['Mandatory filters and partition support', 'Require a filter on every GUI query, so partitioned tables stay affordable.'],
+      ['Permissions debugger', 'Troubleshoot permissions as an admin, and set them with more confidence.'],
+      ['Better control over auto-refresh', 'Pre-configured intervals, finer increments, and a clearer interface for both.'],
+      ['Better search UX', 'Easier access to filters, and a full results page worth landing on.'],
+      ['LLM-powered data extraction', 'Pull structure out of unstructured data, without writing the parser yourself.'],
+      ['More improvements to table viz', 'Column totals, multi-select, and much better handling of very wide tables.'],
+      ['Relative date expressions in SQL', 'More flexible date filters, expressed relative to when the query runs.'],
+      ['SQL editor improvements', 'Better ergonomics for the querying you actually do every day.'],
+      ['User and instance attributes in parameters', 'Reference things like user.email or instance.timezone in a query.'],
+      ['Dynamic goals', 'Define a goal line using another question, rather than a fixed number.'],
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Roadmap | Metabase"
+  description="Highlights of what we're cooking: what is actively being built, what is planned for the next release or two, and what is coming in the next six months."
+>
+  <div class="rm">
+    <div class="container-mb">
+      <nav class="rm-tabs" aria-label="Product updates">
+        <a href="/releases" class="rm-tab">What's new</a>
+        <a href="/roadmap" class="rm-tab rm-tab--on" aria-current="page">Roadmap</a>
+      </nav>
+
+      <h1 class="rm-h1">Highlights of what we're cooking</h1>
+
+      <div class="rm-body">
+        <div class="rm-main">
+          {groups.map((g) => (
+            <section class="rm-group" id={g.id}>
+              <h2 class:list={['rm-group-h', `rm-group-h--${g.tone}`]}>{g.heading}</h2>
+              <ul class="rm-items">
+                {g.items.map(([title, body]) => (
+                  <li class="rm-item">
+                    <strong>{title}</strong>
+                    <p>{body}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+          <p class="rm-foot">
+            Want to see what we shipped recently?
+            <a href="/releases">
+              See what's new
+              <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </p>
+        </div>
+
+        <aside class="rm-side">
+          <nav class="rm-stages" aria-label="Jump to a stage">
+            {groups.map((g) => <a href={`#${g.id}`} class="rm-stage">{g.nav}</a>)}
+          </nav>
+          <p class="rm-note">
+            Keep in mind that these are non-exhaustive plans and subject to change. We ship
+            when something is ready rather than when a date says so, which means the order
+            here moves around more than we would like.
+          </p>
+          <div class="rm-card">
+            <b>Have a great feature idea?</b>
+            <a href="https://github.com/metabase/metabase/discussions" class="rm-card-link">
+              Submit on GitHub
+              <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </div>
+          <div class="rm-card">
+            <h2 class="rm-card-h">What's new</h2>
+            <p>Want to see what we shipped recently?</p>
+            <a href="/releases" class="rm-card-link">
+              See what's new
+              <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
