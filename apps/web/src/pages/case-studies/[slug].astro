@@ -33,7 +33,7 @@ const facts = [
     then a 3-column fact panel sits beside the 8-column article, whose hero
     runs 3:1.
   */}
-  <main class="container-mb cs-main">
+  <div class="container-mb cs-main">
     <div class="cs-grid">
       <div class="cs-back-col">
         <a href="/case-studies" class="cs-back">
@@ -107,7 +107,7 @@ const facts = [
         <RichText blocks={cs.body} variant="sans" />
       </article>
     </div>
-  </main>
+  </div>
 
   {cs.relatedCaseStudies && cs.relatedCaseStudies.length > 0 && (
     <section class="border-t border-(--color-line) bg-(--color-brand-faint) py-14">

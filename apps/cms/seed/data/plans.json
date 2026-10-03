@@ -54,7 +54,8 @@
     "useCases": [
       "Business Intelligence"
     ],
-    "displayOrder": 1
+    "displayOrder": 1,
+    "footnoteSecondary": "14 days free trial. Upgrade anytime."
   },
   {
     "name": "Pro",
@@ -78,7 +79,7 @@
     ],
     "footnote": "Set up in 2 minutes",
     "cta": {
-      "label": "Get started",
+      "label": "Start free trial",
       "url": "/start",
       "style": "primary"
     },
@@ -86,7 +87,8 @@
     "useCases": [
       "Business Intelligence"
     ],
-    "displayOrder": 2
+    "displayOrder": 2,
+    "footnoteSecondary": "14 days free trial"
   },
   {
     "name": "Pro",
@@ -107,7 +109,7 @@
     ],
     "footnote": "Set up in 2 minutes",
     "cta": {
-      "label": "Get started",
+      "label": "Start free trial",
       "url": "/start",
       "style": "primary"
     },
@@ -115,7 +117,8 @@
     "useCases": [
       "Embedded Analytics"
     ],
-    "displayOrder": 3
+    "displayOrder": 3,
+    "footnoteSecondary": "14 days free trial"
   },
   {
     "name": "Enterprise",

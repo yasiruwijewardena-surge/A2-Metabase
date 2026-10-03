@@ -124,6 +124,7 @@ export interface Plan {
   featuresLead?: string | null;
   features: string[];
   footnote?: string | null;
+  footnoteSecondary?: string | null;
   cta?: { label: string; url: string; style?: string } | null;
   highlighted?: boolean;
   displayOrder: number;

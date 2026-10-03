@@ -47,7 +47,7 @@ const label = here
   {/* The auditor keys on this attribute: a stub is not a real page, and
       without the marker the link audit sees these in dist/ and concludes
       every link resolves. */}
-  <main class="container-mb stub" data-replica-stub>
+  <div class="container-mb stub" data-replica-stub>
     <p class="stub-eyebrow">Not part of this build</p>
     <h1 class="stub-title">{label}</h1>
     <p class="stub-body">
@@ -70,5 +70,5 @@ const label = here
         </li>
       ))}
     </ul>
-  </main>
+  </div>
 </BaseLayout>

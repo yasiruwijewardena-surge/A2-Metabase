@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "start": "node server.mjs",
-    "audit:links": "node scripts/audit-links.mjs"
+    "audit:links": "node scripts/audit-links.mjs",
+    "diff": "node scripts/page-diff.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -25,5 +26,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.12.0"
   }
 }

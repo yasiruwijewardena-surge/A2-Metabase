@@ -27,7 +27,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
   title="Pricing | Metabase"
   description="Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
 >
-  <main class="pricing container-mb">
+  <div class="pricing container-mb">
     <h1 class="pricing-title">
       <span class="pricing-title-uc" data-uc="business-intelligence">Business intelligence</span>
       <span class="pricing-title-uc" data-uc="embedded-analytics">Embedded analytics</span>{' '}
@@ -81,6 +81,10 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
             </span>
           ))}
         </fieldset>
+        <p class="pricing-compare">
+          See the full list of features
+          <a href="/pricing">Compare plans</a>
+        </p>
       </div>
 
       <div class="pricing-plans">
@@ -90,7 +94,16 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
             data-deploy={(p.deployments ?? []).join(' ')}
             data-uc={(p.useCases ?? []).map((u) => u.slug ?? slugOf(u.name)).join(' ')}
           >
-            <h3 class="plan-name">{p.name}</h3>
+            <div class="plan-head">
+              <h3 class="plan-name">{p.name}</h3>
+              {/* The saving is advertised while you are looking at monthly
+                  prices: the yearly rate, with the monthly one struck out. */}
+              {p.priceMonthly != null && p.priceYearly != null && p.priceYearly < p.priceMonthly && (
+                <span class="plan-save" data-billing="monthly">
+                  <s>{money(p.priceMonthly)}</s>{money(p.priceYearly)} / mo.
+                </span>
+              )}
+            </div>
 
             <p class="plan-price">
               {p.priceMonthly == null ? (
@@ -103,25 +116,35 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
                   </span>
                   <span class="plan-price-when" data-billing="yearly">
                     <span class="plan-price-figure">{money(p.priceYearly ?? p.priceMonthly)}</span>
-                    <span class="plan-price-unit"> / month, billed yearly</span>
+                    <span class="plan-price-unit"> / month</span>
                   </span>
                 </>
               )}
             </p>
 
-            {p.tagline && <p class="plan-tagline">{p.tagline}</p>}
-            {p.featuresLead && <p class="plan-lead">{p.featuresLead}</p>}
+            <div class="plan-features">
+              {p.featuresLead && <p class="plan-lead">{p.featuresLead}</p>}
+              <ul>
+                {(p.features ?? []).map((f) => (
+                  <li>
+                    <svg class="plan-bullet" width="4" height="21" viewBox="0 0 4 21" fill="none" aria-hidden="true">
+                      <circle cx="2" cy="10.5" r="2" fill="currentColor" />
+                    </svg>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <ul class="plan-features">
-              {(p.features ?? []).map((f) => <li>{f}</li>)}
-            </ul>
-
-            {p.cta && (
-              <a href={p.cta.url} class:list={[p.cta.style === 'primary' ? 'btn-primary' : 'btn-secondary', 'plan-cta']}>
-                {p.cta.label}
-              </a>
-            )}
-            {p.footnote && <p class="plan-foot">{p.footnote}</p>}
+            <div class="plan-cta-row">
+              {p.cta && (
+                <a href={p.cta.url} class:list={[p.cta.style === 'primary' ? 'btn-primary' : 'btn-secondary', 'plan-cta']}>
+                  {p.cta.label}
+                </a>
+              )}
+              {p.footnote && <span class="plan-foot">{p.footnote}</span>}
+              {p.footnoteSecondary && <span class="plan-foot">{p.footnoteSecondary}</span>}
+            </div>
           </article>
         ))}
       </div>
@@ -260,5 +283,5 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
       Prices and tiers mirror metabase.com. This is a replica built for an assignment —
       nothing here can be purchased.
     </p>
-  </main>
+  </div>
 </BaseLayout>

@@ -786,6 +786,7 @@ export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
     features: Schema.Attribute.JSON & Schema.Attribute.Required;
     featuresLead: Schema.Attribute.String;
     footnote: Schema.Attribute.String;
+    footnoteSecondary: Schema.Attribute.String;
     highlighted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::plan.plan'> &

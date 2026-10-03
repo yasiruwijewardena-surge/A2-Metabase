@@ -751,26 +751,52 @@
      a cell of their own and the radio sat above its text. */
   .pricing-billing-opt { display: flex; align-items: center; gap: 8px; }
   .pricing-billing label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+  .pricing-compare {
+    margin-top: 24px; font-size: 14px; line-height: 21px; color: var(--color-ink-2);
+  }
+  .pricing-compare a { display: block; font-weight: 700; color: var(--color-brand-hover); }
+  .pricing-compare a:hover { text-decoration: underline; }
+
   .pricing-save {
     border-radius: 4px; background: var(--color-ok-faint); padding: 1px 6px;
     font-size: 12px; font-weight: 700; color: var(--color-ok-strong);
   }
 
-  .pricing-plans { display: flex; flex: 1; border: 1px solid var(--color-line); border-radius: 12px; }
-  .plan { flex: 1; min-width: 0; padding: 32px; border-right: 1px solid rgb(0 0 0 / 0.1); display: flex; flex-direction: column; }
+  /*
+   * Plan columns. Measured off the original: a 330 column at 32px padding
+   * divided by a 1px hairline, the name at 16/400 rather than bold, and the
+   * figure at 24/32 with its unit in tertiary ink. The bullets are 4px dots in
+   * their own svg, 12px clear of the text.
+   */
+  .pricing-plans { display: flex; flex: 1; min-width: 0; border: 1px solid var(--color-line); border-radius: 12px; }
+  .plan { flex: 1; min-width: 0; padding: 32px; display: flex; flex-direction: column; border-right: 1px solid rgb(0 0 0 / 0.1); }
   .plan:last-child { border-right: 0; }
   .plan--on { background: var(--color-brand-faint); }
-  .plan-name { margin-bottom: 6px; font-size: 16px; line-height: 20px; font-weight: 700; }
-  .plan-price { margin-bottom: 16px; font-size: 24px; line-height: 32px; }
-  .plan-price-figure { color: var(--color-ink); font-weight: 700; }
-  .plan-price-unit { color: var(--color-ink-2); }
-  .plan-tagline { margin-bottom: 16px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
-  .plan-lead { margin-bottom: 12px; font-size: 14px; font-weight: 700; color: var(--color-ink); }
-  .plan-features { display: grid; gap: 10px; margin-bottom: 24px; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
-  .plan-features li { display: flex; gap: 8px; }
-  .plan-features li::before { content: "·"; color: var(--color-ink-4); }
-  .plan-cta { margin-top: auto; width: 100%; }
-  .plan-foot { margin-top: 10px; text-align: center; font-size: 12px; color: var(--color-ink-2); }
+
+  .plan-head { display: flex; align-items: center; }
+  .plan-name { margin-right: 6px; font-size: 16px; line-height: 19px; font-weight: 400; color: var(--color-ink); }
+  /* The original's green is #236d00 on white — it clears AA, so it stays. */
+  .plan-save {
+    border-radius: 4px; padding: 4px 6px;
+    font-size: 12px; line-height: 16px; font-weight: 700; color: var(--color-ok-strong);
+  }
+  .plan-save s { padding-right: 4px; font-weight: 400; }
+
+  .plan-price { margin-top: 6px; font-size: 24px; line-height: 32px; }
+  .plan-price-figure { color: var(--color-ink); }
+  .plan-price-unit { color: var(--color-ink-3); }
+  .plan-price-when { display: none; }
+
+  .plan-features { margin: 32px 0 24px; }
+  .plan-lead { margin-bottom: 12px; font-size: 14px; line-height: 21px; font-weight: 700; color: var(--color-ink); }
+  .plan-features ul { display: flex; flex-direction: column; }
+  .plan-features li { display: flex; font-size: 14px; line-height: 21px; color: var(--color-ink-2); }
+  .plan-bullet { flex: none; margin: 2px 12px 0 0; color: var(--color-ink-4); }
+
+  .plan-cta-row { margin-top: auto; padding-top: 32px; border-top: 1px solid var(--color-line); }
+  .plan-cta { width: 100%; }
+  .plan-foot { display: block; margin-top: 10px; text-align: center; font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
+  .plan-foot + .plan-foot { margin-top: 0; }
 
   .pricing-note { margin-top: 48px; font-size: 14px; color: var(--color-ink-2); }
 
