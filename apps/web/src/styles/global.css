@@ -1570,3 +1570,215 @@
     .ea-final-media { margin-top: 40px; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * /features/* shared template
+ *
+ * Numbers from an element dump of /features/sql-editor at 1512; the full list
+ * is in the comment at the top of src/pages/features/[slug].astro.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .fp-neutral {
+    margin-bottom: 68px;
+    padding-block: 48px 80px;
+    background: var(--color-brand-faint);
+    border-bottom: 1px solid var(--color-line);
+  }
+  /* 1320 shell inside the 1512 band leaves the original's 1264 of content. */
+  .fp-shell { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 28px; }
+
+  .fp-hero { display: flex; align-items: center; gap: 0; margin-top: 40px; }
+  .fp-hero-text { flex: 0 0 632px; min-width: 0; max-width: 100%; }
+  .fp-hero-media { flex: 0 0 632px; min-width: 0; max-width: 100%; }
+  .fp-hero-media video {
+    display: block; width: 100%; height: auto;
+    background: var(--color-brand-faint);
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+  }
+
+  .fp-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    max-width: 560px; margin-top: 28px; margin-bottom: 32px;
+    font-size: 18px; line-height: normal; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .fp-eyebrow img { display: block; flex: none; }
+
+  .fp-h1 {
+    max-width: 560px; margin-bottom: 24px;
+    font-size: 36px; line-height: 40px; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+  .fp-standfirst {
+    max-width: 560px; margin-bottom: 16px;
+    font-size: 20px; line-height: 28px; color: var(--color-ink-2);
+  }
+
+  .fp-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 24px; }
+  .fp-btn {
+    display: inline-block; padding: 13px 20px; border-radius: 8px;
+    font-size: 16px; line-height: 24px; font-weight: 700;
+    transition: background-color 150ms, border-color 150ms;
+  }
+  .fp-btn--primary { background: var(--color-brand); color: #fff; }
+  .fp-btn--primary:hover { background: var(--color-brand-hover); }
+  .fp-btn--secondary {
+    padding-block: 12px;
+    background: #fff; color: var(--color-brand-hover);
+    border: 1px solid rgb(198 201 210 / 0.5);
+  }
+  .fp-btn--secondary:hover { background: var(--color-brand-muted); }
+
+  .fp-h2 {
+    margin-top: 140px; margin-bottom: 24px;
+    font-size: 32px; line-height: 37px; font-weight: 700; color: var(--color-ink);
+  }
+  .fp-h2--b { margin-top: 120px; margin-bottom: 0; }
+  .fp-sub {
+    max-width: 576px; margin-inline: auto;
+    font-size: 18px; line-height: 26px; color: var(--color-ink-2); text-align: center;
+  }
+
+  /* 3 x 400 in 1264 leaves 32 of gutter. */
+  .fp-cards, .fp-links {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 400px));
+    justify-content: space-between; gap: 32px; margin-top: 64px;
+  }
+  .fp-card, .fp-link-card {
+    display: block; padding: 24px;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  .fp-card > img { display: block; margin-bottom: 24px; }
+  .fp-card-h {
+    margin-bottom: 16px;
+    font-size: 16px; line-height: 18px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .fp-card-p { font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .fp-card-p a { font-weight: 700; color: var(--color-brand-hover); }
+  .fp-card-p a:hover { text-decoration: underline; }
+
+  .fp-links { align-items: start; margin-bottom: 120px; }
+  .fp-link-card { height: 100%; transition: border-color 150ms, box-shadow 150ms; }
+  .fp-link-card:hover {
+    border-color: var(--color-brand-border);
+    box-shadow: 0 6px 12px -4px rgb(24 39 75 / 0.08);
+  }
+  .fp-pill {
+    display: inline-block; padding: 8px 12px; line-height: normal;
+    font-size: 11px; font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-brand-hover); background: #eef6fc;
+    border: 1px solid var(--color-brand-border); border-radius: 8px;
+  }
+  .fp-link-h {
+    margin-top: 16px;
+    font-size: 24px; line-height: 36px; font-weight: 700; color: var(--color-ink);
+  }
+
+  /* --- numbered how-to ------------------------------------------------- */
+  .fp-howto { padding-inline: 28px; text-align: center; }
+  .fp-howto-h {
+    width: fit-content; max-width: 100%; margin: 0 auto 24px;
+    font-size: 36px; line-height: 48px; font-weight: 700; color: var(--color-ink);
+  }
+  .fp-steps {
+    width: 100%; max-width: 592px; margin-inline: auto;
+    padding: 48px; text-align: left;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 24px;
+  }
+  .fp-steps > li { display: flex; align-items: flex-start; }
+  .fp-steps > li + li { margin-top: 24px; }
+  .fp-step-n {
+    display: flex; align-items: center; justify-content: center;
+    flex: none; width: 36px; height: 36px; margin-right: 20px;
+    font-size: 16px; line-height: normal; font-weight: 700; color: var(--color-brand-hover);
+    background: #eef6fc; border: 1px solid var(--color-brand-border); border-radius: 50%;
+  }
+  .fp-step-t { margin-top: 5px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  .fp-step-t b { font-weight: 700; color: var(--color-ink); }
+
+  /* --- closing CTA ----------------------------------------------------- */
+  .fp-final {
+    margin-top: 68px; padding: 80px 28px 76px;
+    background: var(--color-brand-faint); text-align: center;
+  }
+  .fp-final-h {
+    width: fit-content; max-width: 100%; margin: 0 auto 24px;
+    font-size: 36px; line-height: 48px; font-weight: 700; color: var(--color-ink);
+  }
+  .fp-final-p {
+    width: fit-content; max-width: 600px; margin: 0 auto 16px;
+    font-size: 18px; line-height: 32px; color: var(--color-ink-2);
+  }
+  .fp-final-p a { font-weight: 700; color: var(--color-brand-hover); }
+  .fp-final-p a:hover { text-decoration: underline; }
+  .fp-final .fp-ctas { justify-content: center; }
+
+  @media (max-width: 1199px) {
+    .fp-hero-text, .fp-hero-media { flex: 1 1 50%; }
+    .fp-cards, .fp-links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  }
+  @media (max-width: 991px) {
+    .fp-neutral { margin-bottom: 40px; padding-block: 32px 48px; }
+    .fp-hero { flex-direction: column; align-items: stretch; gap: 32px; }
+    .fp-hero-text, .fp-hero-media { flex: 1 1 auto; }
+    .fp-h1 { font-size: 28px; line-height: 34px; }
+    .fp-standfirst { font-size: 18px; line-height: 28px; }
+    .fp-h2 { margin-top: 48px; font-size: 24px; line-height: 30px; }
+    .fp-cards, .fp-links { grid-template-columns: 1fr; margin-top: 32px; }
+    .fp-link-h { font-size: 20px; line-height: 28px; }
+    .fp-howto-h, .fp-final-h { font-size: 26px; line-height: 34px; }
+    .fp-steps { padding: 24px; }
+    .fp-final { margin-top: 40px; padding: 48px 28px; }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * /features/* — the optional blocks
+ *
+ * The dashboards page is the template's tall-card variant: three 348-high
+ * cards each closing with a "Learn more" link, a "Read documentation" link
+ * above the link cards, and a six-question FAQ. Both of these sit inside the
+ * tinted band on the original, not after it.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .fp-card { display: flex; flex-direction: column; }
+  /* Inline, as the last words of the paragraph, which is how the original
+   * sets it — not a block beneath. */
+  .fp-card-more { font-weight: 700; color: var(--color-brand-hover); }
+  .fp-card-more:hover { text-decoration: underline; }
+
+  .fp-readdocs { margin-top: 24px; text-align: center; }
+  .fp-readdocs a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 20px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .fp-readdocs a:hover { text-decoration: underline; }
+  .fp-readdocs svg { display: block; flex: none; }
+
+  .fp-howto { text-align: center; }
+  .fp-faq { text-align: center; }
+  .fp-faq-h {
+    width: fit-content; max-width: 100%; margin: 0 auto 32px;
+    font-size: 30px; line-height: 40px; font-weight: 700; color: var(--color-ink);
+  }
+  .fp-faq-box {
+    width: 100%; max-width: 652px; margin-inline: auto;
+    padding: 0 24px; text-align: left;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  .fp-faq-item + .fp-faq-item { border-top: 1px solid var(--color-line); }
+  .fp-faq-item summary {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    padding-block: 20px; cursor: pointer; list-style: none;
+    font-size: 16px; line-height: 22px; font-weight: 700; color: var(--color-ink);
+  }
+  .fp-faq-item summary::-webkit-details-marker { display: none; }
+  .fp-faq-item summary svg { flex: none; margin-top: 3px; transition: transform 200ms ease; }
+  .fp-faq-item[open] summary svg { transform: rotate(180deg); }
+  .fp-faq-item > p { padding-bottom: 20px; font-size: 16px; line-height: 26px; color: var(--color-ink-2); }
+
+  @media (max-width: 991px) {
+    .fp-links { margin-bottom: 48px; }
+    .fp-faq-h { font-size: 24px; line-height: 32px; }
+  }
+}

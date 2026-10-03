@@ -84,10 +84,10 @@ const implementations = [
     title: 'Embed charts and interactive dashboards fast with little engineering lift',
     sub: 'Outrun competitors and boost revenue with reporting as a product feature.',
     img: ['/images/product/embedded-analytics/embed-with-iframes-or-sdk.webp', 602, 377, 'A dashboard embedded in a customer-facing application'],
-    link: { href: '/docs/embedding', label: 'Learn more about low-code embedding' },
+    link: { href: '/learn/metabase-basics/embedding/overview', label: 'Learn more about low-code embedding' },
     points: [
       ['Set up in minutes', ' — validate your in-app reporting needs before you commit a sprint to them.'],
-      ['White label with your branding', ', customise navigation and the surrounding experience with a low-code integration.', { href: '/docs/white-label', label: 'White label with your branding' }],
+      ['White label with your branding', ', customise navigation and the surrounding experience with a low-code integration.', { href: '/features/white-label-analytics', label: 'White label with your branding' }],
       ['Customize theming and interactivity', ' per component, per organisation or per user.'],
       ['Limit exploration', ' with guest embedding, or give carte blanche reporting access with full app embedding.'],
     ],
@@ -112,21 +112,21 @@ const tabs = [
     id: 'metabot', label: 'Metabot AI', icon: 'ai',
     title: 'Embed the AI data assistant',
     body: 'Make it easier for your customers to get answers from data by putting a chat interface where the question actually comes up.',
-    link: { href: '/product/metabot-ai', label: 'Metabot chat interface' },
+    link: { href: '/features/metabase-ai', label: 'Metabot chat interface' },
     img: ['/images/product/embedded-analytics/how-are-our-apps-doing.webp', 651, 443, 'An embedded assistant answering a question about app performance'],
   },
   {
     id: 'explore', label: 'Click to explore', icon: 'drill',
     title: 'Let customers drill in for themselves',
     body: 'Drill-through menus turn a chart into a starting point, so the follow-up question does not come back to you as a support ticket.',
-    link: { href: '/product/query-builder', label: 'the visual query builder' },
+    link: { href: '/features/query-builder', label: 'the visual query builder' },
     img: ['/images/product/embedded-analytics/embed-with-iframes-or-sdk.webp', 602, 377, 'A customer drilling into an embedded chart'],
   },
   {
     id: 'simple', label: 'Simple reporting', icon: 'dashboards',
     title: 'Or keep it to the numbers that matter',
     body: 'Not every customer wants a query tool. Ship a fixed, fast dashboard and let the ones who want more ask for it.',
-    link: { href: '/docs/embedding', label: 'static embedding' },
+    link: { href: '/learn/metabase-basics/embedding/overview', label: 'static embedding' },
     img: ['/images/product/embedded-analytics/more-control-more-customization.webp', 554, 354, 'A compact embedded reporting view'],
   },
 ];
@@ -282,7 +282,7 @@ Sign up, connect to your data, and get your first visualization embedded.
   <section class="pp-band container-mb pp-center">
     <h2 class="pp-h36 pp-h36--tall">Multi-tenant and secure to keep customer data separate</h2>
     <p class="pp-band-sub pp-band-sub--tight">
-      Segregate data with <a href="/product/permissions">granular permissions</a> and strong perimeters.
+      Segregate data with <a href="/features/permissions">granular permissions</a> and strong perimeters.
     </p>
     <ul class="pp-pillars">
       {securityPillars.map(([icon, title, body]) => (
@@ -412,7 +412,7 @@ Sign up, connect to your data, and get your first visualization embedded.
         <p class="pp-band-sub">
           You sweat every detail of your product, so we will make sure the analytics inside it
           look like they belong there.
-          <a href="/docs/white-label">Customize labels, colors, fonts, branding</a>
+          <a href="/features/white-label-analytics">Customize labels, colors, fonts, branding</a>
         </p>
       </div>
       {/* The presets are real radios; each one retints the canvas and updates
@@ -460,13 +460,13 @@ Sign up, connect to your data, and get your first visualization embedded.
     <div class="pp-split-copy">
       <h3 class="pp-h30">Track how your in-app reporting is used</h3>
       <p class="pp-lede">
-        <a href="/product/usage-analytics">Usage analytics</a> tells you who is doing what and
+        <a href="/features/usage-analytics">Usage analytics</a> tells you who is doing what and
         when, so you can act on it rather than guess.
       </p>
       <ul class="pp-rich">
         {usagePoints.map(([lead, rest]) => <li><b>{lead}</b><br />{rest}</li>)}
       </ul>
-      <a href="/product/usage-analytics" class="pp-band-link">
+      <a href="/features/usage-analytics" class="pp-band-link">
         Learn more<span class="sr-only"> about usage analytics</span>
         <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
              stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>

@@ -1,0 +1,162 @@
+---
+/*
+ * The shared /features/* template.
+ *
+ * Eight of the original's feature pages render from one layout
+ * (div.feature-page > section.feature-neutral > div.feature-container-shell),
+ * so they render from one template here too. The five that do not
+ * (/features, data-segregation, metabase-ai, semantic-layer) are bespoke on
+ * the original and get their own pages.
+ *
+ * Measured off /features/sql-editor at 1512 with `npm run metrics`:
+ *   section.feature-neutral  bg #fafbfe, 1px bottom border, mb 68,
+ *                            padding 48 top / 80 bottom
+ *   hero        1264x408 two-up: 632 copy + a 632x383 framed clip (r24, 1px)
+ *               eyebrow 560x70 flex gap 10, 18px/700 brand, 70x70 badge,
+ *                 margin 28 top / 32 bottom
+ *               h1 560x80 36/40/700 mb 24 · standfirst 560 20/28 mb 16
+ *               buttons 16/24/700, padding 12/20, r8, mt 24, gap 8 (50 tall)
+ *   section 2   h2 1264 32/37/700 mb 24 · sub 576 18/26 centred
+ *               two rows of three 400-wide cards: #fff, r12, 1px, p24,
+ *                 24x24 icon (mb 24), h3 16/18/700 (mb 16), p 16/24
+ *   section 3   h2 1264 32/37/700, then three 400x133 link cards carrying an
+ *                 11px/900 brand pill on #eef6fc r8 and an h3 24/36 (mt 16)
+ *   how-to      h3 505 36/48/700 centred mb 24, then a 592x536 card
+ *                 (#fff, r24, 1px, p48) of numbered rows: a 36x36 #eef6fc
+ *                 circle at 16/700 brand, mr 20, beside 438-wide 18/26 text
+ *   final CTA   1512 bg #fafbfe, padding 80/76, h3 36/48 mb 24,
+ *                 p 600 18/32 mb 16, then the buttons again
+ *
+ * The original's heading order runs h1 then h2 then h3 inside the cards, and
+ * sets the how-to and closing titles as h3 at 36/48. Those two keep the
+ * original's size but are h2 here, so the outline stays in order.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { features } from '../../data/features';
+
+export function getStaticPaths() {
+  return features.map((f) => ({ params: { slug: f.slug }, props: { feature: f } }));
+}
+
+const { feature: f } = Astro.props;
+---
+
+<BaseLayout title={f.seoTitle} description={f.seoDescription}>
+  <div class="fp-page">
+    <section class="fp-neutral">
+      <div class="fp-shell">
+        <div class="fp-hero">
+          <div class="fp-hero-text">
+            <p class="fp-eyebrow">
+              <img src={`/images/icons/badges/${f.badge}.svg`} width="70" height="70" alt=""
+                   loading="eager" decoding="sync" />
+              {f.eyebrow}
+            </p>
+            <h1 class="fp-h1">{f.h1}</h1>
+            <p class="fp-standfirst">{f.standfirst}</p>
+            {f.ctas && (
+              <p class="fp-ctas">
+                <a href="/start" class="fp-btn fp-btn--primary">Get started</a>
+                <a href="/contact" class="fp-btn fp-btn--secondary">Contact us</a>
+              </p>
+            )}
+          </div>
+          <div class="fp-hero-media">
+            <video width="630" height={f.mediaHeight}
+                   poster={`/images/features/${f.media}-poster.webp`}
+                   autoplay loop muted playsinline preload="none"
+                   aria-label={`${f.eyebrow} in Metabase`}>
+              <source src={`/images/features/${f.media}.mp4`} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+
+        <h2 class="fp-h2">{f.h2}</h2>
+        <p class="fp-sub">{f.sub}</p>
+        <ul class="fp-cards">
+          {f.cards.map((c) => (
+            <li class="fp-card">
+              <img src={`/images/icons/${c.icon}.svg`} width="24" height="24" alt=""
+                   loading="lazy" decoding="async" />
+              <h3 class="fp-card-h">{c.title}</h3>
+              <p class="fp-card-p">
+                {c.body}
+                {c.links && c.links.length > 0 && (
+                  <> {c.links.map((l, i) => (
+                    <>{i > 0 && ', '}<a href={l.href}>{l.label}</a></>
+                  ))}</>
+                )}
+                {c.trailing && <> <a class="fp-card-more" href={c.trailing.href}>{c.trailing.label}</a></>}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <h2 class="fp-h2 fp-h2--b">{f.h2b}</h2>
+        {f.readDocs && (
+          <p class="fp-readdocs">
+            <a href={f.readDocs}>
+              Read documentation
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+          </p>
+        )}
+        <ul class="fp-links">
+          {f.linkCards.map((l) => (
+            <li>
+              <a href={l.href} class="fp-link-card">
+                <span class="fp-pill">{l.pill}</span>
+                <h3 class="fp-link-h">{l.title}</h3>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {f.howto && (
+          <div class="fp-howto">
+            <h2 class="fp-howto-h">{f.howto.title}</h2>
+            <ol class="fp-steps">
+              {f.howto.steps.map((s, i) => (
+                <li>
+                  <span class="fp-step-n" aria-hidden="true">{i + 1}</span>
+                  <span class="fp-step-t" set:html={s} />
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {f.faq && (
+          <div class="fp-faq">
+            <h2 class="fp-faq-h">Frequently asked questions</h2>
+            <div class="fp-faq-box">
+              {f.faq.map((q) => (
+                <details class="fp-faq-item">
+                  <summary>
+                    {q.q}
+                    <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                         stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  </summary>
+                  <p>{q.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="fp-final">
+      <h2 class="fp-final-h">{f.cta.title}</h2>
+      <p class="fp-final-p">
+        {f.cta.body}
+        {f.cta.link && <> <a href={f.cta.link.href}>{f.cta.link.label}</a>.</>}
+      </p>
+      <p class="fp-ctas">
+        <a href="/start" class="fp-btn fp-btn--primary">Get started</a>
+        <a href="/contact" class="fp-btn fp-btn--secondary">Contact us</a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>
