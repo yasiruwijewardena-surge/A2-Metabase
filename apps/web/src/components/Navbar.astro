@@ -29,13 +29,18 @@ const features: [string, string, string, string?][] = [
   ['CSV upload', '/product/csv-uploads', 'csv'],
 ];
 
+/*
+ * The original's Resources menu is Blog, Events, Customers, Discussion,
+ * Professional Services and Metabase Experts. Love, Glossary and Community
+ * were never in it — /love and /glossary are real pages on metabase.com, but
+ * they are reached from elsewhere, and /community-posts does not exist there
+ * at all. The last three menu entries are the ones the original carries that
+ * this replica has not built yet, so the menu stops at Customers for now.
+ */
 const resources: [string, string, string, string][] = [
   ['Blog', '/blog', 'blog', 'News, updates, and ideas'],
   ['Events', '/events', 'events', 'Join a live event or watch on demand'],
   ['Customers', '/case-studies', 'customers', 'Real companies, real data, real stories'],
-  ['Love', '/love', 'love', 'What people say about Metabase'],
-  ['Glossary', '/glossary', 'glossary', 'Data and BI terms, defined'],
-  ['Community', '/community-posts', 'community', 'Share and connect with other users'],
 ];
 ---
 {/* The original's bar is 74 tall, solid white and carries no bottom rule. */}

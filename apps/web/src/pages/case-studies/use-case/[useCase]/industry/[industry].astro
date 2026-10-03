@@ -2,7 +2,6 @@
 import BaseLayout from '../../../../../layouts/BaseLayout.astro';
 import CaseStudyListing from '../../../../../components/CaseStudyListing.astro';
 import { getCaseStudies, getIndustries, getUseCases } from '../../../../../lib/strapi';
-import { filterCases } from '../../../../../lib/filters';
 import { preloadFor } from '../../../../../lib/image';
 
 /** Both dimensions at once: every combination is a real, indexable page. */
@@ -15,7 +14,7 @@ export async function getStaticPaths() {
       params: { useCase: useCase.slug, industry: industry.slug },
       props: {
         useCase, industry, industries, useCases,
-        cases: filterCases(cases, industry.slug, useCase.slug),
+        cases,
       },
     }))
   );

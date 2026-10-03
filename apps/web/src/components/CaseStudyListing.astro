@@ -12,17 +12,46 @@ interface Props {
 const { cases, industries, useCases, activeIndustry = null, activeUseCase = null } = Astro.props;
 
 /**
- * Both filter dimensions are real URLs, generated at build time, so a filtered
- * view is shareable and indexable and needs no JavaScript. The original filters
- * by toggling DOM visibility, which leaves 17 industries with no page of their
- * own (SITE-ANALYSIS.md §6.4).
+ * Filtering happens in place, with no navigation and no JavaScript: every card
+ * is in the DOM and two radio groups hide what does not match, read with
+ * `:has()`. Clicking a chip used to be a link to a static route, which meant a
+ * full page load on every click — the original filters instantly, and so does
+ * this now.
+ *
+ * The per-filter routes still exist and still build, so a filtered view stays
+ * linkable and indexable; landing on one pre-selects the matching radio. That
+ * is the part the original does not have, since its filters are client-side
+ * only (SITE-ANALYSIS.md §6.4).
  */
-const href = (useCase: string | null, industry: string | null) => {
-  if (useCase && industry) return `/case-studies/use-case/${useCase}/industry/${industry}`;
-  if (useCase) return `/case-studies/use-case/${useCase}`;
-  if (industry) return `/case-studies/industry/${industry}`;
-  return '/case-studies';
-};
+/* Only offer an industry that has something to show. This also stops a
+ * renamed or retired industry left behind in the CMS from rendering as a chip
+ * that filters everything away. */
+const shown = industries.filter((i) =>
+  cases.some((c) => c.company?.industry?.slug === i.slug)
+);
+
+const ucSlugs = useCases.map((u) => u.slug);
+const indSlugs = shown.map((i) => i.slug);
+
+/* One hiding rule per filter value, for both the cards and the count line.
+ * Generated here because the slugs come from Strapi. */
+const filterCss = [
+  ...ucSlugs.map((u) => `.csb:has(#uc-${u}:checked) .cs-card:not([data-uc~="${u}"]),.csb:has(#uc-${u}:checked) .cs-tally:not([data-uc="${u}"]){display:none}`),
+  ...indSlugs.map((i) => `.csb:has(#ind-${i}:checked) .cs-card:not([data-ind="${i}"]),.csb:has(#ind-${i}:checked) .cs-tally:not([data-ind="${i}"]){display:none}`),
+  `.csb:has(#uc-all:checked) .cs-tally:not([data-uc="all"]){display:none}`,
+  `.csb:has(#ind-all:checked) .cs-tally:not([data-ind="all"]){display:none}`,
+  /* The selected chip paints itself from the checked radio. */
+  ...['all', ...indSlugs].map((i) => `.csb:has(#ind-${i}:checked) .pill[for="ind-${i}"]{background:var(--color-brand-strong);color:#fff}`),
+].join('');
+
+/* Counts for every combination, so the tally and the empty state are correct
+ * without having to count at runtime. */
+const matches = (c: CaseStudy, u: string, i: string) =>
+  (u === 'all' || (c.useCases ?? []).some((x) => x.slug === u)) &&
+  (i === 'all' || c.company?.industry?.slug === i);
+const tallies = ['all', ...ucSlugs].flatMap((u) =>
+  ['all', ...indSlugs].map((i) => ({ u, i, n: cases.filter((c) => matches(c, u, i)).length }))
+);
 
 // Counts come from the data, so an industry with nothing to show is never
 // offered as a filter — another thing the original gets wrong, where 11 of its
@@ -44,42 +73,54 @@ const countFor = (industrySlug: string) =>
     </p>
   </header>
 
-  <section id="browser" aria-label="Customer stories" class="mt-9 mb-[72px] rounded-xl border border-(--color-brand-border) p-6">
+  <section id="browser" aria-label="Customer stories" class="csb mt-9 mb-[72px] rounded-xl border border-(--color-brand-border) p-6">
+    <fieldset class="cs-radios">
+      <legend class="sr-only">Filter by use case</legend>
+      <input type="radio" name="cs-uc" id="uc-all" checked={!activeUseCase} />
+      {useCases.map((u) => (
+        <input type="radio" name="cs-uc" id={`uc-${u.slug}`} checked={activeUseCase === u.slug} />
+      ))}
+    </fieldset>
+    <fieldset class="cs-radios">
+      <legend class="sr-only">Filter by industry</legend>
+      <input type="radio" name="cs-ind" id="ind-all" checked={!activeIndustry} />
+      {shown.map((i) => (
+        <input type="radio" name="cs-ind" id={`ind-${i.slug}`} checked={activeIndustry === i.slug} />
+      ))}
+    </fieldset>
     <div
       class="mx-auto mt-[-44px] mb-10 grid w-full max-w-[600px] grid-cols-3 gap-1 rounded-lg border border-(--color-brand-soft) bg-white p-1"
       role="group" aria-label="Filter by use case"
     >
-      <a href={href(null, activeIndustry)} aria-current={!activeUseCase ? 'page' : undefined}
-         class:list={['seg', !activeUseCase && 'seg-on']}>All</a>
-      {useCases.map((u) => (
-        <a href={href(u.slug, activeIndustry)} aria-current={activeUseCase === u.slug ? 'page' : undefined}
-           class:list={['seg', activeUseCase === u.slug && 'seg-on']}>{u.name}</a>
-      ))}
+      <label class="seg" for="uc-all">All</label>
+      {useCases.map((u) => <label class="seg" for={`uc-${u.slug}`}>{u.name}</label>)}
     </div>
 
     <div class="mb-8 flex flex-wrap justify-center gap-3" role="group" aria-label="Filter by industry">
-      <a href={href(activeUseCase, null)} aria-current={!activeIndustry ? 'page' : undefined}
-         class:list={['pill', !activeIndustry && 'pill-on']}>All Stories</a>
-      {industries.map((i) => (
-        <a href={href(activeUseCase, i.slug)} aria-current={activeIndustry === i.slug ? 'page' : undefined}
-           class:list={['pill', activeIndustry === i.slug && 'pill-on']}>
-          {i.name}
-        </a>
-      ))}
+      <label class="pill" for="ind-all">All Stories</label>
+      {shown.map((i) => <label class="pill" for={`ind-${i.slug}`}>{i.name}</label>)}
     </div>
 
     <p class="mb-6 text-center text-sm text-(--color-ink-3)" aria-live="polite">
-      {cases.length} {cases.length === 1 ? 'story' : 'stories'}
+      {tallies.map((t) => (
+        <span class="cs-tally" data-uc={t.u} data-ind={t.i}>
+          {t.n} {t.n === 1 ? 'story' : 'stories'}
+        </span>
+      ))}
     </p>
 
-    {cases.length === 0 ? (
-      <p class="rounded-lg bg-(--color-brand-faint) p-10 text-center text-(--color-ink-2)">
+    {tallies.filter((t) => t.n === 0).map((t) => (
+      <p class="cs-tally cs-empty rounded-lg bg-(--color-brand-faint) p-10 text-center text-(--color-ink-2)"
+         data-uc={t.u} data-ind={t.i}>
         No stories match that combination yet.
       </p>
-    ) : (
+    ))}
+
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {cases.map((c, i) => (
-          <article class="cs-card">
+          <article class="cs-card"
+                   data-uc={(c.useCases ?? []).map((u) => u.slug).join(' ')}
+                   data-ind={c.company?.industry?.slug}>
             <div class="cs-card-media">
               <CldImage
                 image={c.heroImage}
@@ -100,11 +141,15 @@ const countFor = (industrySlug: string) =>
           </article>
         ))}
       </div>
-    )}
   </section>
 </div>
 
+<style set:html={filterCss} is:inline></style>
+
 <style>
+  .cs-radios { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .cs-tally { display: inline; }
+  .cs-empty { display: block; }
   /* Measured off the original: a 167px media panel at a 12px radius, the claim
      sentence at 16/24 twelve clear of it, then the link. */
   .cs-card { border-radius: 12px; background: #fff; padding-bottom: 12px; }
@@ -126,13 +171,21 @@ const countFor = (industrySlug: string) =>
     border-radius: 0.375rem; font-size: 0.9375rem; font-weight: 700;
     color: var(--color-brand-strong); transition: background-color 120ms, color 120ms;
   }
+  .seg { cursor: pointer; }
   .seg:hover { background: var(--color-brand-muted); }
-  .seg-on { background: var(--color-brand-muted); }
+  /* The checked radio paints its own label, so the active chip needs no
+     server-rendered class and survives a click with no navigation. */
+  :global(.csb:has(#uc-all:checked)) .seg[for='uc-all'],
+  :global(.csb:has(#uc-business-intelligence:checked)) .seg[for='uc-business-intelligence'],
+  :global(.csb:has(#uc-embedded-analytics:checked)) .seg[for='uc-embedded-analytics'] {
+    background: var(--color-brand-muted);
+  }
+  .cs-radios input:focus-visible + :global(*) { outline: 2px solid var(--color-brand); }
   .pill {
     border-radius: 0.5rem; background: var(--color-surface);
     padding: 0.5rem 0.75rem; font-size: 0.9375rem; color: var(--color-brand-strong);
     transition: background-color 120ms, color 120ms;
   }
+  .pill { cursor: pointer; }
   .pill:hover { background: var(--color-brand); color: #fff; }
-  .pill-on { background: var(--color-brand-strong); color: #fff; }
 </style>

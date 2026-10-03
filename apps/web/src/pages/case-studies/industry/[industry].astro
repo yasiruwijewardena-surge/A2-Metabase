@@ -2,7 +2,6 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import CaseStudyListing from '../../../components/CaseStudyListing.astro';
 import { getCaseStudies, getIndustries, getUseCases } from '../../../lib/strapi';
-import { filterCases } from '../../../lib/filters';
 import { preloadFor } from '../../../lib/image';
 
 export async function getStaticPaths() {
@@ -11,7 +10,7 @@ export async function getStaticPaths() {
   ]);
   return industries.map((industry) => ({
     params: { industry: industry.slug },
-    props: { industry, industries, useCases, cases: filterCases(cases, industry.slug) },
+    props: { industry, industries, useCases, cases },
   }));
 }
 

@@ -19,7 +19,7 @@
     },
     {
       "name": "AngelList Venture",
-      "industry": "Financial Services",
+      "industry": "Venture Capital",
       "employees": "350+",
       "headquarters": "San Francisco, USA",
       "description": "AngelList Venture brings venture online with private, professional fundraising tools for top quality startups and investors.",
@@ -35,7 +35,7 @@
     },
     {
       "name": "Axway",
-      "industry": "Financial Services",
+      "industry": "B2B Software / Financial Technology",
       "employees": "1000+",
       "headquarters": "France",
       "description": "Axway embedded Metabase Enterprise into their accounting software, using air-gapping to deliver white-labeled analytics to heavily regulated, on-premise banking clients—turning the user experience around with out-of-the-box dashboards and self-service exploration.",
@@ -43,7 +43,7 @@
     },
     {
       "name": "Bdeo",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "70+",
       "headquarters": "Madrid, Spain",
       "description": "Bdeo develops Visual Intelligence technology for the insurance industry, both motor and home insurance, for policy underwriting and claims management processes.",
@@ -51,7 +51,7 @@
     },
     {
       "name": "Billing SaaS",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B Software / Financial Technology",
       "employees": "10+",
       "headquarters": "California, USA",
       "description": "Billing platform transforms the way SaaS companies operate, offering an all-in-one billing and RevOps solution that seamlessly manages billing, quoting, self-service, tenant management, advanced analytics, and revenue recognition with effortless precision.",
@@ -59,7 +59,7 @@
     },
     {
       "name": "Buena",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "70+",
       "headquarters": "Madrid, Spain",
       "description": "Buena is a modern, digital platform for managing apartments (viewings, payments, maintenance) for both landlords and tenants.",
@@ -67,7 +67,7 @@
     },
     {
       "name": "Cal.com",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Developer Tools",
       "employees": "30+",
       "headquarters": "San Francisco, USA",
       "description": "Cal.com is the open-source Calendly successor that powers scheduling for millions of people around the world.",
@@ -75,7 +75,7 @@
     },
     {
       "name": "Cetec ERP",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "50+",
       "headquarters": "Austin, USA",
       "description": "Cetec ERP provides a full suite ERP software for manufacturers and distributors that is practical, intuitive, robust, and flexible to the needs of any manufacturing company.",
@@ -83,7 +83,7 @@
     },
     {
       "name": "Chromatic",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "50+",
       "headquarters": "United States",
       "description": "Chromatic replaced Google Data Studio with Metabase to give the whole company a unified, intuitive workspace for product and business analytics—and is now embedding Metabase for customer-facing insights.",
@@ -91,7 +91,7 @@
     },
     {
       "name": "Clockwise",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "80+",
       "headquarters": "San Francisco, USA",
       "description": "Clockwise optimizes your team’s calendars to create more time in everyone’s day. It brings together a powerful optimization engine with a personal calendar assistant to make your work life run smoothly.",
@@ -99,7 +99,7 @@
     },
     {
       "name": "Cypress",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Developer Tools",
       "employees": "95+",
       "headquarters": "Atlanta, USA",
       "description": "Cypress is an end-to-end testing framework used for testing anything that runs in the browser. Written in Javascript, Cypress is used by hundreds of thousands of developers and QA engineers globally to write, run, and debug automated tests for web applications.",
@@ -107,7 +107,7 @@
     },
     {
       "name": "Dribbble",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "80+",
       "headquarters": "Victoria, Canada",
       "description": "Dribbble is the world’s leading community for creatives to share, grow, and get hired.",
@@ -115,7 +115,7 @@
     },
     {
       "name": "Fabulous",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "70+",
       "headquarters": "Paris, France",
       "description": "Fabulous is a mobile app helping thousands of people every day to change their lifestyles by integrating healthy habits into their lives. Fabulous is ranked 5th Health & Fitness App and has over 30 million users.",
@@ -123,7 +123,7 @@
     },
     {
       "name": "Faros.ai",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Developer Tools",
       "employees": "20+",
       "headquarters": "San Francisco, California",
       "description": "Faros AI is an engineering operations platform that brings all engineering data in one place to give engineering leaders a single-pane view of their entire software development lifecycle.",
@@ -139,7 +139,7 @@
     },
     {
       "name": "Gojek",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "3,000+",
       "headquarters": "Jakarta, Indonesia",
       "description": "Gojek is a leading on-demand service provider. As of June 2020, Gojek has about 170 million users throughout Southeast Asia.",
@@ -163,7 +163,7 @@
     },
     {
       "name": "Hurb",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Travel & Hospitality",
       "employees": "800+",
       "headquarters": "Rio de Janeiro, Brazil",
       "description": "Hurb is a leading online travel platform based in Latin America that has over 25 million registered travelers all over the world.",
@@ -171,7 +171,7 @@
     },
     {
       "name": "Insocial",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "25+",
       "headquarters": "Netherlands",
       "description": "Insocial helps organizations understand what their customers and employees think.",
@@ -179,7 +179,7 @@
     },
     {
       "name": "KLog",
-      "industry": "Logistics & Transport",
+      "industry": "Logistics & Transportation",
       "employees": "150+",
       "headquarters": "Santiago, Chile",
       "description": "KLog provides freight-forwarding services and a digital platform for international commerce administration. KLog.co is a bootstrapped business, and they’ve already served over 3,000 clients to yield $100M in Revenue.",
@@ -195,7 +195,7 @@
     },
     {
       "name": "Lime Technologies",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "400+",
       "headquarters": "Lund, Sweden",
       "description": "Lime Technologies is a Customer Relationship Management supplier with offices in the Nordics, Netherlands, and Germany that delivers what they call “CRM with a twist” to make sure their clients exceed their customers’ expectations.",
@@ -203,7 +203,7 @@
     },
     {
       "name": "Linstol",
-      "industry": "eCommerce & Retail",
+      "industry": "Retail",
       "employees": "30+",
       "headquarters": "Naples, Florida",
       "description": "Linstol, the largest supplier of headphones/earbuds in the world (bigger than Samsung), embeds Metabase in their web portal to stay on top of their inventories.",
@@ -211,7 +211,7 @@
     },
     {
       "name": "Marketfuel",
-      "industry": "eCommerce & Retail",
+      "industry": "eCommerce",
       "employees": "10+",
       "headquarters": "Florida, USA",
       "description": "Marketfuel is an all-in-one eCommerce platform designed for promotional marketing agencies to create their own online store within a single afternoon. The platform enables agencies to manage inventory, order fulfillment, label printing, and more through a single application.",
@@ -219,7 +219,7 @@
     },
     {
       "name": "Matter",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "10+",
       "headquarters": "San Francisco, USA",
       "description": "Matter is a free Slack app that helps teams to recognize each other with Kudos, rewards, and continuous feedback – all inside Feedback Friday.",
@@ -235,7 +235,7 @@
     },
     {
       "name": "N26",
-      "industry": "Financial Services",
+      "industry": "Banking & Finance",
       "employees": "1500+",
       "headquarters": "Paris, France",
       "description": "N26 is Europe’s first mobile bank, headquartered in Berlin. N26 helps clients manage their bank account on the go, track their expenses, and set aside money in real time.",
@@ -243,7 +243,7 @@
     },
     {
       "name": "Onecom",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "900+",
       "headquarters": "London, United Kingdom",
       "description": "Onecom is a managed service provider delivering telecoms, cloud, and data services to enterprise customers across the UK. They offer an integrated customer portal where users can access everything from billing to performance metrics. To support that experience, Onecom needed a reliable, flexible way to deliver embedded analytics at scale.",
@@ -251,7 +251,7 @@
     },
     {
       "name": "Onepark",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Travel & Hospitality",
       "employees": "40+",
       "headquarters": "Paris, France",
       "description": "Onepark is a leading European online carpark booking platform, headquartered in Paris.",
@@ -259,7 +259,7 @@
     },
     {
       "name": "Owlery",
-      "industry": "Logistics & Transport",
+      "industry": "Transport Management System",
       "employees": "Less than 10",
       "headquarters": "United States",
       "description": "Founded in 2021, Owlery helps manufacturers and brands optimize their supply chain operations. Their platform integrates with customers’ supply chain partners and ERPs to create cohesive workflows that save time, reduce costs, and increase efficiency.",
@@ -267,7 +267,7 @@
     },
     {
       "name": "Recruit CRM",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "200+",
       "headquarters": "Dubai, UAE",
       "description": "Recruit CRM is an AI-Powered, top-rated ATS + CRM for recruitment agencies worldwide",
@@ -283,7 +283,7 @@
     },
     {
       "name": "Retargetly",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "60+",
       "headquarters": "Miami, USA",
       "description": "Retargetly is a leading Data Platform company in Latin America that helps brands, agencies, and publishers create better advertising experiences for consumers through data and technology.",
@@ -291,7 +291,7 @@
     },
     {
       "name": "Sincera",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "10+",
       "headquarters": "Remote-first",
       "description": "Sincera is a modern verification service that helps companies accelerate their competitive velocity. It provides data and infrastructure to answer novel questions in media and advertising with hard, accurate data.",
@@ -299,7 +299,7 @@
     },
     {
       "name": "Spocket",
-      "industry": "SaaS & Developer Tools",
+      "industry": "eCommerce",
       "employees": "40+",
       "headquarters": "Vancouver, Canada",
       "description": "Spocket is the largest online dropshipping marketplace that connects over 80,000 retailers with millions of fast-shipping suppliers around the globe.",
@@ -307,7 +307,7 @@
     },
     {
       "name": "Sunglass Fix",
-      "industry": "eCommerce & Retail",
+      "industry": "Retail",
       "employees": "10",
       "headquarters": "Byron Bay Area, Australia",
       "description": "Sunglass Fix is a family-owned, premium sunglass lens replacement service, selling brand new ultra High Definition lenses worldwide since 2008.",
@@ -315,7 +315,7 @@
     },
     {
       "name": "Synctera",
-      "industry": "Financial Services",
+      "industry": "Banking & Finance",
       "employees": "100+",
       "headquarters": "San Francisco, USA",
       "description": "Synctera is a banking and payments platform that helps companies of all sizes build and scale financial products.",
@@ -323,7 +323,7 @@
     },
     {
       "name": "Treebo",
-      "industry": "eCommerce & Retail",
+      "industry": "Travel & Hospitality",
       "employees": "500+",
       "headquarters": "Bengaluru, India",
       "description": "Treebo Hotels is an Indian budget hotel chain that operates on franchising. As of January 2020, Treebo Hotel has over 600 hotels in 113 cities in India.",
@@ -331,7 +331,7 @@
     },
     {
       "name": "Uptime",
-      "industry": "Manufacturing",
+      "industry": "Internet of Things",
       "employees": "60+",
       "headquarters": "Paris, France",
       "description": "Uptime helps elevator service providers keep their lifts running. They develop an operation management platform and a predictive maintenance technology that makes it easy to maintain elevators.",
@@ -339,7 +339,7 @@
     },
     {
       "name": "Usabilla",
-      "industry": "SaaS & Developer Tools",
+      "industry": "IT & Software",
       "employees": "25+",
       "headquarters": "Amsterdam, Netherlands",
       "description": "Usabilla is a user feedback solution for collecting qualitative and quantitative user feedback across digital channels including websites, apps, and emails.",
@@ -347,7 +347,7 @@
     },
     {
       "name": "Yellow Card",
-      "industry": "Financial Services",
+      "industry": "Banking & Finance",
       "employees": "200+",
       "headquarters": "Atlanta, USA",
       "description": "Yellow Card is the largest and first licensed Stablecoin payments orchestrator, empowering businesses across emerging markets with international payments, treasury management, and USD liquidity",
@@ -362,7 +362,7 @@
     },
     {
       "name": "Cadence CRM",
-      "industry": "SaaS & Developer Tools",
+      "industry": "B2B SaaS",
       "employees": "80+",
       "headquarters": "Lisbon, Portugal",
       "description": "A customer relationship platform for agencies, with reporting in every client workspace."
@@ -383,14 +383,14 @@
     },
     {
       "name": "Harbour & Co",
-      "industry": "eCommerce & Retail",
+      "industry": "Retail",
       "employees": "60+",
       "headquarters": "Copenhagen, Denmark",
       "description": "A direct-to-consumer homeware brand operating online and in six stores."
     },
     {
       "name": "Transit Lane",
-      "industry": "Logistics & Transport",
+      "industry": "Logistics & Transportation",
       "employees": "320+",
       "headquarters": "Rotterdam, Netherlands",
       "description": "A freight forwarder moving containers between European ports."
@@ -411,14 +411,14 @@
     },
     {
       "name": "Keystone Payments",
-      "industry": "Financial Services",
+      "industry": "Banking & Finance",
       "employees": "250+",
       "headquarters": "Singapore",
       "description": "A payments processor serving marketplaces in South East Asia."
     },
     {
       "name": "Lantern Dev Tools",
-      "industry": "SaaS & Developer Tools",
+      "industry": "Developer Tools",
       "employees": "35+",
       "headquarters": "Berlin, Germany",
       "description": "An observability product for small engineering teams."

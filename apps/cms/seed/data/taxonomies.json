@@ -63,44 +63,55 @@
   ],
   "industries": [
     {
-      "name": "Education",
-      "displayOrder": 1,
-      "description": "Schools, universities and learning platforms."
+      "name": "Education"
     },
     {
-      "name": "Financial Services",
-      "displayOrder": 2,
-      "description": "Banks, lenders, payments, fintech and investment platforms."
+      "name": "Financial Services"
     },
     {
-      "name": "Healthcare",
-      "displayOrder": 3,
-      "description": "Providers, telehealth and health technology."
+      "name": "Venture Capital"
     },
     {
-      "name": "Logistics & Transport",
-      "displayOrder": 4,
-      "description": "Freight, shipping, fleet and mobility."
+      "name": "B2B Software / Financial Technology"
     },
     {
-      "name": "Manufacturing",
-      "displayOrder": 5,
-      "description": "Industrial production, supply chain and connected devices."
+      "name": "IT & Software"
     },
     {
-      "name": "Nonprofit",
-      "displayOrder": 6,
-      "description": "Charities, NGOs and social enterprises."
+      "name": "B2B SaaS"
     },
     {
-      "name": "SaaS & Developer Tools",
-      "displayOrder": 7,
-      "description": "Software products sold to businesses and developers."
+      "name": "Developer Tools"
     },
     {
-      "name": "eCommerce & Retail",
-      "displayOrder": 8,
-      "description": "Online and physical retail, travel and hospitality."
+      "name": "Manufacturing"
+    },
+    {
+      "name": "Healthcare"
+    },
+    {
+      "name": "Logistics & Transportation"
+    },
+    {
+      "name": "Nonprofit"
+    },
+    {
+      "name": "Travel & Hospitality"
+    },
+    {
+      "name": "eCommerce"
+    },
+    {
+      "name": "Banking & Finance"
+    },
+    {
+      "name": "Transport Management System"
+    },
+    {
+      "name": "Retail"
+    },
+    {
+      "name": "Internet of Things"
     }
   ],
   "useCases": [
