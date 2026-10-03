@@ -16,7 +16,8 @@
     "outline": "node scripts/page-outline.mjs",
     "metrics": "node scripts/page-metrics.mjs",
     "assets": "node scripts/page-assets.mjs",
-    "psi": "node scripts/psi.mjs"
+    "psi": "node scripts/psi.mjs",
+    "interactions": "node scripts/page-interactions.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

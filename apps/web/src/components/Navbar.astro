@@ -15,7 +15,7 @@ const recent = (await getPosts()).slice(0, 5);
 import NavIcon from './NavIcon.astro';
 
 const features: [string, string, string, string?][] = [
-  ['Metabase AI', '/features/metabase-ai', 'ai', 'New'],
+  ['Metabase AI', '/features/metabase-ai', 'ai'],
   ['Data Studio', '/product/data-studio', 'studio', 'New'],
   ['Dashboards and reporting', '/features/analytics-dashboards', 'dashboards'],
   ['Query builder', '/features/query-builder', 'query'],
@@ -54,15 +54,16 @@ const resources: [string, string, string, string][] = [
     </a>
 
     <ul class="nav-menu hidden lg:flex" data-menu-root>
+      <span class="nav-pill" aria-hidden="true" data-pill></span>
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="product">Product<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
         {/* Product: two cards with the icon on a tile above the label, over a
             strip of three buttons. 596 wide. */}
-        <div class="nav-panel" style="width:596px" data-panel="product" hidden>
+        <div class="nav-panel" style="width:596px" data-panel="product">
           <div class="nav-cards">
             {[['Business Intelligence', '/product/business-intelligence', 'bi', 'Self-service analytics for your team'],
               ['Embedded Analytics', '/product/embedded-analytics', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, href, icon, sub]) => (
-              <a href={href} class="nav-card">
+              <a href={href} class:list={['nav-card', icon === 'ea' && 'nav-card--tilt']}>
                 <span class="nav-card-tile" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
                 <span class="nav-card-title">{t}</span>
                 <span class="nav-card-sub">{sub}</span>
@@ -80,13 +81,13 @@ const resources: [string, string, string, string][] = [
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="features">Features<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
         {/* Features: two columns of 32px icon links over a two-button strip. */}
-        <div class="nav-panel" style="width:543px" data-panel="features" hidden>
+        <div class="nav-panel" style="width:560px" data-panel="features">
           <div class="nav-icon-cols">
             {[features.slice(0, 6), features.slice(6)].map((col) => (
               <div>
                 {col.map(([label, href, icon, badge]) => (
                   <a href={href} class="nav-icon-link">
-                    <NavIcon name={icon} size={23} />
+                    <NavIcon name={icon} size={24} />
                     <span>{label}</span>
                     {badge && <span class="nav-badge">{badge}</span>}
                   </a>
@@ -106,7 +107,7 @@ const resources: [string, string, string, string][] = [
         {/* Docs: cards with the icon beside the label, then a tinted section of
             two columns — illustrated rows on the left, ruled links on the
             right. 742 wide. */}
-        <div class="nav-panel" style="width:742px" data-panel="docs" hidden>
+        <div class="nav-panel" style="width:742px" data-panel="docs">
           <div class="nav-cards">
             {[['Documentation', '/docs', 'docs', 'The Metabase manual'],
               ['Learn', '/learn', 'learn', 'Guides and tutorials']].map(([t, href, icon, sub]) => (
@@ -148,7 +149,7 @@ const resources: [string, string, string, string][] = [
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="resources">Resources<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
         {/* Resources: one white section, two columns of title-and-description
             links beside the recent posts. 718 wide. */}
-        <div class="nav-panel" style="width:718px" data-panel="resources" hidden>
+        <div class="nav-panel" style="width:740px" data-panel="resources">
           <div class="nav-res">
             <div class="nav-res-links">
               {resources.map(([label, href, icon, sub]) => (
@@ -174,7 +175,7 @@ const resources: [string, string, string, string][] = [
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="pricing">Pricing<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
         {/* Pricing: cards only, same shape as Product's. 578 wide. */}
-        <div class="nav-panel" style="width:596px" data-panel="pricing" hidden>
+        <div class="nav-panel" style="width:596px" data-panel="pricing">
           <div class="nav-cards">
             {[['Business Intelligence pricing', 'bi', 'Self-service analytics for your team'],
               ['Embedded Analytics pricing', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, icon, sub]) => (
@@ -241,21 +242,62 @@ const resources: [string, string, string, string][] = [
     border-radius: 8px;
     cursor: pointer;
   }
-  .nav-trigger:hover, .nav-trigger[aria-expanded='true'] { color: var(--color-brand-hover); background: var(--color-brand-faint); }
+  /* Measured on the original: the trigger's own background stays transparent
+     in every state. The light-blue box behind the open item is a separate
+     element that slides, so it must not be duplicated here. Colour alone
+     changes, over 0.1s. */
+  .nav-trigger { transition: color 100ms ease; position: relative; z-index: 1; }
+  .nav-trigger:hover, .nav-trigger[aria-expanded='true'] { color: var(--color-brand); }
+
+  /* The sliding highlight. #eef6fc, 8px radius, 40 tall, `all 0.3s` — which is
+     what makes it travel between items rather than blink from one to the
+     next. It is hidden until JS has measured a target so it never animates in
+     from 0,0 on first hover. */
+  .nav-pill {
+    position: absolute; top: 50%; left: 0;
+    width: var(--pill-w, 0px); height: 40px;
+    translate: var(--pill-x, 0px) -50%;
+    border-radius: 8px;
+    background: #eef6fc;
+    opacity: var(--pill-o, 0);
+    transition: translate 300ms ease, width 300ms ease, opacity 300ms ease;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) { .nav-pill { transition: opacity 300ms ease; } }
   /* Measured: a 24px-radius white sheet, no border, on a two-layer shadow,
      sitting flush under the bar rather than 8px below it. Sections provide
      their own padding, so the panel itself has none. */
   /* The row item fills the bar's height so `top: 100%` is the underside of the
      bar, not the underside of the 37px trigger — otherwise the panel opens
      18px too high. */
+  .nav-menu { position: relative; }
   .nav-menu > li { display: flex; align-items: center; height: 74px; }
 
   .nav-panel {
-    position: absolute; top: calc(100% - 2px); left: 6px;
+    position: fixed; top: 72px; left: 50%;
+    transform: translateX(-50%);
     overflow: hidden;
     background: #fff;
     border-radius: 24px;
-    box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.12), 0 6px 12px -4px rgb(24 39 75 / 0.08);
+    box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.12), 0 32px 88px -4px rgb(24 39 75 / 0.14);
+    /* Closed: a touch small and transparent, and out of the tab order.
+       The original scales 0.97 -> 1 over 100ms while opacity runs over 200ms. */
+    transform: translateX(-50%) scale(0.97);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 100ms ease, visibility 0s linear 200ms;
+  }
+  .nav-panel[data-open] {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 200ms ease, transform 100ms ease, visibility 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-panel { transition: opacity 200ms ease, visibility 0s linear 200ms; transform: translateX(-50%); }
+    .nav-panel[data-open] { transition: opacity 200ms ease, visibility 0s; }
   }
 
   /* --- shared ---------------------------------------------------------- */
@@ -264,7 +306,25 @@ const resources: [string, string, string, string][] = [
     display: block; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
-  .nav-card:hover { background: var(--color-brand-faint); border-color: var(--color-brand-border); }
+  .nav-card { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
+  .nav-card:hover {
+    background: var(--color-brand-faint);
+    border-color: var(--color-brand-muted);
+    box-shadow: 0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06);
+  }
+  /* The second Product card's illustration sits at -15deg and straightens on
+     hover over 400ms. Measured: matrix(0.966, -0.259, 0.259, 0.966) -> identity. */
+  .nav-card-tile :global(svg), .nav-card-tile :global(img) {
+    transition: rotate 400ms ease, transform 400ms ease;
+  }
+  .nav-card--tilt .nav-card-tile :global(svg),
+  .nav-card--tilt .nav-card-tile :global(img) { rotate: -15deg; }
+  .nav-card--tilt:hover .nav-card-tile :global(svg),
+  .nav-card--tilt:hover .nav-card-tile :global(img) { rotate: 0deg; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-card--tilt .nav-card-tile :global(svg),
+    .nav-card--tilt .nav-card-tile :global(img) { rotate: 0deg; }
+  }
   /* Product and Pricing stand the icon on a tile above the label; Docs sets it
      beside, which is why its cards are 71 tall rather than 138. */
   .nav-card-tile {
@@ -285,14 +345,20 @@ const resources: [string, string, string, string][] = [
   }
 
   /* --- Features: two columns of icon links ------------------------------- */
-  .nav-icon-cols { display: flex; gap: 12px; padding: 24px 24px 0; }
-  .nav-icon-cols > div { flex: 1; min-width: 0; }
+  .nav-icon-cols { display: flex; gap: 49px; padding: 24px; }
+  .nav-icon-cols > div { display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 0; }
+  /* Sampled from a screenshot of the original's open panel rather than read
+     off computed style, which reports the anchor's inherited brand blue: the
+     label renders #5a6072 and the icon #8d93a5. Item box 232x33, rows 45
+     apart, 16/24/700, colour transitioning over 300ms. */
   .nav-icon-link {
-    display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 32px;
-    font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
+    display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 33px;
+    font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
+    transition: color 300ms ease;
   }
-  .nav-icon-link > :global(svg) { flex: none; color: var(--color-brand); }
-  .nav-icon-link:hover { color: var(--color-brand-hover); }
+  .nav-icon-link > :global(svg) { flex: none; color: var(--color-ink-4-mid, #8d93a5); transition: color 300ms ease; }
+  .nav-icon-link:hover { color: var(--color-brand); }
+  .nav-icon-link:hover > :global(svg) { color: var(--color-brand); }
 
   /* --- Docs: tinted lower section ---------------------------------------- */
   .nav-sub-section { display: flex; gap: 12px; padding: 0 24px; background: var(--color-brand-faint); }
@@ -359,7 +425,6 @@ const resources: [string, string, string, string][] = [
      warms up with the row it sits in rather than switching instantly. */
   :global(.nav-icon path) { transition: stroke 300ms ease, fill 300ms ease; }
   .nav-card:hover :global(.nav-icon path),
-  .nav-icon-link:hover :global(.nav-icon path),
   .nav-rich:hover :global(.nav-icon path),
   .nav-foot a:hover :global(.nav-icon path) { stroke: var(--color-brand-hover); }
   .nav-card:hover .nav-card-tile { background: var(--color-brand-border); }
@@ -376,12 +441,30 @@ const resources: [string, string, string, string][] = [
     [...document.querySelectorAll<HTMLElement>('[data-panel]')].map((p) => [p.dataset.panel!, p])
   );
 
+  /*
+   * The sliding highlight. The original keeps its triggers transparent and
+   * moves one #eef6fc pill between them with `all 0.3s`, so the box appears to
+   * travel rather than blink. The pill is positioned from the live trigger box
+   * so it stays correct when the bar reflows.
+   */
+  const pill = document.querySelector<HTMLElement>('[data-pill]');
+  const menuRoot = document.querySelector<HTMLElement>('[data-menu-root]');
+  const movePill = (to: HTMLElement | null) => {
+    if (!pill || !menuRoot) return;
+    if (!to) { pill.style.setProperty('--pill-o', '0'); return; }
+    const a = to.getBoundingClientRect();
+    const b = menuRoot.getBoundingClientRect();
+    pill.style.setProperty('--pill-x', `${Math.round(a.left - b.left)}px`);
+    pill.style.setProperty('--pill-w', `${Math.round(a.width)}px`);
+    pill.style.setProperty('--pill-o', '1');
+  };
+
   const closeAll = (except?: string) => {
     triggers.forEach((t) => {
       const name = t.dataset.menu!;
       if (name === except) return;
       t.setAttribute('aria-expanded', 'false');
-      panels.get(name)!.hidden = true;
+      delete panels.get(name)!.dataset.open;
     });
   };
 
@@ -391,7 +474,14 @@ const resources: [string, string, string, string][] = [
     const show = (on: boolean) => {
       if (on) closeAll(name);
       trigger.setAttribute('aria-expanded', String(on));
-      panel.hidden = !on;
+      if (on) panel.dataset.open = '';
+      else delete panel.dataset.open;
+      /* Moving between two items fires the new one's enter before the old
+       * one's leave, so clearing the pill unconditionally on close would wipe
+       * the highlight that the item being entered has just claimed. Only
+       * retract it once nothing is open. */
+      if (on) movePill(trigger);
+      else if (!triggers.some((t) => t.getAttribute('aria-expanded') === 'true')) movePill(null);
     };
 
     /*
@@ -416,16 +506,14 @@ const resources: [string, string, string, string][] = [
     }
 
     trigger.addEventListener('click', () => {
-      const open = trigger.getAttribute('aria-expanded') === 'true';
-      closeAll(name);
-      trigger.setAttribute('aria-expanded', String(!open));
-      panel.hidden = open;
+      show(trigger.getAttribute('aria-expanded') !== 'true');
     });
   });
 
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  const closeEverything = () => { closeAll(); movePill(null); };
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeEverything(); });
   document.addEventListener('click', (e) => {
-    if (root && !root.contains(e.target as Node)) closeAll();
+    if (root && !root.contains(e.target as Node)) closeEverything();
   });
 
   const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
