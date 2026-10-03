@@ -25,7 +25,7 @@ const read = (f) => JSON.parse(readFileSync(join(__dirname, 'data', f), 'utf8'))
 const FRESH = process.argv.includes('--fresh');
 const NO_MEDIA = process.argv.includes('--no-media');
 
-const stats = { created: 0, updated: 0, linked: 0 };
+const stats = { created: 0, updated: 0, unchanged: 0, linked: 0 };
 
 /*
  * Create, or update in place when the entry already exists.
@@ -38,9 +38,58 @@ const stats = { created: 0, updated: 0, linked: 0 };
  * skipped. Anything seeded is owned by seed/data, so overwriting is the right
  * behaviour and the one the name promises.
  */
+/**
+ * True when every field the seed is about to write already holds that value,
+ * so the write can be skipped.
+ *
+ * Relations arrive here as documentIds (or a media file's numeric id) while the
+ * stored side is a populated object, so each shape is compared on its id rather
+ * than structurally. Anything this cannot confidently compare returns false and
+ * the document is written as before — the cost of a redundant write is seconds,
+ * the cost of a skipped necessary one is silent drift.
+ */
+function sameAsStored(existing, data) {
+  const idOf = (v) => (v && typeof v === 'object' ? (v.documentId ?? v.id) : v);
+
+  for (const [key, next] of Object.entries(data)) {
+    if (next === undefined) continue;
+    const current = existing[key];
+
+    if (Array.isArray(next)) {
+      /* Blocks and components are compared whole; relation arrays by id. */
+      const a = next.map(idOf);
+      const b = Array.isArray(current) ? current.map(idOf) : [];
+      if (a.length !== b.length) return false;
+      if (a.every((x) => typeof x !== 'object')) {
+        if ([...a].sort().join() !== [...b].sort().join()) return false;
+      } else if (JSON.stringify(next) !== JSON.stringify(current)) return false;
+      continue;
+    }
+
+    if (next !== null && typeof next === 'object') {
+      if (JSON.stringify(next) !== JSON.stringify(current)) return false;
+      continue;
+    }
+
+    /* Scalars, plus a relation or media passed as a bare id. */
+    if (next !== current && next !== idOf(current)) {
+      /* Dates round-trip as ISO strings with a different precision. */
+      const bothDates = typeof next === 'string' && typeof current === 'string'
+        && !Number.isNaN(Date.parse(next)) && !Number.isNaN(Date.parse(current));
+      if (!(bothDates && Date.parse(next) === Date.parse(current))) return false;
+    }
+  }
+  return true;
+}
+
 async function upsert(app, uid, where, data) {
-  const existing = await app.documents(uid).findFirst({ filters: where });
+  /* Populated, so relations can be compared rather than always looking changed. */
+  const existing = await app.documents(uid).findFirst({ filters: where, populate: '*' });
   if (existing) {
+    if (sameAsStored(existing, data)) {
+      stats.unchanged++;
+      return existing;
+    }
     const doc = await app.documents(uid).update({
       documentId: existing.documentId, data, status: 'published',
     });
@@ -327,8 +376,9 @@ async function main() {
       console.log(`    ${String(n).padStart(3)}  ${uid.split('.').pop()}`);
     }
     const m = mediaStats();
-    console.log(`\n    created ${stats.created}, updated ${stats.updated}, relation passes ${stats.linked}`);
-    console.log(`    media: ${m.uploaded} files attached from ${m.unique} source urls\n`);
+    console.log(`\n    created ${stats.created}, updated ${stats.updated}, unchanged ${stats.unchanged}, relation passes ${stats.linked}`);
+    console.log(`    media: ${m.attached} attached from ${m.unique} source urls `
+      + `(${m.uploaded} uploaded, ${m.reused} already in the library)\n`);
   } finally {
     await app.destroy();
   }

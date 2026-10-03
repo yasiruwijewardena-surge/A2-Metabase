@@ -14,6 +14,9 @@ const MIME = {
 };
 
 const cache = new Map();
+/* Source urls answered from a previous run's upload rather than re-fetched,
+   so the summary can tell attaching apart from uploading. */
+const reused = new Set();
 let dir;
 
 async function uploadFromUrl(app, url, { skip = false } = {}) {
@@ -33,7 +36,7 @@ async function uploadFromUrl(app, url, { skip = false } = {}) {
   const [existing] = await app.db.query('plugin::upload.file').findMany({
     where: { name }, limit: 1,
   });
-  if (existing) { cache.set(url, existing.id); return existing.id; }
+  if (existing) { cache.set(url, existing.id); reused.add(url); return existing.id; }
 
   let buf;
   try {
@@ -62,6 +65,11 @@ async function uploadFromUrl(app, url, { skip = false } = {}) {
   return file.id;
 }
 
-const mediaStats = () => ({ unique: cache.size, uploaded: [...cache.values()].filter(Boolean).length });
+const mediaStats = () => ({
+  unique: cache.size,
+  attached: [...cache.values()].filter(Boolean).length,
+  reused: reused.size,
+  uploaded: [...cache.values()].filter(Boolean).length - reused.size,
+});
 
 module.exports = { uploadFromUrl, mediaStats };

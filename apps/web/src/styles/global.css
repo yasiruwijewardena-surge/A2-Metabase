@@ -2579,11 +2579,10 @@
     transition: border-color 200ms ease, background-color 200ms ease;
   }
   .ev-card:hover { border-color: var(--color-brand-border); background: var(--color-surface-2); }
+  /* The series' own square artwork, as on the original. */
   .ev-thumb {
     flex: none; width: 160px; height: 160px; border-radius: 12px;
-    background:
-      radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.55), transparent 60%),
-      linear-gradient(135deg, var(--color-brand-muted), var(--color-brand-soft));
+    object-fit: cover; background: var(--color-brand-muted);
   }
   .ev-body { display: flex; flex-direction: column; min-width: 0; }
   /* The original sets this #8d93a5, which is 2.9:1 on white and fails AA at
@@ -2629,6 +2628,58 @@
   }
   .ev-chip:hover { background: var(--color-brand-muted); color: var(--color-brand-hover); }
   .ev-blurb { margin-top: 20px; margin-bottom: 8px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+
+  /* --- the series carousel ---------------------------------------------- */
+  /* Full-bleed, clipped, and pulled up 45 as the original has it. Two copies
+     of the row scroll as one so the loop has no seam. */
+  .ev-carousel {
+    display: flex; gap: 32px;
+    width: 100vw; max-width: 100vw; margin-top: -45px; margin-bottom: 8px;
+    overflow: hidden;
+    /* 100vw inside a centred column needs pulling back to the viewport edge. */
+    margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+    mask: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ev-track {
+    display: flex; flex: none; gap: 32px; padding-block: 56px;
+    animation: ev-marquee 60s linear infinite;
+  }
+  .ev-carousel:hover .ev-track { animation-play-state: paused; }
+  @keyframes ev-marquee { to { transform: translateX(calc(-100% - 32px)); } }
+
+  .ev-slide { display: flex; flex-direction: column; align-items: center; width: 280px; }
+  .ev-poster {
+    display: block; width: 280px; height: 350px;
+    border-radius: 16px; background-size: cover; background-position: center;
+    cursor: pointer;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+  .ev-poster:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.18);
+  }
+  /* A series with nothing to show yet is still in the index, but it is not a
+     filter, so it does not pretend to be clickable. */
+  .ev-poster--empty { cursor: default; }
+  .ev-poster--empty:hover { transform: none; box-shadow: none; }
+  /* The sentence under each poster appears on hover, as on the original. */
+  .ev-tagline {
+    max-width: 280px; margin-top: 12px; text-align: center;
+    font-size: 16px; line-height: 24px; color: var(--color-ink-2);
+    opacity: 0; transition: opacity 300ms ease;
+  }
+  .ev-slide:hover .ev-tagline { opacity: 1; }
+
+  .ev-pick { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .ev-pick svg { color: var(--color-brand); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ev-track { animation: none; }
+    .ev-carousel { overflow-x: auto; mask: none; }
+    .ev-track[aria-hidden='true'] { display: none; }
+    .ev-poster:hover { transform: none; }
+    .ev-tagline { opacity: 1; }
+  }
   .ev-list { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 24px; }
 
   @media (max-width: 991px) {

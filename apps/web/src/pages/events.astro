@@ -32,6 +32,11 @@ const past = events.filter((e) => new Date(e.startsAt).getTime() < now);
 /* Only offer a series that has a recording to show. */
 const shown = series.filter((s) => past.some((e) => e.category?.slug === s.slug));
 
+/* The carousel is the series index, so it shows all ten posters — including
+ * the two that have no recording yet. The filter chips below only offer the
+ * ones that would actually return something. */
+const ART = '/images/events/categories';
+
 const filterCss = [
   ...shown.map((s) =>
     `.ev:has(#es-${s.slug}:checked) .ev-card:not([data-series="${s.slug}"]),` +
@@ -65,7 +70,8 @@ const fmt = (iso: string) =>
         <p class="ev-none">No events on the calendar right now — the recordings below are all free to stream.</p>
       ) : upcoming.map((e) => (
         <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
-          <span class="ev-thumb" aria-hidden="true"></span>
+          <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
+               width="160" height="160" alt="" loading="eager" decoding="async" />
           <span class="ev-body">
             <span class="ev-date">{fmt(e.startsAt)}</span>
             <span class="ev-title">{e.title}</span>
@@ -89,7 +95,36 @@ const fmt = (iso: string) =>
         {shown.map((s) => <input type="radio" name="ev-series" id={`es-${s.slug}`} />)}
       </fieldset>
 
-      <p class="ev-pick">Pick a series</p>
+      <p class="ev-pick">
+        <svg width="15" height="18" viewBox="0 0 15 18" fill="none" stroke="currentColor"
+             stroke-width="1.6" aria-hidden="true">
+          <path d="M9 1.5C9 7 3 6 3 11.5" stroke-linecap="round" />
+          <path d="M.8 9.3 3 11.9l2.4-2.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Pick a series
+      </p>
+
+      {/* 280x350 posters at radius 16, 32 apart, in a track that scrolls. The
+          original drives this from JavaScript; here it is a CSS animation that
+          stops dead for prefers-reduced-motion. The row is duplicated so the
+          loop has no seam, and the copy is hidden from assistive tech. */}
+      <div class="ev-carousel">
+        {[0, 1].map((copy) => (
+          <ul class="ev-track" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {series.map((s) => (
+              <li class="ev-slide">
+                <label class:list={['ev-poster', !shown.some((x) => x.slug === s.slug) && 'ev-poster--empty']}
+                       for={shown.some((x) => x.slug === s.slug) ? `es-${s.slug}` : undefined}
+                       style={`background-image:url(${ART}/${s.slug}-tall.webp)`}>
+                  <span class="sr-only">{s.name}</span>
+                </label>
+                <span class="ev-tagline">{s.description}</span>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+
       <div class="ev-chips">
         <label class="ev-chip" for="es-all">All series</label>
         {shown.map((s) => <label class="ev-chip" for={`es-${s.slug}`}>{s.name}</label>)}
@@ -102,7 +137,8 @@ const fmt = (iso: string) =>
       <div class="ev-list">
         {past.map((e) => (
           <a class="ev-card" href={e.recordingUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
-            <span class="ev-thumb" aria-hidden="true"></span>
+            <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
+                 width="160" height="160" alt="" loading="lazy" decoding="async" />
             <span class="ev-body">
               <span class="ev-date">{fmt(e.startsAt)}</span>
               <span class="ev-title">{e.title}</span>
