@@ -65,6 +65,50 @@ async function uploadFromUrl(app, url, { skip = false } = {}) {
   return file.id;
 }
 
+/**
+ * The same thing for a file the repository already carries, used for the event
+ * category artwork. Those images are the one case where fetching from the
+ * original's CDN would be the wrong source: it serves them under four different
+ * extensions and two naming conventions (`Meetabase-tall.webp`,
+ * `Conference-tall.png`, `ai-analytics-week-tall-v2.webp`), so the converted
+ * webp copies in `seed/assets` are both tidier and not a seed-time dependency
+ * on someone else's CDN.
+ *
+ * Dedupe is by name against the upload library, exactly as above, so re-seeding
+ * attaches the existing file rather than uploading a second copy.
+ */
+async function uploadFromPath(app, filepath) {
+  const key = `file://${filepath}`;
+  if (cache.has(key)) return cache.get(key);
+
+  const ext = extname(filepath).toLowerCase();
+  const mime = MIME[ext];
+  if (!mime) { cache.set(key, undefined); return undefined; }
+  const name = basename(filepath);
+
+  const [existing] = await app.db.query('plugin::upload.file').findMany({
+    where: { name }, limit: 1,
+  });
+  if (existing) { cache.set(key, existing.id); reused.add(key); return existing.id; }
+
+  let size;
+  try {
+    size = statSync(filepath).size;
+  } catch (err) {
+    console.log(`      image missing (${err.code}): ${name}`);
+    cache.set(key, undefined);
+    return undefined;
+  }
+
+  const [file] = await app.plugin('upload').service('upload').upload({
+    data: {},
+    files: { filepath, originalFilename: name, mimetype: mime, size },
+  });
+
+  cache.set(key, file.id);
+  return file.id;
+}
+
 const mediaStats = () => ({
   unique: cache.size,
   attached: [...cache.values()].filter(Boolean).length,
@@ -72,4 +116,4 @@ const mediaStats = () => ({
   uploaded: [...cache.values()].filter(Boolean).length - reused.size,
 });
 
-module.exports = { uploadFromUrl, mediaStats };
+module.exports = { uploadFromUrl, uploadFromPath, mediaStats };

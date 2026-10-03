@@ -18,7 +18,7 @@ const { createStrapi, compileStrapi } = require('@strapi/strapi');
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
 const { toBlocks, slugify } = require('./blocks');
-const { uploadFromUrl, mediaStats } = require('./media');
+const { uploadFromUrl, uploadFromPath, mediaStats } = require('./media');
 
 const read = (f) => JSON.parse(readFileSync(join(__dirname, 'data', f), 'utf8'));
 
@@ -260,8 +260,22 @@ async function main() {
     // Dates are stored relative to the seed run, so the upcoming/past split on
     // /events stays meaningful however long after seeding the site is built.
     const seriesMap = {};
+    /* The artwork is keyed by strand, not by event: the square goes on every
+       card in the series and the tall poster is what the carousel scrolls.
+       Two strands have a poster but no square -- the original never made one,
+       because neither has run an event yet -- so `artwork` stays optional and
+       the front end falls back to the poster. */
+    const ART = join(__dirname, 'assets', 'event-categories');
     for (const s of eventsData.series) {
-      seriesMap[s.slug] = await upsert(app, 'api::event-category.event-category', { slug: s.slug }, s);
+      /* `want` as well as NO_MEDIA: these uploads sit outside `upsert`, so
+         without it a run scoped to another phase would still push 18 images at
+         Cloudinary to build a record it then skips. */
+      const [artwork, poster] = NO_MEDIA || !want('events') ? [] : await Promise.all([
+        uploadFromPath(app, join(ART, `${s.slug}.webp`)),
+        uploadFromPath(app, join(ART, `${s.slug}-tall.webp`)),
+      ]);
+      seriesMap[s.slug] = await upsert(app, 'api::event-category.event-category', { slug: s.slug },
+        { ...s, ...(artwork ? { artwork } : {}), ...(poster ? { poster } : {}) });
     }
     const dayMs = 24 * 60 * 60 * 1000;
     for (const e of eventsData.events) {

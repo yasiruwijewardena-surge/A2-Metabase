@@ -36,13 +36,6 @@
     "recordingUrl": {
       "type": "string"
     },
-    "thumbnail": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "featured": {
       "type": "boolean",
       "default": false
