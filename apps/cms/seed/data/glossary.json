@@ -1,26 +1,882 @@
 [
-  { "term": "A/B test", "topic": "general", "definition": "A comparison of two versions of something, shown at random to different people, measuring which produces a better outcome on a metric chosen in advance." },
-  { "term": "Aggregation", "topic": "querying", "definition": "Collapsing many rows into a summary value — a count, sum, average or percentile — usually grouped by one or more columns." },
-  { "term": "Analytical database", "topic": "data-modeling", "definition": "A database organised for scanning and summarising large volumes of rows, as opposed to a transactional database optimised for reading and writing individual records." },
-  { "term": "Business intelligence", "topic": "general", "definition": "The practice of turning operational data into answers that inform decisions, covering the tooling, the modelling and the conventions a team agrees on." },
-  { "term": "Cardinality", "topic": "data-modeling", "definition": "The number of distinct values in a column. High-cardinality columns such as user IDs behave very differently in grouping and indexing than low-cardinality ones such as country." },
-  { "term": "Cohort analysis", "topic": "querying", "definition": "Grouping records by when they first appeared and tracking each group separately over time, so that changes in behaviour are not hidden by changes in mix." },
-  { "term": "Core Web Vitals", "topic": "general", "definition": "A set of user-experience measurements — loading, interactivity and visual stability — used to judge how a page performs for real visitors." },
-  { "term": "Dashboard", "topic": "visualization", "definition": "A collection of visualisations and filters presented together, ideally answering one question rather than displaying everything available." },
-  { "term": "Data lineage", "topic": "data-modeling", "definition": "The record of where a value came from — which source tables, transformations and definitions produced it — used to trace errors and assess trust." },
-  { "term": "Drill-through", "topic": "visualization", "definition": "Clicking an element of a chart to see the underlying records or a more granular breakdown, rather than writing a new query." },
-  { "term": "Embedded analytics", "topic": "embedding", "definition": "Analytics presented inside another application, so that a product's own users see reporting about their own data without leaving it." },
-  { "term": "ETL", "topic": "data-modeling", "definition": "Extract, transform, load. Moving data from source systems into an analytical store, reshaping it on the way." },
-  { "term": "Fan-out", "topic": "querying", "definition": "The row multiplication that happens when joining across a one-to-many relationship, silently inflating sums and counts if unnoticed." },
-  { "term": "Granularity", "topic": "data-modeling", "definition": "The level of detail one row represents — a single event, a daily total, a monthly summary. Mixing granularities in one calculation is a common source of wrong numbers." },
-  { "term": "Materialized view", "topic": "querying", "definition": "A stored result of a query, refreshed on a schedule, traded against freshness to avoid recomputing something expensive on every request." },
-  { "term": "Metric", "topic": "data-modeling", "definition": "A named, agreed calculation such as active users or net revenue. The value of a metric is less in the arithmetic than in everyone using the same one." },
-  { "term": "Multi-tenancy", "topic": "embedding", "definition": "Serving many customers from one system while keeping each customer's data strictly separate, usually enforced at the data layer rather than in application code." },
-  { "term": "Normalization", "topic": "data-modeling", "definition": "Structuring tables so each fact is stored once, reducing contradiction at the cost of more joins when querying." },
-  { "term": "OLAP", "topic": "querying", "definition": "Online analytical processing. Query patterns that scan and aggregate many rows to answer questions about trends, as opposed to retrieving individual records." },
-  { "term": "Row-level security", "topic": "administration", "definition": "Restricting which rows a person can see based on their identity, applied by the data layer so that every query is filtered regardless of how it was written." },
-  { "term": "Semantic layer", "topic": "data-modeling", "definition": "The layer where raw tables are given business meaning — canonical sources, named metrics, agreed joins — so people and agents query definitions rather than raw columns." },
-  { "term": "Self-service analytics", "topic": "general", "definition": "An arrangement where people answer their own data questions, requiring both accessible tooling and a modelled, documented foundation to be safe." },
-  { "term": "Slowly changing dimension", "topic": "data-modeling", "definition": "An attribute that changes over time, such as a customer's plan, where historical accuracy requires storing the value as it was rather than only as it is now." },
-  { "term": "Window function", "topic": "querying", "definition": "A calculation across a set of rows related to the current row — running totals, rankings, period-over-period comparisons — without collapsing the result." }
+  {
+    "term": "A/B test",
+    "topic": "general",
+    "definition": "A comparison of two versions of something, shown at random to different people, measuring which produces a better outcome on a metric chosen in advance."
+  },
+  {
+    "term": "Agentic analytics",
+    "topic": "general",
+    "definition": "Analysis carried out by an AI agent in steps — planning, querying, reading the result and revising — rather than in a single pass."
+  },
+  {
+    "term": "Aggregation",
+    "topic": "querying",
+    "definition": "Collapsing many rows into a summary value — a count, sum, average or percentile — usually grouped by one or more columns."
+  },
+  {
+    "term": "Alert",
+    "topic": "administration",
+    "definition": "A rule that watches a saved question and notifies people by email or chat when its result crosses a condition."
+  },
+  {
+    "term": "Analytical database",
+    "topic": "data-modeling",
+    "definition": "A database organised for scanning and summarising large volumes of rows, as opposed to a transactional database optimised for reading and writing individual records."
+  },
+  {
+    "term": "API",
+    "topic": "general",
+    "definition": "A defined set of endpoints one program exposes so other programs can read from it or act on it."
+  },
+  {
+    "term": "Application database",
+    "topic": "data-modeling",
+    "definition": "The database an analytics tool keeps its own configuration in — questions, dashboards, users — as opposed to the data it reports on."
+  },
+  {
+    "term": "Area chart",
+    "topic": "visualization",
+    "definition": "A line chart with the space beneath the line filled, used to show how a total is composed over time."
+  },
+  {
+    "term": "ARR",
+    "topic": "general",
+    "definition": "Annual recurring revenue: the yearly value of subscriptions currently active, usually monthly recurring revenue times twelve."
+  },
+  {
+    "term": "Attribute",
+    "topic": "data-modeling",
+    "definition": "A property carried on a record or a user, often used to decide what that person is allowed to see."
+  },
+  {
+    "term": "Audit log",
+    "topic": "administration",
+    "definition": "A record of who did what and when, used to answer questions about access and change after the fact."
+  },
+  {
+    "term": "Bar chart",
+    "topic": "visualization",
+    "definition": "A chart comparing values across categories using bars whose lengths are proportional to the numbers."
+  },
+  {
+    "term": "BI tool",
+    "topic": "general",
+    "definition": "Software for exploring data and publishing the results, so people can answer questions without writing code."
+  },
+  {
+    "term": "Bin",
+    "topic": "querying",
+    "definition": "One bucket of a continuous range, used to turn values like ages or prices into countable groups."
+  },
+  {
+    "term": "Breakout",
+    "topic": "querying",
+    "definition": "Splitting an aggregate by the values of another column, so one number becomes one number per group."
+  },
+  {
+    "term": "Bubble chart",
+    "topic": "visualization",
+    "definition": "A scatter plot where each point is sized by a third value, letting three dimensions share one view."
+  },
+  {
+    "term": "Business intelligence",
+    "topic": "general",
+    "definition": "The practice of turning operational data into answers that inform decisions, covering the tooling, the modelling and the conventions a team agrees on."
+  },
+  {
+    "term": "CAC",
+    "topic": "general",
+    "definition": "Customer acquisition cost: total sales and marketing spend divided by the number of customers it won."
+  },
+  {
+    "term": "Card",
+    "topic": "visualization",
+    "definition": "One tile on a dashboard: a chart, a number, a table or a block of text."
+  },
+  {
+    "term": "Cardinality",
+    "topic": "data-modeling",
+    "definition": "The number of distinct values in a column. High-cardinality columns such as user IDs behave very differently in grouping and indexing than low-cardinality ones such as country."
+  },
+  {
+    "term": "Change data capture",
+    "topic": "data-modeling",
+    "definition": "Streaming the inserts, updates and deletes made to a source database so another system can stay in step with it."
+  },
+  {
+    "term": "Churn",
+    "topic": "general",
+    "definition": "The share of customers or revenue lost over a period, the counterpart to growth."
+  },
+  {
+    "term": "Coalesce",
+    "topic": "querying",
+    "definition": "A SQL function returning the first value in its arguments that is not null, used to supply a fallback."
+  },
+  {
+    "term": "Cohort analysis",
+    "topic": "querying",
+    "definition": "Grouping records by when they first appeared and tracking each group separately over time, so that changes in behaviour are not hidden by changes in mix."
+  },
+  {
+    "term": "Collection",
+    "topic": "administration",
+    "definition": "A folder holding questions, dashboards and models, and the unit permissions are usually granted on."
+  },
+  {
+    "term": "Column",
+    "topic": "data-modeling",
+    "definition": "One field of a table, holding the same kind of value for every row."
+  },
+  {
+    "term": "Columnar storage",
+    "topic": "data-modeling",
+    "definition": "Storing a table column by column rather than row by row, so a query that reads a few columns of many rows touches far less data."
+  },
+  {
+    "term": "Combo chart",
+    "topic": "visualization",
+    "definition": "A chart mixing bars and lines on shared axes, usually to show a count and a rate together."
+  },
+  {
+    "term": "Compaction",
+    "topic": "data-modeling",
+    "definition": "Merging many small files or segments into fewer larger ones so later reads are cheaper."
+  },
+  {
+    "term": "Concat",
+    "topic": "querying",
+    "definition": "A function joining several strings end to end into one."
+  },
+  {
+    "term": "Core Web Vitals",
+    "topic": "general",
+    "definition": "A set of user-experience measurements — loading, interactivity and visual stability — used to judge how a page performs for real visitors."
+  },
+  {
+    "term": "Cross-filtering",
+    "topic": "visualization",
+    "definition": "Clicking part of one chart to filter the rest of the dashboard by what you clicked."
+  },
+  {
+    "term": "CTE",
+    "topic": "querying",
+    "definition": "A named result set defined at the top of a SQL query with WITH, so a later part of the query can read it like a table."
+  },
+  {
+    "term": "Cumulative value chart",
+    "topic": "visualization",
+    "definition": "A chart plotting a running total, so each point includes everything before it."
+  },
+  {
+    "term": "Custom column",
+    "topic": "querying",
+    "definition": "A column computed from other columns at query time rather than stored in the table."
+  },
+  {
+    "term": "Custom destination",
+    "topic": "visualization",
+    "definition": "A click behaviour that sends someone from a chart to a chosen dashboard, question or URL."
+  },
+  {
+    "term": "Custom expression",
+    "topic": "querying",
+    "definition": "A formula written in a query builder to compute, filter or aggregate without dropping into SQL."
+  },
+  {
+    "term": "DAG",
+    "topic": "data-modeling",
+    "definition": "A directed acyclic graph: a set of steps with dependencies and no cycles, the usual shape of a data pipeline."
+  },
+  {
+    "term": "Dashboard",
+    "topic": "visualization",
+    "definition": "A collection of visualisations and filters presented together, ideally answering one question rather than displaying everything available."
+  },
+  {
+    "term": "Dashboard subscription",
+    "topic": "administration",
+    "definition": "A schedule that sends a dashboard's current results to people by email or chat."
+  },
+  {
+    "term": "Data contract",
+    "topic": "data-modeling",
+    "definition": "An agreement about a dataset's shape, meaning and guarantees, so consumers can rely on it and producers know what they may not break."
+  },
+  {
+    "term": "Data dictionary",
+    "topic": "data-modeling",
+    "definition": "A catalogue describing each table and column in plain language, so people know what a field actually means."
+  },
+  {
+    "term": "Data lake",
+    "topic": "data-modeling",
+    "definition": "Cheap storage holding raw files in many formats, queried where they lie rather than loaded first."
+  },
+  {
+    "term": "Data lakehouse",
+    "topic": "data-modeling",
+    "definition": "A lake with a table layer over it, bringing transactions and schema to files kept in open formats."
+  },
+  {
+    "term": "Data lineage",
+    "topic": "data-modeling",
+    "definition": "The record of where a value came from — which source tables, transformations and definitions produced it — used to trace errors and assess trust."
+  },
+  {
+    "term": "Data mart",
+    "topic": "data-modeling",
+    "definition": "A subset of a warehouse shaped for one team or subject, so its questions are quick to ask."
+  },
+  {
+    "term": "Data mesh",
+    "topic": "data-modeling",
+    "definition": "An approach where domain teams own and publish their own data as products, rather than a central team owning everything."
+  },
+  {
+    "term": "Data model",
+    "topic": "data-modeling",
+    "definition": "The agreed structure of tables and relationships, and the meaning attached to them."
+  },
+  {
+    "term": "Data pipeline",
+    "topic": "data-modeling",
+    "definition": "The sequence of moves and transformations carrying data from where it is produced to where it is analysed."
+  },
+  {
+    "term": "Data reference",
+    "topic": "data-modeling",
+    "definition": "Built-in documentation of the tables and fields a tool can see, read while you work."
+  },
+  {
+    "term": "Data sandbox",
+    "topic": "embedding",
+    "definition": "A rule restricting someone to a slice of a table, so the same question returns only their rows."
+  },
+  {
+    "term": "Data type",
+    "topic": "data-modeling",
+    "definition": "What kind of value a column holds — text, number, date, boolean — which decides how it can be used."
+  },
+  {
+    "term": "Data warehouse",
+    "topic": "data-modeling",
+    "definition": "A database built for analysis, holding data brought together from several systems and organised for querying rather than transactions."
+  },
+  {
+    "term": "Database index",
+    "topic": "data-modeling",
+    "definition": "A lookup structure making some queries much faster to run, at the cost of space and slower writes."
+  },
+  {
+    "term": "Dimension",
+    "topic": "data-modeling",
+    "definition": "A column you group or slice by, such as country or plan, as opposed to the number being measured."
+  },
+  {
+    "term": "Drill-through",
+    "topic": "visualization",
+    "definition": "Clicking an element of a chart to see the underlying records or a more granular breakdown, rather than writing a new query."
+  },
+  {
+    "term": "Embedded analytics",
+    "topic": "embedding",
+    "definition": "Analytics presented inside another application, so that a product's own users see reporting about their own data without leaving it."
+  },
+  {
+    "term": "Embedding",
+    "topic": "embedding",
+    "definition": "Putting charts or dashboards inside another product so its users never leave it to see their data."
+  },
+  {
+    "term": "Entity key",
+    "topic": "data-modeling",
+    "definition": "The column identifying what a row is about, used to join it to other tables."
+  },
+  {
+    "term": "ERD",
+    "topic": "data-modeling",
+    "definition": "An entity relationship diagram: a picture of tables and how they key into one another."
+  },
+  {
+    "term": "ETL",
+    "topic": "data-modeling",
+    "definition": "Extract, transform, load. Moving data from source systems into an analytical store, reshaping it on the way."
+  },
+  {
+    "term": "Fan-out",
+    "topic": "querying",
+    "definition": "The row multiplication that happens when joining across a one-to-many relationship, silently inflating sums and counts if unnoticed."
+  },
+  {
+    "term": "Field",
+    "topic": "data-modeling",
+    "definition": "Another name for a column: one named piece of each record."
+  },
+  {
+    "term": "Field filter",
+    "topic": "querying",
+    "definition": "A SQL variable mapped to a real column, so a filter widget can drive it with the right type and values."
+  },
+  {
+    "term": "Field formula",
+    "topic": "querying",
+    "definition": "An expression deriving a new field from existing ones."
+  },
+  {
+    "term": "Field type",
+    "topic": "data-modeling",
+    "definition": "The semantic role a column plays — a city, a price, a creation timestamp — as distinct from the data type that says how it is stored."
+  },
+  {
+    "term": "Filter",
+    "topic": "querying",
+    "definition": "A condition narrowing a result to the rows that satisfy it."
+  },
+  {
+    "term": "Filter widget",
+    "topic": "visualization",
+    "definition": "The control on a dashboard that lets a reader change a filter without editing anything."
+  },
+  {
+    "term": "Foreign key",
+    "topic": "data-modeling",
+    "definition": "A column pointing at another table's key, which is what makes a join meaningful."
+  },
+  {
+    "term": "Full outer join",
+    "topic": "querying",
+    "definition": "A join keeping every row from both tables, filling the gaps with nulls where there is no match."
+  },
+  {
+    "term": "Funnel chart",
+    "topic": "visualization",
+    "definition": "A chart showing how many people remain at each step of a sequence, and where they drop out."
+  },
+  {
+    "term": "Gauge chart",
+    "topic": "visualization",
+    "definition": "A dial showing a single value against bands of good and bad."
+  },
+  {
+    "term": "GeoJSON",
+    "topic": "visualization",
+    "definition": "An open format describing geographic shapes, used to draw custom map regions."
+  },
+  {
+    "term": "Goal line",
+    "topic": "visualization",
+    "definition": "A reference line drawn across a chart at a target value."
+  },
+  {
+    "term": "Granularity",
+    "topic": "data-modeling",
+    "definition": "The level of detail one row represents — a single event, a daily total, a monthly summary. Mixing granularities in one calculation is a common source of wrong numbers."
+  },
+  {
+    "term": "Grid map",
+    "topic": "visualization",
+    "definition": "A map dividing an area into cells and shading each by the value in it."
+  },
+  {
+    "term": "GROUP BY",
+    "topic": "querying",
+    "definition": "The SQL clause collapsing rows into one row per distinct combination of the listed columns."
+  },
+  {
+    "term": "GUI question",
+    "topic": "querying",
+    "definition": "A question assembled in a visual editor rather than written as SQL."
+  },
+  {
+    "term": "HAVING",
+    "topic": "querying",
+    "definition": "The SQL clause filtering on the result of an aggregate, after grouping rather than before."
+  },
+  {
+    "term": "Heatmap",
+    "topic": "visualization",
+    "definition": "A grid where colour carries the value, used to show where the extremes sit."
+  },
+  {
+    "term": "Histogram",
+    "topic": "visualization",
+    "definition": "A bar chart of how often values fall into each bin, showing a distribution rather than a comparison."
+  },
+  {
+    "term": "Horizontal scaling",
+    "topic": "administration",
+    "definition": "Handling more load by adding more machines rather than making one machine bigger."
+  },
+  {
+    "term": "Inner join",
+    "topic": "querying",
+    "definition": "A join keeping only rows that match on both sides."
+  },
+  {
+    "term": "Join",
+    "topic": "querying",
+    "definition": "Combining rows from two tables by matching on a shared key."
+  },
+  {
+    "term": "JSON",
+    "topic": "general",
+    "definition": "A text format for nested data, widely used by APIs and for semi-structured columns."
+  },
+  {
+    "term": "JWT",
+    "topic": "embedding",
+    "definition": "A signed token carrying claims about a user, commonly used to authenticate an embedded session."
+  },
+  {
+    "term": "KPI",
+    "topic": "general",
+    "definition": "A key performance indicator: the small number of measures an organisation agrees to steer by."
+  },
+  {
+    "term": "LDAP",
+    "topic": "administration",
+    "definition": "A directory protocol many organisations use to hold accounts and groups centrally."
+  },
+  {
+    "term": "Leading indicator",
+    "topic": "general",
+    "definition": "A measure that moves before the outcome you care about, giving you time to act."
+  },
+  {
+    "term": "Left outer join",
+    "topic": "querying",
+    "definition": "A join keeping every row from the left table, with nulls where the right has no match."
+  },
+  {
+    "term": "Line chart",
+    "topic": "visualization",
+    "definition": "A chart joining points in order, used to show how a value moves over time."
+  },
+  {
+    "term": "Linear axis",
+    "topic": "visualization",
+    "definition": "An axis where equal distances represent equal differences in value."
+  },
+  {
+    "term": "Linked filter",
+    "topic": "visualization",
+    "definition": "A dashboard filter whose options are narrowed by another filter's current selection."
+  },
+  {
+    "term": "Load balancer",
+    "topic": "administration",
+    "definition": "A component spreading incoming requests across several servers."
+  },
+  {
+    "term": "Materialized view",
+    "topic": "querying",
+    "definition": "A stored result of a query, refreshed on a schedule, traded against freshness to avoid recomputing something expensive on every request."
+  },
+  {
+    "term": "Measure",
+    "topic": "data-modeling",
+    "definition": "A reusable, named calculation — revenue, active users — defined once so every chart counts it the same way."
+  },
+  {
+    "term": "Medallion architecture",
+    "topic": "data-modeling",
+    "definition": "A convention of layering a warehouse into raw, cleaned and curated stages, often called bronze, silver and gold."
+  },
+  {
+    "term": "Metadata",
+    "topic": "data-modeling",
+    "definition": "Data describing other data: names, types, descriptions, lineage and ownership."
+  },
+  {
+    "term": "Metric",
+    "topic": "data-modeling",
+    "definition": "A named, agreed calculation such as active users or net revenue. The value of a metric is less in the arithmetic than in everyone using the same one."
+  },
+  {
+    "term": "Model",
+    "topic": "data-modeling",
+    "definition": "A saved, curated starting point built on top of raw tables, so people explore from something already cleaned up."
+  },
+  {
+    "term": "Model Context Protocol",
+    "topic": "general",
+    "definition": "An open protocol letting an AI assistant discover and call external tools and data sources in a uniform way."
+  },
+  {
+    "term": "Multi-tenancy",
+    "topic": "embedding",
+    "definition": "Serving many customers from one system while keeping each customer's data strictly separate, usually enforced at the data layer rather than in application code."
+  },
+  {
+    "term": "Multitenancy",
+    "topic": "embedding",
+    "definition": "One deployment serving many customers, with each one's data kept separate from the others'."
+  },
+  {
+    "term": "Native query",
+    "topic": "querying",
+    "definition": "A query written in the database's own language rather than assembled in a builder."
+  },
+  {
+    "term": "Native query editor",
+    "topic": "querying",
+    "definition": "The editor for writing SQL directly, with the schema to hand."
+  },
+  {
+    "term": "Normalization",
+    "topic": "data-modeling",
+    "definition": "Structuring tables so each fact is stored once, reducing contradiction at the cost of more joins when querying."
+  },
+  {
+    "term": "North star metric",
+    "topic": "general",
+    "definition": "The single measure a team agrees best captures the value it delivers."
+  },
+  {
+    "term": "Notebook editor",
+    "topic": "querying",
+    "definition": "A step-by-step visual editor where joins, filters and summaries stack as readable blocks."
+  },
+  {
+    "term": "OLAP",
+    "topic": "querying",
+    "definition": "Online analytical processing. Query patterns that scan and aggregate many rows to answer questions about trends, as opposed to retrieving individual records."
+  },
+  {
+    "term": "OLTP",
+    "topic": "data-modeling",
+    "definition": "Online transaction processing: a database tuned for many small reads and writes, which is what applications need and analysis does not."
+  },
+  {
+    "term": "Ordinal axis",
+    "topic": "visualization",
+    "definition": "An axis treating values as ordered categories, spacing them evenly regardless of distance."
+  },
+  {
+    "term": "Our Analytics",
+    "topic": "administration",
+    "definition": "The top-level collection everything else is nested inside."
+  },
+  {
+    "term": "Parameter",
+    "topic": "querying",
+    "definition": "A placeholder in a query whose value is supplied when it runs."
+  },
+  {
+    "term": "Personal collection",
+    "topic": "administration",
+    "definition": "A private space only its owner and administrators can see."
+  },
+  {
+    "term": "Pie chart",
+    "topic": "visualization",
+    "definition": "A circle divided into slices by share of a total, legible only when there are few categories."
+  },
+  {
+    "term": "Pin map",
+    "topic": "visualization",
+    "definition": "A map placing a marker at each row's coordinates."
+  },
+  {
+    "term": "Pivot table",
+    "topic": "visualization",
+    "definition": "A table summarising values across two axes at once, with groups down the side and across the top."
+  },
+  {
+    "term": "Predicate",
+    "topic": "querying",
+    "definition": "An expression evaluating to true or false, used to decide which rows qualify."
+  },
+  {
+    "term": "Primary key",
+    "topic": "data-modeling",
+    "definition": "The column uniquely identifying each row of a table."
+  },
+  {
+    "term": "Production database",
+    "topic": "data-modeling",
+    "definition": "The live database an application runs on, where heavy analytical queries are usually unwelcome."
+  },
+  {
+    "term": "Public embedding",
+    "topic": "embedding",
+    "definition": "Sharing a chart or dashboard by URL without requiring the viewer to sign in."
+  },
+  {
+    "term": "Pulse",
+    "topic": "administration",
+    "definition": "A scheduled delivery of results to a channel or inbox."
+  },
+  {
+    "term": "Query builder",
+    "topic": "querying",
+    "definition": "A visual interface for assembling a query by choosing data, filters and summaries."
+  },
+  {
+    "term": "Question",
+    "topic": "querying",
+    "definition": "A saved query together with how its answer should be displayed."
+  },
+  {
+    "term": "RAG",
+    "topic": "general",
+    "definition": "Retrieval-augmented generation: fetching relevant documents and giving them to a language model so its answer is grounded in them."
+  },
+  {
+    "term": "Read replica",
+    "topic": "administration",
+    "definition": "A copy of a database kept in step with the original and used for reads, keeping load off the primary."
+  },
+  {
+    "term": "Record",
+    "topic": "data-modeling",
+    "definition": "One row: a single instance of whatever the table describes."
+  },
+  {
+    "term": "Region map",
+    "topic": "visualization",
+    "definition": "A map shading predefined areas such as countries or states by value."
+  },
+  {
+    "term": "Relational database",
+    "topic": "data-modeling",
+    "definition": "A database storing data in tables of rows and columns, with keys expressing how they relate."
+  },
+  {
+    "term": "Retention",
+    "topic": "general",
+    "definition": "The share of customers still active after a given period, the complement of churn."
+  },
+  {
+    "term": "Reverse ETL",
+    "topic": "data-modeling",
+    "definition": "Pushing modelled data back out of the warehouse into the tools teams work in."
+  },
+  {
+    "term": "Right outer join",
+    "topic": "querying",
+    "definition": "A join keeping every row from the right table, with nulls where the left has no match."
+  },
+  {
+    "term": "Row",
+    "topic": "data-modeling",
+    "definition": "One entry in a table, holding a value for each column."
+  },
+  {
+    "term": "Row chart",
+    "topic": "visualization",
+    "definition": "A bar chart drawn horizontally, which suits long category labels."
+  },
+  {
+    "term": "Row-level security",
+    "topic": "administration",
+    "definition": "Restricting which rows a person can see based on their identity, applied by the data layer so that every query is filtered regardless of how it was written."
+  },
+  {
+    "term": "SAML",
+    "topic": "administration",
+    "definition": "A standard for passing authentication between an identity provider and an application."
+  },
+  {
+    "term": "Sample Database",
+    "topic": "general",
+    "definition": "A small bundled dataset for learning and demonstration."
+  },
+  {
+    "term": "Sankey diagram",
+    "topic": "visualization",
+    "definition": "A flow diagram where the width of each path shows the quantity moving along it."
+  },
+  {
+    "term": "Saved question",
+    "topic": "querying",
+    "definition": "A question kept for reuse, which other questions and dashboards can build on."
+  },
+  {
+    "term": "Scatter plot",
+    "topic": "visualization",
+    "definition": "A chart plotting two numeric values against each other to show how they relate."
+  },
+  {
+    "term": "Schema",
+    "topic": "data-modeling",
+    "definition": "The organisation of a database: its tables, columns, types and relationships."
+  },
+  {
+    "term": "Search filter",
+    "topic": "visualization",
+    "definition": "A filter offering matching values as you type rather than a fixed list."
+  },
+  {
+    "term": "Search widget",
+    "topic": "visualization",
+    "definition": "The dashboard control backing a search filter."
+  },
+  {
+    "term": "Secure embed",
+    "topic": "embedding",
+    "definition": "An embed whose parameters are signed, so the host application decides what each viewer may see."
+  },
+  {
+    "term": "Segment",
+    "topic": "data-modeling",
+    "definition": "A named, reusable filter capturing a subset everyone agrees on, such as active customers."
+  },
+  {
+    "term": "Self-service analytics",
+    "topic": "general",
+    "definition": "An arrangement where people answer their own data questions, requiring both accessible tooling and a modelled, documented foundation to be safe."
+  },
+  {
+    "term": "Semantic layer",
+    "topic": "data-modeling",
+    "definition": "The layer where raw tables are given business meaning — canonical sources, named metrics, agreed joins — so people and agents query definitions rather than raw columns."
+  },
+  {
+    "term": "Serialization",
+    "topic": "administration",
+    "definition": "Exporting configuration to files so it can be version-controlled and moved between instances."
+  },
+  {
+    "term": "Session metric",
+    "topic": "general",
+    "definition": "A measure derived from a single visit rather than from a person over time."
+  },
+  {
+    "term": "Session token",
+    "topic": "embedding",
+    "definition": "A short-lived credential identifying an authenticated session."
+  },
+  {
+    "term": "SKU",
+    "topic": "general",
+    "definition": "A stock keeping unit: the identifier for one distinct sellable item."
+  },
+  {
+    "term": "Slowly changing dimension",
+    "topic": "data-modeling",
+    "definition": "An attribute that changes over time, such as a customer's plan, where historical accuracy requires storing the value as it was rather than only as it is now."
+  },
+  {
+    "term": "Soft delete",
+    "topic": "data-modeling",
+    "definition": "Marking a row as deleted rather than removing it, so history survives."
+  },
+  {
+    "term": "SQL",
+    "topic": "querying",
+    "definition": "The language used to query and manipulate relational databases."
+  },
+  {
+    "term": "SQL snippet",
+    "topic": "querying",
+    "definition": "A reusable fragment of SQL that can be referenced from several queries."
+  },
+  {
+    "term": "SSO",
+    "topic": "administration",
+    "definition": "Single sign-on: authenticating once with a central provider and reaching every connected application."
+  },
+  {
+    "term": "Stacked bar chart",
+    "topic": "visualization",
+    "definition": "A bar chart where each bar is divided into parts, showing both the total and its composition."
+  },
+  {
+    "term": "Star schema",
+    "topic": "data-modeling",
+    "definition": "A warehouse layout with one fact table referencing several dimension tables."
+  },
+  {
+    "term": "Stored procedure",
+    "topic": "querying",
+    "definition": "A routine held in the database and run by name."
+  },
+  {
+    "term": "Subquery",
+    "topic": "querying",
+    "definition": "A query nested inside another, supplying rows or a value to the outer one."
+  },
+  {
+    "term": "Summary table",
+    "topic": "data-modeling",
+    "definition": "A table of pre-aggregated results, kept so common questions do not rescan the detail."
+  },
+  {
+    "term": "Table",
+    "topic": "data-modeling",
+    "definition": "A set of rows sharing the same columns."
+  },
+  {
+    "term": "Text card",
+    "topic": "visualization",
+    "definition": "A dashboard tile holding written content rather than a chart."
+  },
+  {
+    "term": "Text-to-SQL",
+    "topic": "general",
+    "definition": "Turning a question written in plain language into a SQL query."
+  },
+  {
+    "term": "Time series",
+    "topic": "general",
+    "definition": "A sequence of values recorded in time order."
+  },
+  {
+    "term": "Transactional database",
+    "topic": "data-modeling",
+    "definition": "A database tuned for the many small reads and writes an application makes."
+  },
+  {
+    "term": "Upsert",
+    "topic": "querying",
+    "definition": "A write that updates a row if it exists and inserts it if it does not."
+  },
+  {
+    "term": "Variable",
+    "topic": "querying",
+    "definition": "A named placeholder in a query whose value is supplied at run time."
+  },
+  {
+    "term": "Vector database",
+    "topic": "general",
+    "definition": "A database storing embeddings and retrieving them by similarity rather than by exact match."
+  },
+  {
+    "term": "Vector embedding",
+    "topic": "general",
+    "definition": "A numeric representation of text or an image, positioned so that similar things sit close together."
+  },
+  {
+    "term": "Vertical scaling",
+    "topic": "administration",
+    "definition": "Handling more load by giving one machine more CPU or memory."
+  },
+  {
+    "term": "View",
+    "topic": "data-modeling",
+    "definition": "A saved query the database presents as if it were a table."
+  },
+  {
+    "term": "Waterfall chart",
+    "topic": "visualization",
+    "definition": "A chart showing how a starting value reaches an ending one through successive increases and decreases."
+  },
+  {
+    "term": "White labeling",
+    "topic": "embedding",
+    "definition": "Restyling an embedded product so it carries the host's branding rather than the vendor's."
+  },
+  {
+    "term": "Window function",
+    "topic": "querying",
+    "definition": "A calculation across a set of rows related to the current row — running totals, rankings, period-over-period comparisons — without collapsing the result."
+  },
+  {
+    "term": "X-ray",
+    "topic": "querying",
+    "definition": "An automatically generated set of charts offering a first look at a table or a record."
+  }
 ]
