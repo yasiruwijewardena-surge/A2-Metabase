@@ -24,7 +24,10 @@ const TAXONOMIES = [
   { uid: 'api::industry.industry', key: 'industries', backrefs: ['companies'] },
   { uid: 'api::category.category', key: 'categories', backrefs: ['posts'] },
   { uid: 'api::tag.tag', key: 'tags', backrefs: ['posts'] },
-  { uid: 'api::use-case.use-case', key: 'useCases', backrefs: ['caseStudies', 'plans'] },
+  /* Only reverse fields the schema actually declares. Plans point at
+   * use-cases one way, so there is no `plans` field here to populate and
+   * asking for one makes the whole query throw. */
+  { uid: 'api::use-case.use-case', key: 'useCases', backrefs: ['caseStudies'] },
 ];
 
 const apply = process.argv.includes('--apply');
