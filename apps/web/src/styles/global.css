@@ -225,7 +225,7 @@
   }
 
   /* The scales grid is capped narrower than the page container. */
-  .scale-grid { max-width: 1174px; margin-inline: auto; }
+  .scale-grid { width: 100%; max-width: 1174px; margin-inline: auto; }
 
   /* Buttons: 42px tall, 12px radius, 18px inline padding, 14px bold. */
   .btn-primary, .btn-secondary {
@@ -446,17 +446,23 @@
    * section's 168px bottom margin.
    */
   .scales-section { padding-top: 168px; padding-inline: 60px; }
+  /* Flex column, as on the original. It is not cosmetic: in normal flow the
+     standfirst's 16px bottom margin collapses into the grid's 48px top margin
+     and the slab comes out 16px short. */
   .scales-slab {
+    display: flex; flex-direction: column; align-items: center;
     max-width: 1320px; margin-inline: auto; padding: 80px 72px;
-    border-radius: 12px; background: #fafbfe;
+    border: 1px solid var(--color-brand-muted); border-radius: 12px; background: #fafbfe;
   }
+  /* Both centre on their own width rather than filling the slab: the heading
+     shrinks to its text within a 640 cap, the standfirst to its single line. */
   .scales-title {
-    max-width: 640px; margin: 0 auto 24px;
+    width: fit-content; max-width: 640px; margin: 0 auto 24px;
     font-size: 36px; line-height: 48px; text-align: center;
   }
   .scales-standfirst {
-    margin: 0 auto 16px; font-size: 18px; line-height: 32px;
-    text-align: center; color: var(--color-ink-2);
+    width: fit-content; max-width: 100%; margin: 0 auto 16px;
+    font-size: 18px; line-height: 32px; text-align: center; color: var(--color-ink-2);
   }
   .scale-grid { margin-top: 48px; }
   /* The card hairline is the faint brand blue, not the neutral line. */
