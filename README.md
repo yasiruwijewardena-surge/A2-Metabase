@@ -171,7 +171,11 @@ fallback**, which is a deliberate choice, not an oversight:
   still renders in full and every link still works. The filter stops narrowing;
   nothing disappears.
 
-Tested in current Chrome, Firefox and Safari.
+Exercised in Chrome 155 — every filter on the site driven through a headless
+browser and asserted on rendered geometry, not on the stylesheet. `:has()` has
+been Baseline since December 2023, so Safari 26 and current Firefox are covered
+by support tables rather than by a run here; the degradation above is what
+bounds the risk either way.
 
 ## Performance
 
@@ -179,19 +183,20 @@ Measured with the PageSpeed Insights API, same pages, same day.
 
 | Page | Mobile | Desktop | LCP (mobile) | CLS | TBT |
 |---|---|---|---|---|---|
-| `/` | 50 → **98** | 64 → **100** | 1.6 s | 0 | 0 ms |
-| `/pricing` | 56 → **100** | 98 → **100** | 1.4 s | 0 | 0 ms |
-| `/blog` | 44 → **98** | 66 → **100** | 1.8 s | 0 | 0 ms |
-| `/case-studies` | 56 → **98** | 88 → **100** | 1.9 s | 0 | 0 ms |
-| `/glossary` | 49 → **100** | 80 → **100** | 1.4 s | 0 | 0 ms |
-| `/product/business-intelligence` | 48 → **98** | 92 → **100** | 1.8 s | 0 | 0 ms |
-| `/features/metabase-ai` | 55 → **98** | 46 → **100** | 1.8 s | 0 | 0 ms |
-| `/roadmap` | 64 → **100** | 73 → **100** | 1.4 s | 0 | 0 ms |
+| `/` | 76 → **98** | 91 → **100** | 1.7 s | 0 | 20 ms |
+| `/pricing` | 64 → **100** | 84 → **100** | 1.4 s | 0 | 0 ms |
+| `/blog` | 58 → **98** | 82 → **100** | 1.8 s | 0 | 0 ms |
+| `/case-studies` | 47 → **98** | 61 → **100** | 1.9 s | 0 | 0 ms |
+| `/events` | 64 → **98** | 97 → **100** | 1.8 s | 0 | 0 ms |
+| `/glossary` | 86 → **99** | 85 → **100** | 1.4 s | 0 | 0 ms |
+| `/product/business-intelligence` | 38 → **98** | 82 → **100** | 1.8 s | 0 | 0 ms |
+| `/features/metabase-ai` | 72 → **98** | 74 → **100** | 1.8 s | 0 | 0 ms |
+| `/roadmap` | 50 → **98** | 97 → **100** | 1.4 s | 0 | 0 ms |
 
-Eight pages, both strategies, measured the same day (2026-10-03). Each cell is
-*original → this replica*. Desktop is 100 on all eight; mobile is 98-100.
-Accessibility is 95-97, Best Practices and SEO 100. CLS is 0 and total blocking
-time 0 ms on every page.
+Nine pages, both strategies, measured the same day. Each cell is *original →
+this replica*. Desktop is 100 on all nine; mobile is 98-100. Accessibility is
+95-97, Best Practices and SEO 100. Across the 18 measurements, CLS is 0 on
+all but one (0.001) and total blocking time is 0 on all but one (20 ms).
 
 The brief asks for 90+ desktop and 80+ mobile. Raw numbers in
 `psi-results.json`, the original's baseline and the reasoning in
@@ -201,7 +206,7 @@ The gap is not cleverness. The original carries 78% of its homepage payload as
 third-party script — 679 KB of Google Tag Manager across five containers, plus
 Hotjar and five ad pixels — lazy-loads its own LCP image, and ships images
 without dimensions. This replica ships no third-party JavaScript at all, no
-external JavaScript files of any kind, 28 KB of CSS, and preloads the LCP image
+external JavaScript files of any kind, 23 KB of CSS over the wire, and preloads the LCP image
 with a matching `imagesrcset`.
 
 ## Status
@@ -214,7 +219,7 @@ with a matching `imagesrcset`.
 - [x] Scaffold Astro with the design tokens
 - [x] Build the pages (299 static routes)
 - [x] Deploy the front end
-- [x] Optimise and record PageSpeed results — 8 pages, both strategies
+- [x] Optimise and record PageSpeed results — 9 pages, both strategies
 - [x] Match the homepage, blog and case studies against measured values
 - [x] Build `/pricing` and model its plans in Strapi
 - [x] Give the rest of the replicated navigation somewhere to land

@@ -14,6 +14,9 @@
  * A PSI_API_KEY in the environment raises the rate limit; without one the API
  * still answers, just more slowly, so the run paces itself.
  */
+import { writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 const BASE = process.env.PSI_SITE || 'https://elegant-spontaneity-production-28e1.up.railway.app';
 const ORIGINAL = 'https://www.metabase.com';
 const KEY = process.env.PSI_API_KEY || '';
@@ -95,4 +98,9 @@ const out = {
   replica: BASE,
   comparison,
 };
-console.log(JSON.stringify(out, null, 1));
+/* This used to print and nothing more, while the header above said it wrote the
+ * file -- so the results only landed anywhere if you remembered to redirect,
+ * and a run piped through `tail` silently threw most of them away. */
+const dest = fileURLToPath(new URL('../../../psi-results.json', import.meta.url));
+writeFileSync(dest, JSON.stringify(out, null, 1) + '\n');
+console.error(`\nwrote ${dest} (${comparison.length} rows)`);
