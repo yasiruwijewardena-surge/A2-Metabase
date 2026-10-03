@@ -13,19 +13,19 @@
     "accessibility": 97,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": "1.6 s",
+    "lcp": "1.7 s",
     "cls": "0",
-    "tbt": "0 ms",
-    "totalBytes": "Total size was 226 KiB"
+    "tbt": "20 ms",
+    "totalBytes": "Total size was 190 KiB"
    },
    "original": {
-    "performance": 50,
+    "performance": 76,
     "accessibility": 95,
     "bestPractices": 92,
     "seo": 100,
-    "lcp": "15.2 s",
-    "cls": "0.001",
-    "tbt": "400 ms",
+    "lcp": "3.7 s",
+    "cls": "0.059",
+    "tbt": "350 ms",
     "totalBytes": "Total size was 1,515 KiB"
    }
   },
@@ -40,17 +40,17 @@
     "lcp": "0.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 290 KiB"
+    "totalBytes": "Total size was 254 KiB"
    },
    "original": {
-    "performance": 64,
+    "performance": 91,
     "accessibility": 92,
     "bestPractices": 92,
     "seo": 100,
-    "lcp": "1.0 s",
+    "lcp": "0.9 s",
     "cls": "0.009",
-    "tbt": "2,340 ms",
-    "totalBytes": "Total size was 1,770 KiB"
+    "tbt": "220 ms",
+    "totalBytes": "Total size was 1,727 KiB"
    }
   },
   {
@@ -64,17 +64,17 @@
     "lcp": "1.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 97 KiB"
+    "totalBytes": "Total size was 98 KiB"
    },
    "original": {
-    "performance": 56,
+    "performance": 64,
     "accessibility": 96,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "14.1 s",
+    "lcp": "14.5 s",
     "cls": "0",
-    "tbt": "330 ms",
-    "totalBytes": "Total size was 1,401 KiB"
+    "tbt": "140 ms",
+    "totalBytes": "Total size was 1,404 KiB"
    }
   },
   {
@@ -88,16 +88,16 @@
     "lcp": "0.3 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 156 KiB"
+    "totalBytes": "Total size was 157 KiB"
    },
    "original": {
-    "performance": 98,
+    "performance": 84,
     "accessibility": 93,
     "bestPractices": 96,
     "seo": 100,
     "lcp": "0.8 s",
     "cls": "0.001",
-    "tbt": "110 ms",
+    "tbt": "350 ms",
     "totalBytes": "Total size was 1,429 KiB"
    }
   },
@@ -112,17 +112,17 @@
     "lcp": "1.8 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 168 KiB"
+    "totalBytes": "Total size was 170 KiB"
    },
    "original": {
-    "performance": 44,
+    "performance": 58,
     "accessibility": 86,
     "bestPractices": 96,
     "seo": 92,
-    "lcp": "18.0 s",
-    "cls": "0.061",
-    "tbt": "530 ms",
-    "totalBytes": "Total size was 2,447 KiB"
+    "lcp": "16.6 s",
+    "cls": "0.069",
+    "tbt": "180 ms",
+    "totalBytes": "Total size was 2,500 KiB"
    }
   },
   {
@@ -136,17 +136,17 @@
     "lcp": "0.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 168 KiB"
+    "totalBytes": "Total size was 169 KiB"
    },
    "original": {
-    "performance": 66,
+    "performance": 82,
     "accessibility": 89,
     "bestPractices": 96,
     "seo": 92,
-    "lcp": "1.0 s",
-    "cls": "0.177",
-    "tbt": "600 ms",
-    "totalBytes": "Total size was 2,499 KiB"
+    "lcp": "1.2 s",
+    "cls": "0.269",
+    "tbt": "100 ms",
+    "totalBytes": "Total size was 2,501 KiB"
    }
   },
   {
@@ -160,17 +160,17 @@
     "lcp": "1.9 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 298 KiB"
+    "totalBytes": "Total size was 295 KiB"
    },
    "original": {
-    "performance": 56,
+    "performance": 47,
     "accessibility": 96,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "12.1 s",
-    "cls": "0.037",
-    "tbt": "450 ms",
-    "totalBytes": "Total size was 2,023 KiB"
+    "lcp": "15.1 s",
+    "cls": "0",
+    "tbt": "650 ms",
+    "totalBytes": "Total size was 2,065 KiB"
    }
   },
   {
@@ -184,41 +184,89 @@
     "lcp": "0.5 s",
     "cls": "0.001",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 597 KiB"
+    "totalBytes": "Total size was 575 KiB"
    },
    "original": {
-    "performance": 88,
+    "performance": 61,
     "accessibility": 93,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "0.8 s",
+    "lcp": "4.3 s",
     "cls": "0.012",
-    "tbt": "280 ms",
-    "totalBytes": "Total size was 9,916 KiB"
+    "tbt": "400 ms",
+    "totalBytes": "Total size was 9,959 KiB"
+   }
+  },
+  {
+   "page": "/events",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 95,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.8 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 393 KiB"
+   },
+   "original": {
+    "performance": 64,
+    "accessibility": 93,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "44.6 s",
+    "cls": "0.056",
+    "tbt": "140 ms",
+    "totalBytes": "Total size was 13,774 KiB"
+   }
+  },
+  {
+   "page": "/events",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 217 KiB"
+   },
+   "original": {
+    "performance": 97,
+    "accessibility": 90,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "0.8 s",
+    "cls": "0.016",
+    "tbt": "130 ms",
+    "totalBytes": "Total size was 13,821 KiB"
    }
   },
   {
    "page": "/glossary",
    "strategy": "mobile",
    "replica": {
-    "performance": 100,
+    "performance": 99,
     "accessibility": 96,
     "bestPractices": 100,
     "seo": 100,
     "lcp": "1.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 106 KiB"
+    "totalBytes": "Total size was 107 KiB"
    },
    "original": {
-    "performance": 49,
+    "performance": 86,
     "accessibility": 89,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "13.8 s",
-    "cls": "0",
-    "tbt": "560 ms",
-    "totalBytes": "Total size was 1,311 KiB"
+    "lcp": "3.3 s",
+    "cls": "0.001",
+    "tbt": "140 ms",
+    "totalBytes": "Total size was 1,313 KiB"
    }
   },
   {
@@ -232,17 +280,17 @@
     "lcp": "0.3 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 106 KiB"
+    "totalBytes": "Total size was 107 KiB"
    },
    "original": {
-    "performance": 80,
+    "performance": 85,
     "accessibility": 87,
     "bestPractices": 96,
     "seo": 100,
     "lcp": "0.8 s",
     "cls": "0.001",
-    "tbt": "430 ms",
-    "totalBytes": "Total size was 1,337 KiB"
+    "tbt": "320 ms",
+    "totalBytes": "Total size was 1,340 KiB"
    }
   },
   {
@@ -256,17 +304,17 @@
     "lcp": "1.8 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 2,887 KiB"
+    "totalBytes": "Total size was 2,889 KiB"
    },
    "original": {
-    "performance": 48,
+    "performance": 38,
     "accessibility": 93,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "23.3 s",
+    "lcp": "19.5 s",
     "cls": "0",
-    "tbt": "470 ms",
-    "totalBytes": "Total size was 35,929 KiB"
+    "tbt": "990 ms",
+    "totalBytes": "Total size was 35,972 KiB"
    }
   },
   {
@@ -280,16 +328,16 @@
     "lcp": "0.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 2,923 KiB"
+    "totalBytes": "Total size was 2,924 KiB"
    },
    "original": {
-    "performance": 92,
+    "performance": 82,
     "accessibility": 90,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "1.2 s",
+    "lcp": "1.3 s",
     "cls": "0.021",
-    "tbt": "180 ms",
+    "tbt": "340 ms",
     "totalBytes": "Total size was 36,071 KiB"
    }
   },
@@ -304,17 +352,17 @@
     "lcp": "1.8 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 826 KiB"
+    "totalBytes": "Total size was 748 KiB"
    },
    "original": {
-    "performance": 55,
+    "performance": 72,
     "accessibility": 92,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "54.4 s",
-    "cls": "0.016",
-    "tbt": "310 ms",
-    "totalBytes": "Total size was 17,263 KiB"
+    "lcp": "4.6 s",
+    "cls": "0.065",
+    "tbt": "220 ms",
+    "totalBytes": "Total size was 17,306 KiB"
    }
   },
   {
@@ -328,41 +376,41 @@
     "lcp": "0.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 747 KiB"
+    "totalBytes": "Total size was 748 KiB"
    },
    "original": {
-    "performance": 46,
+    "performance": 74,
     "accessibility": 89,
     "bestPractices": 96,
     "seo": 100,
     "lcp": "7.5 s",
-    "cls": "0.37",
-    "tbt": "280 ms",
-    "totalBytes": "Total size was 29,947 KiB"
+    "cls": "0.001",
+    "tbt": "100 ms",
+    "totalBytes": "Total size was 29,992 KiB"
    }
   },
   {
    "page": "/roadmap",
    "strategy": "mobile",
    "replica": {
-    "performance": 100,
+    "performance": 98,
     "accessibility": 95,
     "bestPractices": 100,
     "seo": 100,
     "lcp": "1.4 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 96 KiB"
+    "totalBytes": "Total size was 97 KiB"
    },
    "original": {
-    "performance": 64,
+    "performance": 50,
     "accessibility": 91,
     "bestPractices": 96,
     "seo": 100,
-    "lcp": "3.8 s",
+    "lcp": "11.6 s",
     "cls": "0",
-    "tbt": "720 ms",
-    "totalBytes": "Total size was 1,385 KiB"
+    "tbt": "550 ms",
+    "totalBytes": "Total size was 1,428 KiB"
    }
   },
   {
@@ -376,17 +424,17 @@
     "lcp": "0.3 s",
     "cls": "0",
     "tbt": "0 ms",
-    "totalBytes": "Total size was 96 KiB"
+    "totalBytes": "Total size was 97 KiB"
    },
    "original": {
-    "performance": 73,
+    "performance": 97,
     "accessibility": 89,
     "bestPractices": 96,
     "seo": 100,
     "lcp": "1.1 s",
     "cls": "0",
-    "tbt": "630 ms",
-    "totalBytes": "Total size was 1,458 KiB"
+    "tbt": "80 ms",
+    "totalBytes": "Total size was 1,456 KiB"
    }
   }
  ]
