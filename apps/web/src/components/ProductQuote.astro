@@ -1,0 +1,29 @@
+---
+/*
+ * A customer quote between two product sections: body 20/26, an 84x50 photo,
+ * then name 16/26/700 and role 16/26 in the original's muted grey. The
+ * original sets no quotation marks around the body, so neither does this.
+ */
+import Avatar from './Avatar.astro';
+import { thumbSet } from '../lib/image';
+
+interface Props { quote: any }
+const { quote } = Astro.props;
+const person = quote?.person;
+const photo = person?.avatar?.url ? thumbSet(person.avatar.url, 84, 50).src : null;
+---
+{quote && (
+  <figure class="pp-quote container-mb">
+    <blockquote class="pp-quote-body">{quote.quote}</blockquote>
+    {photo
+      ? <img class="pp-quote-photo" src={photo} width="84" height="50"
+             alt={`Photo of ${person?.name}`} loading="lazy" decoding="async" />
+      : <Avatar image={null} name={person?.name} size={50} class="pp-quote-photo" />}
+    <figcaption class="pp-quote-who">
+      <span class="pp-quote-name">{person?.name}</span>
+      <span class="pp-quote-role">
+        {person?.role}{person?.company?.name && <>, {person.company.name}</>}
+      </span>
+    </figcaption>
+  </figure>
+)}

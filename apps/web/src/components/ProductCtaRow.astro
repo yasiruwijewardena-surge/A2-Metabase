@@ -1,0 +1,23 @@
+---
+/*
+ * The pair of hero buttons plus the ticked reassurance row beneath them.
+ * The original repeats this verbatim in the hero and in the closing CTA, so
+ * it lives in one place. Ticks are #8d93a5 on the original, not green.
+ */
+---
+<div class="pp-cta-row">
+  <a href="/start" class="btn-primary pp-btn">Try Metabase Cloud free</a>
+  <a href="/open-source" class="btn-secondary pp-btn">Deploy Metabase Open Source</a>
+</div>
+<p class="pp-points">
+  {[['Free 14-day trial', 24], ['Super-fast setup', 24], ['Open source', 20]].map(([label, size]) => (
+    <span class="pp-point">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+        <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      {label}
+    </span>
+  ))}
+</p>

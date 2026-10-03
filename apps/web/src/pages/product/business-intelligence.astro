@@ -1,0 +1,270 @@
+---
+/*
+ * Self-service Business Intelligence.
+ *
+ * Built against a full element dump of the original at 1512 wide
+ * (`npm run metrics -- <url> --root .embedding-page.business-intelligence`).
+ * The numbers that drive the CSS, for anyone checking this later:
+ *
+ *   hero band   #fafbfe, 1px bottom border, 80 margin-bottom
+ *               eyebrow: 62x70 icon + blue 18/26/700 label
+ *               h1 580x112 48/56/700 margin -10/16
+ *               sub 580 20/28 margin-bottom 24
+ *               buttons radius 8, padding 12/18; ticks 14px #8d93a5, gap 4
+ *               hero img framed: 12 padding, 1px border, radius 24, mt 68
+ *               pillars 3 x 389x215 white cards, radius 12, 1px border, p24
+ *               trust 18/25 mt 58 mb 24 · logos 38 tall, mb 10, px 8
+ *   split       632x632 tinted frame (#eef6fc then #fafbfe) + 560 copy col
+ *               h3 30/35 mb 24 · lede 20/28 mb 16 · bullets 18/26 pl 28 gap 18
+ *   band        h2 640x80 36/40 mb 16 · sub 600 20/32 mb 32
+ *   accordion   632x600 #fafbfe frame (image overflows it by 53 top)
+ *               + 468 column: 4px #f1f2f4 rail, h4 24/32, body 18/26
+ *   quote       600 20/26, 84x50 photo, name 16/26/700, role 16/26 #8d93a5
+ *   final       no tint — 1px top border, padding 80/76, img 1020x537
+ *               radius 24, white, no bottom border, margin-bottom -243
+ *
+ * Deliberate divergences, all three for good reasons:
+ *  - The original's section headings are h3 (36/40) above its h2s (30/35),
+ *    which inverts the document outline. Sizes are kept; the tags are swapped
+ *    so the heading order still reads correctly to a screen reader.
+ *  - The feature list is an accordion on the original (one dark heading, the
+ *    rest muted, a tall rail on the open one). It is rebuilt here with radio
+ *    inputs and `:has()`, so it behaves the same with no JavaScript.
+ *  - Quotes come from Strapi. The original quotes three named real people;
+ *    writing words for them is not something a replica should do.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavIcon from '../../components/NavIcon.astro';
+import ProductCtaRow from '../../components/ProductCtaRow.astro';
+import ProductQuote from '../../components/ProductQuote.astro';
+import { getTestimonials } from '../../lib/strapi';
+
+const quotes = (await getTestimonials())
+  .filter((t) => t.variant === 'pull-quote')
+  .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
+
+const logos = [
+  ['Huggingface', 'huggingface logo', 135], ['mcdonalds', 'mcdonalds logo', 67],
+  ['huma', 'huma logo', 128], ['capital-one', 'capital-one logo', 129],
+  ['mistral', 'Mistral AI logo', 135], ['linear', 'linear logo', 116],
+  ['deutsche-telekom', 'Deutsche Telekom logo', 58], ['kong', 'kong logo', 129],
+];
+
+const pillars = [
+  ['rocket', 'Quick to set up',
+   'Skip the ETL and the modelling layer to begin with. Layer in structure later.'],
+  ['cloud', 'Self-host or deploy on Metabase Cloud',
+   'Go hands-free on our cloud, run it on your own hardware, or air-gap it entirely.'],
+  ['permissions', 'Secure data sharing',
+   'Share a dashboard with the whole company, or one row with one customer.'],
+];
+
+const setupSteps = [
+  ['Low-lift to get started',
+   'Write your config up in a single YAML file, or tidy away things like experimental column headers right in the admin UI.'],
+  ['Curate what you expose',
+   'Choose the tables people see and edit their metadata in the UI, so self-service answers come out right.'],
+  ['Start simple before your first data hire joins the team',
+   'Add modelling layers as the data grows and more data-focused people come onboard.'],
+];
+
+const permissionSteps = [
+  ['Limit access at the table, row or column level',
+   'Lock down the sensitive tables, fields and columns while people carry on using the rest of the data.'],
+  ['Manage role-based permissions with SSO',
+   'Set visibility by role — marketing sees one thing, support another — with view and edit granted separately.'],
+  ["Keep track of who's doing what, when",
+   'Set alerts on access and downloads, and read the rest back out of usage analytics.'],
+];
+
+/* The accordion. `badge` is the small blue label the original puts above its
+ * first heading; `link` is the inline call-to-action some items carry. */
+const features = [
+  {
+    id: 'metabot', icon: 'ai', badge: 'Metabot', title: 'Ask Metabot AI',
+    body: 'Chat with your database to get answers in natural language, so the people who need a number can go and get it themselves.',
+    link: { href: '/product/metabot-ai', label: 'Chat with your database' },
+  },
+  {
+    id: 'drill', icon: 'drill', title: 'Click on charts to drill into data',
+    body: 'Drill-through menus answer the next question before it is asked — "can we see this broken down by plan?" — without anybody writing a query for it.',
+  },
+  {
+    id: 'sql', icon: 'query', title: 'Query data with or without SQL',
+    body: 'Put queries together intuitively in the visual query builder without writing any SQL, then drop into the editor when a question earns it.',
+    link: { href: '/product/query-builder', label: 'visual query builder' },
+  },
+  {
+    id: 'trust', icon: 'services', title: 'Make content trustworthy and easy to find',
+    body: 'Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections.',
+  },
+  {
+    id: 'reports', icon: 'csv', title: 'Put the most valuable data in front of people',
+    body: 'Schedule reports out to anyone, inside the organisation or outside it, over Slack or email.',
+  },
+];
+---
+
+<BaseLayout
+  title="Self-service Business Intelligence | Metabase"
+  description="The fastest way to go from database to dashboards: a clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL whenever you need it."
+>
+  <div class="pp-hero-band">
+    <div class="container-mb pp-center">
+      <p class="pp-eyebrow">
+        <svg class="pp-eyebrow-icon" width="62" height="70" viewBox="0 0 62 70" fill="none" aria-hidden="true">
+          <rect x="1" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".3" />
+          <rect x="35" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".55" />
+          <rect x="9.5" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" opacity=".75" />
+          <rect x="31" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" />
+        </svg>
+        <b>Business Intelligence</b>
+      </p>
+      <h1 class="pp-hero-title">The fastest way to go from database to dashboards</h1>
+      <p class="pp-hero-sub">
+        A clean UI that won't scare off your teammates, governance so things don't go
+        wrong, and SQL when you need it.
+      </p>
+      <ProductCtaRow />
+      {/* The original ships a separate, squarer crop for narrow screens; it is
+          also what keeps mobile LCP inside the 2.5s budget. */}
+      <picture class="pp-hero-pic">
+        <source media="(max-width: 991px)" srcset="/images/product/business-intelligence/hero-mobile.webp"
+                width="764" height="742" />
+        <img class="pp-hero-img" src="/images/product/business-intelligence/hero.webp"
+             alt="A Metabase dashboard of business metrics" width="998" height="634"
+             loading="eager" fetchpriority="high" decoding="sync" />
+      </picture>
+      <ul class="pp-pillars">
+        {pillars.map(([icon, title, body]) => (
+          <li class="pp-pillar">
+            <NavIcon name={icon} size={24} class="pp-pillar-icon" />
+            <h2 class="pp-pillar-title">{title}</h2>
+            <p class="pp-pillar-body">{body}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="pp-trust">Metabase is trusted by 100,000+ companies</p>
+      <ul class="pp-logos">
+        {logos.map(([file, alt, w]) => (
+          <li><img src={`/images/logos/${file}.svg`} alt={alt} width={w} height="38"
+                   style={`width:${w}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <section class="pp-split container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--blue">
+        <video width="630" height="630" poster="/images/home/query-builder-poster.webp"
+               autoplay loop muted playsinline preload="none"
+               aria-label="Building a question in the visual query builder">
+          <source src="/images/home/query-builder.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <p class="pp-play-caption">
+        <svg width="15" height="18" viewBox="0 0 15 18" fill="currentColor" aria-hidden="true"><path d="M0 0l15 9L0 18z" /></svg>
+        Watch how quick and easy it is to go from zero to chart
+      </p>
+    </div>
+    <div class="pp-split-copy">
+      <h3 class="pp-h30">You could be querying 5 minutes from now</h3>
+      <p class="pp-lede">Regardless of what state your DB is in.</p>
+      <ul class="pp-rich">
+        {setupSteps.map(([t, b]) => <li><b>{t}</b><br />{b}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-band container-mb">
+    <div class="pp-center">
+      <h2 class="pp-h36">Avoid repeated requests with reports anyone can run</h2>
+      <p class="pp-band-sub">Let people dive deeper into data on their own without the hand-holding.</p>
+    </div>
+    <div class="pp-accordion">
+      <div class="pp-frame pp-frame--grey pp-accordion-media">
+        <img src="/images/product/business-intelligence/avoid-repeated-requests-1.webp"
+             alt="A dashboard being filtered through a drill-through menu"
+             width="602" height="555" loading="lazy" decoding="async" />
+      </div>
+      <ul class="pp-features">
+        {features.map((f, i) => (
+          <li class="pp-feature">
+            <input class="pp-feature-radio" type="radio" name="bi-feature" id={`f-${f.id}`} checked={i === 0} />
+            <span class="pp-feature-rail" aria-hidden="true"></span>
+            <div class="pp-feature-body">
+              <NavIcon name={f.icon} size={32} class="pp-feature-icon" />
+              {f.badge && <span class="pp-feature-badge"><NavIcon name={f.icon} size={24} class="pp-feature-badge-icon" />{f.badge}</span>}
+              <h3 class="pp-feature-title"><label for={`f-${f.id}`}>{f.title}</label></h3>
+              <div class="pp-feature-detail">
+                <p class="pp-feature-text">{f.body}</p>
+                {f.link && <a class="pp-feature-link" href={f.link.href}>{f.link.label}</a>}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ProductQuote quote={quotes[0]} />
+
+  <section class="pp-split container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--grey">
+        <video width="630" height="630" poster="/images/product/business-intelligence/permissions2-poster.webp"
+               autoplay loop muted playsinline preload="none"
+               aria-label="Setting table, row and column permissions for a group">
+          <source src="/images/product/business-intelligence/permissions2.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div class="pp-split-copy">
+      <h3 class="pp-h30">Make sure people only see what they need to</h3>
+      <p class="pp-lede">
+        Granular permissions keep people safe from accidentally seeing — or breaking —
+        data that was never theirs to touch.
+      </p>
+      <ul class="pp-rich">
+        {permissionSteps.map(([t, b]) => <li><b>{t}</b><br />{b}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <ProductQuote quote={quotes[1]} />
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36">Works with your stack for live visualizations and reports, not extracts</h2>
+    <p class="pp-band-sub">
+      Metabase is a visualization and querying layer that sits on top of the database you
+      already run, across <a href="/data-sources">20 data sources</a>, so the numbers
+      people read are the numbers that are in there right now — not the ones that were
+      true when last night's export finished.
+    </p>
+    <img class="pp-band-img" src="/images/product/business-intelligence/works-with-your-stack.svg"
+         alt="Metabase connected to a warehouse and several application databases"
+         width="592" height="287" loading="lazy" decoding="async" />
+    <a href="/data-sources" class="pp-band-link">
+      Learn more about how Metabase works with your database
+      <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+           stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
+  </section>
+
+  <ProductQuote quote={quotes[2]} />
+
+  <section class="pp-final">
+    <div class="container-mb pp-center">
+      <h2 class="pp-h36 pp-final-title">Ready to get started?</h2>
+      <p class="pp-band-sub">
+        Visualize your data in minutes. Let non-technical teammates explore and share
+        what they find, with no queue behind your data team.
+      </p>
+      <ProductCtaRow />
+      <img class="pp-final-img" src="/images/product/business-intelligence/application-screenshot.webp"
+           alt="The Metabase application, showing a collection of dashboards"
+           width="1020" height="537" loading="lazy" decoding="async" />
+    </div>
+  </section>
+</BaseLayout>

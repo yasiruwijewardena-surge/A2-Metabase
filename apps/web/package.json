@@ -12,7 +12,10 @@
     "astro": "astro",
     "start": "node server.mjs",
     "audit:links": "node scripts/audit-links.mjs",
-    "diff": "node scripts/page-diff.mjs"
+    "diff": "node scripts/page-diff.mjs",
+    "outline": "node scripts/page-outline.mjs",
+    "metrics": "node scripts/page-metrics.mjs",
+    "assets": "node scripts/page-assets.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

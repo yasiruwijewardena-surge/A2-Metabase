@@ -4,8 +4,9 @@
  * over 300ms, so the whole set is drawn in strokes of `currentColor` and the
  * colour change is inherited from whatever is hovered.
  */
-interface Props { name: string; size?: number }
-const { name, size = 24 } = Astro.props;
+interface Props { name: string; size?: number; class?: string }
+/* `class` lets the product pages reuse the set at their own size and colour. */
+const { name, size = 24, class: cls = 'nav-icon' } = Astro.props;
 
 const paths: Record<string, string[]> = {
   ai:         ['M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z'],
@@ -42,7 +43,7 @@ const paths: Record<string, string[]> = {
 const d = paths[name] ?? paths.docs;
 ---
 
-<svg class="nav-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+<svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
   {d.map((p) => (
     <path d={p} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
   ))}
