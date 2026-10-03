@@ -13,6 +13,8 @@ const PUBLIC_READ_APIS = [
   'api::case-study.case-study',
   'api::category.category',
   'api::company.company',
+  'api::event.event',
+  'api::event-category.event-category',
   'api::glossary-term.glossary-term',
   'api::faq.faq',
   'api::industry.industry',

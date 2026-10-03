@@ -1,0 +1,118 @@
+---
+/*
+ * /events
+ *
+ * Measured off the original at 1512 (`npm run metrics -- <url> --root div.events`)
+ * and from its own markup:
+ *   hero band   #fafbfe, h1 48/58/900 "Events" mb 8, standfirst 20/28 mb 8
+ *   event card  800 wide, white, radius 24, 1px border, padding 24, 24 apart,
+ *               a 160x160 thumbnail at radius 12, 24 of gap, then a 16/24
+ *               date in #8d93a5 (mb 8), a 24/32/700 title (mb 16), and a
+ *               brand button 130x48 at radius 8
+ *               hover: border -> blue-85, background -> neutral-99
+ *   watch now   white band, h2 36/43/900 mb 8, standfirst 20/28 mb 16,
+ *               a "Pick a series" control, then the recordings
+ *
+ * The original splits on a `data-starts-at` attribute and filters recordings
+ * by `data-category` with JavaScript. Here the split is done at build time
+ * from `startsAt`, and the series filter is radio inputs read with `:has()`,
+ * so the page ships no JavaScript and the filter does not reload anything.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEvents, getEventCategories } from '../lib/strapi';
+
+const [events, series] = await Promise.all([getEvents(), getEventCategories()]);
+
+const now = Date.now();
+const upcoming = events
+  .filter((e) => new Date(e.startsAt).getTime() >= now)
+  .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt));
+const past = events.filter((e) => new Date(e.startsAt).getTime() < now);
+
+/* Only offer a series that has a recording to show. */
+const shown = series.filter((s) => past.some((e) => e.category?.slug === s.slug));
+
+const filterCss = [
+  ...shown.map((s) =>
+    `.ev:has(#es-${s.slug}:checked) .ev-card:not([data-series="${s.slug}"]),` +
+    `.ev:has(#es-${s.slug}:checked) .ev-blurb:not([data-series="${s.slug}"])` +
+    `{display:none}`),
+  `.ev:has(#es-all:checked) .ev-blurb:not([data-series="all"]){display:none}`,
+  ...['all', ...shown.map((s) => s.slug)].map((s) =>
+    `.ev:has(#es-${s}:checked) .ev-chip[for="es-${s}"]{background:var(--color-brand-hover);color:#fff}`),
+].join('');
+
+/* The original prints the viewer's own timezone. A static build has no
+ * viewer, so this is fixed to UTC and labelled, rather than silently
+ * rendering the build machine's clock. */
+const fmt = (iso: string) =>
+  new Intl.DateTimeFormat('en-GB', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false,
+  }).format(new Date(iso)).replace(' at ', ' at ') + ' (UTC)';
+---
+
+<BaseLayout
+  title="Events | Metabase"
+  description="Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
+>
+  <div class="ev">
+    <section class="ev-hero">
+      <h1 class="ev-h1">Events</h1>
+      <h2 class="ev-sub">Register for an upcoming event or stream a past recording.</h2>
+
+      {upcoming.length === 0 ? (
+        <p class="ev-none">No events on the calendar right now — the recordings below are all free to stream.</p>
+      ) : upcoming.map((e) => (
+        <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
+          <span class="ev-thumb" aria-hidden="true"></span>
+          <span class="ev-body">
+            <span class="ev-date">{fmt(e.startsAt)}</span>
+            <span class="ev-title">{e.title}</span>
+            {e.location && <span class="ev-loc">{e.location}</span>}
+            <span class="ev-btn">Register now</span>
+          </span>
+        </a>
+      ))}
+    </section>
+
+    <section class="ev-watch">
+      <h2 class="ev-watch-h">Watch now</h2>
+      <p class="ev-watch-sub">
+        Miss an event? No worries. Stream recordings of previous events — no email
+        registration required.
+      </p>
+
+      <fieldset class="ev-radios">
+        <legend class="sr-only">Pick a series</legend>
+        <input type="radio" name="ev-series" id="es-all" checked />
+        {shown.map((s) => <input type="radio" name="ev-series" id={`es-${s.slug}`} />)}
+      </fieldset>
+
+      <p class="ev-pick">Pick a series</p>
+      <div class="ev-chips">
+        <label class="ev-chip" for="es-all">All series</label>
+        {shown.map((s) => <label class="ev-chip" for={`es-${s.slug}`}>{s.name}</label>)}
+      </div>
+
+      {/* Each series' own sentence, swapped with the filter. */}
+      <p class="ev-blurb" data-series="all">Every session we have recorded, newest first.</p>
+      {shown.map((s) => <p class="ev-blurb" data-series={s.slug}>{s.description}</p>)}
+
+      <div class="ev-list">
+        {past.map((e) => (
+          <a class="ev-card" href={e.recordingUrl ?? `/events/${e.slug}`} data-series={e.category?.slug}>
+            <span class="ev-thumb" aria-hidden="true"></span>
+            <span class="ev-body">
+              <span class="ev-date">{fmt(e.startsAt)}</span>
+              <span class="ev-title">{e.title}</span>
+              {e.description && <span class="ev-desc">{e.description}</span>}
+              <span class="ev-btn ev-btn--ghost">Watch the recording</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+  <style set:html={filterCss} is:inline></style>
+</BaseLayout>

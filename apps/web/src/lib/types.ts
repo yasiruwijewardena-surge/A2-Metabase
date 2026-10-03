@@ -104,6 +104,27 @@ export interface Testimonial {
   company?: Company | null;
 }
 
+export interface EventCategory {
+  name: string;
+  slug: string;
+  description?: string | null;
+  displayOrder?: number;
+}
+
+export interface SiteEvent {
+  title: string;
+  slug: string;
+  description?: string | null;
+  /** ISO. Decides which band the event appears in, so nothing needs re-flagging as it ages. */
+  startsAt: string;
+  location?: string | null;
+  registrationUrl?: string | null;
+  recordingUrl?: string | null;
+  thumbnail?: StrapiImage | null;
+  featured?: boolean;
+  category?: EventCategory | null;
+}
+
 export interface GlossaryTerm {
   term: string;
   slug: string;

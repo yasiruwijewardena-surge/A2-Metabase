@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "event_categories",
+  "info": {
+    "singularName": "event-category",
+    "pluralName": "event-categories",
+    "displayName": "Event category",
+    "description": "A strand of events — fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "name", "required": true },
+    "description": { "type": "text" },
+    "displayOrder": { "type": "integer", "default": 0 },
+    "events": { "type": "relation", "relation": "oneToMany", "target": "api::event.event", "mappedBy": "category" }
+  }
+}

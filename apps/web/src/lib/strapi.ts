@@ -1,7 +1,6 @@
 import type {
   Author, CaseStudy, Category, Faq, GlossaryTerm, Industry, Plan, Post, PricingAddon, Tag,
-  Testimonial, UseCase,
-} from './types';
+  Testimonial, UseCase, SiteEvent, EventCategory,} from './types';
 
 const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
   .replace(/\/+$/, '');
@@ -148,6 +147,18 @@ export const getTestimonials = () =>
   });
 
 export const getGlossary = () => all<GlossaryTerm>('glossary-terms', { sort: 'term:asc' });
+
+/** Soonest first. The page splits on `startsAt` rather than a flag, so an
+ *  event moves from upcoming to past on its own. */
+export const getEvents = () =>
+  all<SiteEvent>('events', {
+    'populate[category]': 'true',
+    'populate[thumbnail]': 'true',
+    sort: 'startsAt:desc',
+  });
+
+export const getEventCategories = () =>
+  all<EventCategory>('event-categories', { sort: 'displayOrder:asc' });
 
 export const getPlans = () =>
   all<Plan>('plans', {
