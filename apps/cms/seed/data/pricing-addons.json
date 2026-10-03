@@ -2,7 +2,7 @@
   {
     "name": "AI",
     "slug": "ai",
-    "body": "Most folks bring their own AI provider API key to power Metabase's AI features. If you use our AI service, it is billed per token.",
+    "body": "Most folks bring their own AI provider API key to power Metabase's AI features. If you use our AI service, it's $3.75 per 1M tokens, and includes 1 million tokens to get you started.",
     "rate": "$3.75 per 1M tokens",
     "included": "1 million tokens to get you started",
     "displayOrder": 0
@@ -10,7 +10,7 @@
   {
     "name": "Transforms",
     "slug": "transforms",
-    "body": "Transforms run on a schedule against your data. Self-hosting gives you unlimited transforms, since they run on your own infrastructure.",
+    "body": "You get 1,000 included runs on Starter and Pro. After 1,000, each run costs $0.01 and we bill you monthly for your usage. By self-hosting you get unlimited transforms, since they run on your own infrastructure.",
     "rate": "$0.01 per run",
     "included": "1,000 runs on Starter and Pro",
     "displayOrder": 1
@@ -18,7 +18,7 @@
   {
     "name": "Advanced transforms",
     "slug": "advanced-transforms",
-    "body": "Just like regular transforms, with the heavier work billed at a higher rate once the included runs are used up.",
+    "body": "Just like regular transforms, you get 1,000 included runs on Starter and Pro. Advanced transforms cost $0.02 per run once you have used your included runs.",
     "rate": "$0.02 per run",
     "included": "1,000 runs on Starter and Pro",
     "displayOrder": 2
@@ -26,7 +26,7 @@
   {
     "name": "Storage",
     "slug": "storage",
-    "body": "Optional, for when your data is not already in a database and you would rather upload spreadsheets or CSVs to analyse in Metabase.",
+    "body": "Storage is completely optional, for when your data is not already in a database and you would rather upload spreadsheets or CSVs to analyse in Metabase. Pricing starts at $2 for 1M rows of storage.",
     "rate": "From $2 per 1M rows",
     "included": "Nothing stored until you upload",
     "displayOrder": 3
