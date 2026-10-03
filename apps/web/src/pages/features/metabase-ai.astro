@@ -1,0 +1,422 @@
+---
+/*
+ * /features/metabase-ai — the largest page on the site.
+ *
+ * Measured off the original at 1512 with `npm run metrics --root
+ * div.metabot-ai-page`. It is built almost entirely from one repeating
+ * pattern, so most of it is driven from the `sections` array below:
+ *
+ *   section    h2 800x40 36/40/700 centred, optional 800-wide 20/28 lede
+ *              16 beneath, then cards on white at radius 24:
+ *   wide card  1280 wide: h4 1230x32 24/32/700 (mb 8), an 800-wide 20/28
+ *              line, then a 1278-wide still
+ *   pair card  624 wide, two up: h4 574x32 (mb 8), a 574-wide 20/28 line,
+ *              then a 622-wide still
+ *   hero       sky 1500x458 behind an h1 580x168 48/56/700 (margin -10/16),
+ *              a 580x84 20/28 standfirst (mb 36), two buttons, then a
+ *              1192x712 clip in a 1240x760 frame at radius 32, mt 70
+ *   faq        h3 652 30/40/700, a 652 white r12 box of eight details,
+ *              then the 648-wide #eef6fc note
+ *   final      h3 685x48 36/48/700 and the two buttons
+ *
+ * Two deliberate divergences:
+ *
+ *  - Between the permissions stepper and the pricing section the original
+ *    holds 3,282px of scroll with no content in it: the section is pinned
+ *    and its four steps advance as you scroll past. Reproducing that needs
+ *    JavaScript tied to scroll position. Here the same four steps are a
+ *    CSS-only accordion on radio inputs, which presents the identical
+ *    content and costs the page nothing. The replica is therefore about
+ *    3,000px shorter than the original by design.
+ *  - Two of the original's stills are animated GIFs, 11MB and 1.3MB. They
+ *    are served here as muted looping video with a poster, 1.2MB and 156KB.
+ *
+ * FAQ questions and section headings are the original's. The prose is
+ * written here rather than copied.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { preloadStatic } from '../../lib/image';
+
+const A = '/images/features/metabot-ai';
+
+const logos = [
+  ['huma', 'huma logo', 125], ['home/airbyte', 'airbyte logo', 124],
+  ['linear', 'linear logo', 113], ['betterment', 'betterment logo', 135],
+  ['kong', 'kong logo', 126], ['home/superhuman', 'superhuman logo', 135],
+];
+
+/* Each section is a heading, an optional lede, and rows of cards. A row is
+ * either one wide card or a pair. `media` is [src, w, h, alt] and a `.mp4`
+ * src renders as a looping clip. */
+const sections = [
+  {
+    id: 'trust', h2: 'Trustworthy AI analytics',
+    rows: [
+      [{ wide: true, h: 'Inspect and verify every answer',
+         p: 'Every AI-generated answer links back to the query underneath it, so you can see exactly how a number was arrived at before you repeat it in a meeting.',
+         media: [`${A}/inspect-and-verify-every-answer.webp`, 1278, 399, 'An AI answer alongside the query it was generated from'] }],
+      [{ h: 'Respects your existing permissions',
+         p: "People only ever see data they are already allowed to see. AI follows the same permissions as the rest of Metabase, rather than having its own idea of them.",
+         media: [`${A}/respect-your-existing-permissions.mp4`, 622, 370, 'Permissions applying to an AI answer'] },
+       { h: 'Informed by your semantic layer',
+         p: 'AI is aware of your metadata, your definitions and your verified models, so it answers in the terms your organisation already uses.',
+         link: { href: '/features/semantic-layer', label: 'Data Studio' },
+         media: [`${A}/build-on-your-semantic-layer.webp`, 622, 399, 'Semantic definitions informing an AI answer'] }],
+      [{ h: 'Zero data movement',
+         p: "Queries run against your warehouse. Metabot does not ingest, copy or train on your data, so there is no second copy to secure or keep current.",
+         media: [`${A}/zero-data-movement_2.webp`, 622, 370, 'Queries running directly against a warehouse'] },
+       { h: 'Deploy and configure your way',
+         p: 'Plug in the AI provider you already use. Choose Claude, GPT or any of a number of supported providers, on cloud or self-hosted.',
+         link: { href: '#faq', label: 'number of supported providers' },
+         media: [`${A}/deploy-and-configure-your-way.webp`, 622, 376, 'Choosing an AI provider in the admin settings'] }],
+    ],
+  },
+];
+
+/* The four steps of the pinned section, rebuilt as an accordion. */
+const accessSteps = [
+  { id: 'groups', h: 'Enable AI feature access per user group',
+    p: 'Control which groups can ask AI questions, use SQL generation, or reach the agent API at all. The default is off, so access is something you grant rather than something you discover.' },
+  { id: 'limits', h: 'Set usage limits by token or message count',
+    p: 'Keep AI spend predictable with limits per user group and per feature, so one enthusiastic team cannot spend the quarter.' },
+  { id: 'brand', h: 'Customize how AI appears in your organization',
+    p: 'Give Metabot a name and an icon that fits your organisation, and set it up where people will actually meet it.' },
+  { id: 'prompts', h: 'System prompts to guide outputs',
+    p: 'Add instructions that shape tone, use the right naming conventions, and tell the model which tables are the ones people should be asking about.' },
+];
+
+const usageStats = [
+  ['Messages over time', 'Per person or user-group.'],
+  ['Conversation logs per user', "What's asked, data accessed, and tool calls made."],
+  ['Token usage', 'Across people, user groups, and AI features.'],
+];
+
+const chatPrompts = [
+  'How many new accounts were created last week?',
+  "What's the average product rating?",
+  'How many active users did we have in the last 6 months?',
+  'Which plans are driving the most growth?',
+  "What's our revenue this quarter?",
+];
+
+const laterSections = [
+  {
+    id: 'explore', h2: 'Explore your data with AI',
+    lede: 'Ask questions, get summaries, and find what you need.',
+    rows: [
+      [{ h: 'One-click AI summaries',
+         p: 'One-click summaries of any chart or dashboard, with the key takeaways written out so the person reading it does not have to infer them.',
+         media: [`${A}/one-click-ai-summaries.webp`, 622, 399, 'A one-click summary of a dashboard'] },
+       { h: 'AI-powered semantic search',
+         p: 'Find dashboards, questions and models by meaning rather than by guessing the exact words whoever saved it happened to use.',
+         media: [`${A}/ai-powered-semantic-search.webp`, 622, 370, 'Semantic search results across saved content'] }],
+    ],
+  },
+  {
+    id: 'tools', h2: 'AI in your existing tools',
+    lede: 'Get answers from Metabase in the tools your team uses every day.',
+    rows: [
+      [{ wide: true, h: 'Official MCP server',
+         p: 'Connect to Metabase from your AI client. Query and interact with your data from Claude, Cursor and more, without leaving the thing you were already working in.',
+         link: { href: '#faq', label: 'and more' },
+         media: [`${A}/official-mcp-server.webp`, 1278, 399, 'An AI client connected to Metabase over MCP'] }],
+      [{ h: 'Metabot in Slack',
+         p: 'Mention Metabot in a channel or a DM. Ask a question, get a chart back, and leave the answer where the conversation already was.',
+         media: [`${A}/metabot-in-slack.webp`, 622, 370, 'Metabot answering a question in Slack'] },
+       { h: 'Agent Workspace API',
+         p: 'Programmatic access for building your own data agents on top of Metabase, with the same permissions and the same definitions.',
+         media: [`${A}/agent-workspace-api.webp`, 622, 370, 'The agent workspace API in use'] }],
+    ],
+  },
+  {
+    id: 'sql', h2: 'AI-assisted SQL and code',
+    lede: 'Generate queries, write transforms, and debug faster.',
+    rows: [
+      [{ wide: true, h: 'SQL generation',
+         p: 'Describe what you want in plain language and get working SQL grounded in your own schema, which you can then read, edit and run like anything else.',
+         media: [`${A}/sql-generation.mp4`, 1278, 753, 'SQL being generated from a plain-language description'] }],
+      [{ h: 'Transform generation',
+         p: 'Transform raw data in SQL or Python with AI alongside you. Describe the shape you need and start from something that already runs.',
+         media: [`${A}/transform-generation.webp`, 622, 399, 'A transform generated from a description'] },
+       { h: 'AI-assisted debugging',
+         p: "Troubleshoot failing SQL and get an explanation of what is wrong, rather than just the database's own error message.",
+         media: [`${A}/ai-assisted-debugging.webp`, 622, 399, 'An explanation of a failing query'] }],
+    ],
+  },
+  {
+    id: 'model', h2: 'Powered by your data model, metrics, and definitions',
+    lede: 'AI only works as well as the context you give it. Your semantic layer is that context.',
+    ledeLink: { href: '/features/semantic-layer', label: 'Data Studio' },
+    rows: [
+      [{ h: "Define once, it's used everywhere",
+         p: 'Add your business definitions to the Glossary. AI references them, so ARR means the same thing in an AI answer as it does in the board deck.',
+         media: [`${A}/define-once-use-everywhere.webp`, 622, 340, 'A glossary definition referenced by an AI answer'] },
+       { h: 'Surfaces existing work first',
+         p: 'Before running a new query, Metabot checks for a dashboard or a saved question that already answers the thing being asked.',
+         media: [`${A}/surface-existing-work-first.webp`, 622, 370, 'Existing saved content surfaced ahead of a new query'] }],
+    ],
+  },
+];
+
+const faqs = [
+  ['Can I choose my own AI provider?',
+   'Yes. You can bring your own key and plug in the AI provider you already use — Anthropic, OpenAI, AWS Bedrock, Mistral and others — rather than being routed through ours.'],
+  ['Does Metabase charge for AI usage?',
+   'AI features are available in all Metabase editions, including the open-source one. When you bring your own key, what you spend on the model is between you and that provider.'],
+  ['How does Metabase AI handle my data?',
+   'Queries run against your warehouse. Metabase does not ingest your data, does not copy it, and does not train on it. Prompts and results go to your AI provider under whatever terms you hold with them.'],
+  ['Can I self-host Metabase with AI features?',
+   'Yes. Metabase AI works in both cloud and self-hosted deployments, including air-gapped ones where you point it at a model running inside your own network.'],
+  ['Can I embed AI features in my product?',
+   'Yes. You can embed AI-powered querying components with Modular Embedding and the SDK, so your customers get natural-language exploration inside your own app.'],
+  ['Does Metabase have an MCP server?',
+   'Yes. Connect your AI client to Metabase over the official MCP server and query your data from Claude, Cursor and anything else that speaks the protocol.'],
+  ['Does Metabot work in Slack?',
+   'Yes. Metabot in Slack lets your team ask questions and get charts back in a channel or a DM, with the same permissions they have everywhere else.'],
+  ['What do I need to set up before AI is useful?',
+   'Mostly context. Add descriptions and semantic types to the tables people query, define the metrics you keep re-deriving, and the answers get noticeably better.'],
+];
+
+/** True when a media src should render as a looping clip. */
+const isClip = (src: string) => src.endsWith('.mp4');
+---
+
+<BaseLayout
+  title="Metabase AI | Metabase"
+  description="AI exploration built on your permissions and semantic definitions. Bring your own model, keep queries on your warehouse, and see exactly how every answer was produced."
+  preload={preloadStatic(`${A}/hero-section-ai-poster.webp`)}
+>
+  <div class="mai">
+    <header class="mai-hero">
+      {/* Decorative, and only a gradient, so it neither needs priority nor
+          should be allowed to become the LCP element. */}
+      <img class="mai-sky" src={`${A}/sky.webp`} alt="" width="1500" height="458"
+           loading="eager" decoding="async" />
+      <div class="mai-hero-inner">
+        <h1 class="mai-h1">AI exploration built on your permissions and semantic definitions</h1>
+        <p class="mai-hero-lede">
+          AI-powered code generation and data exploration wherever you already work, grounded
+          in the definitions your organisation has already agreed on.
+        </p>
+        <p class="mai-hero-ctas">
+          <a href="/start" class="mai-btn mai-btn--primary">Try Metabase AI free</a>
+          <a href="/open-source" class="mai-btn mai-btn--secondary">Deploy Metabase AI Open Source</a>
+        </p>
+        <div class="mai-hero-frame">
+          <video width="1192" height="712" poster={`${A}/hero-section-ai-poster.webp`}
+                 autoplay loop muted playsinline preload="metadata"
+                 aria-label="Metabot answering a question and showing the query behind it">
+            <source src={`${A}/hero-section-ai.mp4`} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </header>
+
+    <div class="mai-trust">
+      <ul>
+        {logos.map(([file, alt, w]) => (
+          <li><img src={`/images/logos/${file}.svg`} alt={alt} width={w} height="38"
+                   style={`width:${w}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+      <p>Metabase is trusted by 100,000+ companies</p>
+    </div>
+
+    {sections.map((s) => (
+      <section class="mai-sec" id={s.id}>
+        <h2 class="mai-h2">{s.h2}</h2>
+        {s.rows.map((row) => (
+          <div class:list={['mai-row', row.length === 1 && row[0].wide && 'mai-row--wide']}>
+            {row.map((c) => (
+              <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
+                <h3 class="mai-card-h">{c.h}</h3>
+                <p class="mai-card-p">
+                  {c.p}{c.link && <> <a href={c.link.href}>{c.link.label}</a></>}
+                </p>
+                {isClip(c.media[0])
+                  ? <video width={c.media[1]} height={c.media[2]}
+                           poster={c.media[0].replace('.mp4', '-poster.webp')}
+                           controls loop muted playsinline preload="none" aria-label={c.media[3]}>
+                      <source src={c.media[0]} type="video/mp4" />
+                    </video>
+                  : <img src={c.media[0]} alt={c.media[3]} width={c.media[1]} height={c.media[2]}
+                         loading="lazy" decoding="async" />}
+              </article>
+            ))}
+          </div>
+        ))}
+      </section>
+    ))}
+
+    <section class="mai-sec" id="access">
+      <h2 class="mai-h2">AI access that stays under your control</h2>
+      <p class="mai-lede">Decide who can do what with AI, and how much.</p>
+      {/* The original pins this section and advances its four steps on
+          scroll. Radio inputs give the same four steps with no JavaScript. */}
+      <div class="mai-split">
+        <div class="mai-split-media">
+          <img src={`${A}/ai-feature-access-per-group.webp`} width="590" height="590"
+               alt="AI feature access being granted to a user group" loading="lazy" decoding="async" />
+        </div>
+        <ul class="mai-steps">
+          {accessSteps.map((st, i) => (
+            <li class="mai-step">
+              <input class="mai-step-radio" type="radio" name="mai-access" id={`mai-${st.id}`} checked={i === 0} />
+              <span class="mai-step-rail" aria-hidden="true"></span>
+              <div class="mai-step-body">
+                <h3 class="mai-step-h"><label for={`mai-${st.id}`}>{st.h}</label></h3>
+                <p class="mai-step-p">{st.p}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="mai-sec" id="pricing">
+      <h2 class="mai-h2">AI that isn't a separate meter</h2>
+      <p class="mai-lede mai-lede--tall">
+        Power Metabase AI with <a href="#faq">your own model</a> — Anthropic, OpenAI, AWS
+        Bedrock, Mistral or whatever you have already standardised on — and pay that provider
+        directly rather than paying us a markup on top of it.
+      </p>
+      <a href="/pricing" class="mai-link">See how AI pricing works</a>
+    </section>
+
+    <section class="mai-sec" id="audit">
+      <div class="mai-split mai-split--reverse">
+        <div class="mai-split-media">
+          <img src={`${A}/ai-usage-analytics-dashboard.webp`} width="590" height="588"
+               alt="A dashboard of AI usage by person and group" loading="lazy" decoding="async" />
+        </div>
+        <div class="mai-split-copy">
+          <h2 class="mai-h2 mai-h2--left">See who's doing what with AI, down to exact questions</h2>
+          <p class="mai-split-lede">
+            Track token spend, review conversation logs for security audits, and see which
+            features people actually reach for.
+          </p>
+          <ul class="mai-stats">
+            {usageStats.map(([h, p]) => (
+              <li><h3>{h}</h3><p>{p}</p></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mai-sec" id="chat">
+      <h2 class="mai-h2">Explore your data with AI</h2>
+      <p class="mai-lede">Ask questions, get summaries, and find what you need.</p>
+      <div class="mai-row mai-row--wide">
+        <article class="mai-card mai-card--wide">
+          <h3 class="mai-card-h">Ask questions in plain language</h3>
+          <p class="mai-card-p">
+            Chat with your data and get an answer. Metabot builds the query using your models
+            and definitions, and shows you what it ran.
+          </p>
+          <div class="mai-chat">
+            <ul class="mai-chat-prompts">
+              {chatPrompts.map((q) => <li>{q}</li>)}
+            </ul>
+            <div class="mai-chat-panel">
+              <h4>New accounts created</h4>
+              <img src={`${A}/explore-your-data-with-ai_new-account-created.webp`}
+                   width="727" height="256" alt="A chart of new accounts created per week"
+                   loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </article>
+      </div>
+      {laterSections[0].rows.map((row) => (
+        <div class="mai-row">
+          {row.map((c) => (
+            <article class="mai-card">
+              <h3 class="mai-card-h">{c.h}</h3>
+              <p class="mai-card-p">{c.p}</p>
+              <img src={c.media[0]} alt={c.media[3]} width={c.media[1]} height={c.media[2]}
+                   loading="lazy" decoding="async" />
+            </article>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    {laterSections.slice(1).map((s) => (
+      <section class="mai-sec" id={s.id}>
+        <h2 class="mai-h2">{s.h2}</h2>
+        {s.lede && (
+          <p class="mai-lede">
+            {s.lede}{s.ledeLink && <> <a href={s.ledeLink.href}>{s.ledeLink.label}</a></>}
+          </p>
+        )}
+        {s.rows.map((row) => (
+          <div class:list={['mai-row', row.length === 1 && row[0].wide && 'mai-row--wide']}>
+            {row.map((c) => (
+              <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
+                <h3 class="mai-card-h">{c.h}</h3>
+                <p class="mai-card-p">
+                  {c.p}{c.link && <> <a href={c.link.href}>{c.link.label}</a></>}
+                </p>
+                {isClip(c.media[0])
+                  ? <video width={c.media[1]} height={c.media[2]}
+                           poster={c.media[0].replace('.mp4', '-poster.webp')}
+                           controls loop muted playsinline preload="none" aria-label={c.media[3]}>
+                      <source src={c.media[0]} type="video/mp4" />
+                    </video>
+                  : <img src={c.media[0]} alt={c.media[3]} width={c.media[1]} height={c.media[2]}
+                         loading="lazy" decoding="async" />}
+              </article>
+            ))}
+          </div>
+        ))}
+      </section>
+    ))}
+
+    <section class="mai-sec" id="embed">
+      <h2 class="mai-h2">Embed AI analytics in your product</h2>
+      <p class="mai-lede mai-lede--tall">
+        Give your customers natural language data exploration inside your own application,
+        scoped to their own data and styled to look like the rest of it.
+      </p>
+      <a href="/product/embedded-analytics" class="mai-link mai-link--lg">Explore Embedded Analytics</a>
+      <div class="mai-embed-frame">
+        <div class="mai-embed-main">
+          <img src={`${A}/embed/dashboard-replacement.webp`} width="946" height="724"
+               alt="An embedded dashboard inside a customer application" loading="lazy" decoding="async" />
+        </div>
+        <div class="mai-embed-side">
+          <img src={`${A}/embed/chat-replacement.webp`} width="226" height="724"
+               alt="An AI chat panel beside the embedded dashboard" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section class="mai-faq" id="faq">
+      <h2 class="mai-faq-h">Frequently asked questions</h2>
+      <div class="mai-faq-box">
+        {faqs.map(([q, a]) => (
+          <details class="mai-faq-item">
+            <summary>
+              {q}
+              <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+      <p class="mai-more">
+        <span>Have more questions? We'd be happy to help.</span>
+        <a href="/contact" class="mai-more-btn">Contact us</a>
+      </p>
+    </section>
+
+    <section class="mai-final">
+      <h2 class="mai-final-h">AI that respects your rules. Start exploring.</h2>
+      <p class="mai-hero-ctas">
+        <a href="/start" class="mai-btn mai-btn--primary">Try Metabase AI free</a>
+        <a href="/open-source" class="mai-btn mai-btn--secondary">Deploy Metabase AI Open Source</a>
+      </p>
+    </section>
+  </div>
+</BaseLayout>

@@ -10,9 +10,14 @@ import '@fontsource/lato/latin-900.css';
 
 // Body and heading weights are needed for the first paint, and a font inside a
 // stylesheet is only discovered once that stylesheet has parsed. Preloading the
-// two used above the fold cuts that extra round trip. Imported as URLs so the
-// hashes stay correct across builds.
+// weights used above the fold cuts that extra round trip. Imported as URLs so
+// the hashes stay correct across builds.
+//
+// 700 belongs here as much as the other two: it is the weight nearly every
+// heading on the product, features and roadmap pages is set in, and leaving it
+// to be discovered after the stylesheet parsed was holding first paint.
 import lato400 from '@fontsource/lato/files/lato-latin-400-normal.woff2?url';
+import lato700 from '@fontsource/lato/files/lato-latin-700-normal.woff2?url';
 import lato900 from '@fontsource/lato/files/lato-latin-900-normal.woff2?url';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
@@ -60,6 +65,7 @@ const blocked = noIndex || seo?.noIndex;
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preload" as="font" type="font/woff2" href={lato400} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={lato700} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={lato900} crossorigin />
 
     {preload && (

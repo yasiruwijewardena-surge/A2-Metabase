@@ -48,7 +48,16 @@ export function thumbSet(url: string, w: number, h: number): { src: string; srcs
   return { src: t(1), srcset: `${t(1)} 1x, ${t(2)} 2x` };
 }
 
-export interface PreloadAttrs { href: string; imagesrcset: string; imagesizes: string }
+export interface PreloadAttrs { href: string; imagesrcset?: string; imagesizes?: string }
+
+/**
+ * Preload descriptor for a plain local image — a hero still or a video
+ * poster that carries no srcset. The srcset trap `preloadFor` guards against
+ * cannot happen here, because there is only one candidate to pick.
+ */
+export function preloadStatic(href: string | null | undefined): PreloadAttrs | null {
+  return href ? { href } : null;
+}
 
 /**
  * Preload descriptor for an LCP image.
