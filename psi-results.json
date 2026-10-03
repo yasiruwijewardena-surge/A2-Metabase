@@ -1,104 +1,393 @@
 {
-  "measuredAt": "2026-10-02",
-  "source": "PageSpeed Insights API v5",
-  "original": "https://www.metabase.com",
-  "replica": "https://elegant-spontaneity-production-28e1.up.railway.app",
-  "comparison": [
-    {
-      "page": "/",
-      "strategy": "mobile",
-      "original": {
-        "performance": 56,
-        "accessibility": 95,
-        "bestPractices": 92,
-        "seo": 100,
-        "lcp": "14.7\u00a0s",
-        "cls": "0.001",
-        "tbt": "250\u00a0ms",
-        "totalBytes": "Total size was 1,502\u00a0KiB"
-      },
-      "replica": {
-        "performance": 99,
-        "accessibility": 100,
-        "bestPractices": 100,
-        "seo": 100,
-        "lcp": "1.2\u00a0s",
-        "cls": "0",
-        "tbt": "0\u00a0ms",
-        "totalBytes": "Total size was 82\u00a0KiB"
-      }
-    },
-    {
-      "page": "/",
-      "strategy": "desktop",
-      "original": {
-        "performance": 81,
-        "accessibility": 92,
-        "bestPractices": 92,
-        "seo": 100,
-        "lcp": "0.8\u00a0s",
-        "cls": "0.009",
-        "tbt": "410\u00a0ms",
-        "totalBytes": "Total size was 1,864\u00a0KiB"
-      },
-      "replica": {
-        "performance": 100,
-        "accessibility": 100,
-        "bestPractices": 100,
-        "seo": 100,
-        "lcp": "0.3\u00a0s",
-        "cls": "0",
-        "tbt": "0\u00a0ms",
-        "totalBytes": "Total size was 117\u00a0KiB"
-      }
-    },
-    {
-      "page": "/blog",
-      "strategy": "mobile",
-      "original": {
-        "performance": 47,
-        "accessibility": 86,
-        "bestPractices": 96,
-        "seo": 92,
-        "lcp": "16.4\u00a0s",
-        "cls": "0.122",
-        "tbt": "360\u00a0ms",
-        "totalBytes": "Total size was 2,358\u00a0KiB"
-      },
-      "replica": {
-        "performance": 98,
-        "accessibility": 100,
-        "bestPractices": 100,
-        "seo": 100,
-        "lcp": "1.8\u00a0s",
-        "cls": "0",
-        "tbt": "0\u00a0ms",
-        "totalBytes": "Total size was 153\u00a0KiB"
-      }
-    },
-    {
-      "page": "/case-studies",
-      "strategy": "mobile",
-      "original": {
-        "performance": 56,
-        "accessibility": 96,
-        "bestPractices": 96,
-        "seo": 100,
-        "lcp": "15.3\u00a0s",
-        "cls": "0",
-        "tbt": "290\u00a0ms",
-        "totalBytes": "Total size was 2,040\u00a0KiB"
-      },
-      "replica": {
-        "performance": 98,
-        "accessibility": 100,
-        "bestPractices": 100,
-        "seo": 100,
-        "lcp": "1.8\u00a0s",
-        "cls": "0",
-        "tbt": "0\u00a0ms",
-        "totalBytes": "Total size was 288\u00a0KiB"
-      }
-    }
-  ]
+ "measuredAt": "2026-10-03",
+ "source": "PageSpeed Insights API v5",
+ "note": "Scores are from the hosted PageSpeed Insights service against the deployed URLs, not local Lighthouse. The original is measured alongside for comparison.",
+ "original": "https://www.metabase.com",
+ "replica": "https://elegant-spontaneity-production-28e1.up.railway.app",
+ "comparison": [
+  {
+   "page": "/",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 97,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.6 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 226 KiB"
+   },
+   "original": {
+    "performance": 50,
+    "accessibility": 95,
+    "bestPractices": 92,
+    "seo": 100,
+    "lcp": "15.2 s",
+    "cls": "0.001",
+    "tbt": "400 ms",
+    "totalBytes": "Total size was 1,515 KiB"
+   }
+  },
+  {
+   "page": "/",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 97,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 290 KiB"
+   },
+   "original": {
+    "performance": 64,
+    "accessibility": 92,
+    "bestPractices": 92,
+    "seo": 100,
+    "lcp": "1.0 s",
+    "cls": "0.009",
+    "tbt": "2,340 ms",
+    "totalBytes": "Total size was 1,770 KiB"
+   }
+  },
+  {
+   "page": "/pricing",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 97 KiB"
+   },
+   "original": {
+    "performance": 56,
+    "accessibility": 96,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "14.1 s",
+    "cls": "0",
+    "tbt": "330 ms",
+    "totalBytes": "Total size was 1,401 KiB"
+   }
+  },
+  {
+   "page": "/pricing",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.3 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 156 KiB"
+   },
+   "original": {
+    "performance": 98,
+    "accessibility": 93,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "0.8 s",
+    "cls": "0.001",
+    "tbt": "110 ms",
+    "totalBytes": "Total size was 1,429 KiB"
+   }
+  },
+  {
+   "page": "/blog",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.8 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 168 KiB"
+   },
+   "original": {
+    "performance": 44,
+    "accessibility": 86,
+    "bestPractices": 96,
+    "seo": 92,
+    "lcp": "18.0 s",
+    "cls": "0.061",
+    "tbt": "530 ms",
+    "totalBytes": "Total size was 2,447 KiB"
+   }
+  },
+  {
+   "page": "/blog",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 168 KiB"
+   },
+   "original": {
+    "performance": 66,
+    "accessibility": 89,
+    "bestPractices": 96,
+    "seo": 92,
+    "lcp": "1.0 s",
+    "cls": "0.177",
+    "tbt": "600 ms",
+    "totalBytes": "Total size was 2,499 KiB"
+   }
+  },
+  {
+   "page": "/case-studies",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.9 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 298 KiB"
+   },
+   "original": {
+    "performance": 56,
+    "accessibility": 96,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "12.1 s",
+    "cls": "0.037",
+    "tbt": "450 ms",
+    "totalBytes": "Total size was 2,023 KiB"
+   }
+  },
+  {
+   "page": "/case-studies",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.5 s",
+    "cls": "0.001",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 597 KiB"
+   },
+   "original": {
+    "performance": 88,
+    "accessibility": 93,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "0.8 s",
+    "cls": "0.012",
+    "tbt": "280 ms",
+    "totalBytes": "Total size was 9,916 KiB"
+   }
+  },
+  {
+   "page": "/glossary",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 106 KiB"
+   },
+   "original": {
+    "performance": 49,
+    "accessibility": 89,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "13.8 s",
+    "cls": "0",
+    "tbt": "560 ms",
+    "totalBytes": "Total size was 1,311 KiB"
+   }
+  },
+  {
+   "page": "/glossary",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.3 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 106 KiB"
+   },
+   "original": {
+    "performance": 80,
+    "accessibility": 87,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "0.8 s",
+    "cls": "0.001",
+    "tbt": "430 ms",
+    "totalBytes": "Total size was 1,337 KiB"
+   }
+  },
+  {
+   "page": "/product/business-intelligence",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.8 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 2,887 KiB"
+   },
+   "original": {
+    "performance": 48,
+    "accessibility": 93,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "23.3 s",
+    "cls": "0",
+    "tbt": "470 ms",
+    "totalBytes": "Total size was 35,929 KiB"
+   }
+  },
+  {
+   "page": "/product/business-intelligence",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 2,923 KiB"
+   },
+   "original": {
+    "performance": 92,
+    "accessibility": 90,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "1.2 s",
+    "cls": "0.021",
+    "tbt": "180 ms",
+    "totalBytes": "Total size was 36,071 KiB"
+   }
+  },
+  {
+   "page": "/features/metabase-ai",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 98,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.8 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 826 KiB"
+   },
+   "original": {
+    "performance": 55,
+    "accessibility": 92,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "54.4 s",
+    "cls": "0.016",
+    "tbt": "310 ms",
+    "totalBytes": "Total size was 17,263 KiB"
+   }
+  },
+  {
+   "page": "/features/metabase-ai",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 96,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 747 KiB"
+   },
+   "original": {
+    "performance": 46,
+    "accessibility": 89,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "7.5 s",
+    "cls": "0.37",
+    "tbt": "280 ms",
+    "totalBytes": "Total size was 29,947 KiB"
+   }
+  },
+  {
+   "page": "/roadmap",
+   "strategy": "mobile",
+   "replica": {
+    "performance": 100,
+    "accessibility": 95,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "1.4 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 96 KiB"
+   },
+   "original": {
+    "performance": 64,
+    "accessibility": 91,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "3.8 s",
+    "cls": "0",
+    "tbt": "720 ms",
+    "totalBytes": "Total size was 1,385 KiB"
+   }
+  },
+  {
+   "page": "/roadmap",
+   "strategy": "desktop",
+   "replica": {
+    "performance": 100,
+    "accessibility": 95,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": "0.3 s",
+    "cls": "0",
+    "tbt": "0 ms",
+    "totalBytes": "Total size was 96 KiB"
+   },
+   "original": {
+    "performance": 73,
+    "accessibility": 89,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcp": "1.1 s",
+    "cls": "0",
+    "tbt": "630 ms",
+    "totalBytes": "Total size was 1,458 KiB"
+   }
+  }
+ ]
 }
