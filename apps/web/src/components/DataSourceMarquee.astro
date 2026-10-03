@@ -40,7 +40,10 @@ const rows = [sources, [...sources].reverse()];
 </div>
 
 <style>
-  .ds { display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; height: 100%; overflow: hidden; }
+  /* width/min-width keep this from taking its intrinsic width from the
+     max-content track below, which otherwise makes the column 3844px wide and
+     stops it shrinking inside its grid cell. */
+  .ds { display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; width: 100%; min-width: 0; height: 100%; overflow: hidden; }
   .ds__row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
              mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
   .ds__track { display: flex; width: max-content; gap: 1.25rem; list-style: none; padding: 0.25rem 0; margin: 0; }

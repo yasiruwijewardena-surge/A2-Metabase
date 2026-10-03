@@ -15,7 +15,8 @@
     "diff": "node scripts/page-diff.mjs",
     "outline": "node scripts/page-outline.mjs",
     "metrics": "node scripts/page-metrics.mjs",
-    "assets": "node scripts/page-assets.mjs"
+    "assets": "node scripts/page-assets.mjs",
+    "psi": "node scripts/psi.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

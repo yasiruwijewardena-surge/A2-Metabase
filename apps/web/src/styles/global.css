@@ -220,6 +220,7 @@
      24px of padding — uniform across all three, as on the original. */
   .frontier-visual {
     display: grid; place-items: center; overflow: hidden;
+    min-width: 0;
     height: 400px; padding: 24px; margin-bottom: 24px;
     border-radius: 16px; background: #f9fafb;
   }
@@ -933,7 +934,7 @@
 
   .pricing-faq { display: grid; gap: 32px; margin-top: 32px; }
   .pricing-sec--compliance { align-items: center; }
-  .pricing-badges { display: flex; gap: 16px; margin-left: auto; }
+  .pricing-badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 16px; margin-left: auto; }
   .pricing-badges img { width: 80px; height: 80px; object-fit: contain; }
 
   @media (max-width: 991px) {
@@ -1588,8 +1589,8 @@
   .fp-shell { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 28px; }
 
   .fp-hero { display: flex; align-items: center; gap: 0; margin-top: 40px; }
-  .fp-hero-text { flex: 0 0 632px; min-width: 0; max-width: 100%; }
-  .fp-hero-media { flex: 0 0 632px; min-width: 0; max-width: 100%; }
+  .fp-hero-text { flex: 0 1 632px; min-width: 0; max-width: 100%; }
+  .fp-hero-media { flex: 0 1 632px; min-width: 0; max-width: 100%; }
   .fp-hero-media video {
     display: block; width: 100%; height: auto;
     background: var(--color-brand-faint);
@@ -2294,9 +2295,11 @@
   /* --- hero ------------------------------------------------------------- */
   .mai-hero { position: relative; padding-top: 70px; }
   /* The sky sits behind the copy rather than above it. */
+  /* A fixed 1500 with max-width:none hung 555px off a phone viewport. It is
+     a gradient, so letting it shrink costs nothing. */
   .mai-sky {
     position: absolute; inset: 0 0 auto 50%; transform: translateX(-50%);
-    width: 1500px; max-width: none; height: auto; z-index: -1;
+    width: 100%; max-width: 1500px; min-width: 100%; height: auto; z-index: -1;
     pointer-events: none;
   }
   .mai-hero-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
