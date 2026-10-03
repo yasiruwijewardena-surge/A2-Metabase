@@ -164,7 +164,7 @@ const resources: [string, string, string, string][] = [
             <div class="nav-res-posts">
               <span class="nav-eyebrow">Recent blog posts</span>
               {recent.map((post) => (
-                <a href={`/blog/${post.slug}`} class="nav-ruled">{post.title}</a>
+                <a href={`/blog/${post.slug}`} class="nav-post">{post.title}</a>
               ))}
             </div>
           </div>
@@ -289,7 +289,7 @@ const resources: [string, string, string, string][] = [
   .nav-icon-cols > div { flex: 1; min-width: 0; }
   .nav-icon-link {
     display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 32px;
-    font-size: 14px; font-weight: 700; color: var(--color-ink-2);
+    font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
   }
   .nav-icon-link > :global(svg) { flex: none; color: var(--color-brand); }
   .nav-icon-link:hover { color: var(--color-brand-hover); }
@@ -311,7 +311,7 @@ const resources: [string, string, string, string][] = [
   }
   .nav-rich--sm .nav-rich-ico { width: 38px; height: 38px; }
   .nav-rich-label { display: block; font-size: 14px; line-height: 26px; color: var(--color-ink-3); }
-  .nav-rich-title { display: block; font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink); }
+  .nav-rich-title { display: block; font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2); }
   .nav-rich-desc { display: block; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink-2); }
   .nav-rich--sm .nav-rich-desc { font-weight: 400; color: var(--color-ink-3); }
   .nav-rich:hover .nav-rich-desc, .nav-rich:hover .nav-rich-title { color: var(--color-brand-hover); }
@@ -319,8 +319,15 @@ const resources: [string, string, string, string][] = [
   .nav-ruled {
     display: block; padding: 10px 0;
     border-bottom: 1px solid var(--color-brand-muted);
-    font-size: 14px; font-weight: 700; color: var(--color-ink-2);
+    font-size: 14px; line-height: 21px; font-weight: 700; color: var(--color-ink-2);
   }
+  /* Resources lists its posts with a 12px gap and no rule — only the Docs
+     guides column is ruled. */
+  .nav-post {
+    display: block; margin-bottom: 12px;
+    font-size: 14px; line-height: 19px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .nav-post:hover { color: var(--color-brand-hover); }
   .nav-ruled:last-child { border-bottom: 0; }
   .nav-ruled:hover { color: var(--color-brand-hover); }
 
@@ -331,7 +338,8 @@ const resources: [string, string, string, string][] = [
 
   .nav-badge {
     margin-left: 6px; border-radius: 4px; background: var(--color-brand-muted);
-    padding: 1px 5px; font-size: 10px; font-weight: 700; color: var(--color-brand-hover);
+    padding: 1px 4px; font-size: 12px; line-height: 12px; font-weight: 700;
+    color: var(--color-brand-hover);
   }
 
   /* --- footer strip ------------------------------------------------------ */
@@ -355,18 +363,8 @@ const resources: [string, string, string, string][] = [
   .nav-rich:hover :global(.nav-icon path),
   .nav-foot a:hover :global(.nav-icon path) { stroke: var(--color-brand-hover); }
   .nav-card:hover .nav-card-tile { background: var(--color-brand-border); }
-  .nav-eyebrow {
-    margin-bottom: 0.5rem; font-size: 0.6875rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3);
-  }
-  .nav-item {
-    display: block; padding: 0.375rem 0.5rem; border-radius: 0.375rem;
-    color: var(--color-ink); font-size: 0.9375rem;
-  }
-  .nav-item:hover { background: var(--color-brand-faint); color: var(--color-brand-hover); }
   .nav-chevron { transition: rotate 150ms; }
   .nav-trigger[aria-expanded='true'] .nav-chevron { rotate: 180deg; }
-  .nav-sub { display: block; font-size: 0.8125rem; font-weight: 400; color: var(--color-ink-3); }
 </style>
 
 <script>
