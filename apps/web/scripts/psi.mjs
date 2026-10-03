@@ -22,7 +22,7 @@ const KEY = process.env.PSI_API_KEY || '';
  * filters are graded, the heaviest page, the CSS-only filter page, a post, and
  * the two flagship product pages. */
 const PAGES = [
-  '/', '/pricing', '/blog', '/case-studies', '/glossary',
+  '/', '/pricing', '/blog', '/case-studies', '/events', '/glossary',
   '/product/business-intelligence', '/features/metabase-ai', '/roadmap',
 ];
 

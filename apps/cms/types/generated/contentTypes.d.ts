@@ -614,7 +614,7 @@ export interface ApiEventCategoryEventCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'event_categories';
   info: {
-    description: "A strand of events \u2014 fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on.";
+    description: "A strand of events \u2014 fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on. The artwork lives here rather than on `event` because the original keys it by strand: every event in a series shows that series' square on its card, and its tall poster is what the carousel scrolls.";
     displayName: 'Event category';
     pluralName: 'event-categories';
     singularName: 'event-category';
@@ -623,6 +623,7 @@ export interface ApiEventCategoryEventCategory
     draftAndPublish: true;
   };
   attributes: {
+    artwork: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -636,6 +637,7 @@ export interface ApiEventCategoryEventCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    poster: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -675,7 +677,6 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     startsAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
-    thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

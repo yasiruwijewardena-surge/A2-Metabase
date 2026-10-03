@@ -32,9 +32,16 @@
  * only that series, and clicking it again shows everything. Here the posters
  * are labels for hidden checkboxes read with `:has()`, so the behaviour is the
  * same -- including toggling back off -- with no JavaScript and no reload.
+ *
+ * Both images come from Strapi, off the category rather than the event: the
+ * original keys its artwork by strand, so storing it per event would be the
+ * same picture eighteen times. They are fixed crops, so they are requested at
+ * exactly the box they fill at 1x and 2x rather than through a width srcset.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEvents, getEventCategories } from '../lib/strapi';
+import { cld } from '../lib/image';
+import type { StrapiImage } from '../lib/types';
 
 const [events, series] = await Promise.all([getEvents(), getEventCategories()]);
 
@@ -46,7 +53,13 @@ const past = events
   .filter((e) => new Date(e.startsAt).getTime() < now)
   .sort((a, b) => +new Date(b.startsAt) - +new Date(a.startsAt));
 
-const ART = '/images/events/categories';
+/* Conferences and partner tech talks have a poster but no square -- neither has
+ * run an event yet, so the original never drew one. Falling back beats a gap. */
+const square = (c?: { artwork?: StrapiImage | null; poster?: StrapiImage | null } | null) =>
+  c?.artwork?.url ?? c?.poster?.url ?? null;
+
+const crop = (url: string, w: number, h: number, scale = 1) =>
+  cld(url, `f_auto,q_auto,c_fill,w_${w * scale},h_${h * scale}`);
 
 /* A series with no recording yet is still a poster, as on the original, but
  * picking it would leave the list empty with nothing to explain why. */
@@ -107,9 +120,13 @@ const fmtShort = (iso: string) =>
         </p>
       ) : upcoming.map((e, i) => (
         <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`}>
-          <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
-               width="160" height="160" alt=""
-               loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          {square(e.category) && (
+            <img class="ev-thumb" src={crop(square(e.category)!, 160, 160)}
+                 srcset={`${crop(square(e.category)!, 160, 160)} 1x, ${crop(square(e.category)!, 160, 160, 2)} 2x`}
+                 width="160" height="160" alt=""
+                 loading={i === 0 ? 'eager' : 'lazy'}
+                 fetchpriority={i === 0 ? 'high' : 'auto'} decoding="async" />
+          )}
           <div class="ev-body">
             <p class="ev-date">{fmtFull(e.startsAt)}</p>
             <h3 class="ev-title">{e.title}</h3>
@@ -152,7 +169,11 @@ const fmtShort = (iso: string) =>
             <div class="ev-slide" data-series={s.slug} aria-hidden={copy === 1 ? 'true' : undefined}>
               <span class="ev-tagline"><span>{s.description}</span></span>
               <label class="ev-poster" for={`es-${s.slug}`}
-                     style={`--ev-art:url(${ART}/${s.slug}-tall.webp)`}>
+                     style={s.poster?.url
+                       ? `--ev-art:url(${crop(s.poster.url, 280, 350)});` +
+                         `--ev-art:image-set(url(${crop(s.poster.url, 280, 350)}) 1x,` +
+                         ` url(${crop(s.poster.url, 280, 350, 2)}) 2x)`
+                       : undefined}>
                 <span class="sr-only">{s.name}</span>
               </label>
             </div>
@@ -167,8 +188,11 @@ const fmtShort = (iso: string) =>
         {past.map((e) => (
           <a class="ev-card ev-card--past" href={e.recordingUrl ?? `/events/${e.slug}`}
              data-series={e.category?.slug}>
-            <img class="ev-thumb" src={`${ART}/${e.category?.slug ?? 'whats-new'}.webp`}
-                 width="160" height="160" alt="" loading="lazy" decoding="async" />
+            {square(e.category) && (
+              <img class="ev-thumb" src={crop(square(e.category)!, 160, 160)}
+                   srcset={`${crop(square(e.category)!, 160, 160)} 1x, ${crop(square(e.category)!, 160, 160, 2)} 2x`}
+                   width="160" height="160" alt="" loading="lazy" decoding="async" />
+            )}
             <div class="ev-body">
               <p class="ev-date">{fmtShort(e.startsAt)}</p>
               <h3 class="ev-title">{e.title}</h3>

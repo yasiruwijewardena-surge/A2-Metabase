@@ -173,13 +173,21 @@ brew install railway
 railway login
 railway link --project <project id> --environment production --service Postgres
 railway ssh keys add --key ~/.ssh/<your key>.pub --name <machine>
-railway connect Postgres --tunnel-only      # leave running; prints host/port/creds
+railway connect Postgres --tunnel-only -P 55432   # leave running
 ```
 
-The tunnel needs an SSH key registered to your Railway account, and it allocates
-a **new local port each time**, so `.env.seed` has to be rebuilt per session.
-Point `DATABASE_URL` at `127.0.0.1:<port>` with `DATABASE_SSL=false` — the hop to
+The tunnel needs an SSH key registered to your Railway account. Without `-P` it
+takes a **new ephemeral port each time** and `.env.seed` has to be rewritten per
+session; pinning the port keeps the same file working across runs, which matters
+because a dropped tunnel means starting the whole dance again. Point
+`DATABASE_URL` at `127.0.0.1:55432` with `DATABASE_SSL=false` — the hop to
 localhost is already inside the tunnel.
+
+Strapi migrates the schema on boot, so the seed is also how a content-type
+change reaches production: run it before deploying the CMS and the columns are
+already there when the new container starts. Boot against a tunnelled database
+is slow — allow 3-4 minutes before the first write appears, even for a
+`--only` run.
 
 **The tunnel can drop on a long run.** Ours died after about 35 minutes with
 `Client has encountered a connection error and is not queryable`, roughly 59

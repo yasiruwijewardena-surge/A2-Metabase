@@ -19,7 +19,8 @@ and the front end built in Astro.
 ├── apps/
 │   ├── cms/              Strapi 5 — content model, admin, REST API
 │   │   └── seed/         Idempotent seeder + the pipeline that produced its data
-│   └── web/              Astro front end — 179 static routes
+│   │       └── assets/   Images the seed uploads that have no source URL
+│   └── web/              Astro front end — 299 static routes
 │       ├── src/components/demos/   The homepage's interactive islands
 │       ├── src/lib/      Strapi client, Cloudinary helpers
 │       └── src/styles/   Design tokens and component layers
@@ -120,10 +121,23 @@ changing how a page looks. The ones acted on so far:
 ## The navigation
 
 The original's information architecture is part of what is being replicated, so
-the nav and footer carry its full link set. Five sections are built — the
-homepage, the blog, the case studies, the testimonial wall and the glossary —
-plus `/pricing`. The other 66 paths resolve to a page that says it is part of
-the replicated navigation and not part of this build, and links to what is.
+the nav and footer carry its full link set. What is built:
+
+| Section | Routes |
+|---|---|
+| Home | `/` |
+| Blog | listing, posts, by category, by author |
+| Case studies | listing, studies, by industry, by use case, use case × industry |
+| Events | `/events` — upcoming, recordings, filterable by series |
+| Testimonials | `/love` |
+| Glossary | `/glossary` — 176 terms |
+| Pricing | `/pricing` |
+| Product | business intelligence, embedded analytics, data studio |
+| Features | index, Metabase AI, models, semantic layer, data segregation |
+| Roadmap | `/roadmap` |
+
+The remaining 75 paths resolve to a page that says it is part of the replicated
+navigation and not part of this build, and links to what is.
 
 A 404 would have said the build was broken and an invented page would have said
 it was complete. `npm run audit:links` regenerates that list from `dist/`, and
@@ -142,19 +156,42 @@ deployments and use cases it belongs to, so five records cover a matrix that
 would otherwise need twenty near-duplicates. Use cases are the relation the case
 studies already filter on, not a second copy of the same vocabulary.
 
+## Browser support
+
+Filtering across this build — pricing, case studies, events, the blog
+categories, the FAQ accordions — is done with `:has()` over radio and checkbox
+inputs rather than JavaScript. There are 64 such rules and **no `@supports`
+fallback**, which is a deliberate choice, not an oversight:
+
+- `:has()` is in every current browser — Chrome 105+, Safari 15.4+, Firefox 121+.
+- A fallback would mean shipping the JavaScript the approach exists to avoid,
+  for browsers that are themselves two or more years out of support.
+- The failure mode is benign and not a blank page. The inputs are real form
+  controls, so without `:has()` every item simply stays visible: the listing
+  still renders in full and every link still works. The filter stops narrowing;
+  nothing disappears.
+
+Tested in current Chrome, Firefox and Safari.
+
 ## Performance
 
 Measured with the PageSpeed Insights API, same pages, same day.
 
-| Page | Device | Original | This replica |
-|---|---|---:|---:|
-| `/` | mobile | 56 | **99** |
-| `/` | desktop | 81 | **100** |
-| `/blog` | mobile | 47 | **98** |
-| `/case-studies` | mobile | 56 | **98** |
+| Page | Mobile | Desktop | LCP (mobile) | CLS | TBT |
+|---|---|---|---|---|---|
+| `/` | 50 → **98** | 64 → **100** | 1.6 s | 0 | 0 ms |
+| `/pricing` | 56 → **100** | 98 → **100** | 1.4 s | 0 | 0 ms |
+| `/blog` | 44 → **98** | 66 → **100** | 1.8 s | 0 | 0 ms |
+| `/case-studies` | 56 → **98** | 88 → **100** | 1.9 s | 0 | 0 ms |
+| `/glossary` | 49 → **100** | 80 → **100** | 1.4 s | 0 | 0 ms |
+| `/product/business-intelligence` | 48 → **98** | 92 → **100** | 1.8 s | 0 | 0 ms |
+| `/features/metabase-ai` | 55 → **98** | 46 → **100** | 1.8 s | 0 | 0 ms |
+| `/roadmap` | 64 → **100** | 73 → **100** | 1.4 s | 0 | 0 ms |
 
-Accessibility, Best Practices and SEO are 100 across all four. CLS is 0 and
-total blocking time is 0 ms.
+Eight pages, both strategies, measured the same day (2026-10-03). Each cell is
+*original → this replica*. Desktop is 100 on all eight; mobile is 98-100.
+Accessibility is 95-97, Best Practices and SEO 100. CLS is 0 and total blocking
+time 0 ms on every page.
 
 The brief asks for 90+ desktop and 80+ mobile. Raw numbers in
 `psi-results.json`, the original's baseline and the reasoning in
@@ -175,11 +212,23 @@ with a matching `imagesrcset`.
 - [x] Deploy Strapi + Postgres to Railway
 - [x] Seed content (`npm run seed`, idempotent — safe to re-run)
 - [x] Scaffold Astro with the design tokens
-- [x] Build the pages (180 static routes)
+- [x] Build the pages (299 static routes)
 - [x] Deploy the front end
-- [x] Optimise and record PageSpeed results
+- [x] Optimise and record PageSpeed results — 8 pages, both strategies
 - [x] Match the homepage, blog and case studies against measured values
 - [x] Build `/pricing` and model its plans in Strapi
 - [x] Give the rest of the replicated navigation somewhere to land
-- [ ] Glossary is 24 terms against the original's 167
-- [ ] The product and feature pages are stubs, not builds
+- [x] Glossary — 176 terms against the original's 166
+- [x] Build the product and feature pages against measured values
+- [x] Model events in Strapi and build `/events` with its series filter
+
+Known gaps, in the order they are worth closing:
+
+- [ ] `tag` is modelled with 11 records and a relation to `post`, but there is
+      no `/blog/tag/[slug]` route, so it cannot be filtered on. Either build the
+      route or drop the field — a relation nothing can reach reads as unfinished.
+- [ ] Marketing copy on the product, features and roadmap pages is held in the
+      Astro components rather than Strapi. The brief requires the blog, filters
+      and testimonials to be CMS-driven and those are; this is the next step up
+      in content modelling, not an unmet requirement.
+- [ ] 75 of the replicated navigation's paths have no page behind them.

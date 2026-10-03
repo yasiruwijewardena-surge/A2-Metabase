@@ -152,13 +152,19 @@ export const getGlossary = () => all<GlossaryTerm>('glossary-terms', { sort: 'te
  *  event moves from upcoming to past on its own. */
 export const getEvents = () =>
   all<SiteEvent>('events', {
-    'populate[category]': 'true',
-    'populate[thumbnail]': 'true',
+    /* The artwork hangs off the category, so the card needs it two levels
+       down rather than on the event itself. */
+    'populate[category][populate][artwork]': 'true',
+    'populate[category][populate][poster]': 'true',
     sort: 'startsAt:desc',
   });
 
 export const getEventCategories = () =>
-  all<EventCategory>('event-categories', { sort: 'displayOrder:asc' });
+  all<EventCategory>('event-categories', {
+    'populate[artwork]': 'true',
+    'populate[poster]': 'true',
+    sort: 'displayOrder:asc',
+  });
 
 export const getPlans = () =>
   all<Plan>('plans', {

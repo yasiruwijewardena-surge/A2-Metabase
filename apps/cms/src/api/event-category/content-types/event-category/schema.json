@@ -5,14 +5,47 @@
     "singularName": "event-category",
     "pluralName": "event-categories",
     "displayName": "Event category",
-    "description": "A strand of events — fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on."
+    "description": "A strand of events — fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on. The artwork lives here rather than on `event` because the original keys it by strand: every event in a series shows that series' square on its card, and its tall poster is what the carousel scrolls."
   },
-  "options": { "draftAndPublish": true },
+  "options": {
+    "draftAndPublish": true
+  },
   "attributes": {
-    "name": { "type": "string", "required": true },
-    "slug": { "type": "uid", "targetField": "name", "required": true },
-    "description": { "type": "text" },
-    "displayOrder": { "type": "integer", "default": 0 },
-    "events": { "type": "relation", "relation": "oneToMany", "target": "api::event.event", "mappedBy": "category" }
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "artwork": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "poster": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "events": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::event.event",
+      "mappedBy": "category"
+    }
   }
 }

@@ -109,6 +109,10 @@ export interface EventCategory {
   slug: string;
   description?: string | null;
   displayOrder?: number;
+  /** The square shown on every card in the series. Two strands have none. */
+  artwork?: StrapiImage | null;
+  /** The 280x350 the carousel scrolls. Every strand has one. */
+  poster?: StrapiImage | null;
 }
 
 export interface SiteEvent {
@@ -120,7 +124,6 @@ export interface SiteEvent {
   location?: string | null;
   registrationUrl?: string | null;
   recordingUrl?: string | null;
-  thumbnail?: StrapiImage | null;
   featured?: boolean;
   category?: EventCategory | null;
 }

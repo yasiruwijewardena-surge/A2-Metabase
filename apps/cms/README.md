@@ -128,6 +128,26 @@ quote inside product sections and case studies, and the short social card on
 `/love`. Write a quote once, surface it anywhere by querying `variant` and
 `featured`.
 
+### Events
+
+| Type | Key fields | Relations |
+|---|---|---|
+| `event` | title, slug, description, startsAt, location, registrationUrl, recordingUrl, featured, seo | → category (M:1) |
+| `event-category` | name, slug, description, displayOrder, artwork, poster | ← events |
+
+`startsAt` is the only thing that decides whether an event is upcoming or a
+recording, so nothing has to be re-flagged as it ages — the page splits on the
+date at build time and an event moves bands on its own.
+
+The artwork hangs off the **category**, not the event, because that is how the
+original keys it: every event in a strand shows that strand's square on its
+card, and its tall `poster` is what the carousel scrolls. Putting it on `event`
+would mean storing the same image eighteen times and letting them drift.
+
+`artwork` is optional and `poster` is not. Two strands — conferences and
+partner tech talks — have a poster but no square, because neither has run an
+event yet; the front end falls back to the poster rather than showing a gap.
+
 ### Reference
 
 | Type | Key fields |
