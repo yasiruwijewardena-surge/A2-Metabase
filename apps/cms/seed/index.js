@@ -25,7 +25,7 @@ const read = (f) => JSON.parse(readFileSync(join(__dirname, 'data', f), 'utf8'))
 const FRESH = process.argv.includes('--fresh');
 const NO_MEDIA = process.argv.includes('--no-media');
 
-const stats = { created: 0, updated: 0, unchanged: 0, linked: 0 };
+const stats = { created: 0, updated: 0, unchanged: 0, skipped: 0, linked: 0 };
 
 /*
  * Create, or update in place when the entry already exists.
@@ -82,9 +82,35 @@ function sameAsStored(existing, data) {
   return true;
 }
 
+/* Which of the keys being written are relations or media, so only those get
+ * populated for the comparison. `populate: '*'` costs twice as much on a
+ * glossary term and three times as much on a company. */
+const relCache = new Map();
+function relationKeys(app, uid, data) {
+  let attrs = relCache.get(uid);
+  if (!attrs) {
+    const schema = app.contentType(uid)?.attributes ?? {};
+    attrs = new Set(Object.entries(schema)
+      .filter(([, a]) => a.type === 'relation' || a.type === 'media')
+      .map(([k]) => k));
+    relCache.set(uid, attrs);
+  }
+  return Object.keys(data).filter((k) => attrs.has(k));
+}
+
 async function upsert(app, uid, where, data) {
-  /* Populated, so relations can be compared rather than always looking changed. */
-  const existing = await app.documents(uid).findFirst({ filters: where, populate: '*' });
+  if (!want(phase)) {
+    /* Lookup only: the caller needs the documentId for its relation map. */
+    const doc = await app.documents(uid).findFirst({ filters: where });
+    if (doc) { stats.skipped++; return doc; }
+    /* Nothing to skip over — create it, or a later relation would dangle. */
+  }
+
+  const populate = relationKeys(app, uid, data);
+  const existing = await app.documents(uid).findFirst({
+    filters: where,
+    ...(populate.length ? { populate } : {}),
+  });
   if (existing) {
     if (sameAsStored(existing, data)) {
       stats.unchanged++;
@@ -106,6 +132,28 @@ async function wipe(app, uid) {
   for (const d of all) await app.documents(uid).delete({ documentId: d.documentId });
   return all.length;
 }
+
+/*
+ * `npm run seed -- --only events` runs one phase.
+ *
+ * A full run is upwards of 500 documents, and an update costs about four
+ * seconds through the document service (nearly eight on a company), so a
+ * whole-corpus write is the better part of an hour whether or not anything
+ * changed. Most edits touch one section.
+ */
+const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related'];
+const onlyArg = process.argv.indexOf('--only');
+const ONLY = onlyArg > -1 ? process.argv[onlyArg + 1]?.split(',').map((x) => x.trim()) : null;
+const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase);
+
+/*
+ * Set before each section. Skipping a phase cannot simply skip its code: the
+ * later phases look up companies, posts and case studies by name to wire their
+ * relations, so the maps still have to be built. A skipped phase therefore
+ * still reads — enough to return the document and keep every relation intact —
+ * and only the write is dropped.
+ */
+let phase = null;
 
 const ORDER = [
   'api::event.event',
@@ -150,6 +198,7 @@ async function main() {
     const addons = read('pricing-addons.json');
     const eventsData = read('events.json');
 
+    phase = 'taxonomies';
     // ---- 1. independent taxonomies -------------------------------------
     const byName = (list) => Object.fromEntries(list.map((d) => [d.name, d]));
 
@@ -206,6 +255,7 @@ async function main() {
         { ...g, slug: slugify(g.term), body: toBlocks(g.body) });
     }
 
+    phase = 'events';
     // ---- events ---------------------------------------------------------
     // Dates are stored relative to the seed run, so the upcoming/past split on
     // /events stays meaningful however long after seeding the site is built.
@@ -228,6 +278,7 @@ async function main() {
       });
     }
 
+    phase = 'companies';
     // ---- 2. companies, then people --------------------------------------
     // Sequential rather than Promise.all: each company may upload a logo, and
     // firing 54 uploads at Cloudinary at once is how the earlier runs timed out.
@@ -251,6 +302,7 @@ async function main() {
         company: companyMap[p.company]?.documentId,
       }))));
 
+    phase = 'posts';
     // ---- 3. posts --------------------------------------------------------
     const postMap = {};
     for (const p of posts) {
@@ -273,6 +325,7 @@ async function main() {
       postMap[slug] = doc;
     }
 
+    phase = 'case-studies';
     // ---- 4. case studies -------------------------------------------------
     const csMap = {};
     for (const c of caseStudies) {
@@ -297,6 +350,7 @@ async function main() {
       csMap[slug] = doc;
     }
 
+    phase = 'testimonials';
     // ---- 5. testimonials -------------------------------------------------
     for (const t of testimonials) {
       const person = personMap[t.person];
@@ -331,7 +385,11 @@ async function main() {
       });
     }
 
+    phase = 'related';
     // ---- 6. second pass: related content --------------------------------
+    // This one writes directly rather than through upsert, so it carries its
+    // own guard. It is also last, so nothing downstream needs its maps.
+    if (want('related')) {
     // Needs every document to exist first, so it cannot happen inline above.
     const postKey = (x) => x.slug || slugify(x.title);
     for (const p of posts) {
@@ -369,6 +427,8 @@ async function main() {
       stats.linked++;
     }
 
+    }
+
     // ---- summary ---------------------------------------------------------
     console.log('\n  Seed complete\n');
     for (const uid of [...ORDER].reverse()) {
@@ -376,7 +436,9 @@ async function main() {
       console.log(`    ${String(n).padStart(3)}  ${uid.split('.').pop()}`);
     }
     const m = mediaStats();
-    console.log(`\n    created ${stats.created}, updated ${stats.updated}, unchanged ${stats.unchanged}, relation passes ${stats.linked}`);
+    console.log(`\n    created ${stats.created}, updated ${stats.updated}, `
+      + `unchanged ${stats.unchanged}, skipped ${stats.skipped}, relation passes ${stats.linked}`);
+    if (ONLY) console.log(`    phases run: ${ONLY.join(', ')} (of ${PHASES.join(', ')})`);
     console.log(`    media: ${m.attached} attached from ${m.unique} source urls `
       + `(${m.uploaded} uploaded, ${m.reused} already in the library)\n`);
   } finally {
