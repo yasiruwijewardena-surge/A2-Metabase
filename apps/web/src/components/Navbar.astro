@@ -5,13 +5,37 @@ import { getPosts } from '../lib/strapi';
 // at build time, so it costs nothing at runtime.
 const recent = (await getPosts()).slice(0, 5);
 
-const features = [
-  ['Metabase AI', '/features/metabase-ai', 'New'], ['Data Studio', '/product/data-studio', 'New'],
-  ['Dashboards and reporting', '/features/analytics-dashboards'], ['Query builder', '/features/query-builder'],
-  ['Data segregation', '/features/data-segregation'], ['Usage analytics', '/features/usage-analytics'],
-  ['Embedded analytics SDK', '/features/embedded-analytics-sdk'], ['White-label analytics', '/features/white-label'],
-  ['Drill-through', '/features/drill-through'], ['SQL editor', '/features/sql-editor'],
-  ['Permissions', '/features/permissions'], ['CSV upload', '/product/csv-uploads'],
+/*
+ * Every panel was measured separately: they do not share one anatomy. Product
+ * and Pricing are cards with the icon on a tile above the label; Docs puts its
+ * card icon beside the label and adds a tinted two-column section below;
+ * Features is two columns of icon links over a button strip; Resources is two
+ * columns of title-and-description links. Widths are per panel too.
+ */
+import NavIcon from './NavIcon.astro';
+
+const features: [string, string, string, string?][] = [
+  ['Metabase AI', '/features/metabase-ai', 'ai', 'New'],
+  ['Data Studio', '/product/data-studio', 'studio', 'New'],
+  ['Dashboards and reporting', '/features/analytics-dashboards', 'dashboards'],
+  ['Query builder', '/features/query-builder', 'query'],
+  ['Data segregation', '/features/data-segregation', 'segregation'],
+  ['Usage analytics', '/features/usage-analytics', 'usage'],
+  ['Embedded analytics SDK', '/features/embedded-analytics-sdk', 'sdk'],
+  ['White-label analytics', '/features/white-label', 'whitelabel'],
+  ['Drill-through', '/features/drill-through', 'drill'],
+  ['SQL editor', '/features/sql-editor', 'sql'],
+  ['Permissions', '/features/permissions', 'permissions'],
+  ['CSV upload', '/product/csv-uploads', 'csv'],
+];
+
+const resources: [string, string, string, string][] = [
+  ['Blog', '/blog', 'blog', 'News, updates, and ideas'],
+  ['Events', '/events', 'events', 'Join a live event or watch on demand'],
+  ['Customers', '/case-studies', 'customers', 'Real companies, real data, real stories'],
+  ['Love', '/love', 'love', 'What people say about Metabase'],
+  ['Glossary', '/glossary', 'glossary', 'Data and BI terms, defined'],
+  ['Community', '/community-posts', 'community', 'Share and connect with other users'],
 ];
 ---
 {/* The original's bar is 74 tall, solid white and carries no bottom rule. */}
@@ -32,46 +56,22 @@ const features = [
     <ul class="nav-menu hidden lg:flex" data-menu-root>
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="product">Product<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
-        {/*
-            Panel anatomy measured off the original: a 24px-radius white sheet
-            on a deep soft shadow, an optional row of bordered cards, optional
-            link columns, and an optional #f9fbfe footer strip of pill buttons.
-            Widths are the original's per menu.
-        */}
+        {/* Product: two cards with the icon on a tile above the label, over a
+            strip of three buttons. 596 wide. */}
         <div class="nav-panel" style="width:596px" data-panel="product" hidden>
           <div class="nav-cards">
-            <a href="/product/business-intelligence" class="nav-card">
-              <span class="nav-card-glyph" aria-hidden="true">
-                <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
-                  <rect x="2" y="12" width="4" height="10" rx="1" fill="#509EE3" />
-                  <rect x="9" y="7" width="4" height="15" rx="1" fill="#509EE3" opacity=".75" />
-                  <rect x="16" y="3" width="4" height="19" rx="1" fill="#509EE3" />
-                  <rect x="23" y="9" width="4" height="13" rx="1" fill="#509EE3" opacity=".75" />
-                </svg>
-              </span>
-              <span class="nav-card-title">Business Intelligence</span>
-              <span class="nav-card-sub">Self-service analytics for your team</span>
-            </a>
-            <a href="/product/embedded-analytics" class="nav-card">
-              <span class="nav-card-glyph" aria-hidden="true">
-                <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
-                  <rect x="3" y="2" width="28" height="20" rx="3" stroke="#509EE3" stroke-width="1.8" />
-                  <path d="M3 8h28" stroke="#509EE3" stroke-width="1.8" />
-                  <circle cx="23" cy="15" r="4" fill="#509EE3" opacity=".75" />
-                </svg>
-              </span>
-              <span class="nav-card-title">Embedded Analytics</span>
-              <span class="nav-card-sub">Fast, flexible customer-facing analytics</span>
-            </a>
+            {[['Business Intelligence', '/product/business-intelligence', 'bi', 'Self-service analytics for your team'],
+              ['Embedded Analytics', '/product/embedded-analytics', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, href, icon, sub]) => (
+              <a href={href} class="nav-card">
+                <span class="nav-card-tile" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
+                <span class="nav-card-title">{t}</span>
+                <span class="nav-card-sub">{sub}</span>
+              </a>
+            ))}
           </div>
           <div class="nav-foot">
-            {[['Data sources', '/data-sources', 'M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7'],
-              ['Security', '/security', 'M12 3l7 2.5v5.5c0 4.2-2.9 7.4-7 8.5-4.1-1.1-7-4.3-7-8.5V5.5L12 3Z'],
-              ['Cloud', '/cloud', 'M7 18a4 4 0 0 1 .5-8 5.5 5.5 0 0 1 10.6 1.4A3.5 3.5 0 0 1 17.5 18H7Z']].map(([label, href, d]) => (
-              <a href={href}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={d} /></svg>
-                {label}
-              </a>
+            {[['Data sources', '/data-sources', 'data'], ['Security', '/security', 'permissions'], ['Cloud', '/cloud', 'cloud']].map(([t, href, icon]) => (
+              <a href={href}><NavIcon name={icon} /> {t}</a>
             ))}
           </div>
         </div>
@@ -79,13 +79,15 @@ const features = [
 
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="features">Features<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
+        {/* Features: two columns of 32px icon links over a two-button strip. */}
         <div class="nav-panel" style="width:543px" data-panel="features" hidden>
-          <div class="nav-cols nav-cols--2">
+          <div class="nav-icon-cols">
             {[features.slice(0, 6), features.slice(6)].map((col) => (
               <div>
-                {col.map(([label, href, badge]) => (
-                  <a href={href} class="nav-item">
-                    {label}
+                {col.map(([label, href, icon, badge]) => (
+                  <a href={href} class="nav-icon-link">
+                    <NavIcon name={icon} size={23} />
+                    <span>{label}</span>
                     {badge && <span class="nav-badge">{badge}</span>}
                   </a>
                 ))}
@@ -93,55 +95,50 @@ const features = [
             ))}
           </div>
           <div class="nav-foot">
-            <a href="/releases">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M4 12h16" /></svg>
-              What's new
-            </a>
-            <a href="/roadmap">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h16M6 14l4-5 4 3 4-7" /></svg>
-              Roadmap
-            </a>
+            <a href="/releases"><NavIcon name="news" /> What's new</a>
+            <a href="/roadmap"><NavIcon name="roadmap" /> Roadmap</a>
           </div>
         </div>
       </li>
 
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="docs">Docs<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
-        <div class="nav-panel" style="width:720px" data-panel="docs" hidden>
+        {/* Docs: cards with the icon beside the label, then a tinted section of
+            two columns — illustrated rows on the left, ruled links on the
+            right. 742 wide. */}
+        <div class="nav-panel" style="width:742px" data-panel="docs" hidden>
           <div class="nav-cards">
-            <a href="/docs" class="nav-card">
-              <span class="nav-card-glyph" aria-hidden="true">
-                <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
-                  <rect x="6" y="2" width="22" height="20" rx="2" stroke="#509EE3" stroke-width="1.8" />
-                  <path d="M11 8h12M11 12h12M11 16h7" stroke="#509EE3" stroke-width="1.8" stroke-linecap="round" />
-                </svg>
-              </span>
-              <span class="nav-card-title">Documentation</span>
-              <span class="nav-card-sub">The Metabase manual</span>
-            </a>
-            <a href="/learn" class="nav-card">
-              <span class="nav-card-glyph" aria-hidden="true">
-                <svg width="34" height="24" viewBox="0 0 34 24" fill="none">
-                  <path d="M17 4 4 9l13 5 13-5-13-5Z" stroke="#509EE3" stroke-width="1.8" stroke-linejoin="round" />
-                  <path d="M9 11.5V17c0 1.7 3.6 3 8 3s8-1.3 8-3v-5.5" stroke="#509EE3" stroke-width="1.8" opacity=".75" />
-                </svg>
-              </span>
-              <span class="nav-card-title">Learn</span>
-              <span class="nav-card-sub">Guides and tutorials</span>
-            </a>
+            {[['Documentation', '/docs', 'docs', 'The Metabase manual'],
+              ['Learn', '/learn', 'learn', 'Guides and tutorials']].map(([t, href, icon, sub]) => (
+              <a href={href} class="nav-card nav-card--row">
+                <span class="nav-card-ico" aria-hidden="true"><NavIcon name={icon} /></span>
+                <span>
+                  <span class="nav-card-title">{t}</span>
+                  <span class="nav-card-sub">{sub}</span>
+                </span>
+              </a>
+            ))}
           </div>
-          <div class="nav-cols nav-cols--2">
-            <div>
-              <p class="nav-eyebrow">Getting started</p>
-              <a href="/learn" class="nav-item">Querying and dashboards</a>
-              <a href="/learn" class="nav-item">Everyone's data</a>
-              <a href="/learn" class="nav-item">Asking questions</a>
+          <div class="nav-sub-section">
+            <div class="nav-col-wide">
+              <span class="nav-eyebrow">Getting started</span>
+              {[['Querying and dashboards', 'Everyone exploring and analyzing data', 'query'],
+                ['Embedding', 'Developers building in-product analytics', 'embed'],
+                ['Administration', "People running their company's instance", 'gear']].map(([label, desc, icon]) => (
+                <a href="/learn" class="nav-rich">
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
+                  <span>
+                    <span class="nav-rich-label">{label}</span>
+                    <span class="nav-rich-desc">{desc}</span>
+                  </span>
+                </a>
+              ))}
             </div>
-            <div>
-              <p class="nav-eyebrow">Guides</p>
-              <a href="/learn" class="nav-item">Installing Metabase</a>
-              <a href="/learn" class="nav-item">Adding a database</a>
-              <a href="/learn" class="nav-item">Creating a dashboard</a>
+            <div class="nav-col-narrow">
+              <span class="nav-eyebrow">Guides</span>
+              {['Installing Metabase', 'Adding a database', 'Asking questions', 'Creating a dashboard', 'Solving common problems'].map((t) => (
+                <a href="/learn" class="nav-ruled">{t}</a>
+              ))}
             </div>
           </div>
         </div>
@@ -149,25 +146,25 @@ const features = [
 
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="resources">Resources<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
+        {/* Resources: one white section, two columns of title-and-description
+            links beside the recent posts. 718 wide. */}
         <div class="nav-panel" style="width:718px" data-panel="resources" hidden>
-          <div class="nav-cols nav-cols--split">
-            <div class="nav-desc-list">
-              {[['Blog', '/blog', 'News, updates, and ideas'],
-                ['Customers', '/case-studies', 'Real companies, real data, real stories'],
-                ['Love', '/love', 'What people say about Metabase'],
-                ['Glossary', '/glossary', 'Data and BI terms, defined'],
-                ['Community', '/community-posts', 'Share and connect with other users'],
-                ['Professional Services', '/professional-services', 'Extra help from our team']].map(([label, href, sub]) => (
-                <a href={href} class="nav-item">
-                  <span class="nav-item-title">{label}</span>
-                  <span class="nav-sub">{sub}</span>
+          <div class="nav-res">
+            <div class="nav-res-links">
+              {resources.map(([label, href, icon, sub]) => (
+                <a href={href} class="nav-rich nav-rich--sm">
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={22} /></span>
+                  <span>
+                    <span class="nav-rich-title">{label}</span>
+                    <span class="nav-rich-desc">{sub}</span>
+                  </span>
                 </a>
               ))}
             </div>
-            <div>
-              <p class="nav-eyebrow">Recent blog posts</p>
-              {recent.map((p) => (
-                <a href={`/blog/${p.slug}`} class="nav-item nav-item--post">{p.title}</a>
+            <div class="nav-res-posts">
+              <span class="nav-eyebrow">Recent blog posts</span>
+              {recent.map((post) => (
+                <a href={`/blog/${post.slug}`} class="nav-ruled">{post.title}</a>
               ))}
             </div>
           </div>
@@ -176,16 +173,17 @@ const features = [
 
       <li class="relative">
         <button type="button" class="nav-trigger" aria-expanded="false" data-menu="pricing">Pricing<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
-        <div class="nav-panel" style="width:420px" data-panel="pricing" hidden>
-          <div class="nav-desc-list nav-desc-list--pad">
-            <a href="/pricing" class="nav-item">
-              <span class="nav-item-title">Business Intelligence pricing</span>
-              <span class="nav-sub">Self-service analytics for your team</span>
-            </a>
-            <a href="/pricing" class="nav-item">
-              <span class="nav-item-title">Embedded Analytics pricing</span>
-              <span class="nav-sub">Fast, flexible customer-facing analytics</span>
-            </a>
+        {/* Pricing: cards only, same shape as Product's. 578 wide. */}
+        <div class="nav-panel" style="width:596px" data-panel="pricing" hidden>
+          <div class="nav-cards">
+            {[['Business Intelligence pricing', 'bi', 'Self-service analytics for your team'],
+              ['Embedded Analytics pricing', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, icon, sub]) => (
+              <a href="/pricing" class="nav-card">
+                <span class="nav-card-tile" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
+                <span class="nav-card-title">{t}</span>
+                <span class="nav-card-sub">{sub}</span>
+              </a>
+            ))}
           </div>
         </div>
       </li>
@@ -260,35 +258,83 @@ const features = [
     box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.12), 0 6px 12px -4px rgb(24 39 75 / 0.08);
   }
 
-  /* Card row: two bordered cards, each with a 65x48 glyph tile above its
-     label. */
+  /* --- shared ---------------------------------------------------------- */
   .nav-cards { display: flex; gap: 12px; padding: 24px; }
   .nav-card {
     display: block; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
   .nav-card:hover { background: var(--color-brand-faint); border-color: var(--color-brand-border); }
-  .nav-card-glyph {
-    display: grid; place-items: center; width: 65px; height: 48px;
-    margin-bottom: 24px; border-radius: 8px; background: var(--color-brand-muted);
+  /* Product and Pricing stand the icon on a tile above the label; Docs sets it
+     beside, which is why its cards are 71 tall rather than 138. */
+  .nav-card-tile {
+    display: grid; place-items: center; width: 48px; height: 48px;
+    margin-bottom: 24px; border-radius: 8px;
+    background: var(--color-brand-muted); color: var(--color-brand);
   }
+  .nav-card--row { display: flex; gap: 10px; align-items: flex-start; }
+  .nav-card-ico { flex: none; color: var(--color-brand); }
   .nav-card-title { display: block; font-size: 14px; line-height: 18.62px; font-weight: 700; color: var(--color-ink-2); }
   /* The original's #8d93a5 is 2.6:1; one stop down the ramp as elsewhere. */
   .nav-card-sub { display: block; font-size: 14px; line-height: 26px; color: var(--color-ink-3); }
 
-  .nav-cols { display: flex; gap: 24px; padding: 0 24px 24px; }
-  .nav-cards + .nav-cols { padding-top: 0; }
-  .nav-cols > div { flex: 1; min-width: 0; }
-  .nav-cols--split > :first-child { flex: 1.1; }
-  .nav-desc-list--pad { padding: 16px; }
-  .nav-item-title { display: block; font-weight: 700; color: var(--color-ink); }
-  .nav-item--post { font-size: 14px; line-height: 1.35; }
+  .nav-eyebrow {
+    display: block; margin-bottom: 16px; padding-left: 8px;
+    font-size: 11px; line-height: 13.2px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3);
+  }
+
+  /* --- Features: two columns of icon links ------------------------------- */
+  .nav-icon-cols { display: flex; gap: 12px; padding: 24px 24px 0; }
+  .nav-icon-cols > div { flex: 1; min-width: 0; }
+  .nav-icon-link {
+    display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 32px;
+    font-size: 14px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .nav-icon-link > :global(svg) { flex: none; color: var(--color-brand); }
+  .nav-icon-link:hover { color: var(--color-brand-hover); }
+
+  /* --- Docs: tinted lower section ---------------------------------------- */
+  .nav-sub-section { display: flex; gap: 12px; padding: 0 24px; background: var(--color-brand-faint); }
+  /* 427 / 255 on the original, with a hairline between them. */
+  .nav-col-wide {
+    flex: 0 0 427px; min-width: 0; padding: 24px 24px 24px 0;
+    border-right: 1px solid var(--color-brand-muted);
+  }
+  .nav-col-narrow { flex: 1; min-width: 0; padding: 24px 0 24px 24px; }
+
+  .nav-rich { display: flex; gap: 10px; align-items: center; padding: 12px 0; }
+  .nav-rich-ico {
+    display: grid; place-items: center; flex: none; width: 54px; height: 54px;
+    border-radius: 50%; background: #fff; color: var(--color-brand);
+    box-shadow: inset 0 0 0 1px var(--color-brand-muted);
+  }
+  .nav-rich--sm .nav-rich-ico { width: 38px; height: 38px; }
+  .nav-rich-label { display: block; font-size: 14px; line-height: 26px; color: var(--color-ink-3); }
+  .nav-rich-title { display: block; font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink); }
+  .nav-rich-desc { display: block; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink-2); }
+  .nav-rich--sm .nav-rich-desc { font-weight: 400; color: var(--color-ink-3); }
+  .nav-rich:hover .nav-rich-desc, .nav-rich:hover .nav-rich-title { color: var(--color-brand-hover); }
+
+  .nav-ruled {
+    display: block; padding: 10px 0;
+    border-bottom: 1px solid var(--color-brand-muted);
+    font-size: 14px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .nav-ruled:last-child { border-bottom: 0; }
+  .nav-ruled:hover { color: var(--color-brand-hover); }
+
+  /* --- Resources --------------------------------------------------------- */
+  .nav-res { display: flex; gap: 24px; padding: 24px; }
+  .nav-res-links { flex: 1.2; min-width: 0; }
+  .nav-res-posts { flex: 1; min-width: 0; }
+
   .nav-badge {
     margin-left: 6px; border-radius: 4px; background: var(--color-brand-muted);
     padding: 1px 5px; font-size: 10px; font-weight: 700; color: var(--color-brand-hover);
   }
 
-  /* Footer strip of pill buttons on the faint blue. */
+  /* --- footer strip ------------------------------------------------------ */
   .nav-foot {
     display: flex; gap: 24px; padding: 24px 32px;
     background: #f9fbfe; border-top: 1px solid var(--color-brand-muted);
@@ -298,7 +344,17 @@ const features = [
     border: 1px solid var(--color-brand-muted); border-radius: 8px; padding: 12px 0;
     font-size: 14px; line-height: 21px; font-weight: 700; color: var(--color-ink-2);
   }
+  .nav-foot a > :global(svg) { color: var(--color-brand); }
   .nav-foot a:hover { border-color: var(--color-brand); color: var(--color-brand-hover); }
+
+  /* The original transitions each icon path's colour over 300ms, so an icon
+     warms up with the row it sits in rather than switching instantly. */
+  :global(.nav-icon path) { transition: stroke 300ms ease, fill 300ms ease; }
+  .nav-card:hover :global(.nav-icon path),
+  .nav-icon-link:hover :global(.nav-icon path),
+  .nav-rich:hover :global(.nav-icon path),
+  .nav-foot a:hover :global(.nav-icon path) { stroke: var(--color-brand-hover); }
+  .nav-card:hover .nav-card-tile { background: var(--color-brand-border); }
   .nav-eyebrow {
     margin-bottom: 0.5rem; font-size: 0.6875rem; font-weight: 700;
     letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3);
