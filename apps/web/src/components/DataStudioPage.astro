@@ -1,0 +1,202 @@
+---
+/*
+ * Data Studio — the semantic layer page.
+ *
+ * The original serves this one page at three URLs: /features/semantic-layer,
+ * /product/data-studio and /features/models all return identical markup at
+ * 5017px, so this renders all three from one file.
+ *
+ * Measured off the original at 1512 with `npm run metrics --root
+ * div.data-studio-page`:
+ *   hero     #fafbfe, padding 56/24, margin-bottom 150
+ *            badge 69x69 inside an 18/21/700 brand heading, mb 32
+ *            h1 420 30/36/700 mb 12 · lede 760 20/28 mb 32
+ *            buttons 16/24/700 padded 12/20 (50 tall), then three 12px ticks
+ *            shot framed at 1014x605 on #eef6fc, r24, 1px, padding 12,
+ *              margin 64 top and -160 bottom so it overhangs the band
+ *   trust    a 346-wide 18px line, mb 24, then six logos 38 tall
+ *   features h3 800 30/36/700, margin 128 top / 18 bottom
+ *            lede 800 24/32 mb 64
+ *            six cards two up: 384 wide, white, r12, 1px, p24, 32 apart
+ *              h5 18/26/700 muted (mt 24, mb 4), h4 20/28/700 mb 12,
+ *              then a 16/24 line
+ *   faq      #fafbfe banded top and bottom, margin-top 128
+ *            h4 652 30/40/700 mb 32, then a 652 white r12 box of details
+ *            summaries 16px/700 padded 24, each after the first ruled above
+ *            then a 648-wide #eef6fc r12 note with a button
+ *   final    white, padding 80/76, h3 457 30/33/700 mb 16,
+ *            lede 576 20/30 mb 32, buttons, ticks
+ *
+ * On the original the FAQ answers sit one question out of step with their
+ * headings ("How does Data Studio help AI give accurate answers?" is
+ * answered with "Yes, you can build and define your semantic layer…").
+ * The pairs here are the correct ones, and the prose is written rather than
+ * copied.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const logos = [
+  ['huma', 'huma logo', 125], ['home/airbyte', 'airbyte logo', 124],
+  ['linear', 'linear logo', 113], ['betterment', 'betterment logo', 135],
+  ['kong', 'kong logo', 126], ['home/superhuman', 'superhuman logo', 135],
+];
+
+const cards = [
+  ['Transforms', 'Speed up queries by cleaning up tables for analytics',
+   'Clean, join or pre-aggregate data in SQL or Python and persist the result as a new table, so the expensive work happens once.',
+   { href: '/features/sql-editor', label: 'SQL or Python' }],
+  ['Metadata', "Add the context raw tables don't have",
+   'Rename columns, write descriptions and set semantic types, so a table means something to the person who did not build it.',
+   { href: '/features/models', label: 'set semantic types' }],
+  ['Metrics', 'Calculations defined once, used by everyone',
+   'Save the aggregation logic as a metric, so ARR is computed the same way in every dashboard that mentions it.',
+   { href: '/features/models', label: 'metric' }],
+  ['Lineage', 'Make a change, see what breaks',
+   'Trace lineage from raw tables through to the dashboards and questions that depend on them, before you change a column name.',
+   { href: '/features/models', label: 'Trace lineage' }],
+  ['Dependency diagnostics', 'Find and fix broken dependencies without hunting them down',
+   'Detect broken dependencies from tables to dashboards, and fix them before somebody opens the report and finds out for you.',
+   { href: '/features/models', label: 'Detect broken dependencies' }],
+  ['Versioned dataset publishing', 'Make it clear which data is meant to be reused',
+   'Create a shared library of canonical datasets, so teams can tell what is production and what is someone thinking out loud.',
+   { href: '/features/collections', label: 'shared library' }],
+];
+
+const faqs = [
+  ['What is Data Studio in Metabase?',
+   'Data Studio is the part of Metabase where teams shape the data their analytics depends on: transforms, metadata, metrics and the lineage between them, all in the same place people already ask their questions.'],
+  ['Can I define a semantic layer inside Metabase?',
+   'Yes. You can build and define your semantic layer inside Data Studio, rather than maintaining it in a separate tool and hoping the two stay in agreement.'],
+  ['How does Data Studio help AI give accurate answers?',
+   'Metabot and the other AI features draw on the metrics, descriptions and semantic types you have defined. The more context the layer carries, the less the model has to guess at what a column means.'],
+  ['Who is Data Studio for?',
+   'Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week.'],
+  ['What problem does Data Studio solve?',
+   'As analytics grows, teams run into duplicated logic, definitions that disagree with each other, and nobody being sure which table is the real one. Data Studio is where you settle that once.'],
+  ['Can Data Studio structure data for embedded analytics and customer-facing reporting?',
+   'Yes, and it works the same way whether the analytics are internal or embedded in your product. The same metrics and metadata back both, so a customer-facing number matches the internal one.'],
+  ['What plan is Data Studio available on?',
+   'Data Studio is an always-on part of Metabase. The core capabilities are available on every plan, with the governance pieces on Pro and Enterprise.'],
+  ['How do I get started with Data Studio?',
+   'If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving.'],
+  ['How does Data Studio fit alongside existing data modeling and transformation tools?',
+   'It can support full transformation workflows for many teams, and it also sits happily downstream of dbt or a warehouse-native setup, adding the context and the metrics that layer does not carry.'],
+];
+---
+
+<BaseLayout
+  title="Data Studio: curate your semantic layer | Metabase"
+  description="Wrangle your data, add the context it's missing, and define metrics once, right where your data gets used. Transforms, metadata, metrics and lineage in one place."
+>
+  <div class="dst">
+    <section class="dst-hero">
+      <div class="dst-wrap">
+        <p class="dst-eyebrow">
+          <img src="/images/icons/badges/data-studio-badge.svg" width="69" height="69" alt=""
+               loading="eager" decoding="sync" />
+          Data Studio
+        </p>
+        <h1 class="dst-h1">Curate your semantic layer right where your data gets used</h1>
+        <p class="dst-lede">
+          Wrangle your data, add the context it's missing, and define your metrics once, so
+          that every dashboard, every question and every
+          <a href="/features/metabase-ai">AI</a> answer starts from the same definitions
+          rather than from whatever the person asking happened to remember.
+        </p>
+        <p class="dst-ctas">
+          <a href="/start" class="dst-btn dst-btn--primary">Get started</a>
+          <a href="/contact" class="dst-btn dst-btn--secondary">Contact us</a>
+        </p>
+        <p class="dst-ticks">
+          {['Free 14-day trial', 'Super-fast setup', 'Secure and compliant'].map((t) => (
+            <span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+                <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.6"
+                      stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {t}
+            </span>
+          ))}
+        </p>
+        <div class="dst-shot">
+          <img src="/images/product/data-studio/data-studio-interface.webp"
+               alt="The Data Studio interface, showing transforms and their metadata"
+               width="988" height="579" loading="eager" fetchpriority="high" decoding="sync" />
+        </div>
+      </div>
+    </section>
+
+    <div class="dst-trust">
+      <p>Metabase is trusted by 100,000+ companies</p>
+      <ul>
+        {logos.map(([file, alt, w]) => (
+          <li><img src={`/images/logos/${file}.svg`} alt={alt} width={w} height="38"
+                   style={`width:${w}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    </div>
+
+    <section class="dst-feats">
+      <h2 class="dst-feats-h">All in one place, connected, and observable</h2>
+      <p class="dst-feats-lede">
+        Data Studio is where you shape the data your analytics depends on, and where you
+        can see what depends on what, so you find out what a change will break before
+        somebody else does.
+      </p>
+      <ul class="dst-grid">
+        {cards.map(([label, title, body, link]) => (
+          <li class="dst-card">
+            <p class="dst-card-label">{label}</p>
+            <h3 class="dst-card-h">{title}</h3>
+            <p class="dst-card-p">{body} <a href={link.href}>{link.label}</a></p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="dst-faq">
+      <h2 class="dst-faq-h">Frequently asked questions</h2>
+      <div class="dst-faq-box">
+        {faqs.map(([q, a]) => (
+          <details class="dst-faq-item">
+            <summary>
+              {q}
+              <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+      <p class="dst-more">
+        <span>Have more questions? We'd be happy to help.</span>
+        <a href="/contact" class="dst-more-btn">Contact us</a>
+      </p>
+    </section>
+
+    <section class="dst-final">
+      <h2 class="dst-final-h">Bring more order to your analytics</h2>
+      <p class="dst-final-p">
+        Organize your data for clarity, so non-technical teammates can answer their own
+        questions and get the same number you would.
+      </p>
+      <p class="dst-ctas">
+        <a href="/start" class="dst-btn dst-btn--primary">Get started</a>
+        <a href="/contact" class="dst-btn dst-btn--secondary">Contact us</a>
+      </p>
+      <p class="dst-ticks">
+        {['Free 14-day trial', 'Super-fast setup', 'Secure and compliant'].map((t) => (
+          <span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+              <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {t}
+          </span>
+        ))}
+      </p>
+    </section>
+  </div>
+</BaseLayout>

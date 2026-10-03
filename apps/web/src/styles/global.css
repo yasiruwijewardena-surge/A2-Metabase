@@ -2089,3 +2089,192 @@
     .ds-final-h { font-size: 26px; line-height: 34px; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Data Studio (/features/semantic-layer, /product/data-studio,
+ * /features/models — the original serves one page at all three)
+ *
+ * This page's content column is ~1464 (1512 less 24 of padding a side),
+ * wider than the 1264 the rest of the site uses, and its centred blocks are
+ * capped at 800.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .dst-wrap, .dst-trust, .dst-feats, .dst-faq, .dst-final {
+    width: 100%; max-width: 1512px; margin-inline: auto; padding-inline: 24px;
+  }
+  .dst-wrap, .dst-trust, .dst-feats, .dst-final {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .dst-faq { text-align: center; }
+  /* Centred blocks still need their full measure; a centred flex column
+   * otherwise shrinks each child to its own text. */
+  .dst-feats-h, .dst-feats-lede, .dst-lede, .dst-final-p { width: 100%; }
+
+  /* --- hero ------------------------------------------------------------- */
+  .dst-hero {
+    padding-top: 56px; margin-bottom: 150px;
+    background: var(--color-brand-faint);
+  }
+  .dst-eyebrow {
+    display: flex; flex-direction: row; align-items: center; gap: 12px;
+    margin-bottom: 32px;
+    font-size: 18px; line-height: 21px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .dst-eyebrow img { display: block; margin: -2px -7px -9px; }
+
+  .dst-h1 {
+    width: fit-content; max-width: 480px; margin-bottom: 12px;
+    font-size: 30px; line-height: 36px; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-lede {
+    max-width: 760px; margin-bottom: 32px;
+    font-size: 20px; line-height: 28px; color: var(--color-ink-2);
+  }
+  .dst-lede a { font-weight: 700; color: var(--color-brand-hover); }
+  .dst-lede a:hover { text-decoration: underline; }
+
+  .dst-ctas { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+  .dst-btn {
+    display: inline-block; padding: 13px 20px; border-radius: 8px;
+    font-size: 16px; line-height: 24px; font-weight: 700;
+    transition: background-color 150ms, border-color 150ms;
+  }
+  .dst-btn--primary { background: var(--color-brand); color: #fff; }
+  .dst-btn--primary:hover { background: var(--color-brand-hover); }
+  .dst-btn--secondary {
+    padding-block: 12px;
+    background: #fff; color: var(--color-brand-hover);
+    border: 1px solid rgb(198 201 210 / 0.5);
+  }
+  .dst-btn--secondary:hover { background: var(--color-brand-muted); }
+
+  .dst-ticks {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    margin-top: 24px;
+  }
+  .dst-ticks span {
+    display: flex; align-items: center; gap: 4px; margin-inline: 8px;
+    font-size: 12px; line-height: normal; color: var(--color-ink-2);
+  }
+  .dst-ticks svg { display: block; flex: none; }
+
+  /* The shot overhangs the band by 160, which the band's 150 of margin and
+   * the 10 below it account for. */
+  .dst-shot {
+    width: 100%; max-width: 1014px; margin-top: 64px; margin-bottom: -160px;
+    padding: 12px;
+    background: #eef6fc;
+    border: 1px solid var(--color-brand-border);
+    border-radius: 24px;
+  }
+  .dst-shot img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--color-line); border-radius: 16px;
+  }
+
+  /* --- trust ------------------------------------------------------------ */
+  .dst-trust { padding-top: 39px; }
+  .dst-trust > p { margin-bottom: 24px; font-size: 18px; line-height: normal; color: var(--color-ink-2); }
+  .dst-trust > ul { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; }
+  .dst-trust img {
+    display: block; height: 38px; margin-bottom: 10px; padding-inline: 8px;
+    object-fit: contain;
+  }
+
+  /* --- feature cards ---------------------------------------------------- */
+  .dst-feats-h {
+    max-width: 800px; margin-top: 225px; margin-bottom: 18px;
+    font-size: 30px; line-height: 36px; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-feats-lede {
+    max-width: 800px; margin-bottom: 64px;
+    font-size: 24px; line-height: 32px; color: var(--color-ink-2);
+  }
+  /* 2 x 384 with 32 between them is the original's 800-wide block. */
+  .dst-grid {
+    display: grid; grid-template-columns: repeat(2, 384px);
+    gap: 32px; text-align: left;
+  }
+  .dst-card {
+    padding: 24px;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  .dst-card-label {
+    margin-top: 24px; margin-bottom: 4px;
+    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .dst-card-h {
+    margin-bottom: 12px;
+    font-size: 20px; line-height: 28px; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-card-p { font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .dst-card-p a { font-weight: 700; color: var(--color-brand-hover); }
+  .dst-card-p a:hover { text-decoration: underline; }
+
+  /* --- FAQ -------------------------------------------------------------- */
+  .dst-faq {
+    margin-top: 216px; padding-bottom: 118px;
+    background: var(--color-brand-faint);
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .dst-faq-h {
+    width: fit-content; max-width: 100%; margin: 80px auto 32px;
+    font-size: 30px; line-height: 40px; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-faq-box {
+    width: 100%; max-width: 652px; margin-inline: auto;
+    padding: 24px 24px 14px; text-align: left;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  .dst-faq-item + .dst-faq-item { border-top: 1px solid var(--color-line); }
+  .dst-faq-item summary {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    padding-bottom: 24px; cursor: pointer; list-style: none;
+    font-size: 16px; line-height: normal; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-faq-item + .dst-faq-item summary { padding-top: 24px; }
+  .dst-faq-item summary::-webkit-details-marker { display: none; }
+  .dst-faq-item summary svg { flex: none; margin-top: 2px; transition: transform 200ms ease; }
+  .dst-faq-item[open] summary svg { transform: rotate(180deg); }
+  .dst-faq-item > p { padding-bottom: 24px; font-size: 16px; line-height: 26px; color: var(--color-ink-2); }
+
+  .dst-more {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; max-width: 648px; margin: 32px auto 40px;
+    padding: 24px;
+    background: #eef6fc; border: 1px solid var(--color-brand-border); border-radius: 12px;
+  }
+  .dst-more > span { font-size: 16px; font-weight: 700; color: var(--color-ink); }
+  .dst-more-btn {
+    display: inline-block; padding: 16px 24px; border-radius: 8px;
+    font-size: 14px; line-height: 21px; font-weight: 700;
+    color: #fff; background: var(--color-brand);
+  }
+  .dst-more-btn:hover { background: var(--color-brand-hover); }
+
+  /* --- closing CTA ------------------------------------------------------ */
+  .dst-final { padding-block: 80px 76px; }
+  .dst-final-h {
+    width: fit-content; max-width: 100%; margin-bottom: 16px;
+    font-size: 30px; line-height: 33px; font-weight: 700; color: var(--color-ink);
+  }
+  .dst-final-p {
+    max-width: 576px; margin-bottom: 32px;
+    font-size: 20px; line-height: 30px; color: var(--color-ink-2);
+  }
+
+  @media (max-width: 991px) {
+    .dst-hero { padding-top: 32px; margin-bottom: 72px; }
+    .dst-h1 { max-width: 100%; font-size: 26px; line-height: 32px; }
+    .dst-lede { font-size: 18px; line-height: 28px; }
+    .dst-shot { margin-top: 40px; margin-bottom: -64px; padding: 8px; }
+    .dst-feats-h { margin-top: 56px; font-size: 24px; line-height: 30px; }
+    .dst-feats-lede { margin-bottom: 32px; font-size: 18px; line-height: 28px; }
+    .dst-grid { grid-template-columns: 1fr; gap: 16px; width: 100%; }
+    .dst-faq { margin-top: 56px; }
+    .dst-faq-h { margin-block: 48px 24px; font-size: 24px; line-height: 32px; }
+    .dst-final { padding-block: 48px; }
+    .dst-final-h { font-size: 24px; line-height: 30px; }
+  }
+}
