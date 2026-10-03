@@ -1,0 +1,77 @@
+---
+/*
+ * /features — the index of every feature page.
+ *
+ * Measured off the original at 1512 with `npm run metrics --root
+ * div.features-page`. Note this page uses a 1200 container, not the 1320
+ * the rest of the site uses, so its content column is 1152:
+ *   eyebrow  1152x17 14px/600 brand, mb 16
+ *   h1       1152x38 32/38/600, mb 16
+ *   lede     640 18/29 #4c5773, centred in the 1152
+ *   grid     12 cards, three up: 368x166 white, r12, 1px, p24, 24 apart
+ *            each a 20x20 brand icon (mb 12), h3 20/28/700 (mb 8),
+ *            then a 16/24 line
+ *
+ * The original's card for the SDK is described as "an open-source relational
+ * database management system", which is copy that belongs to some other
+ * page. The description here is the accurate one.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavIcon from '../../components/NavIcon.astro';
+
+const cards = [
+  ['dashboards', '/features/analytics-dashboards', 'Analytics dashboard',
+   'Bring charts and questions together on live dashboards'],
+  ['query', '/features/query-builder', 'Query builder',
+   'Put questions together with just clicks and prompts'],
+  ['segregation', '/features/data-segregation', 'Data segregation',
+   'Multi-tenant support for strong boundaries around data'],
+  ['model', '/features/models', 'Models',
+   'Create and curate metadata-rich, annotated models'],
+  ['usage', '/features/usage-analytics', 'Usage analytics',
+   'Understand and act on how your data gets used'],
+  ['ai', '/features/metabase-ai', 'Metabase AI',
+   'Your AI-powered data assistant, on Cloud or self-hosted'],
+  ['sdk', '/product/embedded-analytics-sdk', 'Embedded analytics SDK',
+   'Compose embedded analytics from React components'],
+  ['whitelabel', '/features/white-label-analytics', 'White-label analytics',
+   'A seamless, branded reporting experience'],
+  ['drill', '/features/drill-through', 'Drill-through',
+   'Pull threads in your data without even asking a question'],
+  ['sql', '/features/sql-editor', 'SQL editor',
+   'Get more detailed results with SQL queries'],
+  ['permissions', '/features/permissions', 'Permissions',
+   'Fine-grained control over what people see and do with data'],
+  ['csv', '/product/csv-uploads', 'CSV upload',
+   'Upload and analyze your spreadsheets in Metabase'],
+];
+---
+
+<BaseLayout
+  title="Features | Metabase"
+  description="Built for data, made for everyone. Dashboards, the query builder, the SQL editor, permissions, embedding and everything else Metabase does."
+>
+  <div class="fi">
+    <div class="fi-container">
+      <header class="fi-hero">
+        <p class="fi-eyebrow">Features</p>
+        <h1 class="fi-h1">Built for data, made for everyone</h1>
+        <p class="fi-lede">
+          Even if you aren't an analyst, Metabase can make you feel like one. And if you are,
+          it will stay out of your way.
+        </p>
+      </header>
+      <ul class="fi-grid">
+        {cards.map(([icon, href, title, body]) => (
+          <li>
+            <a href={href} class="fi-card">
+              <NavIcon name={icon} size={20} class="fi-card-icon" />
+              <h2 class="fi-card-h">{title}</h2>
+              <p class="fi-card-p">{body}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

@@ -1894,3 +1894,198 @@
     .rm-stage { padding: 4px 8px; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * /features index
+ *
+ * This page alone uses a 1200 container (1152 of content), where the rest of
+ * the site uses 1320. Twelve cards three up at 368 with 24 between them.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .fi { padding-block: 64px 160px; }
+  .fi-container { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 24px; }
+
+  .fi-hero { text-align: center; }
+  .fi-eyebrow {
+    margin-bottom: 16px;
+    font-size: 14px; line-height: normal; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-brand-hover);
+  }
+  .fi-h1 {
+    margin-bottom: 16px;
+    font-size: 32px; line-height: 38px; font-weight: 600; color: var(--color-ink);
+  }
+  .fi-lede {
+    max-width: 640px; margin-inline: auto;
+    font-size: 18px; line-height: 29px; color: var(--color-admin);
+  }
+
+  .fi-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px; margin-top: 64px;
+  }
+  .fi-card {
+    display: block; height: 100%; padding: 24px;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .fi-card:hover {
+    border-color: var(--color-brand-border);
+    box-shadow: 0 6px 12px -4px rgb(24 39 75 / 0.08);
+  }
+  .fi-card-icon { display: block; margin-bottom: 12px; color: var(--color-brand); }
+  .fi-card-h {
+    margin-bottom: 8px;
+    font-size: 20px; line-height: 28px; font-weight: 700; color: var(--color-ink);
+  }
+  .fi-card-p { font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+
+  @media (max-width: 991px) {
+    .fi { padding-block: 40px 56px; }
+    .fi-h1 { font-size: 26px; line-height: 32px; }
+    .fi-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
+  }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .fi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * /features/data-segregation
+ *
+ * A tinted hero carrying a four-way switcher over a 1264x562 diagram, then a
+ * 1264 comparison grid of 330 + 4x233 cells, then the closing CTA.
+ * ------------------------------------------------------------------------ */
+@layer components {
+  .ds-hero {
+    padding-bottom: 96px;
+    background: var(--color-brand-faint);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .ds-hero-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+  .ds-eyebrow {
+    margin-top: 64px; margin-bottom: 8px;
+    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
+  }
+  .ds-h1 {
+    max-width: 592px; margin-bottom: 16px;
+    font-size: 36px; line-height: 40px; font-weight: 900; color: var(--color-ink);
+  }
+  .ds-lede { max-width: 592px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+
+  /* --- switcher --------------------------------------------------------- */
+  .ds-switch { width: 100%; margin-top: 24px; }
+  .ds-radio { position: absolute; opacity: 0; pointer-events: none; }
+  .ds-tabs {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0;
+    width: fit-content; max-width: 100%; margin-inline: auto; padding: 4px;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 8px;
+  }
+  /* 32 each side, not the 16 the computed style reports: the same string
+   * measures 218 in both builds, and the original's tab box is 282. */
+  .ds-tab {
+    display: flex; align-items: center; height: 32px; padding: 4px 32px;
+    border-radius: 4px; cursor: pointer;
+    font-size: 16px; line-height: normal; font-weight: 700; color: var(--color-ink-3);
+    transition: background-color 150ms, color 150ms;
+  }
+  .ds-tab:hover { color: var(--color-brand-hover); }
+
+  .ds-panel { display: none; margin-top: 42px; }
+  .ds-panel img { display: block; width: 100%; max-width: 1264px; height: auto; margin-inline: auto; }
+  .ds-panel-lede {
+    max-width: 800px; margin: 0 auto;
+    font-size: 18px; line-height: 26px; color: var(--color-ink-2);
+  }
+  .ds-panel-link {
+    display: inline-block; margin-top: 12px;
+    font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-brand-hover);
+  }
+  .ds-panel-link:hover { text-decoration: underline; }
+
+  /* One pair per tab, since :has() cannot select by index. */
+  .ds-switch:has(#ds-rls:checked) .ds-tab[data-tab='rls'],
+  .ds-switch:has(#ds-impersonation:checked) .ds-tab[data-tab='impersonation'],
+  .ds-switch:has(#ds-routing:checked) .ds-tab[data-tab='routing'],
+  .ds-switch:has(#ds-locked:checked) .ds-tab[data-tab='locked'] {
+    color: var(--color-brand-hover); background: #eef6fc;
+  }
+  .ds-switch:has(#ds-rls:checked) .ds-panel[data-tab='rls'],
+  .ds-switch:has(#ds-impersonation:checked) .ds-panel[data-tab='impersonation'],
+  .ds-switch:has(#ds-routing:checked) .ds-panel[data-tab='routing'],
+  .ds-switch:has(#ds-locked:checked) .ds-panel[data-tab='locked'] { display: block; }
+  .ds-radio:focus-visible + .ds-tabs { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+
+  /* --- comparison grid -------------------------------------------------- */
+  .ds-compare { padding-top: 96px; }
+  .ds-compare-h {
+    margin-bottom: 8px;
+    font-size: 36px; line-height: 40px; font-weight: 900; color: var(--color-ink);
+  }
+  .ds-grid {
+    margin-top: 64px;
+    border: 1px solid var(--color-line); border-radius: 12px;
+    overflow: hidden;
+  }
+  /* 330 for the method, then four equal columns across the rest. */
+  .ds-row { display: grid; grid-template-columns: 330px repeat(4, minmax(0, 1fr)); }
+  .ds-cell {
+    padding: 16px 24px;
+    border-top: 1px solid var(--color-line);
+    border-right: 1px solid var(--color-line);
+    font-size: 14px; line-height: 22px; color: var(--color-ink-2);
+  }
+  .ds-cell:last-child { border-right: 0; }
+  .ds-row--head .ds-cell { border-top: 0; }
+  .ds-cell b { font-weight: 700; color: var(--color-ink); }
+  .ds-sub { margin-top: 2px; font-size: 14px; line-height: 22px; color: var(--color-ink-2); }
+  .ds-cell ul { display: flex; flex-direction: column; gap: 10px; }
+  .ds-cell li { position: relative; padding-left: 28px; }
+  .ds-cell li::before {
+    content: ''; position: absolute; left: 8px; top: 8px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--color-brand);
+  }
+
+  /* --- closing CTA ------------------------------------------------------ */
+  .ds-final {
+    margin-top: 80px; padding-block: 80px 76px;
+    background: var(--color-brand-faint); text-align: center;
+  }
+  .ds-final-h {
+    width: fit-content; max-width: 100%; margin: 0 auto 24px;
+    font-size: 36px; line-height: 48px; font-weight: 700; color: var(--color-ink);
+  }
+  .ds-final-p {
+    max-width: 600px; margin: 0 auto 16px;
+    font-size: 18px; line-height: 32px; color: var(--color-ink-2);
+  }
+  .ds-final-btn {
+    display: inline-block; padding: 16px 24px; border-radius: 8px;
+    font-size: 14px; line-height: 21px; font-weight: 700;
+    color: #fff; background: var(--color-brand);
+  }
+  .ds-final-btn:hover { background: var(--color-brand-hover); }
+
+  @media (max-width: 1199px) {
+    .ds-row { grid-template-columns: 240px repeat(4, minmax(0, 1fr)); }
+    .ds-cell { padding: 12px 16px; }
+  }
+  @media (max-width: 991px) {
+    .ds-hero { padding-bottom: 48px; }
+    .ds-eyebrow { margin-top: 32px; }
+    .ds-h1 { font-size: 28px; line-height: 34px; }
+    .ds-tabs { flex-direction: column; width: 100%; }
+    .ds-tab { justify-content: center; }
+    .ds-panel { margin-top: 24px; }
+    .ds-compare { padding-top: 48px; }
+    .ds-compare-h { font-size: 26px; line-height: 32px; }
+    .ds-grid { margin-top: 32px; }
+    /* Each row becomes its own stacked card, with the labels inlined. */
+    .ds-row { grid-template-columns: 1fr; }
+    .ds-row--head { display: none; }
+    .ds-cell { border-right: 0; }
+    .ds-final { margin-top: 48px; padding-block: 48px; }
+    .ds-final-h { font-size: 26px; line-height: 34px; }
+  }
+}
