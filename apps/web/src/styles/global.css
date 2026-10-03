@@ -710,7 +710,9 @@
    * original does it in JavaScript; this way the page still works without any,
    * and the keyboard and screen-reader behaviour is the browser's.
    */
-  .pricing { padding-block: 48px 96px; }
+  /* This page insets by 32, not the 28 the shared container uses, which is
+     what puts its content column at x=392. */
+  .pricing { padding-block: 48px 96px; padding-inline: 32px; }
   .pricing-title { margin-bottom: 48px; font-size: 24px; line-height: 33px; font-weight: 700; }
   .pricing-title-uc { display: none; }
 
@@ -839,20 +841,33 @@
 
 @layer components {
   /*
-   * The sections below the plan tables. Measured: section titles are 30/41 and
-   * their sub-headings 20/28, both at weight 700 in primary ink; body copy is
-   * 16/24 in secondary. "Users" is the exception — it is a row label at 16/22,
-   * like Deployment and Plans above it.
+   * Every row on the page is the same grid: a 240px column, a 24px gap, then
+   * the content, so each heading lands on the same left edge. The table rows
+   * fill that column with a #fafbfe panel at a 12px radius; the prose sections
+   * leave it empty rather than closing the gap.
    */
-  .pricing-tax { margin-top: 16px; text-align: right; font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
-  .pricing-row--block { margin-top: 40px; align-items: flex-start; }
+  .pricing-label, .pricing-spacer { flex: 0 0 240px; max-width: 240px; }
+  /* The panel runs the full height of its row on the original, rather than
+     shrinking to its label. */
+  .pricing-label {
+    border-radius: 12px; background: var(--color-brand-faint); padding: 32px 24px;
+  }
+  .pricing-row--block { margin-top: 24px; align-items: stretch; }
   .pricing-block { flex: 1; min-width: 0; }
+  .pricing-narrow { max-width: 500px; }
+
+  .pricing-tax { margin-top: 16px; text-align: right; font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
   .pricing-fine { margin-top: 8px; font-size: 12px; line-height: 17px; color: var(--color-ink-2); }
 
-  .pricing-sec { margin-top: 72px; }
+  .pricing-sec { margin-top: 72px; align-items: flex-start; }
+  /* A row that has a tinted label stretches it to the row's height; the prose
+     sections, whose 240 column is empty, stay top-aligned. */
+  .pricing-sec:has(.pricing-label) { align-items: stretch; }
+  .pricing-squiggle { display: block; margin-bottom: 24px; }
   .pricing-sec-title { margin-bottom: 16px; font-size: 30px; line-height: 41px; font-weight: 700; }
   .pricing-sub-title { margin-bottom: 8px; font-size: 20px; line-height: 28px; font-weight: 700; }
-  .pricing-body { max-width: 760px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .pricing-body { font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .pricing-body strong { font-weight: 700; color: var(--color-ink); }
   .pricing-body a { font-weight: 700; color: var(--color-brand-hover); }
   .pricing-talk {
     display: inline-block; margin-top: 24px;
@@ -860,18 +875,40 @@
   }
   .pricing-talk:hover { text-decoration: underline; }
 
+  /* Usage-based pricing: a bordered card carrying a pill and a list whose rows
+     are divided by a dotted rule. */
+  .pricing-card {
+    flex: 1; min-width: 0;
+    border: 1px solid var(--color-line); border-radius: 12px; padding: 32px 48px;
+  }
+  .pricing-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--color-line); border-radius: 999px;
+    background: var(--color-brand-faint); padding: 4px 8px;
+    font-size: 14px; line-height: 21px; color: var(--color-ink-2);
+  }
+  .pricing-pill svg { color: var(--color-brand); }
+  .pricing-addons { display: flex; flex-direction: column; }
+  .pricing-addons li { padding-top: 48px; }
+  .pricing-addons li + li { border-top: 1px dotted var(--color-ink-3); }
+
   .pricing-users { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
   .pricing-users > div { flex: 1; min-width: 180px; }
   .pricing-users-head { display: block; font-size: 16px; line-height: 24px; color: var(--color-ink); }
   .pricing-users-head i { font-style: normal; color: var(--color-ink-3); }
   .pricing-users-note { display: block; font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
 
-  .pricing-addons { display: grid; gap: 32px 40px; grid-template-columns: repeat(2, 1fr); margin-top: 8px; }
   .pricing-faq { display: grid; gap: 32px; margin-top: 32px; }
+  .pricing-sec--compliance { align-items: center; }
+  .pricing-badges { display: flex; gap: 16px; margin-left: auto; }
+  .pricing-badges img { width: 80px; height: 80px; object-fit: contain; }
 
   @media (max-width: 991px) {
-    .pricing-row--block { flex-direction: column; }
-    .pricing-addons { grid-template-columns: 1fr; }
+    .pricing-row--block, .pricing-sec { flex-direction: column; }
+    .pricing-label, .pricing-spacer { flex: 0 0 auto; max-width: none; }
+    .pricing-spacer { display: none; }
+    .pricing-card { padding: 24px; }
     .pricing-sec-title { font-size: 26px; line-height: 34px; }
+    .pricing-badges { margin-left: 0; }
   }
 }

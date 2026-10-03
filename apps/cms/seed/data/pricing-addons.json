@@ -2,7 +2,7 @@
   {
     "name": "AI",
     "slug": "ai",
-    "body": "Most folks bring their own AI provider API key to power Metabase's AI features. If you use our AI service, it's $3.75 per 1M tokens, and includes 1 million tokens to get you started.",
+    "body": "**Most folks bring their own AI provider API key** to power Metabase's AI features. If you use our AI service, it's $3.75 per 1m tokens. Our service includes 1 million tokens to get you started.",
     "rate": "$3.75 per 1M tokens",
     "included": "1 million tokens to get you started",
     "displayOrder": 0
