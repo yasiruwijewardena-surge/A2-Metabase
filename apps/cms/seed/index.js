@@ -59,6 +59,8 @@ async function wipe(app, uid) {
 }
 
 const ORDER = [
+  'api::event.event',
+  'api::event-category.event-category',
   'api::faq.faq',
   'api::pricing-addon.pricing-addon',
   'api::plan.plan',
@@ -97,6 +99,7 @@ async function main() {
     const plans = read('plans.json');
     const faqs = read('faqs.json');
     const addons = read('pricing-addons.json');
+    const eventsData = read('events.json');
 
     // ---- 1. independent taxonomies -------------------------------------
     const byName = (list) => Object.fromEntries(list.map((d) => [d.name, d]));
@@ -152,6 +155,28 @@ async function main() {
     for (const g of glossary) {
       await upsert(app, 'api::glossary-term.glossary-term', { slug: slugify(g.term) },
         { ...g, slug: slugify(g.term), body: toBlocks(g.body) });
+    }
+
+    // ---- events ---------------------------------------------------------
+    // Dates are stored relative to the seed run, so the upcoming/past split on
+    // /events stays meaningful however long after seeding the site is built.
+    const seriesMap = {};
+    for (const s of eventsData.series) {
+      seriesMap[s.slug] = await upsert(app, 'api::event-category.event-category', { slug: s.slug }, s);
+    }
+    const dayMs = 24 * 60 * 60 * 1000;
+    for (const e of eventsData.events) {
+      const { inDays, series, ...rest } = e;
+      const startsAt = new Date(Date.now() + inDays * dayMs);
+      /* Sessions run in the evening; without this they all land at the minute
+         the seed happened to run. */
+      startsAt.setUTCHours(16, 0, 0, 0);
+      await upsert(app, 'api::event.event', { slug: slugify(e.title) }, {
+        ...rest,
+        slug: slugify(e.title),
+        startsAt: startsAt.toISOString(),
+        category: seriesMap[series]?.documentId,
+      });
     }
 
     // ---- 2. companies, then people --------------------------------------
