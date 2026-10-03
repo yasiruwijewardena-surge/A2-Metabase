@@ -2586,6 +2586,8 @@
       linear-gradient(135deg, var(--color-brand-muted), var(--color-brand-soft));
   }
   .ev-body { display: flex; flex-direction: column; min-width: 0; }
+  /* The original sets this #8d93a5, which is 2.9:1 on white and fails AA at
+     16px, so it steps down the ramp as the product and feature pages do. */
   .ev-date { margin-bottom: 8px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
   .ev-title { margin-bottom: 16px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
   .ev-loc, .ev-desc {
@@ -2594,7 +2596,7 @@
   }
   .ev-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    align-self: flex-start; height: 48px; padding-inline: 20px;
+    align-self: flex-start; height: 48px; padding-inline: 18px;
     border-radius: 8px; background: var(--color-brand);
     font-size: 16px; line-height: 24px; font-weight: 700; color: #fff;
     transition: background-color 150ms ease;
