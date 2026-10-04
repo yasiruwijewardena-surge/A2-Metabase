@@ -438,9 +438,10 @@ const resources: [string, string, string, string][] = [
   .nav-col-narrow { flex: 1; min-width: 0; padding: 24px 0; }
 
   .nav-rich { display: flex; gap: 10px; align-items: center; padding: 12px 0; }
-  /* The last row in each list drops its bottom padding, which is what keeps
-     the Docs panel 419 tall rather than 430. */
-  .nav-rich:last-child { padding-bottom: 0; }
+  /* The Docs list drops the bottom padding on its last row, which is what
+     keeps that panel 419 tall rather than 430. The Resources list keeps it,
+     so this is scoped rather than applied to every `.nav-rich`. */
+  .nav-col-wide .nav-rich:last-child { padding-bottom: 0; }
   .nav-rich-ico {
     display: grid; place-items: center; flex: none; width: 54px; height: 54px;
     color: var(--color-brand);
