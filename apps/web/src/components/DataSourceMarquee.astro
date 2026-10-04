@@ -44,12 +44,22 @@ const rows = [sources, [...sources].reverse()];
      max-content track below, which otherwise makes the column 3844px wide and
      stops it shrinking inside its grid cell. */
   .ds { display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; width: 100%; min-width: 0; height: 100%; overflow: hidden; }
-  .ds__row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-             mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .ds__item:hover { z-index: 1; }
+  .ds__row {
+    overflow: hidden;
+    /* Room for the hovered circle to rise into. `overflow: hidden` clips both
+       axes -- there is no hiding one and not the other -- so the row is padded
+       out by the lift plus its shadow and pulled back by the same amount. */
+    padding-block: 14px; margin-block: -14px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
   .ds__track { display: flex; width: max-content; gap: 1.25rem; list-style: none; padding: 0.25rem 0; margin: 0; }
-  .ds__row[data-dir='left'] .ds__track  { animation: ds-left  46s linear infinite; }
-  .ds__row[data-dir='right'] .ds__track { animation: ds-right 46s linear infinite; }
-  .ds:hover .ds__track { animation-play-state: paused; }
+  /* 60s and 90s, as the original runs its two rows -- they drift apart rather
+     than sliding in lockstep. Neither pauses: its tracks stay `running` under
+     the pointer, so stopping them on hover was this build's own idea. */
+  .ds__row[data-dir='left'] .ds__track  { animation: ds-left  60s linear infinite; }
+  .ds__row[data-dir='right'] .ds__track { animation: ds-right 90s linear infinite; }
 
   .ds__item {
     display: grid; place-items: center;

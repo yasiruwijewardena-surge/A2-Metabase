@@ -250,9 +250,19 @@
 
 @layer components {
   /* Section eyebrow link: 18px, weight 600, brand blue, with its circled arrow. */
+  /* Section headers sit in a 10-of-12 column, not the full container: 1073
+     wide with 12 either side, which renders the heading at 1049. The
+     standfirst fills that column rather than being capped narrower. */
+  .section-head {
+    width: 100%; max-width: 1073px; margin-inline: auto; padding-inline: 12px;
+  }
+  /* The standfirst spills back over the column's 12 of padding, which is what
+     renders it 1073 against the heading's 1049. */
+  .section-head .section-standfirst { max-width: none; margin-inline: -12px; }
+
   .eyebrow-link {
     display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px;
-    font-size: 18px; font-weight: 600; color: var(--color-brand-hover);
+    font-size: 18px; font-weight: 600; color: var(--color-brand);
   }
   .eyebrow-link:hover { text-decoration: underline; }
 }
