@@ -1,3 +1,4 @@
+import { preloadFor } from './image';
 import type {
   Author,
   CaseStudy,
@@ -279,6 +280,24 @@ export const getMarketingPage = async (slug: string) =>
 
 export const getPages = () =>
   all<Page>('pages', { ...zonePopulate('sections'), 'populate[seo]': 'true' });
+
+/* The LCP image of a listing page belongs to its first row, which lives in a
+   collection rather than in the page. The route needs it for <head>, so the
+   lookup is here rather than inside the section that renders the list. */
+export async function pagePreload(page: Page | null) {
+  const layouts = new Set((page?.sections ?? [])
+    .map((s) => ('layout' in s ? s.layout : null))
+    .filter(Boolean) as string[]);
+  if (layouts.has('blog-index')) {
+    const [first] = await getPosts();
+    return preloadFor(first?.coverImage?.url);
+  }
+  if (layouts.has('case-study-index')) {
+    const [first] = await getCaseStudies();
+    return preloadFor(first?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px');
+  }
+  return undefined;
+}
 
 export const getPage = async (slug: string) =>
   (await all<Page>('pages', {

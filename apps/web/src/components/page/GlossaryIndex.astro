@@ -1,27 +1,30 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getGlossary } from '../lib/strapi';
+/*
+ * The glossary at /glossary.
+ *
+ * Anchors, not a JS filter, for the letter nav: jumping to a letter works
+ * without script. The search box filters in place once it hydrates.
+ */
+import type { PageSection, GlossaryTerm } from '../../lib/types';
 
-const terms = await getGlossary();
+interface Props { section: PageSection; items: GlossaryTerm[] }
+const { section: s, items: terms } = Astro.props;
+
 const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))].sort();
 const grouped = letters.map((l) => ({
   letter: l,
   items: terms.filter((t) => t.term[0].toUpperCase() === l),
 }));
 ---
-<BaseLayout
-  title="Data and Business Intelligence Glossary | Metabase"
-  description="Definitions for the data and business intelligence terms you will run into."
->
   <div class="container-mb max-w-[860px] py-12">
-    <h1 class="mb-6 text-4xl">Data and Business Intelligence Glossary Terms</h1>
+    <h1 class="mb-6 text-4xl">{s.heading}</h1>
 
     <div class="mb-8">
       <label for="q" class="sr-only">Search the glossary</label>
       <input
         id="q"
         type="search"
-        placeholder="Search the glossary"
+        placeholder={s.searchPlaceholder}
         autocomplete="off"
         class="w-full rounded-lg border border-(--color-line) px-4 py-3 text-base"
         data-glossary-search
@@ -37,7 +40,7 @@ const grouped = letters.map((l) => ({
       ))}
     </nav>
 
-    <p class="mb-6 hidden text-(--color-ink-2)" data-empty>No terms match that search.</p>
+    <p class="mb-6 hidden text-(--color-ink-2)" data-empty>{s.emptyText}</p>
 
     {grouped.map(({ letter, items }) => (
       <section id={letter} class="mb-10 scroll-mt-24" data-letter-group>
@@ -53,7 +56,6 @@ const grouped = letters.map((l) => ({
       </section>
     ))}
   </div>
-</BaseLayout>
 
 <script>
   // Progressive enhancement: the full list is in the HTML and usable without

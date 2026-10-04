@@ -1,0 +1,11 @@
+---
+/*
+ * /blog. The listing owns the cards, the filters and the pagination; what
+ * the CMS holds is the page's own title and description, in `seo`.
+ */
+import BlogListing from '../BlogListing.astro';
+import { getPosts, getCategories, getTags } from '../../lib/strapi';
+
+const [posts, categories, tags] = await Promise.all([getPosts(), getCategories(), getTags()]);
+---
+<BlogListing posts={posts} categories={categories} tags={tags} />

@@ -18,7 +18,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Sections from '../components/page/Sections.astro';
-import { getPages } from '../lib/strapi';
+import { getPages, pagePreload } from '../lib/strapi';
 import paths from '../data/ia-paths.json';
 import type { Page } from '../lib/types';
 
@@ -50,6 +50,8 @@ export async function getStaticPaths() {
 interface Props { page: Page | null }
 const { page } = Astro.props;
 
+const preload = await pagePreload(page);
+
 const here = `/${Astro.params.path ?? ''}`;
 
 /** The sections of the replica that are built, for somewhere to go next. */
@@ -70,7 +72,7 @@ const label = here
 ---
 
 {page ? (
-  <BaseLayout title={page.seo?.title ?? page.title} description={page.seo?.description}>
+  <BaseLayout title={page.seo?.title ?? page.title} description={page.seo?.description} preload={preload}>
     <Sections sections={page.sections} />
   </BaseLayout>
 ) : (

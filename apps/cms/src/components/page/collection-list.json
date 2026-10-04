@@ -49,6 +49,21 @@
     },
     "linkUrl": {
       "type": "string"
+    },
+    "headingLead": {
+      "type": "string"
+    },
+    "searchPlaceholder": {
+      "type": "string"
+    },
+    "emptyText": {
+      "type": "string"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
     }
   }
 }

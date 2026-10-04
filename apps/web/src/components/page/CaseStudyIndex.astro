@@ -1,0 +1,13 @@
+---
+/*
+ * /case-studies. As with the blog, the listing owns the cards and the two
+ * filter axes; the CMS holds the page's title and description.
+ */
+import CaseStudyListing from '../CaseStudyListing.astro';
+import { getCaseStudies, getIndustries, getUseCases } from '../../lib/strapi';
+
+const [cases, industries, useCases] = await Promise.all([
+  getCaseStudies(), getIndustries(), getUseCases(),
+]);
+---
+<CaseStudyListing cases={cases} industries={industries} useCases={useCases} />

@@ -87,7 +87,10 @@ export interface PageCollectionList extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
+    badge: Schema.Attribute.String;
+    emptyText: Schema.Attribute.String;
     heading: Schema.Attribute.String;
+    headingLead: Schema.Attribute.String;
     layout: Schema.Attribute.Enumeration<
       [
         'testimonial-wall',
@@ -103,6 +106,8 @@ export interface PageCollectionList extends Struct.ComponentSchema {
     limit: Schema.Attribute.Integer;
     linkLabel: Schema.Attribute.String;
     linkUrl: Schema.Attribute.String;
+    note: Schema.Attribute.Text;
+    searchPlaceholder: Schema.Attribute.String;
     showFilters: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     source: Schema.Attribute.Enumeration<
       [

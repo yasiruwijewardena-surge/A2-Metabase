@@ -575,6 +575,73 @@
           "watchCta": "Learn more"
         }
       ]
+    },
+    {
+      "title": "Customer love",
+      "slug": "love",
+      "seo": {
+        "title": "Love for Metabase",
+        "description": "What people say about Metabase."
+      },
+      "sections": [
+        {
+          "__component": "page.collection-list",
+          "source": "testimonials",
+          "layout": "testimonial-masonry",
+          "headingLead": "The data is clear:",
+          "heading": "people everywhere love Metabase.",
+          "badge": "Loving Metabase?",
+          "note": "Quotes and the people quoted here are fictional sample content; see the repository README."
+        }
+      ]
+    },
+    {
+      "title": "Glossary",
+      "slug": "glossary",
+      "seo": {
+        "title": "Data and Business Intelligence Glossary | Metabase",
+        "description": "Definitions for the data and business intelligence terms you will run into."
+      },
+      "sections": [
+        {
+          "__component": "page.collection-list",
+          "source": "glossary",
+          "layout": "glossary",
+          "heading": "Data and Business Intelligence Glossary Terms",
+          "searchPlaceholder": "Search the glossary",
+          "emptyText": "No terms match that search."
+        }
+      ]
+    },
+    {
+      "title": "Blog",
+      "slug": "blog",
+      "seo": {
+        "title": "Blog | Metabase",
+        "description": "News, updates and ideas from the Metabase team."
+      },
+      "sections": [
+        {
+          "__component": "page.collection-list",
+          "source": "posts",
+          "layout": "blog-index"
+        }
+      ]
+    },
+    {
+      "title": "Customer stories",
+      "slug": "case-studies",
+      "seo": {
+        "title": "Customer stories | Metabase",
+        "description": "Explore what real businesses have built with Metabase."
+      },
+      "sections": [
+        {
+          "__component": "page.collection-list",
+          "source": "case-studies",
+          "layout": "case-study-index"
+        }
+      ]
     }
   ]
 }
