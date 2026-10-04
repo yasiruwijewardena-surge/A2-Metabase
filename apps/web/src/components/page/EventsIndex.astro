@@ -38,10 +38,12 @@
  * same picture eighteen times. They are fixed crops, so they are requested at
  * exactly the box they fill at 1x and 2x rather than through a width srcset.
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getEvents, getEventCategories } from '../lib/strapi';
-import { cld } from '../lib/image';
-import type { StrapiImage } from '../lib/types';
+import { getEvents, getEventCategories } from '../../lib/strapi';
+import { cld } from '../../lib/image';
+import type { StrapiImage, PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
 
 const [events, series] = await Promise.all([getEvents(), getEventCategories()]);
 
@@ -102,22 +104,15 @@ const fmtShort = (iso: string) =>
     day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
   }).format(new Date(iso));
 ---
-
-<BaseLayout
-  title="Events | Metabase"
-  description="Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
->
   <div class="ev">
     <section class="ev-upcoming">
       <div class="ev-head">
-        <h1 class="ev-h1">Events</h1>
-        <h2 class="ev-sub">Register for an upcoming event or stream a past recording.</h2>
+        <h1 class="ev-h1">{s.heading}</h1>
+        <h2 class="ev-sub">{s.standfirst}</h2>
       </div>
 
       {upcoming.length === 0 ? (
-        <p class="ev-none">
-          No events on the calendar right now &mdash; the recordings below are all free to stream.
-        </p>
+        <p class="ev-none">{s.noUpcoming}</p>
       ) : upcoming.map((e, i) => (
         <a class="ev-card" href={e.registrationUrl ?? `/events/${e.slug}`}>
           {square(e.category) && (
@@ -130,7 +125,7 @@ const fmtShort = (iso: string) =>
           <div class="ev-body">
             <p class="ev-date">{fmtFull(e.startsAt)}</p>
             <h3 class="ev-title">{e.title}</h3>
-            <span class="ev-btn">Register now</span>
+            <span class="ev-btn">{s.upcomingCta}</span>
           </div>
         </a>
       ))}
@@ -138,11 +133,8 @@ const fmtShort = (iso: string) =>
 
     <section class="ev-watch">
       <div class="ev-watch-head">
-        <h2 class="ev-watch-h">Watch now</h2>
-        <p class="ev-watch-sub">
-          Miss an event? No worries. Stream recordings of previous events&mdash;no
-          email registration required.
-        </p>
+        <h2 class="ev-watch-h">{s.watchHeading}</h2>
+        <p class="ev-watch-sub">{s.watchStandfirst}</p>
         <p class="ev-pick">
           <svg class="ev-pick-arrow" width="15" height="18" viewBox="0 0 15 18" fill="none"
                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -150,7 +142,7 @@ const fmtShort = (iso: string) =>
             <path d="M6.6 14.4S5.39 12.87 5.39 6.19C5.39-.49 13.9 1.64 13.9 1.64" />
             <path d="M10.42 10.26 7.21 16.12 1.5 12.64" />
           </svg>
-          Pick a series
+          {s.pickLabel}
         </p>
       </div>
 
@@ -182,7 +174,7 @@ const fmtShort = (iso: string) =>
         <div class="ev-fade" aria-hidden="true"></div>
       </div>
 
-      <p class="ev-empty">No recordings in this series yet &mdash; pick another.</p>
+      <p class="ev-empty">{s.noRecordings}</p>
 
       <div class="ev-list">
         {past.map((e) => (
@@ -196,7 +188,7 @@ const fmtShort = (iso: string) =>
             <div class="ev-body">
               <p class="ev-date">{fmtShort(e.startsAt)}</p>
               <h3 class="ev-title">{e.title}</h3>
-              <span class="ev-btn">Learn more</span>
+              <span class="ev-btn">{s.watchCta}</span>
             </div>
           </a>
         ))}
@@ -204,4 +196,3 @@ const fmtShort = (iso: string) =>
     </section>
   </div>
   <style set:html={filterCss} is:inline></style>
-</BaseLayout>

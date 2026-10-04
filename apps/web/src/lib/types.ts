@@ -362,6 +362,19 @@ export interface CollectionListSection extends SectionBase {
   linkUrl?: string | null;
 }
 
+export interface EventsIndexSection extends SectionBase {
+  __component: 'page.events-index';
+  heading?: string | null;
+  standfirst?: string | null;
+  noUpcoming?: string | null;
+  upcomingCta?: string | null;
+  watchHeading?: string | null;
+  watchStandfirst?: string | null;
+  pickLabel?: string | null;
+  noRecordings?: string | null;
+  watchCta?: string | null;
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -404,7 +417,7 @@ export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */

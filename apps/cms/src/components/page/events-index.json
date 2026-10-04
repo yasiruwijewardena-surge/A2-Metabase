@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_page_events_indexes",
+  "info": {
+    "displayName": "Events index",
+    "icon": "calendar",
+    "description": "The /events page. The events themselves are their own type; what is editable here is the copy around them."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "noUpcoming": {
+      "type": "text"
+    },
+    "upcomingCta": {
+      "type": "string"
+    },
+    "watchHeading": {
+      "type": "string"
+    },
+    "watchStandfirst": {
+      "type": "text"
+    },
+    "pickLabel": {
+      "type": "string"
+    },
+    "noRecordings": {
+      "type": "text"
+    },
+    "watchCta": {
+      "type": "string"
+    }
+  }
+}

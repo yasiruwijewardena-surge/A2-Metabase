@@ -553,6 +553,28 @@
           "illustration": "../../web/public/images/home/footer-illustration.svg"
         }
       ]
+    },
+    {
+      "title": "Events",
+      "slug": "events",
+      "seo": {
+        "title": "Events | Metabase",
+        "description": "Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
+      },
+      "sections": [
+        {
+          "__component": "page.events-index",
+          "heading": "Events",
+          "standfirst": "Register for an upcoming event or stream a past recording.",
+          "noUpcoming": "No events on the calendar right now — the recordings below are all free to stream.",
+          "upcomingCta": "Register now",
+          "watchHeading": "Watch now",
+          "watchStandfirst": "Miss an event? No worries. Stream recordings of previous events—no email registration required.",
+          "pickLabel": "Pick a series",
+          "noRecordings": "No recordings in this series yet — pick another.",
+          "watchCta": "Learn more"
+        }
+      ]
     }
   ]
 }

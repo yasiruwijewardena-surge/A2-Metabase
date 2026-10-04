@@ -143,6 +143,26 @@ export interface PageDemo extends Struct.ComponentSchema {
   };
 }
 
+export interface PageEventsIndex extends Struct.ComponentSchema {
+  collectionName: 'components_page_events_indexes';
+  info: {
+    description: 'The /events page. The events themselves are their own type; what is editable here is the copy around them.';
+    displayName: 'Events index';
+    icon: 'calendar';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    noRecordings: Schema.Attribute.Text;
+    noUpcoming: Schema.Attribute.Text;
+    pickLabel: Schema.Attribute.String;
+    standfirst: Schema.Attribute.Text;
+    upcomingCta: Schema.Attribute.String;
+    watchCta: Schema.Attribute.String;
+    watchHeading: Schema.Attribute.String;
+    watchStandfirst: Schema.Attribute.Text;
+  };
+}
+
 export interface PageFaqList extends Struct.ComponentSchema {
   collectionName: 'components_page_faq_lists';
   info: {
@@ -544,6 +564,7 @@ declare module '@strapi/strapi' {
       'page.closing': PageClosing;
       'page.collection-list': PageCollectionList;
       'page.demo': PageDemo;
+      'page.events-index': PageEventsIndex;
       'page.faq-list': PageFaqList;
       'page.feature-grid': PageFeatureGrid;
       'page.final-cta': PageFinalCta;

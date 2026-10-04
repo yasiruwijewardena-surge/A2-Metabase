@@ -230,6 +230,7 @@ const ZONE: Record<string, Record<string, string>> = {
   'page.scale-cards': { '': '*' },
   'page.collection-list': { '': '*' },
   'page.prose': { '': '*' },
+  'page.events-index': { '': '*' },
   'page.demo': { '': '*' },
   'page.faq-list': { '[faqs]': 'true' },
   'page.roadmap-groups': { '[groups][populate]': '*' },
