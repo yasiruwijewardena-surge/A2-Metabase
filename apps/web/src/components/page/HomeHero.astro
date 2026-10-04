@@ -1,0 +1,69 @@
+---
+/*
+ * The home hero: heading, standfirst, two CTAs, the dashboard island, a trust
+ * row of customer logos and the "watch a demo" tour link.
+ *
+ * Markup is the home page's own, moved here unchanged -- the heading's
+ * `<br>` and the space before it included, because the space is load-bearing
+ * (`<br>` ends the line but contributes no whitespace, so without it the
+ * accessible name reads "analyticsyou").
+ */
+import Demo from './Demo.astro';
+import { src as at, srcset } from '../../lib/image';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const logos = s.logos ?? [];
+const tour = s.tourMedia ?? [];
+---
+<section class="hero-band">
+  <div class="container-mb">
+    <div class="hero-content">
+      <h1>{s.heading}{s.headingBreakAfter && <> <br />{s.headingBreakAfter}</>}</h1>
+      {s.sub && <p class="hero-sub">{s.sub}</p>}
+      {s.ctas && s.ctas.length > 0 && (
+        <div class="hero-cta">
+          {s.ctas.map((c) => (
+            <a href={c.url} class={c.style === 'secondary' ? 'btn-secondary' : 'btn-primary'}>{c.label}</a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <Demo name={s.demo} />
+
+    {logos.length > 0 && (
+      <div class="hero-trust">
+        {s.trustLabel && <p class="hero-trust-label">{s.trustLabel}</p>}
+        <ul class="hero-logos">
+          {logos.map((l) => (
+            <li>
+              <img src={l.url} alt={l.alternativeText ?? ''} width="135" height="38"
+                   loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {s.tourLabel && (
+      <a href={s.tourUrl ?? '/demo'} class="hero-tour">
+        <span class="hero-tour__play" aria-hidden="true">
+          <svg width="15" height="18" viewBox="0 0 18 20" fill="currentColor"><path d="M0 0l18 10L0 20z"/></svg>
+        </span>
+        <span class="hero-tour__label">{s.tourLabel}</span>
+        {tour.length > 0 && (
+          <span class="hero-tour__media" aria-hidden="true">
+            {tour.map((m, i) => (
+              <img src={at(m.url, i === 0 ? 380 : 104)}
+                   srcset={srcset(m.url, i === 0 ? [380, 760] : [104, 208])}
+                   alt="" width={i === 0 ? 380 : 104} height={i === 0 ? 130 : 104}
+                   loading="lazy" decoding="async" />
+            ))}
+          </span>
+        )}
+      </a>
+    )}
+  </div>
+</section>

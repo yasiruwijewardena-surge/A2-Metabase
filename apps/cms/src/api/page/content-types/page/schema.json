@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Every composed page on the site, one row per URL. The body is a dynamic zone over the whole section vocabulary, so a page's shape -- which sections it has and in what order -- is content, not code. Collection detail routes (a post, a case study) are templates over their own type and are not rows here."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "page.home-hero",
+        "page.hero",
+        "page.pillars",
+        "page.panel-group",
+        "page.split",
+        "page.band",
+        "page.accordion",
+        "page.quote",
+        "page.scale-cards",
+        "page.collection-list",
+        "page.faq-list",
+        "page.prose",
+        "page.roadmap-groups",
+        "page.demo",
+        "page.feature-grid",
+        "page.final-cta",
+        "page.closing"
+      ]
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

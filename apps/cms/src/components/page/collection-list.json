@@ -1,0 +1,54 @@
+{
+  "collectionName": "components_page_collection_lists",
+  "info": {
+    "displayName": "Collection list",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "source": {
+      "type": "enumeration",
+      "enum": [
+        "posts",
+        "case-studies",
+        "testimonials",
+        "glossary",
+        "events-upcoming",
+        "events-on-demand",
+        "plans"
+      ]
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "showFilters": {
+      "type": "boolean",
+      "default": true
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "testimonial-wall",
+        "testimonial-masonry",
+        "blog-index",
+        "case-study-index",
+        "glossary",
+        "events-upcoming",
+        "events-on-demand",
+        "pricing-table"
+      ]
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

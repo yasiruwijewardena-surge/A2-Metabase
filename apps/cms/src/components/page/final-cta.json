@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_page_final_ctas",
+  "info": {
+    "displayName": "Final CTA",
+    "icon": "star"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "ctas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "points": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    },
+    "illustration": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

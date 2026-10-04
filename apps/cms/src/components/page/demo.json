@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_page_demos",
+  "info": {
+    "displayName": "Demo",
+    "icon": "cube"
+  },
+  "options": {},
+  "attributes": {
+    "demo": {
+      "type": "enumeration",
+      "enum": [
+        "hero-dashboard",
+        "hero-chat",
+        "metabot-chat",
+        "payments-dashboard",
+        "data-studio-account",
+        "embedded-dashboard",
+        "data-source-marquee",
+        "copy-command",
+        "compliance-badges"
+      ]
+    },
+    "caption": {
+      "type": "string"
+    }
+  }
+}

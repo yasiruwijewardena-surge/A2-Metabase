@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_page_pillar_cards",
+  "info": {
+    "displayName": "Pillar card",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "visual": {
+      "type": "enumeration",
+      "enum": [
+        "hero-dashboard",
+        "hero-chat",
+        "metabot-chat",
+        "payments-dashboard",
+        "data-studio-account",
+        "embedded-dashboard",
+        "data-source-marquee",
+        "copy-command",
+        "compliance-badges",
+        "badges",
+        "image"
+      ]
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "caption": {
+      "type": "string"
+    }
+  }
+}

@@ -1,24 +1,44 @@
 ---
 /*
- * Every path the replicated navigation points at but this build does not
- * implement.
+ * Every URL that is not a collection detail route.
  *
- * The information architecture is part of what is being replicated, so the nav
- * and footer carry the original's full link set — 66 of those paths have no
- * page behind them here. Serving a 404 would misrepresent the build as broken;
- * inventing a page would misrepresent it as complete. This says plainly which
- * it is and points at the sections that do exist.
+ * Two kinds of path arrive here, and one route has to serve both because Astro
+ * allows a single rest parameter at a level:
  *
- * The list is generated from the built output (`npm run audit:links`) rather
- * than hand-kept. A path that later gains a real page drops out of it, and
- * would win anyway: a real route is more specific than this rest parameter.
+ *   - a composed page, held as a row in Strapi. Its shape is the dynamic zone,
+ *     so what sections it has and in what order is content, not code.
+ *   - a path the replicated navigation points at with nothing behind it. The
+ *     information architecture is part of what is being replicated, so the nav
+ *     and footer carry the original's full link set. Serving a 404 would
+ *     misrepresent the build as broken; inventing a page would misrepresent it
+ *     as complete. This says plainly which it is.
+ *
+ * A page row wins over a stub of the same path, so building a page simply
+ * removes its stub.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Sections from '../components/page/Sections.astro';
+import { getPages } from '../lib/strapi';
 import paths from '../data/ia-paths.json';
+import type { Page } from '../lib/types';
 
-export function getStaticPaths() {
-  return (paths as string[]).map((p) => ({ params: { path: p.replace(/^\//, '') } }));
+export async function getStaticPaths() {
+  const pages = await getPages();
+  const taken = new Set(pages.map((p) => `/${p.slug.replace(/^\/+/, '')}`));
+
+  return [
+    ...pages.map((page) => ({
+      params: { path: page.slug.replace(/^\/+/, '') },
+      props: { page },
+    })),
+    ...(paths as string[])
+      .filter((p) => !taken.has(p))
+      .map((p) => ({ params: { path: p.replace(/^\/+/, '') }, props: { page: null } })),
+  ];
 }
+
+interface Props { page: Page | null }
+const { page } = Astro.props;
 
 const here = `/${Astro.params.path}`;
 
@@ -39,6 +59,11 @@ const label = here
   .join(' — ');
 ---
 
+{page ? (
+  <BaseLayout title={page.seo?.title ?? page.title} description={page.seo?.description}>
+    <Sections sections={page.sections} />
+  </BaseLayout>
+) : (
 <BaseLayout
   title={`${label} | Metabase replica`}
   description={`${here} is part of the replicated navigation but is not one of the pages built for this assignment.`}
@@ -72,3 +97,4 @@ const label = here
     </ul>
   </div>
 </BaseLayout>
+)}

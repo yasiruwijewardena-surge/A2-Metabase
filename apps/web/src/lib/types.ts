@@ -260,9 +260,160 @@ export interface ClosingSection extends SectionBase {
   mediaLabel?: string | null;
 }
 
+
+/** One of the interactive islands, named by the CMS. See components/page/Demo.astro. */
+export type DemoName =
+  | 'hero-dashboard' | 'hero-chat' | 'metabot-chat' | 'payments-dashboard'
+  | 'data-studio-account' | 'embedded-dashboard' | 'data-source-marquee'
+  | 'copy-command' | 'compliance-badges';
+
+export interface PillarCard {
+  id: number;
+  icon?: string | null;
+  heading?: string | null;
+  body?: string | null;
+  visual?: DemoName | 'badges' | 'image' | null;
+  media?: StrapiImage | null;
+  caption?: string | null;
+}
+
+export interface HomeHeroSection extends SectionBase {
+  __component: 'page.home-hero';
+  heading: string;
+  /** The second line. `<br>` ends the line but adds no whitespace, so the two halves are held apart. */
+  headingBreakAfter?: string | null;
+  sub?: string | null;
+  ctas?: Cta[];
+  demo?: DemoName | null;
+  trustLabel?: string | null;
+  logos?: StrapiImage[];
+  tourLabel?: string | null;
+  tourUrl?: string | null;
+  tourMedia?: StrapiImage[];
+}
+
+export interface PillarsSection extends SectionBase {
+  __component: 'page.pillars';
+  heading: string;
+  standfirst?: string | null;
+  items?: PillarCard[];
+}
+
+export interface Panel {
+  id: number;
+  heading: string;
+  body?: string | null;
+  bullets?: Bullet[];
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  demo?: DemoName | null;
+  frame?: 'query' | 'share' | 'guide' | null;
+  reverse?: boolean | null;
+  quote?: Testimonial | null;
+}
+
+export interface PanelGroupSection extends SectionBase {
+  __component: 'page.panel-group';
+  eyebrow?: string | null;
+  eyebrowUrl?: string | null;
+  heading: string;
+  standfirst?: string | null;
+  panels?: Panel[];
+}
+
+export interface FeatureGridSection extends SectionBase {
+  __component: 'page.feature-grid';
+  eyebrow?: string | null;
+  eyebrowUrl?: string | null;
+  heading: string;
+  standfirst?: string | null;
+  demo?: DemoName | null;
+  items?: PillarCard[];
+}
+
+export interface ScaleCard {
+  id: number;
+  icon?: string | null;
+  heading?: string | null;
+  /** The body is split so a feature link can sit mid-sentence. */
+  lead?: string | null;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  tail?: string | null;
+}
+
+export interface ScaleCardsSection extends SectionBase {
+  __component: 'page.scale-cards';
+  heading: string;
+  standfirst?: string | null;
+  cards?: ScaleCard[];
+}
+
+export interface CollectionListSection extends SectionBase {
+  __component: 'page.collection-list';
+  heading?: string | null;
+  standfirst?: string | null;
+  source?: 'posts' | 'case-studies' | 'testimonials' | 'glossary'
+         | 'events-upcoming' | 'events-on-demand' | 'plans' | null;
+  layout?: string | null;
+  limit?: number | null;
+  showFilters?: boolean | null;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+}
+
+export interface ProseSection extends SectionBase {
+  __component: 'page.prose';
+  heading?: string | null;
+  body?: Block[];
+  narrow?: boolean | null;
+}
+
+export interface DemoSection extends SectionBase {
+  __component: 'page.demo';
+  demo?: DemoName | null;
+  caption?: string | null;
+}
+
+export interface FinalCtaSection extends SectionBase {
+  __component: 'page.final-cta';
+  heading: string;
+  sub?: string | null;
+  ctas?: Cta[];
+  points?: Bullet[];
+  illustration?: StrapiImage | null;
+}
+
+export interface FaqListSection extends SectionBase {
+  __component: 'page.faq-list';
+  heading?: string | null;
+  standfirst?: string | null;
+  faqs?: Faq[];
+}
+
+export interface RoadmapGroup { id: number; heading?: string | null; body?: string | null; items?: Bullet[] }
+
+export interface RoadmapGroupsSection extends SectionBase {
+  __component: 'page.roadmap-groups';
+  heading?: string | null;
+  standfirst?: string | null;
+  groups?: RoadmapGroup[];
+}
+
 export type PageSection =
-  | HeroSection | SplitSection | BandSection
-  | AccordionSection | QuoteSection | ClosingSection;
+  | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
+  | FeatureGridSection | SplitSection | BandSection | AccordionSection
+  | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection
+  | QuoteSection | ClosingSection;
+
+/** A composed page: one row per URL, its shape held in the zone. */
+export interface Page {
+  title: string;
+  slug: string;
+  sections?: PageSection[];
+  seo?: Seo | null;
+}
 
 export interface ProductPage {
   title: string;

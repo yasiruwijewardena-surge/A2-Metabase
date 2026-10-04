@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_page_panel_groups",
+  "info": {
+    "displayName": "Panel group",
+    "icon": "layout"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "eyebrowUrl": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "panels": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.panel"
+    }
+  }
+}

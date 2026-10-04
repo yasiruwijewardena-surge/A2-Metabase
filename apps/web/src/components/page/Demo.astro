@@ -1,0 +1,31 @@
+---
+/*
+ * Mounts one of the interactive islands by name.
+ *
+ * The islands are code, not copy -- a payments dashboard is not something an
+ * editor writes -- so the CMS names one rather than describing it. This is the
+ * one place the enum in `page.demo` is tied to a component, and every section
+ * that can carry a demo goes through here.
+ */
+import HeroDashboard from '../HeroDashboard.astro';
+import HeroChat from '../demos/HeroChat.astro';
+import MetabotChat from '../demos/MetabotChat.astro';
+import PaymentsDashboard from '../demos/PaymentsDashboard.astro';
+import DataStudioAccount from '../demos/DataStudioAccount.astro';
+import EmbeddedDashboard from '../demos/EmbeddedDashboard.astro';
+import DataSourceMarquee from '../DataSourceMarquee.astro';
+import CopyCommand from '../CopyCommand.astro';
+import ComplianceBadges from '../ComplianceBadges.astro';
+
+interface Props { name?: string | null; caption?: string | null }
+const { name, caption } = Astro.props;
+---
+{name === 'hero-dashboard' && <HeroDashboard />}
+{name === 'hero-chat' && <HeroChat />}
+{name === 'metabot-chat' && <MetabotChat />}
+{name === 'payments-dashboard' && <PaymentsDashboard />}
+{name === 'data-studio-account' && <DataStudioAccount />}
+{name === 'embedded-dashboard' && <EmbeddedDashboard />}
+{name === 'data-source-marquee' && <DataSourceMarquee />}
+{name === 'copy-command' && <CopyCommand command={caption ?? 'docker run -d -p 3000:3000 metabase/metabase'} />}
+{name === 'compliance-badges' && <ComplianceBadges />}

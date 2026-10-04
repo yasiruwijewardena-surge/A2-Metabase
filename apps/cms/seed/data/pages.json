@@ -322,5 +322,237 @@
         "sub": "Even if you aren't an analyst, Metabase can make you feel like one. And if you are, it will stay out of your way."
       }
     }
+  ],
+  "pages": [
+    {
+      "title": "Home",
+      "slug": "home",
+      "seo": {
+        "title": "Metabase | Open source Business Intelligence and Embedded Analytics",
+        "description": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
+      },
+      "sections": [
+        {
+          "__component": "page.home-hero",
+          "heading": "Open source AI analytics",
+          "headingBreakAfter": "you can verify",
+          "sub": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer.",
+          "ctas": [
+            {
+              "label": "Try Metabase Cloud free",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Deploy Metabase Open Source",
+              "url": "/open-source",
+              "style": "secondary"
+            }
+          ],
+          "demo": "hero-dashboard",
+          "trustLabel": "Trusted by 100,000+ companies",
+          "logos": [
+            "../../web/public/images/logos/Huggingface.svg",
+            "../../web/public/images/logos/mcdonalds.svg",
+            "../../web/public/images/logos/huma.svg",
+            "../../web/public/images/logos/capital-one.svg",
+            "../../web/public/images/logos/mistral.svg",
+            "../../web/public/images/logos/linear.svg",
+            "../../web/public/images/logos/deutsche-telekom.svg",
+            "../../web/public/images/logos/kong.svg"
+          ],
+          "logoAlts": [
+            "Hugging Face",
+            "McDonald's",
+            "Huma",
+            "Capital One",
+            "Mistral",
+            "Linear",
+            "Deutsche Telekom",
+            "Kong"
+          ],
+          "tourLabel": "Watch a 1-minute demo",
+          "tourUrl": "/demo",
+          "tourMedia": [
+            "../../web/public/images/home/tour-dashboard.webp",
+            "../../web/public/images/home/tour-presenter.webp"
+          ]
+        },
+        {
+          "__component": "page.pillars",
+          "heading": "Deploy in minutes, scale infinitely",
+          "standfirst": "Start simple. Keep your data secure and compliant as you grow. From pre-seed to post-IPO.",
+          "items": [
+            {
+              "visual": "copy-command",
+              "caption": "docker run -d -p 3000:3000 metabase/metabase",
+              "heading": "Always open source",
+              "body": "Run the script to spin up your free, self-hosted instance in minutes. Ships with AI features. Used by millions worldwide."
+            },
+            {
+              "visual": "data-source-marquee",
+              "heading": "Connect your data and your tools",
+              "body": "Query and visualize data from your database or warehouse. Work with your data via the MCP server, CLI, APIs, Slack, and more."
+            },
+            {
+              "visual": "compliance-badges",
+              "heading": "Enterprise-grade security",
+              "body": "We treat your data the way we'd want ours — it's secure and compliant (SOC1, SOC2, GDPR, CCPA, and more)."
+            }
+          ]
+        },
+        {
+          "__component": "page.panel-group",
+          "eyebrow": "Business Intelligence",
+          "eyebrowUrl": "/product/business-intelligence",
+          "heading": "Analytics your team will use and trust",
+          "standfirst": "Teams can explore data on their own, guided to correct answers with a trustworthy foundation. Your data team can curate a governed semantic layer of canonical tables and metrics in Data Studio.",
+          "panels": [
+            {
+              "heading": "Query data in plain English with AI",
+              "body": "AI on all plans so anyone can explore data, visualize results, and answer their own questions. Ask Metabot AI or connect to the MCP server, click on charts to find the \"why\" with built-in drilldowns, or spin up a no-code query with the visual query builder.",
+              "linkLabel": "Explore Metabase AI",
+              "linkUrl": "/features/metabase-ai",
+              "demo": "metabot-chat",
+              "frame": "query",
+              "__quoteIndex": 0
+            },
+            {
+              "heading": "Share reports and create custom insights",
+              "body": "Filter and breakout interactive dashboards. Combine charts with text in Documents for collaborative reporting. Set up subscriptions and alerts to keep everyone in the loop.",
+              "linkLabel": "Explore interactive dashboards",
+              "linkUrl": "/features/analytics-dashboards",
+              "demo": "payments-dashboard",
+              "frame": "share",
+              "__quoteIndex": 1
+            },
+            {
+              "heading": "Guide people to the right answers",
+              "body": "Curate your semantic layer in Data Studio to make your data usable and correct for humans and AI. Define trusted, reusable metrics, and mark vetted data sources so everyone builds on consistent, accurate foundations.",
+              "linkLabel": "Explore Data Studio",
+              "linkUrl": "/product/data-studio",
+              "demo": "data-studio-account",
+              "frame": "guide",
+              "__quoteIndex": 2
+            }
+          ]
+        },
+        {
+          "__component": "page.feature-grid",
+          "eyebrow": "Embedded Analytics",
+          "eyebrowUrl": "/product/embedded-analytics",
+          "heading": "Put production-grade analytics into your app without drama",
+          "standfirst": "Embed dashboards, visualizations, and self-serve reporting in your SaaS app. Multi-tenant, customizable analytics components, with plumbing and permissions built in.",
+          "demo": "embedded-dashboard",
+          "items": [
+            {
+              "icon": "window",
+              "heading": "Way less engineering overhead than rolling your own in-app reporting",
+              "body": "Data teams and non-technical teammates can work with data without bugging devs."
+            },
+            {
+              "icon": "package",
+              "heading": "Self-host or deploy on Metabase Cloud",
+              "body": "Start with simple charts, embed full dashboards, or use the SDK for advanced setups as your needs grow."
+            },
+            {
+              "icon": "shield",
+              "heading": "Customizable to fit your product",
+              "body": "White-labeling, dynamic styling, and interactive controls from view-only to full data discovery with a low-code integration."
+            }
+          ]
+        },
+        {
+          "__component": "page.scale-cards",
+          "heading": "Metabase scales as you grow",
+          "standfirst": "Advanced features for managing lots of users and compliance. Flexible even as your tooling or workflow evolves.",
+          "cards": [
+            {
+              "icon": "grid",
+              "heading": "Multi-tenant data segregation",
+              "linkLabel": "Granular permissions",
+              "linkUrl": "/features/data-segregation",
+              "tail": " to make sure people see what they need to, and nothing else."
+            },
+            {
+              "icon": "eye",
+              "heading": "Secure and simple access",
+              "tail": "Integrate with SSO IdPs (SAML, LDAP, JWT, Google) and map to Metabase groups."
+            },
+            {
+              "icon": "terminal",
+              "heading": "Drop into SQL",
+              "lead": "When you need an ",
+              "linkLabel": "escape hatch into SQL",
+              "linkUrl": "/features/sql-editor",
+              "tail": " to run raw queries, tweak logic, or join tables, you're covered."
+            },
+            {
+              "icon": "chart",
+              "heading": "Track data and dashboard usage",
+              "linkLabel": "No more unused dashboards",
+              "linkUrl": "/features/usage-analytics",
+              "tail": ". Inspect user behavior across content, data access and downloads."
+            },
+            {
+              "icon": "bolt",
+              "heading": "Keep dashboards snappy",
+              "lead": "Go faster with ",
+              "linkLabel": "result and model caching",
+              "linkUrl": "/docs",
+              "tail": ". No schedulers or pipelines needed."
+            },
+            {
+              "icon": "layers",
+              "heading": "Test and deploy safely",
+              "lead": "Spin up ",
+              "linkLabel": "staging environments",
+              "linkUrl": "/docs",
+              "tail": " without touching prod. Export configs, models, and dashboards to test or scale across multiple instances."
+            }
+          ]
+        },
+        {
+          "__component": "page.collection-list",
+          "heading": "Analytics that people straight up love",
+          "source": "testimonials",
+          "layout": "testimonial-wall",
+          "linkLabel": "See more love for Metabase",
+          "linkUrl": "/love"
+        },
+        {
+          "__component": "page.final-cta",
+          "heading": "Ready to get started?",
+          "sub": "We could keep typing, or you could just try it. AI on all plans. 100k+ teams already love it.",
+          "ctas": [
+            {
+              "label": "Try Metabase Cloud free",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Deploy Metabase Open Source",
+              "url": "/open-source",
+              "style": "secondary"
+            }
+          ],
+          "points": [
+            {
+              "title": "Free 14-day trial",
+              "body": "check"
+            },
+            {
+              "title": "Super-fast setup",
+              "body": "clock"
+            },
+            {
+              "title": "Open source",
+              "body": "github"
+            }
+          ],
+          "illustration": "../../web/public/images/home/footer-illustration.svg"
+        }
+      ]
+    }
   ]
 }

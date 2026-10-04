@@ -1,0 +1,42 @@
+---
+/*
+ * Eyebrow-led header, one full-width demo, then a grid of icon features.
+ * The Embedded Analytics block on the home page.
+ */
+import Demo from './Demo.astro';
+import EyebrowArrow from '../EyebrowArrow.astro';
+import EaFeatureIcon from '../EaFeatureIcon.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const items = s.items ?? [];
+---
+<section class="pt-24 pb-0">
+  <div class="container-mb">
+    <header class="section-head mb-10 text-center">
+      {s.eyebrow && (
+        <a href={s.eyebrowUrl ?? '#'} class="eyebrow-link">
+          {s.eyebrow}
+          <EyebrowArrow />
+        </a>
+      )}
+      <h2 class="mx-auto mb-6 max-w-[640px]">{s.heading}</h2>
+      {s.standfirst && <p class="section-standfirst">{s.standfirst}</p>}
+    </header>
+
+    <Demo name={s.demo} />
+
+    {items.length > 0 && (
+      <div class="ea-features">
+        {items.map((f) => (
+          <div class="ea-feature">
+            <span class="ea-feature-icon"><EaFeatureIcon name={f.icon} /></span>
+            <h3 class="ea-feature-title">{f.heading}</h3>
+            {f.body && <p class="ea-feature-text">{f.body}</p>}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

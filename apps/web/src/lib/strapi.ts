@@ -5,6 +5,7 @@ import type {
   EventCategory,
   Faq,
   MarketingPage,
+  Page,
   GlossaryTerm,
   Industry,
   Plan,
@@ -203,22 +204,57 @@ export const getPricingAddons = () =>
  * `[on][page.x]` form, one entry per component in the zone.
  * ------------------------------------------------------------------------ */
 
-const ZONE = ['hero', 'split', 'band', 'accordion', 'quote', 'closing'];
+/*
+ * What to populate under each component the zone may hold.
+ *
+ * `*` is one level deep: it returns a component's own fields and media, but a
+ * repeatable component nested inside one comes back without *its* media or
+ * relations. Those components spell their inner fields out instead -- and must
+ * not also ask for `*`, because asking for both is a 400.
+ */
+const ZONE: Record<string, Record<string, string>> = {
+  'page.home-hero': { '': '*' },
+  'page.hero': { '': '*' },
+  'page.pillars': { '[items][populate]': '*' },
+  'page.panel-group': {
+    '[panels][populate][bullets]': 'true',
+    /* The quote names a person, who names a company. `*` on the testimonial
+       stops at the person, so the byline loses ", Northwind Lending". */
+    '[panels][populate][quote][populate][person][populate]': '*',
+  },
+  'page.feature-grid': { '[items][populate]': '*' },
+  'page.split': { '': '*' },
+  'page.band': { '': '*' },
+  'page.accordion': { '[items][populate]': '*' },
+  'page.quote': { '[testimonial][populate][person][populate]': '*' },
+  'page.scale-cards': { '': '*' },
+  'page.collection-list': { '': '*' },
+  'page.prose': { '': '*' },
+  'page.demo': { '': '*' },
+  'page.faq-list': { '[faqs]': 'true' },
+  'page.roadmap-groups': { '[groups][populate]': '*' },
+  'page.final-cta': { '': '*' },
+  'page.closing': { '': '*' },
+};
 
-const zonePopulate = (field: string) =>
-  Object.fromEntries(ZONE.flatMap((c) => (c === 'quote'
-    /* The quote holds a relation to a testimonial, which has relations of its
-       own, so it needs the nested form. Asking for `*` as well as the nested
-       path is a 400 -- they are two ways to populate the same component. */
-    ? [[`populate[${field}][on][page.quote][populate][testimonial][populate]`, '*']]
-    : [[`populate[${field}][on][page.${c}][populate]`, '*']])));
+const zonePopulate = (field: string, components: string[] = Object.keys(ZONE)) =>
+  Object.fromEntries(
+    components.flatMap((c) =>
+      Object.entries(ZONE[c] ?? { '': '*' }).map(([path, value]) =>
+        [`populate[${field}][on][${c}][populate]${path}`, value] as const
+      )
+    )
+  );
+
+/** The six a product page's zone is limited to. */
+const PRODUCT_ZONE = ['page.hero', 'page.split', 'page.band', 'page.accordion', 'page.quote', 'page.closing'];
 
 export const getProductPages = () =>
-  all<ProductPage>('product-pages', { ...zonePopulate('sections'), 'populate[seo]': 'true' });
+  all<ProductPage>('product-pages', { ...zonePopulate('sections', PRODUCT_ZONE), 'populate[seo]': 'true' });
 
 export const getProductPage = async (slug: string) =>
   (await all<ProductPage>('product-pages', {
-    'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
+    'filters[slug][$eq]': slug, ...zonePopulate('sections', PRODUCT_ZONE), 'populate[seo]': 'true',
   }))[0] ?? null;
 
 export const getMarketingPages = () =>
@@ -232,3 +268,18 @@ export const getMarketingPages = () =>
 
 export const getMarketingPage = async (slug: string) =>
   (await getMarketingPages()).find((p) => p.slug === slug) ?? null;
+
+/* ---------------------------------------------------------------------------
+ * Pages
+ *
+ * One row per URL, its shape held in the zone. `slug` is a full path
+ * ("product/data-studio"), which the catch-all route splits on "/".
+ * ------------------------------------------------------------------------ */
+
+export const getPages = () =>
+  all<Page>('pages', { ...zonePopulate('sections'), 'populate[seo]': 'true' });
+
+export const getPage = async (slug: string) =>
+  (await all<Page>('pages', {
+    'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
+  }))[0] ?? null;

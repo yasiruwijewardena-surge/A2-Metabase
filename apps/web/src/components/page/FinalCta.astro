@@ -1,0 +1,44 @@
+---
+/*
+ * The closing call to action.
+ *
+ * The original has no bottom padding here and rules the top off with a
+ * hairline; the air below comes from the footer.
+ */
+import { src as at } from '../../lib/image';
+import FinalCtaIcon from './FinalCtaIcon.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const points = s.points ?? [];
+---
+<section class="final-cta-section">
+  <div class="final-cta">
+    <h2 class="final-cta-title">{s.heading}</h2>
+    {s.sub && <p class="final-cta-sub">{s.sub}</p>}
+    {s.ctas && s.ctas.length > 0 && (
+      <div class="final-cta-actions">
+        {s.ctas.map((c) => (
+          <a href={c.url} class={c.style === 'secondary' ? 'btn-secondary' : 'btn-primary'}>{c.label}</a>
+        ))}
+      </div>
+    )}
+    {points.length > 0 && (
+      <ul class="final-cta-points">
+        {points.map((p) => (
+          <li>
+            <span class="final-cta-point-icon" aria-hidden="true"><FinalCtaIcon name={p.body} /></span>
+            {p.title}
+          </li>
+        ))}
+      </ul>
+    )}
+    {s.illustration && (
+      <div class="final-cta-illustration-wrap" aria-hidden="true">
+        <img class="final-cta-illustration" src={at(s.illustration.url, 1440)}
+             alt="" width="1440" height="279" loading="lazy" decoding="async" />
+      </div>
+    )}
+  </div>
+</section>

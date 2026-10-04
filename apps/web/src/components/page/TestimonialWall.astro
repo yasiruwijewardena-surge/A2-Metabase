@@ -1,0 +1,47 @@
+---
+/*
+ * The home page's social wall: a CSS-column masonry of social testimonials
+ * with a "see more" link beneath.
+ */
+import Avatar from '../Avatar.astro';
+import type { Testimonial } from '../../lib/types';
+
+interface Props {
+  heading?: string | null;
+  items: Testimonial[];
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+}
+const { heading, items, linkLabel, linkUrl } = Astro.props;
+---
+{items.length > 0 && (
+  <section class="love-revamp">
+    <div class="container-mb">
+      <div class="love-head">
+        <h2 class="love-title">{heading}</h2>
+      </div>
+
+      <div class="love-masonry">
+        {items.map((t) => (
+          <figure class="love-card">
+            <blockquote class="love-quote">{t.quote}</blockquote>
+            <figcaption class="love-author">
+              <Avatar image={t.person?.avatar} name={t.person?.name} size={36} class="love-avatar" />
+              <span class="love-name">
+                {t.sourceUrl
+                  ? <a class="love-name-link" href={t.sourceUrl} target="_blank" rel="noopener noreferrer">{t.person?.name}</a>
+                  : t.person?.name}
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      {linkLabel && (
+        <p class="love-more">
+          <a class="love-more-link" href={linkUrl ?? '/love'}>{linkLabel} <span aria-hidden="true">›</span></a>
+        </p>
+      )}
+    </div>
+  </section>
+)}

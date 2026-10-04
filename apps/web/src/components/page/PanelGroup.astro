@@ -1,0 +1,57 @@
+---
+/*
+ * An eyebrow-led section header over alternating copy/demo panels, each with
+ * an optional pull quote. The Business Intelligence block on the home page.
+ *
+ * Panels alternate automatically; `reverse` on a panel overrides the parity so
+ * a reordered zone still reads the way the editor intended.
+ */
+import Demo from './Demo.astro';
+import EyebrowArrow from '../EyebrowArrow.astro';
+import PanelQuote from './PanelQuote.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const panels = s.panels ?? [];
+---
+<section class="pt-24 pb-14">
+  <div class="container-mb">
+    <header class="section-head mb-14 text-center">
+      {s.eyebrow && (
+        <a href={s.eyebrowUrl ?? '#'} class="eyebrow-link">
+          {s.eyebrow}
+          <EyebrowArrow />
+        </a>
+      )}
+      <h2 class="mb-6">{s.heading}</h2>
+      {s.standfirst && <p class="section-standfirst">{s.standfirst}</p>}
+    </header>
+
+    <div>
+      {panels.map((p, i) => (
+        <article class:list={['bi-panel', (p.reverse ?? i % 2 === 1) && 'bi-panel--reverse']}>
+          <div class="panel-copy">
+            <h3 class="panel-heading">{p.heading}</h3>
+            {p.body && <p class="panel-text">{p.body}</p>}
+            {p.linkLabel && (
+              <a href={p.linkUrl ?? '#'} class="panel-cta">
+                {p.linkLabel}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M5.5 3.5L9 7L5.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            )}
+            {p.quote && <PanelQuote quote={p.quote} />}
+          </div>
+
+          <div class="panel-media">
+            <div class:list={['bi-frame', p.frame && `bi-frame--${p.frame}`]}>
+              <Demo name={p.demo} />
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

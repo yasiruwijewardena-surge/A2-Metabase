@@ -99,6 +99,12 @@ function relationKeys(app, uid, data) {
 }
 
 async function upsert(app, uid, where, data) {
+  /* A key held as `undefined` is not the same as an absent one. On create
+     Strapi ignores it; on update it reaches updateOrCreateComponent, which
+     does `'id' in value` and throws on undefined. A page with no `seo` was
+     therefore fine the first time and failed on every run after. */
+  data = Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined));
+
   if (!want(phase)) {
     /* Lookup only: the caller needs the documentId for its relation map. */
     const doc = await app.documents(uid).findFirst({ filters: where });
@@ -158,6 +164,7 @@ let phase = null;
 const ORDER = [
   'api::product-page.product-page',
   'api::marketing-page.marketing-page',
+  'api::page.page',
   'api::event.event',
   'api::event-category.event-category',
   'api::faq.faq',
@@ -465,12 +472,12 @@ async function main() {
          else is relative to this file, which for now reaches into the front
          end's public folder -- those copies go away once every page is
          converted and nothing but Cloudinary serves them. */
-      const upload = async (ref) => {
+      const upload = async (ref, alt) => {
         if (!ref) return undefined;
         const abs = ref.startsWith('seed:')
           ? join(__dirname, 'assets', ref.slice(5))
           : join(__dirname, ref);
-        return uploadFromPath(app, abs);
+        return uploadFromPath(app, abs, alt);
       };
 
       /* A standfirst that carries an inline link, which `toBlocks` does not
@@ -482,12 +489,24 @@ async function main() {
           : { type: 'text', text: p.t })),
       }];
 
+      /* Media fields that hold a list of paths rather than one. The alt text
+         for each sits in a parallel `<field>Alts` array, because a file's
+         alternativeText belongs to the file and these are uploaded here. */
+      const MEDIA_LISTS = { logos: 'logoAlts', tourMedia: null };
+
       const buildSection = async (raw) => {
         const s = { ...raw };
         if ('__quote' in s) {
           const t = pullQuotes[s.__quote];
           delete s.__quote;
           return t ? { ...s, testimonial: t.documentId } : null;
+        }
+        /* A panel carries its pull quote by position in the same list, so the
+           rebuilt home page quotes the same three people in the same places. */
+        if ('__quoteIndex' in s) {
+          const t = pullQuotes[s.__quoteIndex];
+          delete s.__quoteIndex;
+          if (t) s.quote = t.documentId;
         }
         if (s.__subRich) {
           /* The band holds its standfirst in `sub`; the hero keeps `sub` plain
@@ -497,8 +516,26 @@ async function main() {
           s[field] = richParagraph(s.__subRich);
           delete s.__subRich;
         }
-        for (const k of ['media', 'mediaMobile', 'mediaPoster']) {
+        for (const k of ['media', 'mediaMobile', 'mediaPoster', 'illustration']) {
           if (s[k]) s[k] = await upload(s[k]);
+        }
+        for (const [field, altField] of Object.entries(MEDIA_LISTS)) {
+          if (!Array.isArray(s[field])) continue;
+          const alts = altField ? s[altField] ?? [] : [];
+          const ids = [];
+          for (const [i, ref] of s[field].entries()) {
+            const id = await upload(ref, alts[i]);
+            if (id) ids.push(id);
+          }
+          s[field] = ids;
+          if (altField) delete s[altField];
+        }
+        /* Nested repeatables carry media and quotes of their own. */
+        for (const k of ['items', 'panels', 'cards', 'groups']) {
+          if (!Array.isArray(s[k])) continue;
+          const built = [];
+          for (const child of s[k]) built.push(await buildSection(child));
+          s[k] = built.filter(Boolean);
         }
         return s;
       };
@@ -522,6 +559,16 @@ async function main() {
           for (const raw of page.sections) data.sections.push(await buildSection(raw));
         }
         await upsert(app, 'api::marketing-page.marketing-page', { slug: page.slug }, data);
+      }
+
+      for (const page of pagesData.pages ?? []) {
+        const sections = [];
+        for (const raw of page.sections ?? []) {
+          const built = await buildSection(raw);
+          if (built) sections.push(built);
+        }
+        await upsert(app, 'api::page.page', { slug: page.slug },
+          { title: page.title, slug: page.slug, seo: page.seo, sections });
       }
     }
 

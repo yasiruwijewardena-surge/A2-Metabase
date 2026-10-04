@@ -80,6 +80,125 @@ export interface PageClosing extends Struct.ComponentSchema {
   };
 }
 
+export interface PageCollectionList extends Struct.ComponentSchema {
+  collectionName: 'components_page_collection_lists';
+  info: {
+    displayName: 'Collection list';
+    icon: 'bulletList';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    layout: Schema.Attribute.Enumeration<
+      [
+        'testimonial-wall',
+        'testimonial-masonry',
+        'blog-index',
+        'case-study-index',
+        'glossary',
+        'events-upcoming',
+        'events-on-demand',
+        'pricing-table',
+      ]
+    >;
+    limit: Schema.Attribute.Integer;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    showFilters: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    source: Schema.Attribute.Enumeration<
+      [
+        'posts',
+        'case-studies',
+        'testimonials',
+        'glossary',
+        'events-upcoming',
+        'events-on-demand',
+        'plans',
+      ]
+    >;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageDemo extends Struct.ComponentSchema {
+  collectionName: 'components_page_demos';
+  info: {
+    displayName: 'Demo';
+    icon: 'cube';
+  };
+  attributes: {
+    caption: Schema.Attribute.String;
+    demo: Schema.Attribute.Enumeration<
+      [
+        'hero-dashboard',
+        'hero-chat',
+        'metabot-chat',
+        'payments-dashboard',
+        'data-studio-account',
+        'embedded-dashboard',
+        'data-source-marquee',
+        'copy-command',
+        'compliance-badges',
+      ]
+    >;
+  };
+}
+
+export interface PageFaqList extends Struct.ComponentSchema {
+  collectionName: 'components_page_faq_lists';
+  info: {
+    displayName: 'FAQ list';
+    icon: 'question';
+  };
+  attributes: {
+    faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
+    heading: Schema.Attribute.String;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageFeatureGrid extends Struct.ComponentSchema {
+  collectionName: 'components_page_feature_grids';
+  info: {
+    displayName: 'Feature grid';
+    icon: 'grid';
+  };
+  attributes: {
+    demo: Schema.Attribute.Enumeration<
+      [
+        'hero-dashboard',
+        'hero-chat',
+        'metabot-chat',
+        'payments-dashboard',
+        'data-studio-account',
+        'embedded-dashboard',
+        'data-source-marquee',
+        'copy-command',
+        'compliance-badges',
+      ]
+    >;
+    eyebrow: Schema.Attribute.String;
+    eyebrowUrl: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    items: Schema.Attribute.Component<'page.pillar-card', true>;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageFinalCta extends Struct.ComponentSchema {
+  collectionName: 'components_page_final_ctas';
+  info: {
+    displayName: 'Final CTA';
+    icon: 'star';
+  };
+  attributes: {
+    ctas: Schema.Attribute.Component<'shared.cta', true>;
+    heading: Schema.Attribute.String;
+    illustration: Schema.Attribute.Media<'images'>;
+    points: Schema.Attribute.Component<'page.bullet', true>;
+    sub: Schema.Attribute.Text;
+  };
+}
+
 export interface PageHero extends Struct.ComponentSchema {
   collectionName: 'components_page_heros';
   info: {
@@ -104,6 +223,88 @@ export interface PageHero extends Struct.ComponentSchema {
   };
 }
 
+export interface PageHomeHero extends Struct.ComponentSchema {
+  collectionName: 'components_page_home_heros';
+  info: {
+    displayName: 'Home hero';
+    icon: 'rocket';
+  };
+  attributes: {
+    ctas: Schema.Attribute.Component<'shared.cta', true>;
+    demo: Schema.Attribute.Enumeration<
+      [
+        'hero-dashboard',
+        'hero-chat',
+        'metabot-chat',
+        'payments-dashboard',
+        'data-studio-account',
+        'embedded-dashboard',
+        'data-source-marquee',
+        'copy-command',
+        'compliance-badges',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'hero-dashboard'>;
+    heading: Schema.Attribute.String;
+    headingBreakAfter: Schema.Attribute.String;
+    logos: Schema.Attribute.Media<'images', true>;
+    sub: Schema.Attribute.Text;
+    tourLabel: Schema.Attribute.String;
+    tourMedia: Schema.Attribute.Media<'images', true>;
+    tourUrl: Schema.Attribute.String;
+    trustLabel: Schema.Attribute.String;
+  };
+}
+
+export interface PagePanel extends Struct.ComponentSchema {
+  collectionName: 'components_page_panels';
+  info: {
+    displayName: 'Panel';
+    icon: 'layer';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    bullets: Schema.Attribute.Component<'page.bullet', true>;
+    demo: Schema.Attribute.Enumeration<
+      [
+        'hero-dashboard',
+        'hero-chat',
+        'metabot-chat',
+        'payments-dashboard',
+        'data-studio-account',
+        'embedded-dashboard',
+        'data-source-marquee',
+        'copy-command',
+        'compliance-badges',
+      ]
+    >;
+    frame: Schema.Attribute.Enumeration<['query', 'share', 'guide']>;
+    heading: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    quote: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::testimonial.testimonial'
+    >;
+    reverse: Schema.Attribute.Boolean;
+  };
+}
+
+export interface PagePanelGroup extends Struct.ComponentSchema {
+  collectionName: 'components_page_panel_groups';
+  info: {
+    displayName: 'Panel group';
+    icon: 'layout';
+  };
+  attributes: {
+    eyebrow: Schema.Attribute.String;
+    eyebrowUrl: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    panels: Schema.Attribute.Component<'page.panel', true>;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
 export interface PagePillar extends Struct.ComponentSchema {
   collectionName: 'components_page_pillars';
   info: {
@@ -115,6 +316,62 @@ export interface PagePillar extends Struct.ComponentSchema {
     body: Schema.Attribute.Text;
     icon: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface PagePillarCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_pillar_cards';
+  info: {
+    displayName: 'Pillar card';
+    icon: 'layer';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    caption: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images' | 'videos'>;
+    visual: Schema.Attribute.Enumeration<
+      [
+        'hero-dashboard',
+        'hero-chat',
+        'metabot-chat',
+        'payments-dashboard',
+        'data-studio-account',
+        'embedded-dashboard',
+        'data-source-marquee',
+        'copy-command',
+        'compliance-badges',
+        'badges',
+        'image',
+      ]
+    >;
+  };
+}
+
+export interface PagePillars extends Struct.ComponentSchema {
+  collectionName: 'components_page_pillarss';
+  info: {
+    displayName: 'Pillar grid';
+    icon: 'grid';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    items: Schema.Attribute.Component<'page.pillar-card', true>;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageProse extends Struct.ComponentSchema {
+  collectionName: 'components_page_proses';
+  info: {
+    displayName: 'Prose';
+    icon: 'alignLeft';
+  };
+  attributes: {
+    body: Schema.Attribute.Blocks;
+    heading: Schema.Attribute.String;
+    narrow: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
@@ -130,6 +387,61 @@ export interface PageQuote extends Struct.ComponentSchema {
       'oneToOne',
       'api::testimonial.testimonial'
     >;
+  };
+}
+
+export interface PageRoadmapGroup extends Struct.ComponentSchema {
+  collectionName: 'components_page_roadmap_groups';
+  info: {
+    displayName: 'Roadmap group';
+    icon: 'calendar';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    items: Schema.Attribute.Component<'page.bullet', true>;
+  };
+}
+
+export interface PageRoadmapGroups extends Struct.ComponentSchema {
+  collectionName: 'components_page_roadmap_groupss';
+  info: {
+    displayName: 'Roadmap groups';
+    icon: 'calendar';
+  };
+  attributes: {
+    groups: Schema.Attribute.Component<'page.roadmap-group', true>;
+    heading: Schema.Attribute.String;
+    standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageScaleCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_scale_cards';
+  info: {
+    displayName: 'Scale card';
+    icon: 'layer';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    lead: Schema.Attribute.Text;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    tail: Schema.Attribute.Text;
+  };
+}
+
+export interface PageScaleCards extends Struct.ComponentSchema {
+  collectionName: 'components_page_scale_cardss';
+  info: {
+    displayName: 'Scale cards';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'page.scale-card', true>;
+    heading: Schema.Attribute.String;
+    standfirst: Schema.Attribute.Text;
   };
 }
 
@@ -230,9 +542,24 @@ declare module '@strapi/strapi' {
       'page.band': PageBand;
       'page.bullet': PageBullet;
       'page.closing': PageClosing;
+      'page.collection-list': PageCollectionList;
+      'page.demo': PageDemo;
+      'page.faq-list': PageFaqList;
+      'page.feature-grid': PageFeatureGrid;
+      'page.final-cta': PageFinalCta;
       'page.hero': PageHero;
+      'page.home-hero': PageHomeHero;
+      'page.panel': PagePanel;
+      'page.panel-group': PagePanelGroup;
       'page.pillar': PagePillar;
+      'page.pillar-card': PagePillarCard;
+      'page.pillars': PagePillars;
+      'page.prose': PageProse;
       'page.quote': PageQuote;
+      'page.roadmap-group': PageRoadmapGroup;
+      'page.roadmap-groups': PageRoadmapGroups;
+      'page.scale-card': PageScaleCard;
+      'page.scale-cards': PageScaleCards;
       'page.section': PageSection;
       'page.split': PageSplit;
       'shared.cta': SharedCta;

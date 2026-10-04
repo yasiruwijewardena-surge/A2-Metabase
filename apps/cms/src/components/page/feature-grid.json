@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_page_feature_grids",
+  "info": {
+    "displayName": "Feature grid",
+    "icon": "grid"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "eyebrowUrl": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "demo": {
+      "type": "enumeration",
+      "enum": [
+        "hero-dashboard",
+        "hero-chat",
+        "metabot-chat",
+        "payments-dashboard",
+        "data-studio-account",
+        "embedded-dashboard",
+        "data-source-marquee",
+        "copy-command",
+        "compliance-badges"
+      ]
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.pillar-card"
+    }
+  }
+}

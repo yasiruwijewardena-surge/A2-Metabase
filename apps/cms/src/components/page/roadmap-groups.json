@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_roadmap_groupss",
+  "info": {
+    "displayName": "Roadmap groups",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.roadmap-group"
+    }
+  }
+}

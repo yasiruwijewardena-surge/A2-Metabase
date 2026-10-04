@@ -1,0 +1,29 @@
+---
+/*
+ * A section whose body is a collection rather than authored copy.
+ *
+ * The editor picks the source and the layout; the fetch happens here, at build
+ * time, so a page row never has to carry a copy of content that already lives
+ * in its own type. Detail routes (a post, a case study) stay templates over
+ * their type -- they are not page rows, and nothing here tries to make them so.
+ */
+import TestimonialWall from './TestimonialWall.astro';
+import { getTestimonials } from '../../lib/strapi';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const layout = s.layout ?? s.source;
+
+let testimonials: Awaited<ReturnType<typeof getTestimonials>> = [];
+if (s.source === 'testimonials') {
+  testimonials = (await getTestimonials())
+    .filter((t) => t.variant === 'social')
+    .sort((a, b) => Number(b.featured) - Number(a.featured) || a.displayOrder - b.displayOrder);
+  if (s.limit) testimonials = testimonials.slice(0, s.limit);
+}
+---
+{layout === 'testimonial-wall' && (
+  <TestimonialWall heading={s.heading} items={testimonials}
+                   linkLabel={s.linkLabel} linkUrl={s.linkUrl} />
+)}

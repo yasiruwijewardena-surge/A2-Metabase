@@ -1,0 +1,57 @@
+{
+  "collectionName": "components_page_panels",
+  "info": {
+    "displayName": "Panel",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "bullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "demo": {
+      "type": "enumeration",
+      "enum": [
+        "hero-dashboard",
+        "hero-chat",
+        "metabot-chat",
+        "payments-dashboard",
+        "data-studio-account",
+        "embedded-dashboard",
+        "data-source-marquee",
+        "copy-command",
+        "compliance-badges"
+      ]
+    },
+    "frame": {
+      "type": "enumeration",
+      "enum": [
+        "query",
+        "share",
+        "guide"
+      ]
+    },
+    "reverse": {
+      "type": "boolean"
+    },
+    "quote": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::testimonial.testimonial"
+    }
+  }
+}

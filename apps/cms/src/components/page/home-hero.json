@@ -1,0 +1,62 @@
+{
+  "collectionName": "components_page_home_heros",
+  "info": {
+    "displayName": "Home hero",
+    "icon": "rocket"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "headingBreakAfter": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "ctas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "demo": {
+      "type": "enumeration",
+      "enum": [
+        "hero-dashboard",
+        "hero-chat",
+        "metabot-chat",
+        "payments-dashboard",
+        "data-studio-account",
+        "embedded-dashboard",
+        "data-source-marquee",
+        "copy-command",
+        "compliance-badges"
+      ],
+      "default": "hero-dashboard"
+    },
+    "trustLabel": {
+      "type": "string"
+    },
+    "logos": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "tourLabel": {
+      "type": "string"
+    },
+    "tourUrl": {
+      "type": "string"
+    },
+    "tourMedia": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_page_scale_cards",
+  "info": {
+    "displayName": "Scale card",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "lead": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "tail": {
+      "type": "text"
+    }
+  }
+}

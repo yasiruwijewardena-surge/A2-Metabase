@@ -78,7 +78,7 @@ async function uploadFromUrl(app, url, { skip = false } = {}) {
  * Dedupe is by name against the upload library, exactly as above, so re-seeding
  * attaches the existing file rather than uploading a second copy.
  */
-async function uploadFromPath(app, filepath) {
+async function uploadFromPath(app, filepath, alt) {
   const key = `file://${filepath}`;
   if (cache.has(key)) return cache.get(key);
 
@@ -99,7 +99,16 @@ async function uploadFromPath(app, filepath) {
   const [existing] = await app.db.query('plugin::upload.file').findMany({
     where: { name }, limit: 1,
   });
-  if (existing) { cache.set(key, existing.id); reused.add(key); return existing.id; }
+  if (existing) {
+    /* Alt text belongs to the file, so a re-seed fills it in on a file that
+       was uploaded before the caller had one to give. */
+    if (alt && !existing.alternativeText) {
+      await app.db.query('plugin::upload.file').update({
+        where: { id: existing.id }, data: { alternativeText: alt },
+      });
+    }
+    cache.set(key, existing.id); reused.add(key); return existing.id;
+  }
 
   let size;
   try {
@@ -111,7 +120,7 @@ async function uploadFromPath(app, filepath) {
   }
 
   const [file] = await app.plugin('upload').service('upload').upload({
-    data: {},
+    data: alt ? { fileInfo: { alternativeText: alt } } : {},
     files: { filepath, originalFilename: name, mimetype: mime, size },
   });
 

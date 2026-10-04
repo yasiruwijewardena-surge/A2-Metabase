@@ -1,0 +1,37 @@
+---
+/*
+ * A centred section header over a 3-up grid of pillars, each with a visual
+ * above it. The visual is either one of the islands or an uploaded image, so
+ * the "Deploy in minutes" row (command, marquee, badges) is expressible.
+ */
+import Demo from './Demo.astro';
+import { src as at } from '../../lib/image';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const items = s.items ?? [];
+---
+<section class="pt-[120px] pb-[140px]">
+  <div class="container-mb">
+    {/* Centred with an 840px standfirst at 20/28, as every section header on
+        the original is. */}
+    <header class="section-head mb-14 text-center">
+      <h2 class="mb-6">{s.heading}</h2>
+      {s.standfirst && <p class="section-standfirst">{s.standfirst}</p>}
+    </header>
+    <div class="grid gap-8 md:grid-cols-3">
+      {items.map((p) => (
+        <div>
+          <div class="frontier-visual">
+            {p.visual === 'image' && p.media
+              ? <img src={at(p.media.url, 760)} alt={p.media.alternativeText ?? ''} loading="lazy" decoding="async" />
+              : <Demo name={p.visual} caption={p.caption} />}
+          </div>
+          <h3 class="mb-2">{p.heading}</h3>
+          {p.body && <p class="frontier-text">{p.body}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

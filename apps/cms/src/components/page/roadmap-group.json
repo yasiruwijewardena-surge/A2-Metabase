@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_roadmap_groups",
+  "info": {
+    "displayName": "Roadmap group",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    }
+  }
+}

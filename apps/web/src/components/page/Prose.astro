@@ -1,0 +1,15 @@
+---
+/*
+ * A heading over rich text. The shape most of the pricing page's lower
+ * sections take, and the fallback for any page whose body is just prose.
+ */
+import RichText from '../RichText.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+---
+<section class:list={['pricing-row', 'pricing-sec', s.narrow && 'pricing-sec--narrow']}>
+  {s.heading && <h2>{s.heading}</h2>}
+  {s.body && <RichText blocks={s.body} />}
+</section>

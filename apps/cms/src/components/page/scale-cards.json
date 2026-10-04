@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_scale_cardss",
+  "info": {
+    "displayName": "Scale cards",
+    "icon": "chartBubble"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.scale-card"
+    }
+  }
+}

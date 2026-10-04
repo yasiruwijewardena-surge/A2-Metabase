@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_page_proses",
+  "info": {
+    "displayName": "Prose",
+    "icon": "alignLeft"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "blocks"
+    },
+    "narrow": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

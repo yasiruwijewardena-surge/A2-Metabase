@@ -836,6 +836,57 @@ export interface ApiMarketingPageMarketingPage
   };
 }
 
+export interface ApiPagePage extends Struct.CollectionTypeSchema {
+  collectionName: 'pages';
+  info: {
+    description: "Every composed page on the site, one row per URL. The body is a dynamic zone over the whole section vocabulary, so a page's shape -- which sections it has and in what order -- is content, not code. Collection detail routes (a post, a case study) are templates over their own type and are not rows here.";
+    displayName: 'Page';
+    pluralName: 'pages';
+    singularName: 'page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'page.home-hero',
+        'page.hero',
+        'page.pillars',
+        'page.panel-group',
+        'page.split',
+        'page.band',
+        'page.accordion',
+        'page.quote',
+        'page.scale-cards',
+        'page.collection-list',
+        'page.faq-list',
+        'page.prose',
+        'page.roadmap-groups',
+        'page.demo',
+        'page.feature-grid',
+        'page.final-cta',
+        'page.closing',
+      ]
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
   collectionName: 'people';
   info: {
@@ -1668,6 +1719,7 @@ declare module '@strapi/strapi' {
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
       'api::industry.industry': ApiIndustryIndustry;
       'api::marketing-page.marketing-page': ApiMarketingPageMarketingPage;
+      'api::page.page': ApiPagePage;
       'api::person.person': ApiPersonPerson;
       'api::plan.plan': ApiPlanPlan;
       'api::post.post': ApiPostPost;

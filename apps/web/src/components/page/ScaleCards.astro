@@ -1,0 +1,37 @@
+---
+/*
+ * "Metabase scales as you grow": not a plain section on the original but a
+ * tinted slab inset 60px from the viewport, with its own 80/72 padding and a
+ * 12px radius.
+ */
+import ScaleIcon from '../ScaleIcon.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+const cards = s.cards ?? [];
+---
+<section class="scales-section">
+  <div class="scales-slab">
+    <h2 class="scales-title">{s.heading}</h2>
+    {s.standfirst && <p class="scales-standfirst">{s.standfirst}</p>}
+
+    {/* Cards, not bare text: 24px padding, 12px radius, white on a 1px
+        border, in a 3-up grid with a 20px gutter. */}
+    <div class="scale-grid">
+      {cards.map((c) => (
+        <div class="scale-card">
+          <ScaleIcon name={c.icon} />
+          {/* h3, not h4: the slab heading above is an h2 and skipping a level
+              breaks the outline. The class fixes the size at 18/25 either way. */}
+          <h3 class="scale-card__title">{c.heading}</h3>
+          <p class="scale-card__body">
+            {c.lead}
+            {c.linkLabel && <a href={c.linkUrl ?? '#'} class="scale-card__link">{c.linkLabel}</a>}
+            {c.tail}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

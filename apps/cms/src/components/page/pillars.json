@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_pillarss",
+  "info": {
+    "displayName": "Pillar grid",
+    "icon": "grid"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.pillar-card"
+    }
+  }
+}

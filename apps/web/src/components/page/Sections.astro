@@ -1,14 +1,24 @@
 ---
 /*
- * Renders a product page's dynamic zone in the order the CMS holds it.
+ * Renders a page's dynamic zone in the order the CMS holds it.
  *
  * `__component` is the only thing that decides the shape, so adding a section
- * type here is the one place the front end has to learn about it.
+ * type is one case here plus the component it names -- the pages themselves
+ * never learn about it.
  */
+import HomeHero from './HomeHero.astro';
 import Hero from './Hero.astro';
+import Pillars from './Pillars.astro';
+import PanelGroup from './PanelGroup.astro';
+import FeatureGrid from './FeatureGrid.astro';
 import Split from './Split.astro';
 import Band from './Band.astro';
 import Accordion from './Accordion.astro';
+import ScaleCards from './ScaleCards.astro';
+import CollectionList from './CollectionList.astro';
+import Prose from './Prose.astro';
+import Demo from './Demo.astro';
+import FinalCta from './FinalCta.astro';
 import Closing from './Closing.astro';
 import ProductQuote from '../ProductQuote.astro';
 import type { PageSection } from '../../lib/types';
@@ -18,12 +28,21 @@ const { sections = [] } = Astro.props;
 ---
 {sections.map((s) => {
   switch (s.__component) {
-    case 'page.hero':      return <Hero section={s} />;
-    case 'page.split':     return <Split section={s} />;
-    case 'page.band':      return <Band section={s} />;
-    case 'page.accordion': return <Accordion section={s} />;
-    case 'page.closing':   return <Closing section={s} />;
-    case 'page.quote':     return s.testimonial ? <ProductQuote quote={s.testimonial} /> : null;
-    default:               return null;
+    case 'page.home-hero':       return <HomeHero section={s} />;
+    case 'page.hero':            return <Hero section={s} />;
+    case 'page.pillars':         return <Pillars section={s} />;
+    case 'page.panel-group':     return <PanelGroup section={s} />;
+    case 'page.feature-grid':    return <FeatureGrid section={s} />;
+    case 'page.split':           return <Split section={s} />;
+    case 'page.band':            return <Band section={s} />;
+    case 'page.accordion':       return <Accordion section={s} />;
+    case 'page.scale-cards':     return <ScaleCards section={s} />;
+    case 'page.collection-list': return <CollectionList section={s} />;
+    case 'page.prose':           return <Prose section={s} />;
+    case 'page.demo':            return <Demo name={s.demo} caption={s.caption} />;
+    case 'page.final-cta':       return <FinalCta section={s} />;
+    case 'page.closing':         return <Closing section={s} />;
+    case 'page.quote':           return s.testimonial ? <ProductQuote quote={s.testimonial} /> : null;
+    default:                     return null;
   }
 })}

@@ -1,0 +1,36 @@
+---
+/*
+ * The pull quote inside a Business Intelligence panel.
+ *
+ * Falls back to drawn initials when the person has no avatar, which is what
+ * the original does for the people it has no photograph of.
+ */
+import { thumbSet } from '../../lib/image';
+import type { Testimonial } from '../../lib/types';
+
+interface Props { quote: Testimonial }
+const { quote } = Astro.props;
+const person = quote.person;
+const avatar = person?.avatar?.url ? thumbSet(person.avatar.url, 84, 50) : null;
+
+/** "Sameer Al-Sakran" -> "SA" */
+const initialsOf = (name?: string | null) =>
+  (name ?? '').split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('');
+---
+<figure class="panel-quote">
+  <blockquote>"{quote.quote}"</blockquote>
+  <figcaption>
+    {avatar ? (
+      <img class="quote-thumb" src={avatar.src} srcset={avatar.srcset} width="84" height="50"
+           alt={`Photo of ${person?.name}`} loading="lazy" decoding="async" />
+    ) : (
+      <span class="quote-thumb quote-thumb--initials" aria-hidden="true">{initialsOf(person?.name)}</span>
+    )}
+    <span class="quote-meta">
+      <span class="quote-author">{person?.name}</span>
+      <span class="quote-company">
+        {person?.role}{person?.company?.name && <>, {person.company.name}</>}
+      </span>
+    </span>
+  </figcaption>
+</figure>
