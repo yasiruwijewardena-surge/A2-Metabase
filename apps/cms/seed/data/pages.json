@@ -328,8 +328,8 @@
       "title": "Home",
       "slug": "home",
       "seo": {
-        "title": "Metabase | Open source Business Intelligence and Embedded Analytics",
-        "description": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
+        "metaTitle": "Metabase | Open source Business Intelligence and Embedded Analytics",
+        "metaDescription": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
       },
       "sections": [
         {
@@ -558,8 +558,8 @@
       "title": "Events",
       "slug": "events",
       "seo": {
-        "title": "Events | Metabase",
-        "description": "Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
+        "metaTitle": "Events | Metabase",
+        "metaDescription": "Register for an upcoming event or stream a past recording. Fireside chats, workshops, customer stories and hands-on sessions."
       },
       "sections": [
         {
@@ -580,8 +580,8 @@
       "title": "Customer love",
       "slug": "love",
       "seo": {
-        "title": "Love for Metabase",
-        "description": "What people say about Metabase."
+        "metaTitle": "Love for Metabase",
+        "metaDescription": "What people say about Metabase."
       },
       "sections": [
         {
@@ -599,8 +599,8 @@
       "title": "Glossary",
       "slug": "glossary",
       "seo": {
-        "title": "Data and Business Intelligence Glossary | Metabase",
-        "description": "Definitions for the data and business intelligence terms you will run into."
+        "metaTitle": "Data and Business Intelligence Glossary | Metabase",
+        "metaDescription": "Definitions for the data and business intelligence terms you will run into."
       },
       "sections": [
         {
@@ -617,8 +617,8 @@
       "title": "Blog",
       "slug": "blog",
       "seo": {
-        "title": "Blog | Metabase",
-        "description": "News, updates and ideas from the Metabase team."
+        "metaTitle": "Blog | Metabase",
+        "metaDescription": "News, updates and ideas from the Metabase team."
       },
       "sections": [
         {
@@ -632,8 +632,8 @@
       "title": "Customer stories",
       "slug": "case-studies",
       "seo": {
-        "title": "Customer stories | Metabase",
-        "description": "Explore what real businesses have built with Metabase."
+        "metaTitle": "Customer stories | Metabase",
+        "metaDescription": "Explore what real businesses have built with Metabase."
       },
       "sections": [
         {
@@ -647,8 +647,8 @@
       "title": "Roadmap",
       "slug": "roadmap",
       "seo": {
-        "title": "Roadmap | Metabase",
-        "description": "Highlights of what we're cooking: what is actively being built, what is planned for the next release or two, and what is coming in the next six months."
+        "metaTitle": "Roadmap | Metabase",
+        "metaDescription": "Highlights of what we're cooking: what is actively being built, what is planned for the next release or two, and what is coming in the next six months."
       },
       "sections": [
         {
@@ -816,8 +816,8 @@
       "title": "Pricing",
       "slug": "pricing",
       "seo": {
-        "title": "Pricing | Metabase",
-        "description": "Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
+        "metaTitle": "Pricing | Metabase",
+        "metaDescription": "Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
       },
       "sections": [
         {

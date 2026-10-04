@@ -72,7 +72,12 @@ const label = here
 ---
 
 {page ? (
-  <BaseLayout title={page.seo?.title ?? page.title} description={page.seo?.description} preload={preload}>
+  <BaseLayout
+    title={page.seo?.metaTitle ?? page.title}
+    description={page.seo?.metaDescription ?? ''}
+    preload={preload}
+    noIndex={page.seo?.noIndex}
+  >
     <Sections sections={page.sections} />
   </BaseLayout>
 ) : (

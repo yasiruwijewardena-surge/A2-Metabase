@@ -13,7 +13,7 @@
     },
     "metaDescription": {
       "type": "text",
-      "maxLength": 170
+      "maxLength": 320
     },
     "ogImage": {
       "type": "media",
