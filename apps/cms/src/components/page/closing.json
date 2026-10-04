@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_page_closings",
+  "info": {
+    "displayName": "Closing CTA",
+    "icon": "arrowRight",
+    "description": "The last band on the page: heading, standfirst, buttons and a wide image."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "sub": {
+      "type": "text"
+    },
+    "ctas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
+    }
+  }
+}

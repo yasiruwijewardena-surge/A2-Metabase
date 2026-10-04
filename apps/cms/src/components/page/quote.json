@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_page_quotes",
+  "info": {
+    "displayName": "Quote",
+    "icon": "quote",
+    "description": "Places one of the testimonials between sections. The quote itself stays in `testimonial` so it is written once and reused across the homepage, the case studies and /love."
+  },
+  "options": {},
+  "attributes": {
+    "testimonial": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::testimonial.testimonial"
+    }
+  }
+}

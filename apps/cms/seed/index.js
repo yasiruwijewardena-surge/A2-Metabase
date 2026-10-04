@@ -141,7 +141,7 @@ async function wipe(app, uid) {
  * whole-corpus write is the better part of an hour whether or not anything
  * changed. Most edits touch one section.
  */
-const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related'];
+const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related', 'pages'];
 const onlyArg = process.argv.indexOf('--only');
 const ONLY = onlyArg > -1 ? process.argv[onlyArg + 1]?.split(',').map((x) => x.trim()) : null;
 const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase);
@@ -156,6 +156,8 @@ const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase)
 let phase = null;
 
 const ORDER = [
+  'api::product-page.product-page',
+  'api::feature-page.feature-page',
   'api::event.event',
   'api::event-category.event-category',
   'api::faq.faq',
@@ -197,6 +199,7 @@ async function main() {
     const faqs = read('faqs.json');
     const addons = read('pricing-addons.json');
     const eventsData = read('events.json');
+    const pagesData = read('pages.json');
 
     phase = 'taxonomies';
     // ---- 1. independent taxonomies -------------------------------------
@@ -441,6 +444,78 @@ async function main() {
       stats.linked++;
     }
 
+    }
+
+    phase = 'pages';
+    // ---- 7. product and feature pages ------------------------------------
+    // The marketing pages' copy, which used to live in the Astro components.
+    // Product pages are a dynamic zone, so the whole `sections` array is
+    // written as one value and the order in the JSON is the order on the page.
+    if (want('pages')) {
+      /* The same three pull quotes the page used to pick itself, in the same
+         order, so the rebuilt page reads identically to the one it replaces. */
+      const pullQuotes = (await app.documents('api::testimonial.testimonial').findMany({
+        filters: { variant: 'pull-quote' },
+        sort: ['featured:desc', 'displayOrder:asc'],
+        limit: 50,
+        status: 'published',
+      }));
+
+      /* Media is referenced by path. `seed:` points inside seed/assets; anything
+         else is relative to this file, which for now reaches into the front
+         end's public folder -- those copies go away once every page is
+         converted and nothing but Cloudinary serves them. */
+      const upload = async (ref) => {
+        if (!ref) return undefined;
+        const abs = ref.startsWith('seed:')
+          ? join(__dirname, 'assets', ref.slice(5))
+          : join(__dirname, ref);
+        return uploadFromPath(app, abs);
+      };
+
+      /* A standfirst that carries an inline link, which `toBlocks` does not
+         parse. Spelled out as data rather than guessed at from markup. */
+      const richParagraph = (parts) => [{
+        type: 'paragraph',
+        children: parts.map((p) => (p.href
+          ? { type: 'link', url: p.href, children: [{ type: 'text', text: p.t }] }
+          : { type: 'text', text: p.t })),
+      }];
+
+      const buildSection = async (raw) => {
+        const s = { ...raw };
+        if ('__quote' in s) {
+          const t = pullQuotes[s.__quote];
+          delete s.__quote;
+          return t ? { ...s, testimonial: t.documentId } : null;
+        }
+        if (s.__subRich) { s.sub = richParagraph(s.__subRich); delete s.__subRich; }
+        for (const k of ['media', 'mediaMobile', 'mediaPoster']) {
+          if (s[k]) s[k] = await upload(s[k]);
+        }
+        return s;
+      };
+
+      for (const page of pagesData.productPages ?? []) {
+        const sections = [];
+        for (const raw of page.sections) {
+          const built = await buildSection(raw);
+          if (built) sections.push(built);
+        }
+        await upsert(app, 'api::product-page.product-page', { slug: page.slug },
+          { title: page.title, slug: page.slug, seo: page.seo, sections });
+      }
+
+      for (const page of pagesData.featurePages ?? []) {
+        const data = { title: page.title, slug: page.slug, seo: page.seo };
+        if (page.hero) data.hero = await buildSection(page.hero);
+        if (page.closing) data.closing = await buildSection(page.closing);
+        if (page.sections) {
+          data.sections = [];
+          for (const raw of page.sections) data.sections.push(await buildSection(raw));
+        }
+        await upsert(app, 'api::feature-page.feature-page', { slug: page.slug }, data);
+      }
     }
 
     // ---- summary ---------------------------------------------------------

@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_page_accordions",
+  "info": {
+    "displayName": "Accordion",
+    "icon": "filter",
+    "description": "A heading and standfirst over an image and a list of features, one open at a time. Built with radio inputs and `:has()`, so it needs no JavaScript."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "sub": {
+      "type": "text"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.accordion-item"
+    }
+  }
+}

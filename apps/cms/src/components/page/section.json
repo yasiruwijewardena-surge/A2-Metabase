@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_page_sections",
+  "info": {
+    "displayName": "Section",
+    "icon": "file",
+    "description": "A plain heading-body-artwork section, used by the feature pages where the shapes are one-offs rather than a shared vocabulary."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text"
+    },
+    "bullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "mediaPoster": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

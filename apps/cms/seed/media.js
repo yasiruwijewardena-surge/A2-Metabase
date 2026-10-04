@@ -11,6 +11,7 @@ const { join, basename, extname } = require('node:path');
 const MIME = {
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
   '.webp': 'image/webp', '.gif': 'image/gif', '.svg': 'image/svg+xml',
+  '.mp4': 'video/mp4', '.webm': 'video/webm',
 };
 
 const cache = new Map();
@@ -84,7 +85,16 @@ async function uploadFromPath(app, filepath) {
   const ext = extname(filepath).toLowerCase();
   const mime = MIME[ext];
   if (!mime) { cache.set(key, undefined); return undefined; }
-  const name = basename(filepath);
+
+  // Named from the path below `images/`, not the basename, for the same reason
+  // `uploadFromUrl` does it: `hero.webp` and `poster.webp` exist under several
+  // directories, and deduping on the basename alone silently attaches whichever
+  // one reached the library first.
+  const marker = ['/images/', '/assets/'].find((m) => filepath.includes(m));
+  const rel = marker ? filepath.slice(filepath.lastIndexOf(marker) + marker.length)
+                     : basename(filepath);
+  const name = rel.slice(0, rel.length - ext.length)
+    .replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '') + ext;
 
   const [existing] = await app.db.query('plugin::upload.file').findMany({
     where: { name }, limit: 1,

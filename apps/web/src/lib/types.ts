@@ -173,3 +173,121 @@ export interface PricingAddon {
   included?: string | null;
   displayOrder: number;
 }
+
+/* ---------------------------------------------------------------------------
+ * Marketing pages
+ *
+ * The product pages are a dynamic zone: `__component` says which shape each
+ * entry is, and the order in the array is the order down the page.
+ * ------------------------------------------------------------------------ */
+
+export interface Cta { label: string; url: string; style?: string | null }
+export interface Bullet { title: string; body?: string | null }
+export interface Pillar { icon?: string | null; title: string; body?: string | null }
+
+export interface AccordionItem {
+  icon?: string | null;
+  badge?: string | null;
+  title: string;
+  body?: string | null;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+}
+
+interface SectionBase { id: number; __component: string }
+
+export interface HeroSection extends SectionBase {
+  __component: 'page.hero';
+  eyebrowIcon?: string | null;
+  eyebrow?: string | null;
+  heading: string;
+  sub?: string | null;
+  ctas?: Cta[];
+  media?: StrapiImage | null;
+  mediaMobile?: StrapiImage | null;
+  mediaPoster?: StrapiImage | null;
+  mediaLabel?: string | null;
+  framed?: boolean;
+  pillars?: Pillar[];
+  trustLine?: string | null;
+}
+
+export interface SplitSection extends SectionBase {
+  __component: 'page.split';
+  heading: string;
+  lede?: string | null;
+  bullets?: Bullet[];
+  media?: StrapiImage | null;
+  mediaPoster?: StrapiImage | null;
+  mediaLabel?: string | null;
+  frameTheme?: 'blue' | 'grey' | 'none';
+  caption?: string | null;
+  reverse?: boolean;
+}
+
+export interface BandSection extends SectionBase {
+  __component: 'page.band';
+  heading: string;
+  /** Rich text: these standfirsts carry inline links. */
+  sub?: Block[];
+  media?: StrapiImage | null;
+  mediaLabel?: string | null;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+  centred?: boolean;
+}
+
+export interface AccordionSection extends SectionBase {
+  __component: 'page.accordion';
+  heading: string;
+  sub?: string | null;
+  media?: StrapiImage | null;
+  mediaLabel?: string | null;
+  items?: AccordionItem[];
+}
+
+export interface QuoteSection extends SectionBase {
+  __component: 'page.quote';
+  testimonial?: Testimonial | null;
+}
+
+export interface ClosingSection extends SectionBase {
+  __component: 'page.closing';
+  heading: string;
+  sub?: string | null;
+  ctas?: Cta[];
+  media?: StrapiImage | null;
+  mediaLabel?: string | null;
+}
+
+export type PageSection =
+  | HeroSection | SplitSection | BandSection
+  | AccordionSection | QuoteSection | ClosingSection;
+
+export interface ProductPage {
+  title: string;
+  slug: string;
+  sections?: PageSection[];
+  seo?: Seo | null;
+}
+
+export interface FeatureSection extends SectionBase {
+  __component: 'page.section';
+  heading: string;
+  body?: string | null;
+  bullets?: Bullet[];
+  media?: StrapiImage | null;
+  mediaPoster?: StrapiImage | null;
+  mediaLabel?: string | null;
+  reverse?: boolean;
+}
+
+export interface FeaturePage {
+  title: string;
+  slug: string;
+  hero?: HeroSection | null;
+  sections?: FeatureSection[];
+  closing?: ClosingSection | null;
+  faqs?: Faq[];
+  seo?: Seo | null;
+}

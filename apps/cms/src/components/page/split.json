@@ -1,0 +1,57 @@
+{
+  "collectionName": "components_page_splits",
+  "info": {
+    "displayName": "Split",
+    "icon": "layout",
+    "description": "Artwork one side, copy the other. `reverse` puts the artwork on the right; `frameTheme` is the tint behind it."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "lede": {
+      "type": "text"
+    },
+    "bullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "mediaPoster": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
+    },
+    "frameTheme": {
+      "type": "enumeration",
+      "enum": [
+        "blue",
+        "grey",
+        "none"
+      ],
+      "default": "blue"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "reverse": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

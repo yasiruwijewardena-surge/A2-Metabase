@@ -1,0 +1,21 @@
+---
+/*
+ * The inline run inside one rich-text block: text, its marks, and links.
+ *
+ * `RichText` used to filter children down to `type === 'text'`, which silently
+ * dropped every link in a paragraph. Pulled out here so the band standfirsts
+ * on the product pages -- which do carry links -- and the article bodies share
+ * one implementation.
+ */
+import Mark from './Mark.astro';
+
+interface Props { nodes?: unknown[] }
+const { nodes = [] } = Astro.props;
+type Node = { type?: string; url?: string; text?: string; children?: any[] };
+const list = (nodes as Node[]).filter(Boolean);
+---
+{list.map((n) => (
+  n.type === 'link' && n.url
+    ? <a href={n.url}>{(n.children ?? []).map((c) => <Mark node={c} />)}</a>
+    : n.type === 'text' ? <Mark node={n as any} /> : null
+))}

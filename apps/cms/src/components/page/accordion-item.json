@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_page_accordion_items",
+  "info": {
+    "displayName": "Accordion item",
+    "icon": "bulletList",
+    "description": "One row of the feature accordion. `icon` names an entry in the icon set the nav uses."
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

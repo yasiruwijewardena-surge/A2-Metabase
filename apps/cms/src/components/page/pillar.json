@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_pillars",
+  "info": {
+    "displayName": "Pillar",
+    "icon": "grid",
+    "description": "One of the cards under a hero. `icon` names an entry in the icon set the nav uses; it is a key, not an upload, because these are chrome rather than content."
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text"
+    }
+  }
+}

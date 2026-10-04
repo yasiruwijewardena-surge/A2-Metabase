@@ -1,5 +1,6 @@
 ---
 /** Renders Strapi's `blocks` rich text. Covers what the seeded content uses. */
+import Inlines from './Inlines.astro';
 import type { Block, Inline } from '../lib/types';
 
 // The original sets article body copy in Merriweather at 18px/32px
@@ -17,14 +18,13 @@ import '@fontsource/merriweather/latin-700.css';
 interface Props { blocks: Block[]; variant?: 'serif' | 'sans' }
 const { blocks = [], variant = 'serif' } = Astro.props;
 
-const inlines = (children: unknown[] = []) => (children as Inline[]).filter((c) => c?.type === 'text');
 ---
 <div class:list={[variant === 'serif' ? 'prose-mb' : 'prose-cs']}>
   {blocks.map((block) => {
     if (block.type === 'heading') {
       const level = Math.min(Math.max((block as any).level ?? 2, 2), 4);
       const Tag = `h${level}` as 'h2' | 'h3' | 'h4';
-      return <Tag>{inlines(block.children).map((c) => (c.bold ? <strong>{c.text}</strong> : c.text))}</Tag>;
+      return <Tag><Inlines nodes={block.children} /></Tag>;
     }
     if (block.type === 'list') {
       const items = ((block as any).children ?? []) as { children: Inline[] }[];
@@ -33,11 +33,11 @@ const inlines = (children: unknown[] = []) => (children as Inline[]).filter((c) 
       return (
         <Tag class={ordered ? 'list-decimal' : 'list-disc'}>
           {items.map((li) => (
-            <li>{inlines(li.children).map((c) => (c.bold ? <strong>{c.text}</strong> : c.text))}</li>
+            <li><Inlines nodes={li.children} /></li>
           ))}
         </Tag>
       );
     }
-    return <p>{inlines((block as any).children).map((c) => (c.bold ? <strong>{c.text}</strong> : c.text))}</p>;
+    return <p><Inlines nodes={(block as any).children} /></p>;
   })}
 </div>

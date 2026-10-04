@@ -1,0 +1,28 @@
+---
+/* A heading and standfirst, optionally over an image with a link under it.
+ * The standfirst is rich text because these carry inline links. */
+import Inlines from '../Inlines.astro';
+import Media from './Media.astro';
+import type { BandSection } from '../../lib/types';
+
+interface Props { section: BandSection }
+const { section: s } = Astro.props;
+---
+<section class:list={['pp-band', 'container-mb', s.centred && 'pp-center']}>
+  <h2 class="pp-h36">{s.heading}</h2>
+  {/* A plain paragraph, as the original has it -- not the prose wrapper, whose
+      type settings are for article bodies and would override the band's. */}
+  {s.sub?.length ? (
+    <p class="pp-band-sub"><Inlines nodes={(s.sub[0] as any).children} /></p>
+  ) : null}
+  {s.media?.url && (
+    <Media media={s.media} label={s.mediaLabel} width={592} height={287} class="pp-band-img" />
+  )}
+  {s.linkLabel && s.linkUrl && (
+    <a href={s.linkUrl} class="pp-band-link">
+      {s.linkLabel}
+      <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+           stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
+  )}
+</section>

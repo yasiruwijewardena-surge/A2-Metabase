@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_page_bands",
+  "info": {
+    "displayName": "Band",
+    "icon": "bold",
+    "description": "A heading and standfirst, optionally over an image with a link beneath it. The standfirst is rich text because these carry inline links."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "sub": {
+      "type": "blocks"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "centred": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
