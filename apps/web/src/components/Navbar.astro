@@ -189,11 +189,16 @@ const resources: [string, string, string, string][] = [
         <div class="nav-panel" style="width:596px" data-panel="pricing">
           <div class="nav-cards">
             {[['Business Intelligence pricing', 'bi', 'Self-service analytics for your team'],
-              ['Embedded Analytics pricing', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, icon, sub]) => (
-              <a href="/pricing" class="nav-card">
-                <span class="nav-card-tile" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
-                <span class="nav-card-title">{t}</span>
-                <span class="nav-card-sub">{sub}</span>
+              ['Embedded Analytics pricing', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, art, sub]) => (
+              <a href={`/pricing?use_case=${art === 'bi' ? 'business-intelligence' : 'embedded-analytics'}`}
+                 class="nav-card nav-card--stack">
+                <span class="nav-card-art" aria-hidden="true">
+                  <img src={`/images/nav/pricing-${art}.svg`} width="64" height="56" alt="" />
+                </span>
+                <span>
+                  <span class="nav-card-title">{t}</span>
+                  <span class="nav-card-sub">{sub}</span>
+                </span>
               </a>
             ))}
           </div>
@@ -321,9 +326,15 @@ const resources: [string, string, string, string][] = [
     display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
-  /* Product stands its artwork above the label; Docs sets it beside, which is
-     why those cards are 71 tall against 143. */
-  .nav-card--stack { flex-direction: column; align-items: stretch; }
+  /* Product and Pricing stand the artwork above the label; Docs sets it
+     beside, which is why those cards are 71 tall against 143. The column
+     spaces its two blocks over a fixed 117, which is how a 48-tall bar chart
+     and a 56-tall illustration both land on the same card height. */
+  .nav-card--stack {
+    flex-direction: column; align-items: stretch;
+    justify-content: space-between; gap: 0; min-height: 143px;
+  }
+  .nav-card-art { display: block; }
   .nav-card { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
   .nav-card:hover {
     background: var(--color-brand-faint);
