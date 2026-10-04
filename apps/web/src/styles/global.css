@@ -847,11 +847,11 @@
     max-width: 1320px; margin-inline: auto; padding-inline: 8px;
   }
   /* One piece of artwork now, so there is no icon-to-word gap to set.
-     The basis is a layout device, not the logo's width: the menu centres in
-     what this column leaves, so the column is 26 wider than the artwork needs
-     in order to put the menu's centre where the original has it. Measured
-     against the original's trigger positions -- 464/567/675/759/877. */
-  .nav-logo { display: flex; flex: 0 0 244px; align-items: center; padding-inline: 12px; }
+     The basis is a layout device rather than the logo's width: the menu centres
+     in what this column leaves. 218 puts the triggers on the original's
+     452/555/663/747/865 -- measured button against button, not against the
+     original's inner label div, which sits 12 inside its own button. */
+  .nav-logo { display: flex; flex: 0 0 218px; align-items: center; padding-inline: 12px; }
   .nav-menu { flex: 1; align-items: center; justify-content: center; gap: 10px; padding-inline: 12px; }
   .nav-actions { display: flex; flex: none; align-items: center; justify-content: flex-end; gap: 12px; padding-inline: 12px; }
   /* The stars block carries 8px of its own inline padding and sits 16px from

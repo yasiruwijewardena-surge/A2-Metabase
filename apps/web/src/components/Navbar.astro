@@ -61,19 +61,29 @@ const resources: [string, string, string, string][] = [
         {/* Product: two cards with the icon on a tile above the label, over a
             strip of three buttons. 596 wide. */}
         <div class="nav-panel" style="width:596px" data-panel="product">
+          {/* The two cards carry artwork rather than icons, and not the same
+              kind: Business Intelligence is a bar chart drawn in CSS whose
+              bars re-sort on hover, and Embedded Analytics is a flat
+              illustration on a tinted plate. An icon in a tile was neither. */}
           <div class="nav-cards">
-            {[['Business Intelligence', '/product/business-intelligence', 'bi', 'Self-service analytics for your team'],
-              ['Embedded Analytics', '/product/embedded-analytics', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, href, icon, sub]) => (
-              <a href={href} class:list={['nav-card', icon === 'ea' && 'nav-card--tilt']}>
-                <span class="nav-card-tile" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
-                <span class="nav-card-title">{t}</span>
-                <span class="nav-card-sub">{sub}</span>
-              </a>
-            ))}
+            <a href="/product/business-intelligence" class="nav-card">
+              <span class="nav-bars" aria-hidden="true">
+                {[20, 30, 35, 24, 16, 20].map(() => <span></span>)}
+              </span>
+              <span class="nav-card-title">Business Intelligence</span>
+              <span class="nav-card-sub">Self-service analytics for your team</span>
+            </a>
+            <a href="/product/embedded-analytics" class="nav-card">
+              <span class="nav-embed" aria-hidden="true">
+                <img src="/images/nav/embed.svg" width="64" height="56" alt="" />
+              </span>
+              <span class="nav-card-title">Embedded Analytics</span>
+              <span class="nav-card-sub">Fast, flexible customer-facing analytics</span>
+            </a>
           </div>
           <div class="nav-foot">
             {[['Data sources', '/data-sources', 'data'], ['Security', '/security', 'permissions'], ['Cloud', '/cloud', 'cloud']].map(([t, href, icon]) => (
-              <a href={href}><NavIcon name={icon} /> {t}</a>
+              <a href={href}><NavIcon name={icon} size={24} /> {t}</a>
             ))}
           </div>
         </div>
@@ -97,8 +107,8 @@ const resources: [string, string, string, string][] = [
             ))}
           </div>
           <div class="nav-foot">
-            <a href="/releases"><NavIcon name="news" /> What's new</a>
-            <a href="/roadmap"><NavIcon name="roadmap" /> Roadmap</a>
+            <a href="/releases"><NavIcon name="news" size={24} /> What’s new</a>
+            <a href="/roadmap"><NavIcon name="roadmap" size={24} /> Roadmap</a>
           </div>
         </div>
       </li>
@@ -128,7 +138,7 @@ const resources: [string, string, string, string][] = [
                 ['Embedding', 'Developers building in-product analytics', 'embed'],
                 ['Administration', "People running their company's instance", 'gear']].map(([label, desc, icon]) => (
                 <a href="/learn" class="nav-rich">
-                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={26} /></span>
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={52} /></span>
                   <span>
                     <span class="nav-rich-label">{label}</span>
                     <span class="nav-rich-desc">{desc}</span>
@@ -155,7 +165,7 @@ const resources: [string, string, string, string][] = [
             <div class="nav-res-links">
               {resources.map(([label, href, icon, sub]) => (
                 <a href={href} class="nav-rich nav-rich--sm">
-                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={22} /></span>
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={24} /></span>
                   <span>
                     <span class="nav-rich-title">{label}</span>
                     <span class="nav-rich-desc">{sub}</span>
@@ -236,8 +246,12 @@ const resources: [string, string, string, string][] = [
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    /* 40 tall on the original with 8px of padding, so the height is set
+       rather than implied: 14px text at 1.33 leaves a 35px box otherwise. */
+    height: 40px;
     padding: 8px 12px;
     font-size: 14px;
+    line-height: 18.62px;
     font-weight: 700;
     color: var(--color-ink-2);
     border-radius: 8px;
@@ -304,7 +318,7 @@ const resources: [string, string, string, string][] = [
   /* --- shared ---------------------------------------------------------- */
   .nav-cards { display: flex; gap: 12px; padding: 24px; }
   .nav-card {
-    display: block; flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
   .nav-card { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
@@ -313,18 +327,53 @@ const resources: [string, string, string, string][] = [
     border-color: var(--color-brand-muted);
     box-shadow: 0 4px 8px -2px rgb(16 24 40 / 0.1), 0 2px 4px -2px rgb(16 24 40 / 0.06);
   }
-  /* The second Product card's illustration sits at -15deg and straightens on
-     hover over 400ms. Measured: matrix(0.966, -0.259, 0.259, 0.966) -> identity. */
-  .nav-card-tile :global(svg), .nav-card-tile :global(img) {
-    transition: rotate 400ms ease, transform 400ms ease;
+  /* --- the two Product cards' artwork --------------------------------- */
+  /* Business Intelligence is a bar chart drawn in CSS, not an icon: six 5px
+     bars on a tinted plate, each transitioning its own height over 400ms. On
+     hover the series re-sorts, which is the whole point of it -- it reads as
+     live data rather than a picture. Measured heights, rest and hovered. */
+  .nav-bars {
+    display: flex; align-items: flex-end; gap: 4px;
+    width: 65px; height: 48px;
+    padding: 7px 8px 6px; border-radius: 8px;
+    background: #eef6fc;
   }
-  .nav-card--tilt .nav-card-tile :global(svg),
-  .nav-card--tilt .nav-card-tile :global(img) { rotate: -15deg; }
-  .nav-card--tilt:hover .nav-card-tile :global(svg),
-  .nav-card--tilt:hover .nav-card-tile :global(img) { rotate: 0deg; }
+  .nav-bars > span {
+    width: 5px; border-radius: 1px; background: var(--color-brand);
+    transition: height 400ms ease;
+  }
+  .nav-bars > span:nth-child(1) { height: 20px; }
+  .nav-bars > span:nth-child(2) { height: 30px; }
+  .nav-bars > span:nth-child(3) { height: 35px; }
+  .nav-bars > span:nth-child(4) { height: 24px; }
+  .nav-bars > span:nth-child(5) { height: 16px; }
+  .nav-bars > span:nth-child(6) { height: 20px; }
+  .nav-card:hover .nav-bars > span:nth-child(1) { height: 20px; }
+  .nav-card:hover .nav-bars > span:nth-child(2) { height: 19px; }
+  .nav-card:hover .nav-bars > span:nth-child(3) { height: 25px; }
+  .nav-card:hover .nav-bars > span:nth-child(4) { height: 35px; }
+  .nav-card:hover .nav-bars > span:nth-child(5) { height: 24px; }
+  .nav-card:hover .nav-bars > span:nth-child(6) { height: 16px; }
+
+  /* Embedded Analytics is a flat illustration standing proud of its plate --
+     76x71 of artwork over 64x48 of background -- held at -15deg and
+     straightening on hover over 400ms. */
+  .nav-embed {
+    display: grid; place-items: center;
+    width: 64px; height: 48px;
+    border-radius: 8px;
+    background: url('/images/nav/embed-background.svg') center / cover no-repeat;
+  }
+  /* 64x56 of artwork; the 76x71 it measures is that box once rotated. */
+  .nav-embed img {
+    width: 64px; height: 56px; max-width: none;
+    transform: rotate(-15deg);
+    transition: transform 400ms ease;
+  }
+  .nav-card:hover .nav-embed img { transform: rotate(0deg); }
   @media (prefers-reduced-motion: reduce) {
-    .nav-card--tilt .nav-card-tile :global(svg),
-    .nav-card--tilt .nav-card-tile :global(img) { rotate: 0deg; }
+    .nav-embed img { transform: none; }
+    .nav-bars > span, .nav-embed img { transition: none; }
   }
   /* Product and Pricing stand the icon on a tile above the label; Docs sets it
      beside, which is why its cards are 71 tall rather than 138. */
@@ -354,7 +403,7 @@ const resources: [string, string, string, string][] = [
      apart, 16/24/700, colour transitioning over 300ms. */
   .nav-icon-link {
     display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 33px;
-    font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
+    font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
     transition: color 300ms ease;
   }
   .nav-icon-link > :global(svg) { flex: none; color: var(--color-ink-4-mid, #8d93a5); transition: color 300ms ease; }
@@ -376,7 +425,17 @@ const resources: [string, string, string, string][] = [
     border-radius: 50%; background: #fff; color: var(--color-brand);
     box-shadow: inset 0 0 0 1px var(--color-brand-muted);
   }
-  .nav-rich--sm .nav-rich-ico { width: 38px; height: 38px; }
+  /* Resources rows are the muted grey of every other menu list; only the Docs
+     category illustrations are brand blue, which is why one rule for both put
+     blue icons down the Resources column. Their rows are also tighter: the
+     original sets 4px 8px against the 12px 0 the Docs rows use. */
+  .nav-rich--sm { padding: 4px 8px; }
+  .nav-rich--sm .nav-rich-ico {
+    width: 38px; height: 38px;
+    color: var(--color-ink-3);
+    background: transparent; box-shadow: none;
+  }
+  .nav-rich--sm:hover .nav-rich-ico { color: var(--color-brand); }
   .nav-rich-label { display: block; font-size: 14px; line-height: 26px; color: var(--color-ink-3); }
   .nav-rich-title { display: block; font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2); }
   .nav-rich-desc { display: block; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink-2); }
@@ -419,7 +478,11 @@ const resources: [string, string, string, string][] = [
     border: 1px solid var(--color-brand-muted); border-radius: 8px; padding: 12px 0;
     font-size: 14px; line-height: 21px; font-weight: 700; color: var(--color-ink-2);
   }
-  .nav-foot a > :global(svg) { color: var(--color-brand); }
+  /* The strip's icons are the same muted grey as the menu lists. They were
+     inheriting the anchor's brand blue, which is why every footer icon read
+     as the wrong colour while the lists above them were right. */
+  .nav-foot a > :global(svg) { color: var(--color-ink-3); transition: color 300ms ease; }
+  .nav-foot a:hover > :global(svg) { color: var(--color-brand); }
   .nav-foot a:hover { border-color: var(--color-brand); color: var(--color-brand-hover); }
 
   /* The original transitions each icon path's colour over 300ms, so an icon
