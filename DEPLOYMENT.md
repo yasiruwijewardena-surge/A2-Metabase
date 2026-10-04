@@ -196,6 +196,31 @@ posts in. Because the seed is idempotent, reopening the tunnel, rebuilding
 Budget around 45 minutes: Strapi generates responsive variants per image, so 136
 source images become several hundred Cloudinary uploads.
 
+**A dropped tunnel leaves a listener behind, and `nc -z` will lie about it.**
+When the ssh session loses the far end, the local forward keeps accepting
+connections while every channel fails with `connect failed: failed to connect`
+in the tunnel's output. A port check therefore passes and the seed dies with
+`ECONNRESET` instead. Worse, `railway connect` refuses to reuse the held port
+and quietly opens on a different one, so `.env.seed` ends up pointing at a
+forward that is not there. Kill the stale session before reopening:
+
+```sh
+pkill -f 'ssh.*ssh.railway.com'
+lsof -nP -iTCP:55432          # expect nothing
+```
+
+and prove the new tunnel forwards rather than merely listens:
+
+```sh
+set -a && . ./.env.seed && set +a
+node -e "new (require('pg').Client)({connectionString:process.env.DATABASE_URL})
+  .connect().then(c=>console.log('ok')).catch(e=>{console.log('broken:',e.message);process.exit(1)})"
+```
+
+**Do not log `railway connect`'s output.** It prints the database password
+twice — once on a `Password:` line and once inside the connection URL — so
+redirecting it to a file writes the credential to disk.
+
 ### Public access, if the CLI is unavailable
 
 Needs a TCP proxy, which Railway only adds on request.
