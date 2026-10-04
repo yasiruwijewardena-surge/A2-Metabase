@@ -1,4 +1,4 @@
-import { preloadFor } from './image';
+import { preloadFor, preloadStatic } from './image';
 import type {
   Author,
   CaseStudy,
@@ -240,6 +240,19 @@ const ZONE: Record<string, Record<string, string>> = {
     '[columns]': 'true',
     '[rows][populate]': '*',
   },
+  /* Cards sit two levels down -- section, row, card -- so the path is spelled
+     all the way rather than stopping at `*`. */
+  'page.metabase-ai': {
+    '[heroCtas]': 'true',
+    '[logos]': 'true',
+    '[sections][populate][rows][populate][cards]': 'true',
+    '[accessSteps]': 'true',
+    '[auditStats]': 'true',
+    '[chatPrompts]': 'true',
+    '[laterSections][populate][rows][populate][cards]': 'true',
+    '[faqs]': 'true',
+    '[closingCtas]': 'true',
+  },
   /* Cards hold their own repeatable links, which `*` would stop short of. */
   'page.feature-detail': {
     '[cards][populate][links]': 'true',
@@ -315,6 +328,9 @@ export async function pagePreload(page: Page | null) {
     const [first] = await getCaseStudies();
     return preloadFor(first?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px');
   }
+  /* The Metabase AI page leads with a clip, so its poster is the LCP image. */
+  const ai = (page?.sections ?? []).find((s) => s.__component === 'page.metabase-ai');
+  if (ai) return preloadStatic('/images/features/metabot-ai/hero-section-ai-poster.webp');
   /* Otherwise the LCP image is the hero's own artwork, when it has one. */
   const hero = (page?.sections ?? []).find((s) => s.__component === 'page.hero');
   return preloadFor(hero && 'media' in hero ? hero.media?.url : undefined);

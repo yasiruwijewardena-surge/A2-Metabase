@@ -1,0 +1,151 @@
+{
+  "collectionName": "components_page_metabase_ais",
+  "info": {
+    "displayName": "Metabase AI page",
+    "icon": "robot"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "heroCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "logos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.logo-item"
+    },
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ai-section"
+    },
+    "accessHeading": {
+      "type": "string"
+    },
+    "accessLede": {
+      "type": "text"
+    },
+    "accessImage": {
+      "type": "string"
+    },
+    "accessImageAlt": {
+      "type": "string"
+    },
+    "accessSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ai-step"
+    },
+    "pricingHeading": {
+      "type": "string"
+    },
+    "pricingLedeBefore": {
+      "type": "text"
+    },
+    "pricingLedeLinkLabel": {
+      "type": "string"
+    },
+    "pricingLedeLinkUrl": {
+      "type": "string"
+    },
+    "pricingLedeAfter": {
+      "type": "text"
+    },
+    "pricingLinkLabel": {
+      "type": "string"
+    },
+    "pricingLinkUrl": {
+      "type": "string"
+    },
+    "auditHeading": {
+      "type": "string"
+    },
+    "auditImage": {
+      "type": "string"
+    },
+    "auditImageAlt": {
+      "type": "string"
+    },
+    "auditStats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.metric"
+    },
+    "chatHeading": {
+      "type": "string"
+    },
+    "chatCardHeading": {
+      "type": "string"
+    },
+    "chatPrompts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    },
+    "laterSections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ai-section"
+    },
+    "embedHeading": {
+      "type": "string"
+    },
+    "faqHeading": {
+      "type": "string"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.faq-item"
+    },
+    "closingHeading": {
+      "type": "string"
+    },
+    "closingSub": {
+      "type": "text"
+    },
+    "closingCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "trustLine": {
+      "type": "string"
+    },
+    "auditLede": {
+      "type": "text"
+    },
+    "chatLede": {
+      "type": "text"
+    },
+    "chatCardBody": {
+      "type": "text"
+    },
+    "chatPanelHeading": {
+      "type": "string"
+    },
+    "chatPanelImage": {
+      "type": "string"
+    },
+    "chatPanelImageAlt": {
+      "type": "string"
+    },
+    "chatPanelW": {
+      "type": "integer"
+    },
+    "chatPanelH": {
+      "type": "integer"
+    }
+  }
+}

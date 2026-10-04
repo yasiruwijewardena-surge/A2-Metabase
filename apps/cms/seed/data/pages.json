@@ -2091,6 +2091,397 @@
           "ctaUrl": "/start"
         }
       ]
+    },
+    {
+      "title": "Metabase AI",
+      "slug": "features/metabase-ai",
+      "seo": {
+        "metaTitle": "Metabase AI | Metabase",
+        "metaDescription": "AI exploration built on your permissions and semantic definitions. Bring your own model, keep queries on your warehouse, and see exactly how every answer was produced."
+      },
+      "sections": [
+        {
+          "__component": "page.metabase-ai",
+          "heading": "AI exploration built on your permissions and semantic definitions",
+          "sub": "AI-powered code generation and data exploration wherever you already work, grounded in the definitions your organisation has already agreed on.",
+          "heroCtas": [
+            {
+              "label": "Try Metabase AI free",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Deploy Metabase AI Open Source",
+              "url": "/open-source",
+              "style": "secondary"
+            }
+          ],
+          "logos": [
+            {
+              "src": "huma",
+              "alt": "huma logo",
+              "width": 125
+            },
+            {
+              "src": "home/airbyte",
+              "alt": "airbyte logo",
+              "width": 124
+            },
+            {
+              "src": "linear",
+              "alt": "linear logo",
+              "width": 113
+            },
+            {
+              "src": "betterment",
+              "alt": "betterment logo",
+              "width": 135
+            },
+            {
+              "src": "kong",
+              "alt": "kong logo",
+              "width": 126
+            },
+            {
+              "src": "home/superhuman",
+              "alt": "superhuman logo",
+              "width": 135
+            }
+          ],
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "sections": [
+            {
+              "anchor": "trust",
+              "heading": "Trustworthy AI analytics",
+              "rows": [
+                {
+                  "cards": [
+                    {
+                      "wide": true,
+                      "heading": "Inspect and verify every answer",
+                      "body": "Every AI-generated answer links back to the query underneath it, so you can see exactly how a number was arrived at before you repeat it in a meeting.",
+                      "mediaSrc": "/images/features/metabot-ai/inspect-and-verify-every-answer.webp",
+                      "mediaW": 1278,
+                      "mediaH": 399,
+                      "mediaAlt": "An AI answer alongside the query it was generated from"
+                    }
+                  ]
+                },
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "Respects your existing permissions",
+                      "body": "People only ever see data they are already allowed to see. AI follows the same permissions as the rest of Metabase, rather than having its own idea of them.",
+                      "mediaSrc": "/images/features/metabot-ai/respect-your-existing-permissions.mp4",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "Permissions applying to an AI answer"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "Informed by your semantic layer",
+                      "body": "AI is aware of your metadata, your definitions and your verified models, so it answers in the terms your organisation already uses.",
+                      "linkLabel": "Data Studio",
+                      "linkUrl": "/features/semantic-layer",
+                      "mediaSrc": "/images/features/metabot-ai/build-on-your-semantic-layer.webp",
+                      "mediaW": 622,
+                      "mediaH": 399,
+                      "mediaAlt": "Semantic definitions informing an AI answer"
+                    }
+                  ]
+                },
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "Zero data movement",
+                      "body": "Queries run against your warehouse. Metabot does not ingest, copy or train on your data, so there is no second copy to secure or keep current.",
+                      "mediaSrc": "/images/features/metabot-ai/zero-data-movement_2.webp",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "Queries running directly against a warehouse"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "Deploy and configure your way",
+                      "body": "Plug in the AI provider you already use. Choose Claude, GPT or any of a number of supported providers, on cloud or self-hosted.",
+                      "linkLabel": "number of supported providers",
+                      "linkUrl": "#faq",
+                      "mediaSrc": "/images/features/metabot-ai/deploy-and-configure-your-way.webp",
+                      "mediaW": 622,
+                      "mediaH": 376,
+                      "mediaAlt": "Choosing an AI provider in the admin settings"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "accessHeading": "AI access that stays under your control",
+          "accessLede": "Decide who can do what with AI, and how much.",
+          "accessImage": "/images/features/metabot-ai/ai-feature-access-per-group.webp",
+          "accessImageAlt": "AI feature access being granted to a user group",
+          "accessSteps": [
+            {
+              "anchor": "groups",
+              "heading": "Enable AI feature access per user group",
+              "body": "Control which groups can ask AI questions, use SQL generation, or reach the agent API at all. The default is off, so access is something you grant rather than something you discover."
+            },
+            {
+              "anchor": "limits",
+              "heading": "Set usage limits by token or message count",
+              "body": "Keep AI spend predictable with limits per user group and per feature, so one enthusiastic team cannot spend the quarter."
+            },
+            {
+              "anchor": "brand",
+              "heading": "Customize how AI appears in your organization",
+              "body": "Give Metabot a name and an icon that fits your organisation, and set it up where people will actually meet it."
+            },
+            {
+              "anchor": "prompts",
+              "heading": "System prompts to guide outputs",
+              "body": "Add instructions that shape tone, use the right naming conventions, and tell the model which tables are the ones people should be asking about."
+            }
+          ],
+          "pricingHeading": "AI that isn't a separate meter",
+          "pricingLedeBefore": "Power Metabase AI with ",
+          "pricingLedeLinkLabel": "your own model",
+          "pricingLedeLinkUrl": "#faq",
+          "pricingLedeAfter": " — Anthropic, OpenAI, AWS Bedrock, Mistral or whatever you have already standardised on — and pay that provider directly rather than paying us a markup on top of it.",
+          "pricingLinkLabel": "See how AI pricing works",
+          "pricingLinkUrl": "/pricing",
+          "auditHeading": "See who's doing what with AI, down to exact questions",
+          "auditLede": "Track token spend, review conversation logs for security audits, and see which features people actually reach for.",
+          "auditImage": "/images/features/metabot-ai/ai-usage-analytics-dashboard.webp",
+          "auditImageAlt": "A dashboard of AI usage by person and group",
+          "auditStats": [
+            {
+              "value": "Messages over time",
+              "label": "Per person or user-group."
+            },
+            {
+              "value": "Conversation logs per user",
+              "label": "What's asked, data accessed, and tool calls made."
+            },
+            {
+              "value": "Token usage",
+              "label": "Across people, user groups, and AI features."
+            }
+          ],
+          "chatHeading": "Explore your data with AI",
+          "chatLede": "Ask questions, get summaries, and find what you need.",
+          "chatCardHeading": "Ask questions in plain language",
+          "chatCardBody": "Chat with your data and get an answer. Metabot builds the query using your models and definitions, and shows you what it ran.",
+          "chatPrompts": [
+            {
+              "text": "How many new accounts were created last week?"
+            },
+            {
+              "text": "What's the average product rating?"
+            },
+            {
+              "text": "How many active users did we have in the last 6 months?"
+            },
+            {
+              "text": "Which plans are driving the most growth?"
+            },
+            {
+              "text": "What's our revenue this quarter?"
+            }
+          ],
+          "chatPanelHeading": "New accounts created",
+          "chatPanelImage": "/images/features/metabot-ai/explore-your-data-with-ai_new-account-created.webp",
+          "chatPanelImageAlt": "A chart of new accounts created per week",
+          "chatPanelW": 727,
+          "chatPanelH": 256,
+          "laterSections": [
+            {
+              "anchor": "explore",
+              "heading": "Explore your data with AI",
+              "lede": "Ask questions, get summaries, and find what you need.",
+              "rows": [
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "One-click AI summaries",
+                      "body": "One-click summaries of any chart or dashboard, with the key takeaways written out so the person reading it does not have to infer them.",
+                      "mediaSrc": "/images/features/metabot-ai/one-click-ai-summaries.webp",
+                      "mediaW": 622,
+                      "mediaH": 399,
+                      "mediaAlt": "A one-click summary of a dashboard"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "AI-powered semantic search",
+                      "body": "Find dashboards, questions and models by meaning rather than by guessing the exact words whoever saved it happened to use.",
+                      "mediaSrc": "/images/features/metabot-ai/ai-powered-semantic-search.webp",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "Semantic search results across saved content"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "anchor": "tools",
+              "heading": "AI in your existing tools",
+              "lede": "Get answers from Metabase in the tools your team uses every day.",
+              "rows": [
+                {
+                  "cards": [
+                    {
+                      "wide": true,
+                      "heading": "Official MCP server",
+                      "body": "Connect to Metabase from your AI client. Query and interact with your data from Claude, Cursor and more, without leaving the thing you were already working in.",
+                      "linkLabel": "and more",
+                      "linkUrl": "#faq",
+                      "mediaSrc": "/images/features/metabot-ai/official-mcp-server.webp",
+                      "mediaW": 1278,
+                      "mediaH": 399,
+                      "mediaAlt": "An AI client connected to Metabase over MCP"
+                    }
+                  ]
+                },
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "Metabot in Slack",
+                      "body": "Mention Metabot in a channel or a DM. Ask a question, get a chart back, and leave the answer where the conversation already was.",
+                      "mediaSrc": "/images/features/metabot-ai/metabot-in-slack.webp",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "Metabot answering a question in Slack"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "Agent Workspace API",
+                      "body": "Programmatic access for building your own data agents on top of Metabase, with the same permissions and the same definitions.",
+                      "mediaSrc": "/images/features/metabot-ai/agent-workspace-api.webp",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "The agent workspace API in use"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "anchor": "sql",
+              "heading": "AI-assisted SQL and code",
+              "lede": "Generate queries, write transforms, and debug faster.",
+              "rows": [
+                {
+                  "cards": [
+                    {
+                      "wide": true,
+                      "heading": "SQL generation",
+                      "body": "Describe what you want in plain language and get working SQL grounded in your own schema, which you can then read, edit and run like anything else.",
+                      "mediaSrc": "/images/features/metabot-ai/sql-generation.mp4",
+                      "mediaW": 1278,
+                      "mediaH": 753,
+                      "mediaAlt": "SQL being generated from a plain-language description"
+                    }
+                  ]
+                },
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "Transform generation",
+                      "body": "Transform raw data in SQL or Python with AI alongside you. Describe the shape you need and start from something that already runs.",
+                      "mediaSrc": "/images/features/metabot-ai/transform-generation.webp",
+                      "mediaW": 622,
+                      "mediaH": 399,
+                      "mediaAlt": "A transform generated from a description"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "AI-assisted debugging",
+                      "body": "Troubleshoot failing SQL and get an explanation of what is wrong, rather than just the database's own error message.",
+                      "mediaSrc": "/images/features/metabot-ai/ai-assisted-debugging.webp",
+                      "mediaW": 622,
+                      "mediaH": 399,
+                      "mediaAlt": "An explanation of a failing query"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "anchor": "model",
+              "heading": "Powered by your data model, metrics, and definitions",
+              "lede": "AI only works as well as the context you give it. Your semantic layer is that context.",
+              "ledeLinkLabel": "Data Studio",
+              "ledeLinkUrl": "/features/semantic-layer",
+              "rows": [
+                {
+                  "cards": [
+                    {
+                      "wide": false,
+                      "heading": "Define once, it's used everywhere",
+                      "body": "Add your business definitions to the Glossary. AI references them, so ARR means the same thing in an AI answer as it does in the board deck.",
+                      "mediaSrc": "/images/features/metabot-ai/define-once-use-everywhere.webp",
+                      "mediaW": 622,
+                      "mediaH": 340,
+                      "mediaAlt": "A glossary definition referenced by an AI answer"
+                    },
+                    {
+                      "wide": false,
+                      "heading": "Surfaces existing work first",
+                      "body": "Before running a new query, Metabot checks for a dashboard or a saved question that already answers the thing being asked.",
+                      "mediaSrc": "/images/features/metabot-ai/surface-existing-work-first.webp",
+                      "mediaW": 622,
+                      "mediaH": 370,
+                      "mediaAlt": "Existing saved content surfaced ahead of a new query"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "faqHeading": "Frequently asked questions",
+          "faqs": [
+            {
+              "question": "Can I choose my own AI provider?",
+              "answer": "Yes. You can bring your own key and plug in the AI provider you already use — Anthropic, OpenAI, AWS Bedrock, Mistral and others — rather than being routed through ours."
+            },
+            {
+              "question": "Does Metabase charge for AI usage?",
+              "answer": "AI features are available in all Metabase editions, including the open-source one. When you bring your own key, what you spend on the model is between you and that provider."
+            },
+            {
+              "question": "How does Metabase AI handle my data?",
+              "answer": "Queries run against your warehouse. Metabase does not ingest your data, does not copy it, and does not train on it. Prompts and results go to your AI provider under whatever terms you hold with them."
+            },
+            {
+              "question": "Can I self-host Metabase with AI features?",
+              "answer": "Yes. Metabase AI works in both cloud and self-hosted deployments, including air-gapped ones where you point it at a model running inside your own network."
+            },
+            {
+              "question": "Can I embed AI features in my product?",
+              "answer": "Yes. You can embed AI-powered querying components with Modular Embedding and the SDK, so your customers get natural-language exploration inside your own app."
+            },
+            {
+              "question": "Does Metabase have an MCP server?",
+              "answer": "Yes. Connect your AI client to Metabase over the official MCP server and query your data from Claude, Cursor and anything else that speaks the protocol."
+            },
+            {
+              "question": "Does Metabot work in Slack?",
+              "answer": "Yes. Metabot in Slack lets your team ask questions and get charts back in a channel or a DM, with the same permissions they have everywhere else."
+            },
+            {
+              "question": "What do I need to set up before AI is useful?",
+              "answer": "Mostly context. Add descriptions and semantic types to the tables people query, define the metrics you keep re-deriving, and the answers get noticeably better."
+            }
+          ],
+          "closingHeading": "AI that respects your rules. Start exploring.",
+          "closingCtas": []
+        }
+      ]
     }
   ]
 }

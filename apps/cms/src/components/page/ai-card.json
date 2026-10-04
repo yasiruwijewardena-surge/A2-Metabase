@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_page_ai_cards",
+  "info": {
+    "displayName": "AI card",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "wide": {
+      "type": "boolean"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "mediaSrc": {
+      "type": "string"
+    },
+    "mediaW": {
+      "type": "integer"
+    },
+    "mediaH": {
+      "type": "integer"
+    },
+    "mediaAlt": {
+      "type": "string"
+    }
+  }
+}

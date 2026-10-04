@@ -33,6 +33,65 @@ export interface PageAccordionItem extends Struct.ComponentSchema {
   };
 }
 
+export interface PageAiCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_ai_cards';
+  info: {
+    displayName: 'AI card';
+    icon: 'layer';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    mediaAlt: Schema.Attribute.String;
+    mediaH: Schema.Attribute.Integer;
+    mediaSrc: Schema.Attribute.String;
+    mediaW: Schema.Attribute.Integer;
+    wide: Schema.Attribute.Boolean;
+  };
+}
+
+export interface PageAiRow extends Struct.ComponentSchema {
+  collectionName: 'components_page_ai_rows';
+  info: {
+    displayName: 'AI card row';
+    icon: 'grid';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'page.ai-card', true>;
+  };
+}
+
+export interface PageAiSection extends Struct.ComponentSchema {
+  collectionName: 'components_page_ai_sections';
+  info: {
+    displayName: 'AI section';
+    icon: 'layer';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    lede: Schema.Attribute.Text;
+    ledeLinkLabel: Schema.Attribute.String;
+    ledeLinkUrl: Schema.Attribute.String;
+    rows: Schema.Attribute.Component<'page.ai-row', true>;
+  };
+}
+
+export interface PageAiStep extends Struct.ComponentSchema {
+  collectionName: 'components_page_ai_steps';
+  info: {
+    displayName: 'AI step';
+    icon: 'bulletList';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    body: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
 export interface PageBand extends Struct.ComponentSchema {
   collectionName: 'components_page_bands';
   info: {
@@ -455,6 +514,70 @@ export interface PageLinkGrid extends Struct.ComponentSchema {
   };
 }
 
+export interface PageLogoItem extends Struct.ComponentSchema {
+  collectionName: 'components_page_logo_items';
+  info: {
+    displayName: 'Logo';
+    icon: 'picture';
+  };
+  attributes: {
+    alt: Schema.Attribute.String;
+    src: Schema.Attribute.String;
+    width: Schema.Attribute.Integer;
+  };
+}
+
+export interface PageMetabaseAi extends Struct.ComponentSchema {
+  collectionName: 'components_page_metabase_ais';
+  info: {
+    displayName: 'Metabase AI page';
+    icon: 'robot';
+  };
+  attributes: {
+    accessHeading: Schema.Attribute.String;
+    accessImage: Schema.Attribute.String;
+    accessImageAlt: Schema.Attribute.String;
+    accessLede: Schema.Attribute.Text;
+    accessSteps: Schema.Attribute.Component<'page.ai-step', true>;
+    auditHeading: Schema.Attribute.String;
+    auditImage: Schema.Attribute.String;
+    auditImageAlt: Schema.Attribute.String;
+    auditLede: Schema.Attribute.Text;
+    auditStats: Schema.Attribute.Component<'shared.metric', true>;
+    chatCardBody: Schema.Attribute.Text;
+    chatCardHeading: Schema.Attribute.String;
+    chatHeading: Schema.Attribute.String;
+    chatLede: Schema.Attribute.Text;
+    chatPanelH: Schema.Attribute.Integer;
+    chatPanelHeading: Schema.Attribute.String;
+    chatPanelImage: Schema.Attribute.String;
+    chatPanelImageAlt: Schema.Attribute.String;
+    chatPanelW: Schema.Attribute.Integer;
+    chatPrompts: Schema.Attribute.Component<'page.text-item', true>;
+    closingCtas: Schema.Attribute.Component<'shared.cta', true>;
+    closingHeading: Schema.Attribute.String;
+    closingSub: Schema.Attribute.Text;
+    embedHeading: Schema.Attribute.String;
+    eyebrow: Schema.Attribute.String;
+    faqHeading: Schema.Attribute.String;
+    faqs: Schema.Attribute.Component<'page.faq-item', true>;
+    heading: Schema.Attribute.String;
+    heroCtas: Schema.Attribute.Component<'shared.cta', true>;
+    laterSections: Schema.Attribute.Component<'page.ai-section', true>;
+    logos: Schema.Attribute.Component<'page.logo-item', true>;
+    pricingHeading: Schema.Attribute.String;
+    pricingLedeAfter: Schema.Attribute.Text;
+    pricingLedeBefore: Schema.Attribute.Text;
+    pricingLedeLinkLabel: Schema.Attribute.String;
+    pricingLedeLinkUrl: Schema.Attribute.String;
+    pricingLinkLabel: Schema.Attribute.String;
+    pricingLinkUrl: Schema.Attribute.String;
+    sections: Schema.Attribute.Component<'page.ai-section', true>;
+    sub: Schema.Attribute.Text;
+    trustLine: Schema.Attribute.String;
+  };
+}
+
 export interface PagePanel extends Struct.ComponentSchema {
   collectionName: 'components_page_panels';
   info: {
@@ -807,6 +930,10 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'page.accordion': PageAccordion;
       'page.accordion-item': PageAccordionItem;
+      'page.ai-card': PageAiCard;
+      'page.ai-row': PageAiRow;
+      'page.ai-section': PageAiSection;
+      'page.ai-step': PageAiStep;
       'page.band': PageBand;
       'page.bullet': PageBullet;
       'page.closing': PageClosing;
@@ -829,6 +956,8 @@ declare module '@strapi/strapi' {
       'page.howto-step': PageHowtoStep;
       'page.link-card': PageLinkCard;
       'page.link-grid': PageLinkGrid;
+      'page.logo-item': PageLogoItem;
+      'page.metabase-ai': PageMetabaseAi;
       'page.panel': PagePanel;
       'page.panel-group': PagePanelGroup;
       'page.pillar': PagePillar;

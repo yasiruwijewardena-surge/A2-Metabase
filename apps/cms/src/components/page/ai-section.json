@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_page_ai_sections",
+  "info": {
+    "displayName": "AI section",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "lede": {
+      "type": "text"
+    },
+    "ledeLinkLabel": {
+      "type": "string"
+    },
+    "ledeLinkUrl": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ai-row"
+    }
+  }
+}

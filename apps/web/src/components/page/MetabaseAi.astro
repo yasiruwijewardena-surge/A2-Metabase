@@ -1,0 +1,250 @@
+---
+/*
+ * /features/metabase-ai
+ *
+ * The page's copy, cards, access steps, usage stats, prompts and FAQs are a
+ * page.metabase-ai section in Strapi; the shapes they fill stay here, because
+ * each band on this page is its own layout rather than a repeat of one.
+ */
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+
+const A = '/images/features/metabot-ai';
+const heroCtas = s.heroCtas ?? [];
+const closeCtas = s.closingCtas?.length ? s.closingCtas : heroCtas;
+const logos = s.logos ?? [];
+const sections = s.sections ?? [];
+const accessSteps = s.accessSteps ?? [];
+const usageStats = s.auditStats ?? [];
+const chatPrompts = s.chatPrompts ?? [];
+const laterSections = s.laterSections ?? [];
+const faqs = s.faqs ?? [];
+
+const isClip = (src: string) => src.endsWith('.mp4');
+---
+  <div class="mai">
+    <header class="mai-hero">
+      {/* Decorative, and only a gradient, so it neither needs priority nor
+          should be allowed to become the LCP element. */}
+      <img class="mai-sky" src={`${A}/sky.webp`} alt="" width="1500" height="458"
+           loading="eager" decoding="async" />
+      <div class="mai-hero-inner">
+        <h1 class="mai-h1">{s.heading}</h1>
+        <p class="mai-hero-lede">{s.sub}</p>
+        <p class="mai-hero-ctas">
+          {heroCtas.map((c, i) => (
+            <a href={c.url} class:list={['mai-btn', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
+          ))}
+        </p>
+        <div class="mai-hero-frame">
+          <video width="1192" height="712" poster={`${A}/hero-section-ai-poster.webp`}
+                 autoplay loop muted playsinline preload="metadata"
+                 aria-label="Metabot answering a question and showing the query behind it">
+            <source src={`${A}/hero-section-ai.mp4`} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </header>
+
+    <div class="mai-trust">
+      <ul>
+        {logos.map((l) => (
+          <li><img src={`/images/logos/${l.src}.svg`} alt={l.alt} width={l.width} height="38"
+                   style={`width:${l.width}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+      <p>{s.trustLine}</p>
+    </div>
+
+    {sections.map((sec) => (
+      <section class="mai-sec" id={sec.anchor}>
+        <h2 class="mai-h2">{sec.heading}</h2>
+        {(sec.rows ?? []).map((row) => (
+          <div class:list={['mai-row', row.cards?.length === 1 && row.cards[0].wide && 'mai-row--wide']}>
+            {(row.cards ?? []).map((c) => (
+              <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
+                <h3 class="mai-card-h">{c.heading}</h3>
+                <p class="mai-card-p">
+                  {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
+                </p>
+                {isClip(c.mediaSrc)
+                  ? <video width={c.mediaW} height={c.mediaH}
+                           poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
+                           controls loop muted playsinline preload="none" aria-label={c.mediaAlt}>
+                      <source src={c.mediaSrc} type="video/mp4" />
+                    </video>
+                  : <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
+                         loading="lazy" decoding="async" />}
+              </article>
+            ))}
+          </div>
+        ))}
+      </section>
+    ))}
+
+    <section class="mai-sec" id="access">
+      <h2 class="mai-h2">{s.accessHeading}</h2>
+      <p class="mai-lede">{s.accessLede}</p>
+      {/* The original pins this section and advances its four steps on
+          scroll. Radio inputs give the same four steps with no JavaScript. */}
+      <div class="mai-split">
+        <div class="mai-split-media">
+          <img src={s.accessImage} width="590" height="590"
+               alt={s.accessImageAlt} loading="lazy" decoding="async" />
+        </div>
+        <ul class="mai-steps">
+          {accessSteps.map((st, i) => (
+            <li class="mai-step">
+              <input class="mai-step-radio" type="radio" name="mai-access" id={`mai-${st.anchor}`} checked={i === 0} />
+              <span class="mai-step-rail" aria-hidden="true"></span>
+              <div class="mai-step-body">
+                <h3 class="mai-step-h"><label for={`mai-${st.anchor}`}>{st.heading}</label></h3>
+                <p class="mai-step-p">{st.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="mai-sec" id="pricing">
+      <h2 class="mai-h2">{s.pricingHeading}</h2>
+      <p class="mai-lede mai-lede--tall">
+        {s.pricingLedeBefore}<a href={s.pricingLedeLinkUrl}>{s.pricingLedeLinkLabel}</a>{s.pricingLedeAfter}
+      </p>
+      <a href={s.pricingLinkUrl} class="mai-link">{s.pricingLinkLabel}</a>
+    </section>
+
+    <section class="mai-sec" id="audit">
+      <div class="mai-split mai-split--reverse">
+        <div class="mai-split-media">
+          <img src={s.auditImage} width="590" height="588"
+               alt={s.auditImageAlt} loading="lazy" decoding="async" />
+        </div>
+        <div class="mai-split-copy">
+          <h2 class="mai-h2 mai-h2--left">{s.auditHeading}</h2>
+          <p class="mai-split-lede">{s.auditLede}</p>
+          <ul class="mai-stats">
+            {usageStats.map((st) => (
+              <li><h3>{st.value}</h3><p>{st.label}</p></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mai-sec" id="chat">
+      <h2 class="mai-h2">{s.chatHeading}</h2>
+      <p class="mai-lede">{s.chatLede}</p>
+      <div class="mai-row mai-row--wide">
+        <article class="mai-card mai-card--wide">
+          <h3 class="mai-card-h">{s.chatCardHeading}</h3>
+          <p class="mai-card-p">{s.chatCardBody}</p>
+          <div class="mai-chat">
+            <ul class="mai-chat-prompts">
+              {chatPrompts.map((q) => <li>{q.text}</li>)}
+            </ul>
+            <div class="mai-chat-panel">
+              <h4>{s.chatPanelHeading}</h4>
+              <img src={s.chatPanelImage}
+                   width={s.chatPanelW} height={s.chatPanelH} alt={s.chatPanelImageAlt}
+                   loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </article>
+      </div>
+      {(laterSections[0]?.rows ?? []).map((row) => (
+        <div class="mai-row">
+          {(row.cards ?? []).map((c) => (
+            <article class="mai-card">
+              <h3 class="mai-card-h">{c.heading}</h3>
+              <p class="mai-card-p">{c.body}</p>
+              <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
+                   loading="lazy" decoding="async" />
+            </article>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    {laterSections.slice(1).map((sec) => (
+      <section class="mai-sec" id={sec.anchor}>
+        <h2 class="mai-h2">{sec.heading}</h2>
+        {sec.lede && (
+          <p class="mai-lede">
+            {sec.lede}{sec.ledeLinkUrl && <> <a href={sec.ledeLinkUrl}>{sec.ledeLinkLabel}</a></>}
+          </p>
+        )}
+        {(sec.rows ?? []).map((row) => (
+          <div class:list={['mai-row', row.cards?.length === 1 && row.cards[0].wide && 'mai-row--wide']}>
+            {(row.cards ?? []).map((c) => (
+              <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
+                <h3 class="mai-card-h">{c.heading}</h3>
+                <p class="mai-card-p">
+                  {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
+                </p>
+                {isClip(c.mediaSrc)
+                  ? <video width={c.mediaW} height={c.mediaH}
+                           poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
+                           controls loop muted playsinline preload="none" aria-label={c.mediaAlt}>
+                      <source src={c.mediaSrc} type="video/mp4" />
+                    </video>
+                  : <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
+                         loading="lazy" decoding="async" />}
+              </article>
+            ))}
+          </div>
+        ))}
+      </section>
+    ))}
+
+    <section class="mai-sec" id="embed">
+      <h2 class="mai-h2">Embed AI analytics in your product</h2>
+      <p class="mai-lede mai-lede--tall">
+        Give your customers natural language data exploration inside your own application,
+        scoped to their own data and styled to look like the rest of it.
+      </p>
+      <a href="/product/embedded-analytics" class="mai-link mai-link--lg">Explore Embedded Analytics</a>
+      <div class="mai-embed-frame">
+        <div class="mai-embed-main">
+          <img src={`${A}/embed/dashboard-replacement.webp`} width="946" height="724"
+               alt="An embedded dashboard inside a customer application" loading="lazy" decoding="async" />
+        </div>
+        <div class="mai-embed-side">
+          <img src={`${A}/embed/chat-replacement.webp`} width="226" height="724"
+               alt="An AI chat panel beside the embedded dashboard" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </section>
+
+    <section class="mai-faq" id="faq">
+      <h2 class="mai-faq-h">{s.faqHeading}</h2>
+      <div class="mai-faq-box">
+        {faqs.map((f) => (
+          <details class="mai-faq-item">
+            <summary>
+              {f.question}
+              <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+      </div>
+      <p class="mai-more">
+        <span>Have more questions? We'd be happy to help.</span>
+        <a href="/contact" class="mai-more-btn">Contact us</a>
+      </p>
+    </section>
+
+    <section class="mai-final">
+      <h2 class="mai-final-h">{s.closingHeading}</h2>
+      <p class="mai-hero-ctas">
+        {closeCtas.map((c, i) => (
+          <a href={c.url} class:list={['mai-btn', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
+        ))}
+      </p>
+    </section>
+  </div>

@@ -878,6 +878,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'page.feature-detail',
         'page.link-grid',
         'page.compare-grid',
+        'page.metabase-ai',
         'page.closing',
       ]
     >;

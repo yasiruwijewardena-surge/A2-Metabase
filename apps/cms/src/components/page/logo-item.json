@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_logo_items",
+  "info": {
+    "displayName": "Logo",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "src": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "width": {
+      "type": "integer"
+    }
+  }
+}

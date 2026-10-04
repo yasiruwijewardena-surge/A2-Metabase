@@ -517,10 +517,13 @@ async function main() {
           delete s.__subRich;
         }
         for (const k of ['media', 'mediaMobile', 'mediaPoster', 'illustration', 'embedMedia']) {
-          if (s[k]) s[k] = await upload(s[k]);
+          if (typeof s[k] === 'string') s[k] = await upload(s[k]);
         }
         for (const [field, altField] of Object.entries(MEDIA_LISTS)) {
-          if (!Array.isArray(s[field])) continue;
+          /* Matched by field name, so a component that happens to call
+             something `logos` while holding objects rather than paths is not
+             dragged through the uploader. */
+          if (!Array.isArray(s[field]) || !s[field].every((x) => typeof x === 'string')) continue;
           const alts = altField ? s[altField] ?? [] : [];
           const ids = [];
           for (const [i, ref] of s[field].entries()) {

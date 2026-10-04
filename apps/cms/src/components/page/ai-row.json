@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_page_ai_rows",
+  "info": {
+    "displayName": "AI card row",
+    "icon": "grid"
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ai-card"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_ai_steps",
+  "info": {
+    "displayName": "AI step",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    }
+  }
+}

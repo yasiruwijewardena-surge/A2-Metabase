@@ -460,6 +460,47 @@ export interface CompareGridSection extends SectionBase {
   ctaUrl?: string | null;
 }
 
+export interface AiCard {
+  id: number; wide?: boolean | null; heading?: string | null; body?: string | null;
+  linkLabel?: string | null; linkUrl?: string | null;
+  mediaSrc?: string | null; mediaW?: number | null; mediaH?: number | null; mediaAlt?: string | null;
+}
+
+export interface AiSection {
+  id: number; anchor?: string | null; heading?: string | null; lede?: string | null;
+  ledeLinkLabel?: string | null; ledeLinkUrl?: string | null;
+  rows?: { id: number; cards?: AiCard[] }[];
+}
+
+export interface MetabaseAiSection extends SectionBase {
+  __component: 'page.metabase-ai';
+  heading?: string | null;
+  sub?: string | null;
+  heroCtas?: Cta[];
+  logos?: { id: number; src?: string | null; alt?: string | null; width?: number | null }[];
+  trustLine?: string | null;
+  sections?: AiSection[];
+  accessHeading?: string | null; accessLede?: string | null;
+  accessImage?: string | null; accessImageAlt?: string | null;
+  accessSteps?: { id: number; anchor?: string | null; heading?: string | null; body?: string | null }[];
+  pricingHeading?: string | null; pricingLedeBefore?: string | null;
+  pricingLedeLinkLabel?: string | null; pricingLedeLinkUrl?: string | null;
+  pricingLedeAfter?: string | null;
+  pricingLinkLabel?: string | null; pricingLinkUrl?: string | null;
+  auditHeading?: string | null; auditLede?: string | null;
+  auditImage?: string | null; auditImageAlt?: string | null;
+  auditStats?: { id: number; value?: string | null; label?: string | null }[];
+  chatHeading?: string | null; chatLede?: string | null;
+  chatCardHeading?: string | null; chatCardBody?: string | null;
+  chatPrompts?: { id: number; text?: string | null }[];
+  chatPanelHeading?: string | null; chatPanelImage?: string | null;
+  chatPanelImageAlt?: string | null; chatPanelW?: number | null; chatPanelH?: number | null;
+  laterSections?: AiSection[];
+  faqHeading?: string | null;
+  faqs?: { id: number; question?: string | null; answer?: string | null }[];
+  closingHeading?: string | null; closingSub?: string | null; closingCtas?: Cta[];
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -519,7 +560,7 @@ export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection | LinkGridSection | CompareGridSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection | LinkGridSection | CompareGridSection | MetabaseAiSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */
