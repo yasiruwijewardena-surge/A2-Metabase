@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_page_compare_tabs",
+  "info": {
+    "displayName": "Compare tab",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "lede": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

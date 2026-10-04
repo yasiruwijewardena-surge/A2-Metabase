@@ -1,0 +1,44 @@
+---
+/*
+ * /features — the index of every feature page.
+ *
+ * Measured off the original at 1512 with `npm run metrics --root
+ * div.features-page`. Note this page uses a 1200 container, not the 1320
+ * the rest of the site uses, so its content column is 1152:
+ *   eyebrow  1152x17 14px/600 brand, mb 16
+ *   h1       1152x38 32/38/600, mb 16
+ *   lede     640 18/29 #4c5773, centred in the 1152
+ *   grid     12 cards, three up: 368x166 white, r12, 1px, p24, 24 apart
+ *            each a 20x20 brand icon (mb 12), h3 20/28/700 (mb 8),
+ *            then a 16/24 line
+ *
+ * The original's card for the SDK is described as "an open-source relational
+ * database management system", which is copy that belongs to some other
+ * page. The description here is the accurate one.
+ */
+import NavIcon from '../NavIcon.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+---
+  <div class="fi">
+    <div class="fi-container">
+      <header class="fi-hero">
+        <p class="fi-eyebrow">{s.eyebrow}</p>
+        <h1 class="fi-h1">{s.heading}</h1>
+        <p class="fi-lede">{s.standfirst}</p>
+      </header>
+      <ul class="fi-grid">
+        {(s.items ?? []).map((c) => (
+          <li>
+            <a href={c.url} class="fi-card">
+              <NavIcon name={c.icon} size={20} class="fi-card-icon" />
+              <h2 class="fi-card-h">{c.title}</h2>
+              <p class="fi-card-p">{c.body}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>

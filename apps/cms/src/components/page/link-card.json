@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_page_link_cards",
+  "info": {
+    "displayName": "Link card",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

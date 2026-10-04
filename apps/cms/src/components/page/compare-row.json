@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_page_compare_rows",
+  "info": {
+    "displayName": "Comparison row",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "string"
+    },
+    "mean": {
+      "type": "text"
+    },
+    "when": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    },
+    "example": {
+      "type": "text"
+    },
+    "tradeoffs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    }
+  }
+}

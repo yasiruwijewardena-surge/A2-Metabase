@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_page_text_items",
+  "info": {
+    "displayName": "Text item",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text"
+    }
+  }
+}

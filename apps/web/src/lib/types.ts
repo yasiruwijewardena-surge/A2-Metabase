@@ -435,6 +435,31 @@ export interface FeatureDetailSection extends SectionBase {
   ctaLinkUrl?: string | null;
 }
 
+export interface LinkGridSection extends SectionBase {
+  __component: 'page.link-grid';
+  eyebrow?: string | null;
+  heading?: string | null;
+  standfirst?: string | null;
+  items?: { id: number; icon?: string | null; title?: string | null; body?: string | null; url?: string | null }[];
+}
+
+export interface CompareGridSection extends SectionBase {
+  __component: 'page.compare-grid';
+  eyebrow?: string | null;
+  heading?: string | null;
+  standfirst?: string | null;
+  tabs?: { id: number; anchor?: string | null; label?: string | null; image?: string | null;
+           lede?: string | null; linkLabel?: string | null; linkUrl?: string | null }[];
+  columns?: { id: number; text?: string | null }[];
+  rows?: { id: number; name?: string | null; sub?: string | null; mean?: string | null;
+           when?: { id: number; text?: string | null }[]; example?: string | null;
+           tradeoffs?: { id: number; text?: string | null }[] }[];
+  ctaHeading?: string | null;
+  ctaBody?: string | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -494,7 +519,7 @@ export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection | LinkGridSection | CompareGridSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */

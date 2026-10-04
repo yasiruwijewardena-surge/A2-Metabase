@@ -233,6 +233,13 @@ const ZONE: Record<string, Record<string, string>> = {
   'page.prose': { '': '*' },
   'page.events-index': { '': '*' },
   'page.pricing-index': { '': '*' },
+  'page.link-grid': { '[items]': 'true' },
+  /* Each comparison row holds two lists of its own. */
+  'page.compare-grid': {
+    '[tabs]': 'true',
+    '[columns]': 'true',
+    '[rows][populate]': '*',
+  },
   /* Cards hold their own repeatable links, which `*` would stop short of. */
   'page.feature-detail': {
     '[cards][populate][links]': 'true',

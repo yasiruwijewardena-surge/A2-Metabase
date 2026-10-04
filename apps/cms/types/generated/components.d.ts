@@ -124,6 +124,58 @@ export interface PageCollectionList extends Struct.ComponentSchema {
   };
 }
 
+export interface PageCompareGrid extends Struct.ComponentSchema {
+  collectionName: 'components_page_compare_grids';
+  info: {
+    displayName: 'Compare grid';
+    icon: 'layer';
+  };
+  attributes: {
+    columns: Schema.Attribute.Component<'page.text-item', true>;
+    ctaBody: Schema.Attribute.Text;
+    ctaHeading: Schema.Attribute.String;
+    ctaLabel: Schema.Attribute.String;
+    ctaUrl: Schema.Attribute.String;
+    eyebrow: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    rows: Schema.Attribute.Component<'page.compare-row', true>;
+    standfirst: Schema.Attribute.Text;
+    tabs: Schema.Attribute.Component<'page.compare-tab', true>;
+  };
+}
+
+export interface PageCompareRow extends Struct.ComponentSchema {
+  collectionName: 'components_page_compare_rows';
+  info: {
+    displayName: 'Comparison row';
+    icon: 'layer';
+  };
+  attributes: {
+    example: Schema.Attribute.Text;
+    mean: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    sub: Schema.Attribute.String;
+    tradeoffs: Schema.Attribute.Component<'page.text-item', true>;
+    when: Schema.Attribute.Component<'page.text-item', true>;
+  };
+}
+
+export interface PageCompareTab extends Struct.ComponentSchema {
+  collectionName: 'components_page_compare_tabs';
+  info: {
+    displayName: 'Compare tab';
+    icon: 'layer';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    image: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+    lede: Schema.Attribute.Text;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+  };
+}
+
 export interface PageDemo extends Struct.ComponentSchema {
   collectionName: 'components_page_demos';
   info: {
@@ -372,6 +424,34 @@ export interface PageHowtoStep extends Struct.ComponentSchema {
   };
   attributes: {
     text: Schema.Attribute.Text;
+  };
+}
+
+export interface PageLinkCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_link_cards';
+  info: {
+    displayName: 'Link card';
+    icon: 'link';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface PageLinkGrid extends Struct.ComponentSchema {
+  collectionName: 'components_page_link_grids';
+  info: {
+    displayName: 'Link grid';
+    icon: 'grid';
+  };
+  attributes: {
+    eyebrow: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    items: Schema.Attribute.Component<'page.link-card', true>;
+    standfirst: Schema.Attribute.Text;
   };
 }
 
@@ -661,6 +741,17 @@ export interface PageSplit extends Struct.ComponentSchema {
   };
 }
 
+export interface PageTextItem extends Struct.ComponentSchema {
+  collectionName: 'components_page_text_items';
+  info: {
+    displayName: 'Text item';
+    icon: 'dashboard';
+  };
+  attributes: {
+    text: Schema.Attribute.Text;
+  };
+}
+
 export interface SharedCta extends Struct.ComponentSchema {
   collectionName: 'components_shared_ctas';
   info: {
@@ -720,6 +811,9 @@ declare module '@strapi/strapi' {
       'page.bullet': PageBullet;
       'page.closing': PageClosing;
       'page.collection-list': PageCollectionList;
+      'page.compare-grid': PageCompareGrid;
+      'page.compare-row': PageCompareRow;
+      'page.compare-tab': PageCompareTab;
       'page.demo': PageDemo;
       'page.events-index': PageEventsIndex;
       'page.faq-item': PageFaqItem;
@@ -733,6 +827,8 @@ declare module '@strapi/strapi' {
       'page.hero': PageHero;
       'page.home-hero': PageHomeHero;
       'page.howto-step': PageHowtoStep;
+      'page.link-card': PageLinkCard;
+      'page.link-grid': PageLinkGrid;
       'page.panel': PagePanel;
       'page.panel-group': PagePanelGroup;
       'page.pillar': PagePillar;
@@ -748,6 +844,7 @@ declare module '@strapi/strapi' {
       'page.scale-cards': PageScaleCards;
       'page.section': PageSection;
       'page.split': PageSplit;
+      'page.text-item': PageTextItem;
       'shared.cta': SharedCta;
       'shared.metric': SharedMetric;
       'shared.seo': SharedSeo;

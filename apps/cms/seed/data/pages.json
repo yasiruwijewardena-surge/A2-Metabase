@@ -1826,6 +1826,271 @@
           "mediaName": "white-label-analytics"
         }
       ]
+    },
+    {
+      "title": "Features",
+      "slug": "features",
+      "seo": {
+        "metaTitle": "Features | Metabase",
+        "metaDescription": "Built for data, made for everyone. Dashboards, the query builder, the SQL editor, permissions, embedding and everything else Metabase does."
+      },
+      "sections": [
+        {
+          "__component": "page.link-grid",
+          "eyebrow": "Features",
+          "heading": "Built for data, made for everyone",
+          "standfirst": "Even if you aren't an analyst, Metabase can make you feel like one. And if you are, it will stay out of your way.",
+          "items": [
+            {
+              "icon": "dashboards",
+              "url": "/features/analytics-dashboards",
+              "title": "Analytics dashboard",
+              "body": "Bring charts and questions together on live dashboards"
+            },
+            {
+              "icon": "query",
+              "url": "/features/query-builder",
+              "title": "Query builder",
+              "body": "Put questions together with just clicks and prompts"
+            },
+            {
+              "icon": "segregation",
+              "url": "/features/data-segregation",
+              "title": "Data segregation",
+              "body": "Multi-tenant support for strong boundaries around data"
+            },
+            {
+              "icon": "model",
+              "url": "/features/models",
+              "title": "Models",
+              "body": "Create and curate metadata-rich, annotated models"
+            },
+            {
+              "icon": "usage",
+              "url": "/features/usage-analytics",
+              "title": "Usage analytics",
+              "body": "Understand and act on how your data gets used"
+            },
+            {
+              "icon": "ai",
+              "url": "/features/metabase-ai",
+              "title": "Metabase AI",
+              "body": "Your AI-powered data assistant, on Cloud or self-hosted"
+            },
+            {
+              "icon": "sdk",
+              "url": "/product/embedded-analytics-sdk",
+              "title": "Embedded analytics SDK",
+              "body": "Compose embedded analytics from React components"
+            },
+            {
+              "icon": "whitelabel",
+              "url": "/features/white-label-analytics",
+              "title": "White-label analytics",
+              "body": "A seamless, branded reporting experience"
+            },
+            {
+              "icon": "drill",
+              "url": "/features/drill-through",
+              "title": "Drill-through",
+              "body": "Pull threads in your data without even asking a question"
+            },
+            {
+              "icon": "sql",
+              "url": "/features/sql-editor",
+              "title": "SQL editor",
+              "body": "Get more detailed results with SQL queries"
+            },
+            {
+              "icon": "permissions",
+              "url": "/features/permissions",
+              "title": "Permissions",
+              "body": "Fine-grained control over what people see and do with data"
+            },
+            {
+              "icon": "csv",
+              "url": "/product/csv-uploads",
+              "title": "CSV upload",
+              "body": "Upload and analyze your spreadsheets in Metabase"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Data segregation",
+      "slug": "features/data-segregation",
+      "seo": {
+        "metaTitle": "Data segregation | Metabase",
+        "metaDescription": "Set strong boundaries around your multi-tenant data: row and column-level security, connection impersonation, database routing and locked parameters, compared."
+      },
+      "sections": [
+        {
+          "__component": "page.compare-grid",
+          "eyebrow": "Data segregation",
+          "heading": "Set strong boundaries around your multi-tenant data",
+          "standfirst": "Methods to fit your configuration preferences and your security requirements.",
+          "tabs": [
+            {
+              "anchor": "rls",
+              "label": "Row and column-level security",
+              "image": "row-and-column-level-security",
+              "lede": "Define rules in Metabase that limit which rows and columns each group can see, based on attributes you set.",
+              "linkLabel": "Learn more about row-level security"
+            },
+            {
+              "anchor": "impersonation",
+              "label": "Connection impersonation",
+              "image": "connection-impersonation",
+              "lede": "Database-managed row-level permissions: Metabase impersonates database roles to enforce what is visible, and still allows SQL editor access.",
+              "linkLabel": "Learn more about connection impersonation"
+            },
+            {
+              "anchor": "routing",
+              "label": "Database routing",
+              "image": "database-routing",
+              "lede": "In one-database-per-tenant setups, Metabase routes each customer’s queries to their own database while shared content stays in a primary one.",
+              "linkLabel": "Learn more about database routing"
+            },
+            {
+              "anchor": "locked",
+              "label": "Locked parameters",
+              "image": "locked-parameters",
+              "lede": "Lightweight restriction for basic embedding, with locked parameters passed from your own app that the viewer cannot change.",
+              "linkLabel": "Learn more about locked parameters"
+            }
+          ],
+          "columns": [
+            {
+              "text": "What does it mean"
+            },
+            {
+              "text": "When to use it"
+            },
+            {
+              "text": "Example use case"
+            },
+            {
+              "text": "Tradeoffs / when it's not a fit"
+            }
+          ],
+          "rows": [
+            {
+              "name": "Row-level security",
+              "sub": "Set in the Metabase UI",
+              "mean": "Define rules inside Metabase that restrict which rows and columns people can see, based on attributes like user ID, group or region. They apply to questions and dashboards, not to native SQL.",
+              "when": [
+                {
+                  "text": "You need granular control over what each person can see and use"
+                },
+                {
+                  "text": "You want control over access driven from the UI"
+                },
+                {
+                  "text": "You need flexible control per group or organisation"
+                }
+              ],
+              "example": "For internal BI: west coast fleet managers at a nationwide logistics firm see only the fleet and delivery data for their own region.",
+              "tradeoffs": [
+                {
+                  "text": "Does not apply to native or SQL queries"
+                },
+                {
+                  "text": "You are on a non-SQL database like Druid, though basic row-level security does work with MongoDB"
+                }
+              ]
+            },
+            {
+              "name": "Connection impersonation",
+              "sub": "DB-enforced RLS",
+              "mean": "Metabase connects as the actual user or role in the database. You define the policies, roles and access controls there, and Metabase passes the identity through with SET ROLE.",
+              "when": [
+                {
+                  "text": "You want the access logic centralised in the database"
+                },
+                {
+                  "text": "Native queries have to respect access control too"
+                },
+                {
+                  "text": "You are more worried about user attributes being misconfigured"
+                },
+                {
+                  "text": "Your DBAs manage security centrally"
+                }
+              ],
+              "example": "Set role-based permissions for users of your HR SaaS app, so a manager only ever sees data for their own direct reports.",
+              "tradeoffs": [
+                {
+                  "text": "Not every database supports it"
+                },
+                {
+                  "text": "Adds complexity in user management and setup"
+                },
+                {
+                  "text": "Does not cache well in Metabase"
+                },
+                {
+                  "text": "Less friendly for smaller teams, or anyone who is not a DBA"
+                }
+              ]
+            },
+            {
+              "name": "Database routing",
+              "sub": "For one-DB-per-tenant setups",
+              "mean": "When tenant data lives in separate databases, routing makes sure each tenant only ever sees results from theirs. Admins build the questions and dashboards once against a primary database.",
+              "when": [
+                {
+                  "text": "You want the strongest isolation there is, which suits compliance and noisy-neighbour problems in multi-tenant embedding"
+                },
+                {
+                  "text": "You are more worried about user attributes being misconfigured"
+                },
+                {
+                  "text": "You want to avoid one tenant’s queries slowing another’s"
+                }
+              ],
+              "example": "Acme's queries go to Acme's database when they open an embedded dashboard in your SaaS app, because the data is separated at the database level.",
+              "tradeoffs": [
+                {
+                  "text": "Unnecessary if you do not need separation at the database level"
+                },
+                {
+                  "text": "Higher operational complexity, if you would rather manage permissions in the Metabase UI"
+                }
+              ]
+            },
+            {
+              "name": "Locked parameters",
+              "sub": null,
+              "mean": "Embed dashboards whose results are already filtered before they are shown, say to org_id = 123. The filter is invisible and cannot be tampered with, and is controlled by attributes from your host app.",
+              "when": [
+                {
+                  "text": "Lightweight tenant isolation for embedded analytics"
+                },
+                {
+                  "text": "Simple access control that is still safe"
+                },
+                {
+                  "text": "Keeping a sensitive filter away from the people reading the dashboard"
+                }
+              ],
+              "example": "On an embedded dashboard in your ecommerce app, show each seller their own sales using a hidden seller ID passed in by the host app.",
+              "tradeoffs": [
+                {
+                  "text": "No user login, SSO or awareness of roles"
+                },
+                {
+                  "text": "Not something to rely on for high-risk data"
+                }
+              ]
+            }
+          ],
+          "ctaHeading": "Try Metabase free for 14 days",
+          "ctaBody": "Keep sensitive, or simply irrelevant, data under wraps. Sandboxing and the rest of these methods are available on Pro and Enterprise plans, and you can try either without talking to anyone first.",
+          "ctaLabel": "Get started",
+          "ctaUrl": "/start"
+        }
+      ]
     }
   ]
 }
