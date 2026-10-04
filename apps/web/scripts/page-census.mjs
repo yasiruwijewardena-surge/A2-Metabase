@@ -60,7 +60,11 @@ function harvest() {
     }));
 
   /* Leaf text, so a paragraph counts once rather than once per ancestor. */
-  const texts = [...document.querySelectorAll('p,li,span,a,button,figcaption,dt,dd,label,blockquote')]
+  /* `small`, `code`, `b` and `strong` carry real copy -- a source card's
+     library name, a shell command, a bolded finding -- and leaving them out of
+     this list reported each of them as missing while they sat on the page. */
+  const texts = [...document.querySelectorAll(
+    'p,li,span,a,button,figcaption,dt,dd,label,blockquote,small,code,b,strong,h5,h6,td,th')]
     .filter((e) => vis(e) && ![...e.children].some((c) => c.textContent.trim()))
     .map((e) => norm(e.textContent))
     .filter((t) => t.length > 1);
@@ -178,8 +182,18 @@ for (const a of o.headings) {
 }
 
 console.log(bar('text blocks'));
-const t = align(o.texts, m.texts, (x) => x.toLowerCase().replace(/[^a-z0-9]/g, ''));
-console.log(`  original ${o.texts.length}, replica ${m.texts.length}`);
+const key = (x) => x.toLowerCase().replace(/[^a-z0-9]/g, '');
+const t = align(o.texts, m.texts, key);
+/* Alignment is a sequence diff, so when the two sides differ a lot in length --
+   here they often do, because this build renders demo content the original
+   loads in an iframe -- it reports text as missing that is present but in a
+   different position. Anything that appears anywhere on the replica is taken
+   out of the missing list and counted as moved instead. */
+const present = new Set(m.texts.map(key));
+const moved = t.missing.filter((x) => present.has(key(x)));
+t.missing = t.missing.filter((x) => !present.has(key(x)));
+console.log(`  original ${o.texts.length}, replica ${m.texts.length}` +
+  (moved.length ? `, ${moved.length} present but in a different order` : ''));
 t.missing.slice(0, 40).forEach((x) => console.log(`  MISSING  "${x.slice(0, 92)}"`));
 if (t.missing.length > 40) console.log(`  ... and ${t.missing.length - 40} more missing`);
 t.extra.slice(0, 10).forEach((x) => console.log(`  EXTRA    "${x.slice(0, 92)}"`));
