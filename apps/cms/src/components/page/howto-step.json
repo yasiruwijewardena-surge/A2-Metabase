@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_page_howto_steps",
+  "info": {
+    "displayName": "How-to step",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_feature_link_cards",
+  "info": {
+    "displayName": "Feature link card",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "pill": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

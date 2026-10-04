@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_page_feature_cards",
+  "info": {
+    "displayName": "Feature card",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.feature-link"
+    },
+    "trailingLabel": {
+      "type": "string"
+    },
+    "trailingUrl": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "collectionName": "components_page_feature_details",
+  "info": {
+    "displayName": "Feature detail",
+    "icon": "puzzle"
+  },
+  "options": {},
+  "attributes": {
+    "badge": {
+      "type": "string"
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "h1": {
+      "type": "string"
+    },
+    "standfirst": {
+      "type": "text"
+    },
+    "showCtas": {
+      "type": "boolean"
+    },
+    "mediaName": {
+      "type": "string"
+    },
+    "mediaHeight": {
+      "type": "integer"
+    },
+    "h2": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.feature-card"
+    },
+    "h2b": {
+      "type": "string"
+    },
+    "linkCards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.feature-link-card"
+    },
+    "howtoTitle": {
+      "type": "string"
+    },
+    "howtoSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.howto-step"
+    },
+    "readDocs": {
+      "type": "string"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.faq-item"
+    },
+    "ctaTitle": {
+      "type": "string"
+    },
+    "ctaBody": {
+      "type": "text"
+    },
+    "ctaLinkLabel": {
+      "type": "string"
+    },
+    "ctaLinkUrl": {
+      "type": "string"
+    }
+  }
+}

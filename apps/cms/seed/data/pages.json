@@ -853,6 +853,979 @@
           "footNote": "Prices and tiers mirror metabase.com. This is a replica built for an assignment — nothing here can be purchased."
         }
       ]
+    },
+    {
+      "title": "Self-service Business Intelligence",
+      "slug": "product/business-intelligence",
+      "seo": {
+        "metaTitle": "Self-service Business Intelligence | Metabase",
+        "metaDescription": "The fastest way to go from database to dashboards: a clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL whenever you need it."
+      },
+      "sections": [
+        {
+          "__component": "page.hero",
+          "eyebrowIcon": "bi",
+          "eyebrow": "Business Intelligence",
+          "heading": "The fastest way to go from database to dashboards",
+          "sub": "A clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL when you need it.",
+          "media": "../../web/public/images/product/business-intelligence/hero.webp",
+          "mediaMobile": "../../web/public/images/product/business-intelligence/hero-mobile.webp",
+          "mediaLabel": "A Metabase dashboard of business metrics",
+          "framed": false,
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "pillars": [
+            {
+              "icon": "rocket",
+              "title": "Quick to set up",
+              "body": "Skip the ETL and the modelling layer to begin with. Layer in structure later."
+            },
+            {
+              "icon": "cloud",
+              "title": "Self-host or deploy on Metabase Cloud",
+              "body": "Go hands-free on our cloud, run it on your own hardware, or air-gap it entirely."
+            },
+            {
+              "icon": "permissions",
+              "title": "Secure data sharing",
+              "body": "Share a dashboard with the whole company, or one row with one customer."
+            }
+          ]
+        },
+        {
+          "__component": "page.split",
+          "heading": "You could be querying 5 minutes from now",
+          "lede": "Regardless of what state your DB is in.",
+          "media": "../../web/public/images/home/query-builder.mp4",
+          "mediaPoster": "../../web/public/images/home/query-builder-poster.webp",
+          "mediaLabel": "Building a question in the visual query builder",
+          "frameTheme": "blue",
+          "caption": "Watch how quick and easy it is to go from zero to chart",
+          "bullets": [
+            {
+              "title": "Low-lift to get started",
+              "body": "Write your config up in a single YAML file, or tidy away things like experimental column headers right in the admin UI."
+            },
+            {
+              "title": "Curate what you expose",
+              "body": "Choose the tables people see and edit their metadata in the UI, so self-service answers come out right."
+            },
+            {
+              "title": "Start simple before your first data hire joins the team",
+              "body": "Add modelling layers as the data grows and more data-focused people come onboard."
+            }
+          ]
+        },
+        {
+          "__component": "page.accordion",
+          "heading": "Avoid repeated requests with reports anyone can run",
+          "sub": "Let people dive deeper into data on their own without the hand-holding.",
+          "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-1.webp",
+          "mediaLabel": "A dashboard being filtered through a drill-through menu",
+          "items": [
+            {
+              "icon": "ai",
+              "badge": "Metabot",
+              "title": "Ask Metabot AI",
+              "body": "Chat with your database to get answers in natural language, so the people who need a number can go and get it themselves.",
+              "linkLabel": "Chat with your database",
+              "linkUrl": "/features/metabase-ai"
+            },
+            {
+              "icon": "drill",
+              "title": "Click on charts to drill into data",
+              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it."
+            },
+            {
+              "icon": "query",
+              "title": "Query data with or without SQL",
+              "body": "Put queries together intuitively in the visual query builder without writing any SQL, then drop into the editor when a question earns it.",
+              "linkLabel": "visual query builder",
+              "linkUrl": "/features/query-builder"
+            },
+            {
+              "icon": "services",
+              "title": "Make content trustworthy and easy to find",
+              "body": "Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections."
+            },
+            {
+              "icon": "csv",
+              "title": "Put the most valuable data in front of people",
+              "body": "Schedule reports out to anyone, inside the organisation or outside it, over Slack or email."
+            }
+          ]
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 0
+        },
+        {
+          "__component": "page.split",
+          "heading": "Make sure people only see what they need to",
+          "lede": "Granular permissions keep people safe from accidentally seeing — or breaking — data that was never theirs to touch.",
+          "media": "../../web/public/images/product/business-intelligence/permissions2.mp4",
+          "mediaPoster": "../../web/public/images/product/business-intelligence/permissions2-poster.webp",
+          "mediaLabel": "Setting table, row and column permissions for a group",
+          "frameTheme": "grey",
+          "bullets": [
+            {
+              "title": "Limit access at the table, row or column level",
+              "body": "Lock down the sensitive tables, fields and columns while people carry on using the rest of the data."
+            },
+            {
+              "title": "Manage role-based permissions with SSO",
+              "body": "Set visibility by role — marketing sees one thing, support another — with view and edit granted separately."
+            },
+            {
+              "title": "Keep track of who's doing what, when",
+              "body": "Set alerts on access and downloads, and read the rest back out of usage analytics."
+            }
+          ]
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 1
+        },
+        {
+          "__component": "page.band",
+          "heading": "Works with your stack for live visualizations and reports, not extracts",
+          "__subRich": [
+            {
+              "t": "Metabase is a visualization and querying layer that sits on top of the database you already run, across "
+            },
+            {
+              "t": "20 data sources",
+              "href": "/data-sources"
+            },
+            {
+              "t": ", so the numbers people read are the numbers that are in there right now — not the ones that were true when last night's export finished."
+            }
+          ],
+          "media": "seed:product-pages/works-with-your-stack.webp",
+          "mediaLabel": "Metabase connected to a warehouse and several application databases",
+          "linkLabel": "Learn more about how Metabase works with your database",
+          "linkUrl": "/data-sources",
+          "centred": true
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 2
+        },
+        {
+          "__component": "page.closing",
+          "heading": "Ready to get started?",
+          "sub": "Visualize your data in minutes. Let non-technical teammates explore and share what they find, with no queue behind your data team.",
+          "media": "../../web/public/images/product/business-intelligence/application-screenshot.webp",
+          "mediaLabel": "The Metabase application, showing a collection of dashboards"
+        }
+      ]
+    },
+    {
+      "title": "Dashboards and reporting",
+      "slug": "features/analytics-dashboards",
+      "seo": {
+        "metaTitle": "Analytics dashboards and reporting | Metabase",
+        "metaDescription": "Build interactive dashboards from saved questions and filters, explain them in Documents, and share them by link, email, Slack or embed."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "dashboard",
+          "eyebrow": "Dashboards and reporting",
+          "h1": "Dashboards that actually get used. Insights, explained. Data your whole team can act on.",
+          "standfirst": "Whether you are tracking core SaaS metrics or sending the monthly update that explains why a number moved, Metabase gives your team somewhere to build reporting and somewhere to read it.",
+          "showCtas": true,
+          "mediaHeight": 401,
+          "h2": "Interactive, collaborative, and built for data pros and non-technical people",
+          "sub": "Straightforward tools for everyone to create, structure, and use dashboards and reports on their own.",
+          "cards": [
+            {
+              "icon": "Type=Dashboard",
+              "title": "Interactive dashboards",
+              "body": "Assemble a dashboard out of saved questions and filters to follow the numbers that move fastest, then let people change the date range or the segment themselves rather than queueing for someone to rebuild it. Charts respond to clicks, so the follow-up question is usually one menu away, and you can hand the whole thing to a team without handing over your afternoon.",
+              "links": [],
+              "trailingLabel": "Learn more about dashboards in Metabase.",
+              "trailingUrl": "/docs/latest/dashboards/start"
+            },
+            {
+              "icon": "model",
+              "title": "Documents",
+              "body": "Put the visualizations next to the writing that explains them, so a chart turns up with the reason it matters attached instead of on its own. Documents are the difference between sending a number and sending an argument, which is what most monthly updates are really trying to be. Write once, embed the live charts, and let the text update around them.",
+              "links": [],
+              "trailingLabel": "Learn more about Documents in Metabase.",
+              "trailingUrl": "/docs/latest/documents/start"
+            },
+            {
+              "icon": "share",
+              "title": "Sharing data with your team and customers",
+              "body": "Send dashboards to where people already are rather than asking them to come and find one. A direct link, a scheduled email, a Slack message on a Monday morning, or an embed inside your own product for the customers who should only see their own rows. Each route carries the same permissions, so sharing never quietly widens access.",
+              "links": [],
+              "trailingLabel": "Learn more about sharing in Metabase.",
+              "trailingUrl": "/learn/metabase-basics/administration/administration-and-operation/guide-to-sharing-data"
+            }
+          ],
+          "h2b": "Get better at building analytics dashboards",
+          "linkCards": [
+            {
+              "pill": "Webinar",
+              "title": "Building Metabase dashboards like a pro",
+              "url": "/events/building-metabase-dashboards-like-a-pro"
+            },
+            {
+              "pill": "Video demo",
+              "title": "From zero to dashboard in 6 mins",
+              "url": "/demo"
+            },
+            {
+              "pill": "Learn",
+              "title": "Dashboard fundamentals",
+              "url": "/learn/metabase-basics/querying-and-dashboards/dashboards"
+            }
+          ],
+          "howtoSteps": [],
+          "readDocs": "/docs/latest/dashboards/start",
+          "faqs": [
+            {
+              "question": "How do dashboards help teams make data-driven decisions?",
+              "answer": "A dashboard puts the handful of numbers a team actually steers by in one place, refreshed from the database rather than pasted in. That turns the weekly argument about whose figures are right into a conversation about what to do next."
+            },
+            {
+              "question": "What's the best way to share a dashboard with non-technical teammates?",
+              "answer": "Send a link or set up a subscription that emails or Slacks it on a schedule. Neither asks the recipient to learn the tool, and both keep the permissions you already set, so nobody sees more than they should."
+            },
+            {
+              "question": "Can I create data reports that tell a story, not just show charts?",
+              "answer": "That is what Documents are for. You write the explanation and embed the live visualizations inside it, so the narrative and the numbers stay together and the numbers stay current."
+            },
+            {
+              "question": "What's the difference between a dashboard and a data report?",
+              "answer": "A dashboard is for monitoring: the same questions, answered again whenever you open it. A report is for explaining a particular thing once, with the writing that makes sense of it."
+            },
+            {
+              "question": "How do I set up self-service analytics for my team?",
+              "answer": "Curate the tables people see, add the metadata that makes the column names mean something, and give them the query builder. Most questions then get answered without reaching you at all."
+            },
+            {
+              "question": "How can I automate sharing dashboards and reports in Metabase?",
+              "answer": "Dashboard subscriptions send a dashboard by email or Slack on a schedule, and alerts fire when a result crosses a threshold, so people hear about a change without watching for it."
+            }
+          ],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Give your team the open source reporting tool they will actually enjoy using.",
+          "mediaName": "dashboard-docs"
+        }
+      ]
+    },
+    {
+      "title": "Collections and verified items",
+      "slug": "features/collections",
+      "seo": {
+        "metaTitle": "Collections and verified items | Metabase",
+        "metaDescription": "Organize models, questions and dashboards into collections, set permissions per group, and mark the reviewed ones official."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "collections",
+          "eyebrow": "Collections and verified items",
+          "h1": "Keep things organized",
+          "standfirst": "Bring some structure to your Metabase by tucking related models, questions and dashboards together into collections, and make the good ones easy to find.",
+          "showCtas": false,
+          "mediaHeight": 380,
+          "h2": "Everything in its right place",
+          "sub": "As everyone explores and adds more to your Metabase, things get noisy. These are the tools that keep it in check.",
+          "cards": [
+            {
+              "icon": "collections",
+              "title": "Collections",
+              "body": "Give each team its own corner of Metabase and bundle everything they need into it, with sub-collections when one corner is not enough.",
+              "links": []
+            },
+            {
+              "icon": "eye",
+              "title": "Collection permissions",
+              "body": "Grant view access, curate access, or none at all, and set it separately on a sub-collection when the parent is too broad.",
+              "links": []
+            },
+            {
+              "icon": "medal",
+              "title": "Official collections",
+              "body": "Admins can mark a collection official, so people can tell at a glance which numbers have been through review and which are someone’s working draft.",
+              "links": []
+            },
+            {
+              "icon": "question-blue",
+              "title": "Verified questions",
+              "body": "Put a blue check on the questions and models that have been looked over, so people can tell what has been reviewed, and let search rank the verified ones above everything else when someone goes hunting.",
+              "links": []
+            },
+            {
+              "icon": "pin",
+              "title": "Pin important items",
+              "body": "Keep the dashboards people actually open at the top of the collection, instead of three screens down an alphabetical list.",
+              "links": []
+            },
+            {
+              "icon": "person",
+              "title": "Personal collection",
+              "body": "Somewhere to think out loud. Your personal collection is yours alone until you decide to move something out of it.",
+              "links": []
+            }
+          ],
+          "h2b": "More about collections and verified items",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Exploration and organization",
+              "url": "/docs/latest/exploration-and-organization/collections"
+            },
+            {
+              "pill": "Documentation",
+              "title": "Collection permissions",
+              "url": "/docs/latest/permissions/collections"
+            },
+            {
+              "pill": "Learn",
+              "title": "Keeping your analytics organized",
+              "url": "/learn/metabase-basics/administration/administration-and-operation/same-page"
+            }
+          ],
+          "howtoTitle": "How to create a collection, set permissions, and mark it as official",
+          "howtoSteps": [
+            {
+              "text": "Create one with <b>New &gt; Collection</b>, then move in the questions and dashboards that belong together."
+            },
+            {
+              "text": "Or start from a question: save it, and either pick a collection or create one from the bottom of the same menu."
+            },
+            {
+              "text": "If you are an admin, set and adjust permissions per group from the <b>…</b> menu at the top right."
+            },
+            {
+              "text": "Admins on a Pro or Enterprise plan can mark the collection <b>Official</b> from that same menu."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase for free for 14 days",
+          "ctaBody": "Collections come with every plan. Marking them official needs Pro or Enterprise.",
+          "mediaName": "collections"
+        }
+      ]
+    },
+    {
+      "title": "Drill-through",
+      "slug": "features/drill-through",
+      "seo": {
+        "metaTitle": "Drill-through and interactivity | Metabase",
+        "metaDescription": "Click any chart to filter it, view the underlying records, break it out by another dimension, cross-filter a dashboard, or x-ray a table."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "magnifier",
+          "eyebrow": "Drill-through",
+          "h1": "Pull threads in your data without even asking a question",
+          "standfirst": "Drill-throughs give people an intuitive place to start: click a bar, a slice or a state and Metabase offers the next question rather than waiting to be asked.",
+          "showCtas": true,
+          "mediaHeight": 380,
+          "h2": "Analysis on (almost) autopilot",
+          "sub": "Click a chart, a model or a question to filter it, see the records behind it, break it out by another dimension, or generate a whole dashboard about it.",
+          "cards": [
+            {
+              "icon": "magnifying-glass",
+              "title": "Zoom in",
+              "body": "Find out why a number moved around a particular date by clicking and dragging across the part of the chart that looks interesting, and Metabase re-runs the question zoomed in on it.",
+              "links": []
+            },
+            {
+              "icon": "servers",
+              "title": "View these records",
+              "body": "Get to the specifics: click through to a table of the individual rows that make up the point you were looking at.",
+              "links": []
+            },
+            {
+              "icon": "bifurcate",
+              "title": "Breakout",
+              "body": "Split the same measure by another dimension — time, location, category — without going back to the query builder.",
+              "links": []
+            },
+            {
+              "icon": "filter",
+              "title": "Filters",
+              "body": "Slice it a different way by clicking to apply a filter, and see what is actually high or low once the rows nobody asked about are out of the way.",
+              "links": []
+            },
+            {
+              "icon": "click",
+              "title": "Custom click behavior",
+              "body": "Decide where the next click goes: a related dashboard, a saved question, or a URL in another system entirely.",
+              "links": []
+            },
+            {
+              "icon": "filter-plus",
+              "title": "Cross-filter",
+              "body": "Wire a card to the dashboard’s filter widgets, so clicking a state on a map narrows every other card to it.",
+              "links": []
+            },
+            {
+              "icon": "action-blue",
+              "title": "X-ray",
+              "body": "Generate a whole dashboard of questions about a table or a single record automatically, then throw away the cards that were not interesting and keep the handful that turned out to be worth watching.",
+              "links": []
+            }
+          ],
+          "h2b": "More info on drill-throughs and interactivity",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Interactive dashboards",
+              "url": "/docs/latest/dashboards/interactive"
+            },
+            {
+              "pill": "Learn",
+              "title": "Drill-through on charts",
+              "url": "/docs/latest/questions/visualizations/drill-through"
+            },
+            {
+              "pill": "Event",
+              "title": "A tour of Metabase",
+              "url": "/events/metabase-for-beginners"
+            }
+          ],
+          "howtoTitle": "How to use drill-throughs on dashboards and charts",
+          "howtoSteps": [
+            {
+              "text": "Find a dashboard, chart or model you want to know more about."
+            },
+            {
+              "text": "Click anywhere on a chart built with the query builder — a state on a map, a bar in a bar chart, a slice of a pie — and pick whichever option from the drill-through menu looks like the next question."
+            },
+            {
+              "text": "That is more or less it. Go wild."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Make it easier to get the useful bits out of your data with menus people can just click.",
+          "ctaLinkLabel": "Drill-throughs are on every plan",
+          "ctaLinkUrl": "/pricing",
+          "mediaName": "breakout-filter"
+        }
+      ]
+    },
+    {
+      "title": "Permissions",
+      "slug": "features/permissions",
+      "seo": {
+        "metaTitle": "Permissions | Metabase",
+        "metaDescription": "Granular permissions by group, down to the row and column, with data sandboxing, collection permissions and download controls."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "permissions",
+          "eyebrow": "Permissions",
+          "h1": "Fine-grained control over what people can see and do with data",
+          "standfirst": "Granular governance over what each group can reach, across your internal and your embedded analytics, right down to the row and the column.",
+          "showCtas": true,
+          "mediaHeight": 381,
+          "h2": "From top secret to unrestricted access",
+          "sub": "With several layers in between. Decide what people see per database, schema, table, row or column.",
+          "cards": [
+            {
+              "icon": "person",
+              "title": "Manage permissions by group",
+              "body": "People can belong to more than one group. Where groups overlap, the most permissive setting is the one that applies, which keeps the rules predictable.",
+              "links": []
+            },
+            {
+              "icon": "servers",
+              "title": "Row and column level permissions",
+              "body": "Use data segregation to scope a table to one tenant, so the same saved question returns only the rows that belong to whoever ran it.",
+              "links": [
+                {
+                  "label": "Data segregation",
+                  "url": "/features/data-segregation"
+                }
+              ]
+            },
+            {
+              "icon": "column",
+              "title": "Database-managed row-level permissions",
+              "body": "Map user attributes onto roles your database already defines, and let the privileges you maintain there carry straight through.",
+              "links": []
+            },
+            {
+              "icon": "collections",
+              "title": "Collection permissions",
+              "body": "Decide which groups can view or edit the questions, dashboards and models inside a collection.",
+              "links": []
+            },
+            {
+              "icon": "click",
+              "title": "Application permissions",
+              "body": "Grant a group some administrative powers without making everyone an admin.",
+              "links": [
+                {
+                  "label": "Pro",
+                  "url": "/pricing"
+                },
+                {
+                  "label": "Enterprise",
+                  "url": "/pricing"
+                }
+              ]
+            },
+            {
+              "icon": "share",
+              "title": "Download results",
+              "body": "Control whether a group can export results from a given data source at all, and in what form.",
+              "links": []
+            }
+          ],
+          "h2b": "More info on managing permissions",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Introduction to permissions",
+              "url": "/docs/latest/permissions/introduction"
+            },
+            {
+              "pill": "Documentation",
+              "title": "Data segregation",
+              "url": "/features/data-segregation"
+            },
+            {
+              "pill": "Learn",
+              "title": "Guide to permissions",
+              "url": "/learn/metabase-basics/administration/permissions/data-permissions"
+            }
+          ],
+          "howtoSteps": [],
+          "faqs": [],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Get full control over how your data is reached and used, on every plan.",
+          "mediaName": "data-sandbox"
+        }
+      ]
+    },
+    {
+      "title": "Query builder",
+      "slug": "features/query-builder",
+      "seo": {
+        "metaTitle": "Query builder | Metabase",
+        "metaDescription": "Build questions from clicks and menus: filters, summaries, joins, custom expressions and multi-level aggregation, with no SQL required."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "query-builder-icon",
+          "eyebrow": "Query builder",
+          "h1": "Get answers in a few clicks with the query builder",
+          "standfirst": "The query builder lets anyone — including your less data-savvy teammates — put a question together from clicks and menu choices, with no SQL anywhere in sight.",
+          "showCtas": true,
+          "mediaHeight": 381,
+          "h2": "Analytics for everyone",
+          "sub": "A point-and-click tool for people who do not write SQL, and a shortcut for the people who do.",
+          "cards": [
+            {
+              "icon": "filter",
+              "title": "Filters and summarizations",
+              "body": "Narrow the data and group it from a dropdown, without having to remember what the column was called.",
+              "links": []
+            },
+            {
+              "icon": "join",
+              "title": "Joins",
+              "body": "Ask questions about data that lives across more than one table or model, and let Metabase work out the keys where it can.",
+              "links": []
+            },
+            {
+              "icon": "formula",
+              "title": "Custom expressions",
+              "body": "Go past the basics with expressions that work the way spreadsheet formulas do, so the syntax is already familiar.",
+              "links": []
+            },
+            {
+              "icon": "multi-level",
+              "title": "Multi-level aggregation",
+              "body": "Summarize a summary. Stack another filter or grouping on top of a result you have already aggregated.",
+              "links": []
+            },
+            {
+              "icon": "play",
+              "title": "Preview results",
+              "body": "Check what a filter is doing as you add it, without running the whole query against the whole table.",
+              "links": []
+            },
+            {
+              "icon": "question-blue-circle-outline",
+              "title": "Question history",
+              "body": "Let anyone edit a question while Metabase keeps the versions, so a change that turns out wrong is one click from being undone.",
+              "links": []
+            }
+          ],
+          "h2b": "More about asking questions in Metabase",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Asking questions",
+              "url": "/docs/latest/questions/introduction"
+            },
+            {
+              "pill": "Learn",
+              "title": "Using the query builder",
+              "url": "/learn/metabase-basics/querying-and-dashboards/questions"
+            },
+            {
+              "pill": "SQL editor",
+              "title": "Writing SQL",
+              "url": "/features/sql-editor"
+            }
+          ],
+          "howtoTitle": "How to ask a question with the query builder",
+          "howtoSteps": [
+            {
+              "text": "Click <b>New &gt; Question</b> at the top right of your Metabase to open the query builder. You can also get to it from a saved question by clicking the editor icon, which is quicker than starting again when all you want is a small change to something that already exists."
+            },
+            {
+              "text": "Pick the table or model you want to ask about — say the <b>Orders</b> table from the sample data that ships with Metabase."
+            },
+            {
+              "text": "Click into <b>Filters</b>, choose <b>Created at</b>, and select <b>Last 12 months</b>."
+            },
+            {
+              "text": "Click <b>+</b> to add another filter. This time choose <b>Total</b>, then pick <b>Greater than</b> from the dropdown, and enter a number to cut off the small orders."
+            },
+            {
+              "text": "Click into <b>Summarize</b>, choose <b>Sum of…</b>, and pick <b>Taxes</b> as the column to add up."
+            },
+            {
+              "text": "Use the <b>by</b> box beside it to group the results. Start with <b>Product &gt; Category</b>."
+            },
+            {
+              "text": "Click <b>+</b> to group by <b>Created at</b> as well, and choose <b>month</b>."
+            },
+            {
+              "text": "Hit <b>Visualize</b>. You get a chart showing how tax splits across product categories on orders, month by month, which is the question you just described."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase for free for 14 days",
+          "ctaBody": "The query builder is on every plan, and you can embed it for customer-facing analytics on Pro or Enterprise.",
+          "mediaName": "query-builder1"
+        }
+      ]
+    },
+    {
+      "title": "SQL editor",
+      "slug": "features/sql-editor",
+      "seo": {
+        "metaTitle": "SQL editor | Metabase",
+        "metaDescription": "Write native SQL with parameters, reusable snippets, autocomplete and an inline data reference, and turn the results into charts."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "sql-editor",
+          "eyebrow": "SQL editor",
+          "h1": "Get more detailed results with SQL queries",
+          "standfirst": "For the analysts, scientists, engineers and everyone else who would rather just write the query. The SQL editor gets out of your way, and adds a few things worth having.",
+          "showCtas": true,
+          "mediaHeight": 381,
+          "h2": "SQL queries with a few extra bells and whistles",
+          "sub": "The flexibility and control of writing native queries, made a little more comfortable.",
+          "cards": [
+            {
+              "icon": "data",
+              "title": "SQL parameters",
+              "body": "Turn a query into a template by adding variables, so the same SQL answers the question for any date range or customer.",
+              "links": []
+            },
+            {
+              "icon": "servers",
+              "title": "SQL snippets",
+              "body": "Save and share the bits of SQL you keep retyping, and update them in one place when the definition changes.",
+              "links": []
+            },
+            {
+              "icon": "filter",
+              "title": "Dashboard filter",
+              "body": "Wire a SQL question up to a dashboard filter, as long as the query exposes a variable for it to drive.",
+              "links": [
+                {
+                  "label": "Pro",
+                  "url": "/pricing"
+                },
+                {
+                  "label": "Enterprise",
+                  "url": "/pricing"
+                }
+              ]
+            },
+            {
+              "icon": "xray",
+              "title": "Autocomplete",
+              "body": "Write faster with completion for keywords, tables and columns, so you are not switching tabs to check a name.",
+              "links": []
+            },
+            {
+              "icon": "columns",
+              "title": "Data reference",
+              "body": "Check the data reference in the sidebar for a reminder of what a table holds and how it connects to the others.",
+              "links": []
+            },
+            {
+              "icon": "model",
+              "title": "Start from a model",
+              "body": "Use a model as the jumping-off point for something more complicated, instead of restating its logic in every query.",
+              "links": []
+            }
+          ],
+          "h2b": "More about asking questions in Metabase",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Writing SQL",
+              "url": "/docs/latest/questions/native-editor/writing-sql"
+            },
+            {
+              "pill": "Learn",
+              "title": "SQL best practices",
+              "url": "/learn/sql-questions"
+            },
+            {
+              "pill": "Features",
+              "title": "Query builder",
+              "url": "/features/query-builder"
+            }
+          ],
+          "howtoTitle": "How to ask a question with SQL",
+          "howtoSteps": [
+            {
+              "text": "Click <b>New &gt; SQL Query</b> at the top of Metabase. You will not see this option at all if your group has not been given native query access, which is deliberate — it is the setting that decides who gets to write raw SQL."
+            },
+            {
+              "text": "Write your query. If you are here, you know what to do — we will stay out of the way."
+            },
+            {
+              "text": "Click the run button to see the results below."
+            },
+            {
+              "text": "To turn them into a chart, click <b>Visualization</b> and pick whatever fits the shape of the data, clicking through the options to see each one applied."
+            },
+            {
+              "text": "Save it, put it in a collection or on a dashboard, share it, and carry on."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Get more granular access to your data with the SQL editor.",
+          "ctaLinkLabel": "included on all plans",
+          "ctaLinkUrl": "/pricing",
+          "mediaName": "sql-editor"
+        }
+      ]
+    },
+    {
+      "title": "Usage analytics",
+      "slug": "features/usage-analytics",
+      "seo": {
+        "metaTitle": "Usage analytics | Metabase",
+        "metaDescription": "Audit logs, usage statistics and prebuilt dashboards showing who used what and when, plus models for building your own reports."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "usage-analytics",
+          "eyebrow": "Usage analytics",
+          "h1": "Total visibility into what's going on in your Metabase",
+          "standfirst": "A collection of dashboards, questions and models for understanding how your data is actually being used, how your instance is performing, and who changed what.",
+          "showCtas": true,
+          "mediaHeight": 380,
+          "h2": "Know who did what, when",
+          "sub": "Durable audit logs, usage statistics and reports you can monitor, investigate and get notified about when you need to.",
+          "cards": [
+            {
+              "icon": "Type=Trend",
+              "title": "Usage reports, configuration changes and audit logs",
+              "body": "Comprehensive records of how your Metabase is being used, by whom and when, which is usually what compliance is asking for.",
+              "links": []
+            },
+            {
+              "icon": "Type=Dashboard",
+              "title": "Interactive pre-defined dashboards",
+              "body": "Overall trends without building anything yourself: which dashboards get viewed most, which questions run slowest, who is active this month and who has quietly stopped logging in at all.",
+              "links": []
+            },
+            {
+              "icon": "model",
+              "title": "Models to create custom reports",
+              "body": "Your usage and audit data arrives already modelled, so asking a new question of it does not mean learning a new schema.",
+              "links": []
+            },
+            {
+              "icon": "Type=Alert",
+              "title": "Set up subscriptions and alerts",
+              "body": "Get a regular digest, or an alarm when something changes unexpectedly and you would rather know now than at the end of the month.",
+              "links": []
+            },
+            {
+              "icon": "Type=Dashboard",
+              "title": "Customize prebuilt dashboards",
+              "body": "The audit logs are read-only by default so they stay trustworthy and nobody can quietly edit the record, but you can duplicate any dashboard into your own collection and reshape that copy freely.",
+              "links": []
+            },
+            {
+              "icon": "eye",
+              "title": "Manage access to usage analytics",
+              "body": "Give view or edit access where it is needed, without handing out admin to everyone who wants a number.",
+              "links": []
+            }
+          ],
+          "h2b": "Get the most out of usage analytics",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Usage and performance tools",
+              "url": "/docs/latest/usage-and-performance-tools/usage-analytics"
+            },
+            {
+              "pill": "Release announcement",
+              "title": "Learn what's happening in your Metabase…using Metabase",
+              "url": "/releases/metabase-48"
+            },
+            {
+              "pill": "Video",
+              "title": "See usage analytics in action",
+              "url": "/demo"
+            }
+          ],
+          "howtoTitle": "How to use usage analytics",
+          "howtoSteps": [
+            {
+              "text": "Open the <b>Metabase analytics</b> collection in the left sidebar. Admins see it by default; others need to be given access."
+            },
+            {
+              "text": "Open <b>Metabase metrics</b>, pick a date range, and filter by the user groups you have. You could narrow it to one team to see which dashboards they actually open, and which ones nobody has touched since they were built."
+            },
+            {
+              "text": "Set up a dashboard subscription so the answer arrives every week without anyone going to look for it."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Tune your internal analytics and your embedding around how they are really used.",
+          "ctaLinkLabel": "Usage analytics is on Pro and Enterprise plans",
+          "ctaLinkUrl": "/pricing",
+          "mediaName": "usage-analytics"
+        }
+      ]
+    },
+    {
+      "title": "White-label analytics",
+      "slug": "features/white-label-analytics",
+      "seo": {
+        "metaTitle": "White-label analytics | Metabase",
+        "metaDescription": "Fully branded embedded analytics: set logo, fonts and colours with no code, or compose React components with the Modular Embedding SDK."
+      },
+      "sections": [
+        {
+          "__component": "page.feature-detail",
+          "badge": "white-labeled-analytics",
+          "eyebrow": "White-label analytics",
+          "h1": "White-label analytics for a seamless, branded reporting experience",
+          "standfirst": "Put fully branded analytics inside your SaaS app. Restyle the dashboards, charts and reports with no code, or go further with the React SDK.",
+          "showCtas": true,
+          "mediaHeight": 380,
+          "h2": "Key features of our white-labeled embedded analytics",
+          "sub": "Customization that covers what you need now, with developer tooling for when that changes.",
+          "cards": [
+            {
+              "icon": "medal",
+              "title": "Branded in-app reporting",
+              "body": "Set the name, the logo, the fonts, and the UI and chart colours, so the reporting area reads as a part of your product rather than a window into someone else’s.",
+              "links": []
+            },
+            {
+              "icon": "eye",
+              "title": "Hide all traces of Metabase",
+              "body": "Point help links at your own documentation, swap the illustrations, and leave nothing that says this came from somewhere else.",
+              "links": []
+            },
+            {
+              "icon": "click",
+              "title": "No-code customization",
+              "body": "Restyle the embedded views through configuration alone, without putting a front-end engineer on it.",
+              "links": []
+            },
+            {
+              "icon": "action-blue",
+              "title": "Go beyond white-labeling",
+              "body": "Use Modular Embedding or the SDK to place individual React components exactly where your own layout wants them, rather than fitting your page around one big embedded frame.",
+              "links": [
+                {
+                  "label": "Modular Embedding SDK",
+                  "url": "/product/embedded-analytics-sdk"
+                }
+              ]
+            },
+            {
+              "icon": "formula",
+              "title": "Dynamic theming",
+              "body": "Style each component with CSS variables, so switching theme at runtime is a variable change rather than a rebuild.",
+              "links": []
+            },
+            {
+              "icon": "person",
+              "title": "Customized UX",
+              "body": "Override menu names, button labels and placement to build click-paths that match how your customers already work.",
+              "links": []
+            }
+          ],
+          "h2b": "Get started with white-label analytics",
+          "linkCards": [
+            {
+              "pill": "Documentation",
+              "title": "Appearance and branding",
+              "url": "/docs/latest/configuring-metabase/appearance"
+            },
+            {
+              "pill": "Features",
+              "title": "Embedded analytics SDK",
+              "url": "/product/embedded-analytics-sdk"
+            },
+            {
+              "pill": "Learn",
+              "title": "Embedding overview",
+              "url": "/learn/metabase-basics/embedding/overview"
+            }
+          ],
+          "howtoTitle": "How to set up white-label analytics in your app",
+          "howtoSteps": [
+            {
+              "text": "Choose your white-labeling method. Use Modular Embedding for a quick implementation, or the Modular Embedding SDK when you want control over how the components are composed inside your own layout."
+            },
+            {
+              "text": "Add your branding — logo, colours, fonts, and whatever custom UI elements you need."
+            },
+            {
+              "text": "Define permissions, and set up authentication so each customer only ever sees their own data."
+            },
+            {
+              "text": "Refine the user experience. With the SDK you can override menu names, button placement and tooltips, so the analytics feel native to your app."
+            },
+            {
+              "text": "Deploy, test with internal users, and iterate on the styling from there."
+            }
+          ],
+          "faqs": [],
+          "ctaTitle": "Try Metabase 14 days free",
+          "ctaBody": "Get to a proof of concept with white-labeled analytics quickly.",
+          "ctaLinkLabel": "White-labeling is on Pro and Enterprise plans",
+          "ctaLinkUrl": "/pricing",
+          "mediaName": "white-label-analytics"
+        }
+      ]
     }
   ]
 }

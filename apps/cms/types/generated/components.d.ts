@@ -168,6 +168,18 @@ export interface PageEventsIndex extends Struct.ComponentSchema {
   };
 }
 
+export interface PageFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_page_faq_items';
+  info: {
+    displayName: 'FAQ item';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.Text;
+    question: Schema.Attribute.String;
+  };
+}
+
 export interface PageFaqList extends Struct.ComponentSchema {
   collectionName: 'components_page_faq_lists';
   info: {
@@ -178,6 +190,52 @@ export interface PageFaqList extends Struct.ComponentSchema {
     faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
     heading: Schema.Attribute.String;
     standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageFeatureCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_feature_cards';
+  info: {
+    displayName: 'Feature card';
+    icon: 'layer';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    links: Schema.Attribute.Component<'page.feature-link', true>;
+    title: Schema.Attribute.String;
+    trailingLabel: Schema.Attribute.String;
+    trailingUrl: Schema.Attribute.String;
+  };
+}
+
+export interface PageFeatureDetail extends Struct.ComponentSchema {
+  collectionName: 'components_page_feature_details';
+  info: {
+    displayName: 'Feature detail';
+    icon: 'puzzle';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    cards: Schema.Attribute.Component<'page.feature-card', true>;
+    ctaBody: Schema.Attribute.Text;
+    ctaLinkLabel: Schema.Attribute.String;
+    ctaLinkUrl: Schema.Attribute.String;
+    ctaTitle: Schema.Attribute.String;
+    eyebrow: Schema.Attribute.String;
+    faqs: Schema.Attribute.Component<'page.faq-item', true>;
+    h1: Schema.Attribute.String;
+    h2: Schema.Attribute.String;
+    h2b: Schema.Attribute.String;
+    howtoSteps: Schema.Attribute.Component<'page.howto-step', true>;
+    howtoTitle: Schema.Attribute.String;
+    linkCards: Schema.Attribute.Component<'page.feature-link-card', true>;
+    mediaHeight: Schema.Attribute.Integer;
+    mediaName: Schema.Attribute.String;
+    readDocs: Schema.Attribute.String;
+    showCtas: Schema.Attribute.Boolean;
+    standfirst: Schema.Attribute.Text;
+    sub: Schema.Attribute.Text;
   };
 }
 
@@ -206,6 +264,31 @@ export interface PageFeatureGrid extends Struct.ComponentSchema {
     heading: Schema.Attribute.String;
     items: Schema.Attribute.Component<'page.pillar-card', true>;
     standfirst: Schema.Attribute.Text;
+  };
+}
+
+export interface PageFeatureLink extends Struct.ComponentSchema {
+  collectionName: 'components_page_feature_links';
+  info: {
+    displayName: 'Feature link';
+    icon: 'link';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface PageFeatureLinkCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_feature_link_cards';
+  info: {
+    displayName: 'Feature link card';
+    icon: 'link';
+  };
+  attributes: {
+    pill: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -278,6 +361,17 @@ export interface PageHomeHero extends Struct.ComponentSchema {
     tourMedia: Schema.Attribute.Media<'images', true>;
     tourUrl: Schema.Attribute.String;
     trustLabel: Schema.Attribute.String;
+  };
+}
+
+export interface PageHowtoStep extends Struct.ComponentSchema {
+  collectionName: 'components_page_howto_steps';
+  info: {
+    displayName: 'How-to step';
+    icon: 'bulletList';
+  };
+  attributes: {
+    text: Schema.Attribute.Text;
   };
 }
 
@@ -628,11 +722,17 @@ declare module '@strapi/strapi' {
       'page.collection-list': PageCollectionList;
       'page.demo': PageDemo;
       'page.events-index': PageEventsIndex;
+      'page.faq-item': PageFaqItem;
       'page.faq-list': PageFaqList;
+      'page.feature-card': PageFeatureCard;
+      'page.feature-detail': PageFeatureDetail;
       'page.feature-grid': PageFeatureGrid;
+      'page.feature-link': PageFeatureLink;
+      'page.feature-link-card': PageFeatureLinkCard;
       'page.final-cta': PageFinalCta;
       'page.hero': PageHero;
       'page.home-hero': PageHomeHero;
+      'page.howto-step': PageHowtoStep;
       'page.panel': PagePanel;
       'page.panel-group': PagePanelGroup;
       'page.pillar': PagePillar;

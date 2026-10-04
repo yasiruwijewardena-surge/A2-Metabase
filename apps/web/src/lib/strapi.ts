@@ -233,6 +233,13 @@ const ZONE: Record<string, Record<string, string>> = {
   'page.prose': { '': '*' },
   'page.events-index': { '': '*' },
   'page.pricing-index': { '': '*' },
+  /* Cards hold their own repeatable links, which `*` would stop short of. */
+  'page.feature-detail': {
+    '[cards][populate][links]': 'true',
+    '[linkCards]': 'true',
+    '[howtoSteps]': 'true',
+    '[faqs]': 'true',
+  },
   'page.demo': { '': '*' },
   'page.faq-list': { '[faqs]': 'true' },
   'page.roadmap-groups': {
@@ -301,7 +308,9 @@ export async function pagePreload(page: Page | null) {
     const [first] = await getCaseStudies();
     return preloadFor(first?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px');
   }
-  return undefined;
+  /* Otherwise the LCP image is the hero's own artwork, when it has one. */
+  const hero = (page?.sections ?? []).find((s) => s.__component === 'page.hero');
+  return preloadFor(hero && 'media' in hero ? hero.media?.url : undefined);
 }
 
 export const getPage = async (slug: string) =>

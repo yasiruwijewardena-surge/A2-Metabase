@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_page_feature_links",
+  "info": {
+    "displayName": "Feature link",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

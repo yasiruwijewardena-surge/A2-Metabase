@@ -31,30 +31,24 @@
  * sets the how-to and closing titles as h3 at 36/48. Those two keep the
  * original's size but are h2 here, so the outline stays in order.
  */
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { features } from '../../data/features';
+import type { PageSection } from '../../lib/types';
 
-export function getStaticPaths() {
-  return features.map((f) => ({ params: { slug: f.slug }, props: { feature: f } }));
-}
-
-const { feature: f } = Astro.props;
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
 ---
-
-<BaseLayout title={f.seoTitle} description={f.seoDescription}>
   <div class="fp-page">
     <section class="fp-neutral">
       <div class="fp-shell">
         <div class="fp-hero">
           <div class="fp-hero-text">
             <p class="fp-eyebrow">
-              <img src={`/images/icons/badges/${f.badge}.svg`} width="70" height="70" alt=""
+              <img src={`/images/icons/badges/${s.badge}.svg`} width="70" height="70" alt=""
                    loading="eager" decoding="sync" />
-              {f.eyebrow}
+              {s.eyebrow}
             </p>
-            <h1 class="fp-h1">{f.h1}</h1>
-            <p class="fp-standfirst">{f.standfirst}</p>
-            {f.ctas && (
+            <h1 class="fp-h1">{s.h1}</h1>
+            <p class="fp-standfirst">{s.standfirst}</p>
+            {s.showCtas && (
               <p class="fp-ctas">
                 <a href="/start" class="fp-btn fp-btn--primary">Get started</a>
                 <a href="/contact" class="fp-btn fp-btn--secondary">Contact us</a>
@@ -62,19 +56,19 @@ const { feature: f } = Astro.props;
             )}
           </div>
           <div class="fp-hero-media">
-            <video width="630" height={f.mediaHeight}
-                   poster={`/images/features/${f.media}-poster.webp`}
+            <video width="630" height={s.mediaHeight}
+                   poster={`/images/features/${s.mediaName}-poster.webp`}
                    autoplay loop muted playsinline preload="none"
-                   aria-label={`${f.eyebrow} in Metabase`}>
-              <source src={`/images/features/${f.media}.mp4`} type="video/mp4" />
+                   aria-label={`${s.eyebrow} in Metabase`}>
+              <source src={`/images/features/${s.mediaName}.mp4`} type="video/mp4" />
             </video>
           </div>
         </div>
 
-        <h2 class="fp-h2">{f.h2}</h2>
-        <p class="fp-sub">{f.sub}</p>
+        <h2 class="fp-h2">{s.h2}</h2>
+        <p class="fp-sub">{s.sub}</p>
         <ul class="fp-cards">
-          {f.cards.map((c) => (
+          {(s.cards ?? []).map((c) => (
             <li class="fp-card">
               <img src={`/images/icons/${c.icon}.svg`} width="24" height="24" alt=""
                    loading="lazy" decoding="async" />
@@ -83,19 +77,19 @@ const { feature: f } = Astro.props;
                 {c.body}
                 {c.links && c.links.length > 0 && (
                   <> {c.links.map((l, i) => (
-                    <>{i > 0 && ', '}<a href={l.href}>{l.label}</a></>
+                    <>{i > 0 && ', '}<a href={l.url}>{l.label}</a></>
                   ))}</>
                 )}
-                {c.trailing && <> <a class="fp-card-more" href={c.trailing.href}>{c.trailing.label}</a></>}
+                {c.trailingUrl && <> <a class="fp-card-more" href={c.trailingUrl}>{c.trailingLabel}</a></>}
               </p>
             </li>
           ))}
         </ul>
 
-        <h2 class="fp-h2 fp-h2--b">{f.h2b}</h2>
-        {f.readDocs && (
+        <h2 class="fp-h2 fp-h2--b">{s.h2b}</h2>
+        {s.readDocs && (
           <p class="fp-readdocs">
-            <a href={f.readDocs}>
+            <a href={s.readDocs}>
               Read documentation
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
                    stroke-width="2" aria-hidden="true"><path d="M3 11L11 3M11 3H5M11 3v6" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -103,9 +97,9 @@ const { feature: f } = Astro.props;
           </p>
         )}
         <ul class="fp-links">
-          {f.linkCards.map((l) => (
+          {(s.linkCards ?? []).map((l) => (
             <li>
-              <a href={l.href} class="fp-link-card">
+              <a href={l.url} class="fp-link-card">
                 <span class="fp-pill">{l.pill}</span>
                 <h3 class="fp-link-h">{l.title}</h3>
               </a>
@@ -113,32 +107,32 @@ const { feature: f } = Astro.props;
           ))}
         </ul>
 
-        {f.howto && (
+        {s.howtoTitle && (
           <div class="fp-howto">
-            <h2 class="fp-howto-h">{f.howto.title}</h2>
+            <h2 class="fp-howto-h">{s.howtoTitle}</h2>
             <ol class="fp-steps">
-              {f.howto.steps.map((s, i) => (
+              {(s.howtoSteps ?? []).map((step, i) => (
                 <li>
                   <span class="fp-step-n" aria-hidden="true">{i + 1}</span>
-                  <span class="fp-step-t" set:html={s} />
+                  <span class="fp-step-t" set:html={step.text} />
                 </li>
               ))}
             </ol>
           </div>
         )}
 
-        {f.faq && (
+        {s.faqs && s.faqs.length > 0 && (
           <div class="fp-faq">
             <h2 class="fp-faq-h">Frequently asked questions</h2>
             <div class="fp-faq-box">
-              {f.faq.map((q) => (
+              {s.faqs.map((q) => (
                 <details class="fp-faq-item">
                   <summary>
-                    {q.q}
+                    {q.question}
                     <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
                          stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
                   </summary>
-                  <p>{q.a}</p>
+                  <p>{q.answer}</p>
                 </details>
               ))}
             </div>
@@ -148,10 +142,10 @@ const { feature: f } = Astro.props;
     </section>
 
     <section class="fp-final">
-      <h2 class="fp-final-h">{f.cta.title}</h2>
+      <h2 class="fp-final-h">{s.ctaTitle}</h2>
       <p class="fp-final-p">
-        {f.cta.body}
-        {f.cta.link && <> <a href={f.cta.link.href}>{f.cta.link.label}</a>.</>}
+        {s.ctaBody}
+        {s.ctaLinkUrl && <> <a href={s.ctaLinkUrl}>{s.ctaLinkLabel}</a>.</>}
       </p>
       <p class="fp-ctas">
         <a href="/start" class="fp-btn fp-btn--primary">Get started</a>
@@ -159,4 +153,3 @@ const { feature: f } = Astro.props;
       </p>
     </section>
   </div>
-</BaseLayout>

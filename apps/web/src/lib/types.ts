@@ -404,6 +404,37 @@ export interface PricingIndexSection extends SectionBase {
   footNote?: string | null;
 }
 
+export interface FeatureCardItem {
+  id: number; icon?: string | null; title?: string | null; body?: string | null;
+  links?: { id: number; label?: string | null; url?: string | null }[];
+  trailingLabel?: string | null; trailingUrl?: string | null;
+}
+
+export interface FeatureDetailSection extends SectionBase {
+  __component: 'page.feature-detail';
+  badge?: string | null;
+  eyebrow?: string | null;
+  h1?: string | null;
+  standfirst?: string | null;
+  showCtas?: boolean | null;
+  /** A filename stem under /images/features, not an upload. */
+  mediaName?: string | null;
+  mediaHeight?: number | null;
+  h2?: string | null;
+  sub?: string | null;
+  cards?: FeatureCardItem[];
+  h2b?: string | null;
+  linkCards?: { id: number; pill?: string | null; title?: string | null; url?: string | null }[];
+  howtoTitle?: string | null;
+  howtoSteps?: { id: number; text?: string | null }[];
+  readDocs?: string | null;
+  faqs?: { id: number; question?: string | null; answer?: string | null }[];
+  ctaTitle?: string | null;
+  ctaBody?: string | null;
+  ctaLinkLabel?: string | null;
+  ctaLinkUrl?: string | null;
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -463,7 +494,7 @@ export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */
