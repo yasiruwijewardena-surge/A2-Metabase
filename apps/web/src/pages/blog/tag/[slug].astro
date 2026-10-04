@@ -1,0 +1,41 @@
+---
+/*
+ * /blog/tag/[slug]
+ *
+ * The mirror of `/blog/category/[slug]`. Tags are this build's own addition --
+ * the original has no tags, and no category pages either; its pills toggle DOM
+ * visibility with no URL change. Categories were given real routes here because
+ * a filtered view that is shareable and indexable beats one that is neither, so
+ * tags get the same treatment rather than a second, different mechanism beside
+ * the first.
+ *
+ * One dimension at a time, unlike the case studies: the original filters those
+ * on two axes and the route tree follows it, while the blog filters on one.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { preloadFor } from '../../../lib/image';
+import BlogListing from '../../../components/BlogListing.astro';
+import { getPosts, getCategories, getTags } from '../../../lib/strapi';
+
+export async function getStaticPaths() {
+  const [posts, categories, tags] = await Promise.all([getPosts(), getCategories(), getTags()]);
+  return tags.map((tag) => ({
+    params: { slug: tag.slug },
+    props: {
+      tag,
+      tags,
+      categories,
+      posts: posts.filter((p) => p.tags?.some((t) => t.slug === tag.slug)),
+    },
+  }));
+}
+
+const { tag, tags, categories, posts } = Astro.props;
+---
+<BaseLayout
+  title={`${tag.name} | Metabase Blog`}
+  description={`Posts tagged ${tag.name}.`}
+  preload={preloadFor(posts[0]?.coverImage?.url)}
+>
+  <BlogListing posts={posts} categories={categories} tags={tags} activeTag={tag.slug} />
+</BaseLayout>
