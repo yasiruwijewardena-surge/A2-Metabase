@@ -23,7 +23,7 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
   <div class="mbot__dots" data-mbot-dots hidden aria-hidden="true"><span></span><span></span><span></span></div>
 
   <figure class="mbot__chart" data-mbot-chart hidden>
-    <figcaption>Orders over time (monthly)</figcaption>
+    <figcaption>New Accounts by Source</figcaption>
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Line chart of orders over time, climbing from under 50 to about 420">
       {[0, 100, 200, 300, 400, 500, 600].map((t) => (
         <>
@@ -43,23 +43,38 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
     </svg>
   </figure>
 
+  <div class="mbot__lead" data-mbot-lead hidden>
+    <p><strong>Organic added the most in 2026: 62 accounts,</strong> ahead of Google at 30.
+      LinkedIn, Invite, and Facebook make up the rest.</p>
+  </div>
+
   <div class="mbot__source" data-mbot-source hidden>
-    <p class="mbot__source-head">Data source used</p>
+    <p class="mbot__source-head">Data Sources</p>
     <div class="mbot__source-row">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
         <rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M9 9v11" />
       </svg>
-      <span><b>Orders + People</b><small>Model · Data library</small></span>
+      <span><b>Accounts</b><small>Data library</small></span>
       <span class="mbot__votes">
-        <button type="button" aria-label="Good answer" data-vote="up">👍</button>
-        <button type="button" aria-label="Bad answer" data-vote="down">👎</button>
+        <button type="button" aria-label="Good answer" data-vote="up">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 5h5a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 17 20H7" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <button type="button" aria-label="Bad answer" data-vote="down">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-3-2l1-5H6a2 2 0 0 1-2-2.3l1-6A2 2 0 0 1 7 4h10" stroke-linejoin="round" />
+          </svg>
+        </button>
       </span>
     </div>
   </div>
 
   <div class="mbot__answer" data-mbot-answer hidden>
-    <p>Here's <a href="#">Orders over time (monthly)</a>, from the <a href="#">Orders + People</a> model.</p>
-    <p>Orders climbed steadily through <a href="#">July 2026</a>, with recent months tracking in the high 400s.</p>
+    <p>The bigger signal is that 2026 is tracking below recent years across every source,
+      so even the top channel is down on its usual pace. The slowdown is broad, not one
+      channel falling off.</p>
+    <p>Want me to compare <span class="mbot__mention">@New Accounts by Source</span>, 2026 vs 2025?</p>
   </div>
 
   <p class="mbot__ask"><span>Ask about your data</span>
@@ -77,6 +92,7 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
   .mbot__q {
     margin: 0 0 0.9rem; margin-inline-start: auto; width: fit-content; min-height: 2.2rem;
     border: 1px solid var(--color-line); border-radius: 0.75rem; padding: 0.55rem 0.85rem;
+    font-size: 14px; line-height: 24px; color: var(--color-ink);
   }
   .mbot__caret { display: inline-block; width: 1px; height: 1em; background: var(--color-ink); vertical-align: -2px; animation: mbot-caret 1s step-end infinite; }
   .mbot__q[data-done='true'] .mbot__caret { display: none; }
@@ -95,17 +111,33 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
   .mbot__line { transition: stroke-dashoffset 1.3s ease-out; }
 
   .mbot__source { margin-bottom: 0.75rem; border: 1px solid var(--color-line); border-radius: 0.625rem; }
-  .mbot__source-head { margin: 0; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--color-line); color: var(--color-ink-2); font-weight: 700; }
+  /* Measured on the original: the card header is 12px, the model name 14/16
+     and its library 12/16 -- three sizes, not the one the base was giving. */
+  .mbot__source-head {
+    margin: 0; padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--color-line);
+    font-size: 12px; font-weight: 700; color: var(--color-ink);
+  }
   .mbot__source-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.7rem; }
   .mbot__source-row svg { width: 16px; height: 16px; color: var(--color-brand); flex-shrink: 0; }
-  .mbot__source-row b { display: block; font-weight: 700; }
-  .mbot__source-row small { color: var(--color-ink-3); }
+  .mbot__source-row b { display: block; font-size: 14px; line-height: 16px; font-weight: 700; color: var(--color-ink); }
+  .mbot__source-row small { font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
   .mbot__votes { margin-inline-start: auto; display: flex; gap: 0.3rem; }
   .mbot__votes button { border: 0; background: none; cursor: pointer; opacity: 0.5; font-size: 0.875rem; }
   .mbot__votes button:hover, .mbot__votes button[data-on='true'] { opacity: 1; }
 
-  .mbot__answer p { margin: 0 0 0.5rem; color: var(--color-ink-2); line-height: 1.55; }
+  /* 14/24 in primary ink, which is what the original sets for the whole
+     exchange -- question, finding and reasoning alike. */
+  .mbot__lead p, .mbot__answer p {
+    margin: 0 0 0.75rem; font-size: 14px; line-height: 24px; color: var(--color-ink);
+  }
+  .mbot__lead p:last-child, .mbot__answer p:last-child { margin-bottom: 0; }
+  .mbot__lead strong { font-weight: 700; }
   .mbot__answer a { color: var(--color-brand); }
+  /* The @-reference to a saved question reads as a chip rather than a link. */
+  .mbot__mention {
+    border-radius: 4px; background: var(--color-surface); padding: 1px 5px;
+    color: var(--color-ink); white-space: nowrap;
+  }
 
   .mbot__ask {
     display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
@@ -116,13 +148,14 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
 </style>
 
 <script>
-  const QUESTION = 'show me orders over time';
+  const QUESTION = 'Which source added the most accounts in 2026?';
 
   document.querySelectorAll<HTMLElement>('[data-mbot]').forEach((root) => {
     const q = root.querySelector<HTMLElement>('[data-mbot-q]')!;
     const typed = root.querySelector<HTMLElement>('[data-mbot-typed]')!;
     const dots = root.querySelector<HTMLElement>('[data-mbot-dots]')!;
     const chart = root.querySelector<HTMLElement>('[data-mbot-chart]')!;
+    const lead = root.querySelector<HTMLElement>('[data-mbot-lead]')!;
     const source = root.querySelector<HTMLElement>('[data-mbot-source]')!;
     const answer = root.querySelector<HTMLElement>('[data-mbot-answer]')!;
     const line = root.querySelector<SVGPolylineElement>('.mbot__line')!;
@@ -141,7 +174,7 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
       typed.textContent = QUESTION;
       q.dataset.done = 'true';
       dots.hidden = true;
-      [chart, source, answer].forEach((el) => (el.hidden = false));
+      [chart, lead, source, answer].forEach((el) => (el.hidden = false));
       line.style.strokeDasharray = '';
       line.style.strokeDashoffset = '';
     }
@@ -150,7 +183,7 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
       typed.textContent = '';
       q.dataset.done = 'false';
       dots.hidden = true;
-      [chart, source, answer].forEach((el) => (el.hidden = true));
+      [chart, lead, source, answer].forEach((el) => (el.hidden = true));
 
       for (let i = 1; i <= QUESTION.length; i++) {
         typed.textContent = QUESTION.slice(0, i);
@@ -171,6 +204,10 @@ const path = POINTS.map((v, i) => `${x(i)},${y(v)}`).join(' ');
       requestAnimationFrame(() => { line.style.strokeDashoffset = '0'; });
       await sleep(900);
 
+      /* The finding lands first, then what it was drawn from, then the
+         reasoning -- the order the original reveals them in. */
+      lead.hidden = false;
+      await sleep(400);
       source.hidden = false;
       await sleep(450);
       answer.hidden = false;
