@@ -149,13 +149,18 @@ const pages = {};
 for (const [k, url] of [['orig', ORIGINAL], ['mine', REPLICA]]) {
   const p = await browser.newPage();
   await p.setViewport({ width: 1512, height: 1200 });
-  await p.goto(url + '/', { waitUntil: 'networkidle2', timeout: 120000 });
+  await p.goto(url + '/', { waitUntil: 'domcontentloaded', timeout: 120000 });
+  /* The original takes a long time to reach network idle because of its
+     third-party scripts, and the menus do not wait for any of them. */
+  await new Promise((r) => setTimeout(r, 2500));
   pages[k] = p;
 }
 
 const pad = (s, n) => String(s ?? '-').padEnd(n);
 
+const audited = [];
 for (const menu of menus) {
+  audited.push(menu);
   console.log('\n' + '='.repeat(78));
   console.log(menu.toUpperCase());
   console.log('='.repeat(78));
@@ -207,3 +212,12 @@ for (const menu of menus) {
   extra.forEach((r) => console.log(`  EXTRA    "${r.label}"`));
 }
 await browser.close();
+
+/* Printed last on purpose. Without it a truncated run looks exactly like a
+   clean one -- which is how Pricing came to be reported as matching when it
+   had never been reached at all. */
+console.log('\n' + '='.repeat(78));
+console.log(`audited ${audited.length} of ${menus.length}: ${audited.join(', ')}`);
+if (audited.length < menus.length) {
+  console.log('INCOMPLETE -- the menus not listed above were never measured.');
+}
