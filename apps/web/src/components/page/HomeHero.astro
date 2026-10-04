@@ -52,15 +52,21 @@ const tour = s.tourMedia ?? [];
         <span class="hero-tour__play" aria-hidden="true">
           <svg width="15" height="18" viewBox="0 0 18 20" fill="currentColor"><path d="M0 0l18 10L0 20z"/></svg>
         </span>
-        <span class="hero-tour__label">{s.tourLabel}</span>
+        <span class="hero-tour__label"><strong>{s.tourLabel}</strong></span>
         {tour.length > 0 && (
+          /* Absolutely positioned across the pill and clipped by it, so both
+             pieces hang past the bottom edge rather than sitting on it. */
           <span class="hero-tour__media" aria-hidden="true">
-            {tour.map((m, i) => (
-              <img src={at(m.url, i === 0 ? 380 : 104)}
-                   srcset={srcset(m.url, i === 0 ? [380, 760] : [104, 208])}
-                   alt="" width={i === 0 ? 380 : 104} height={i === 0 ? 130 : 104}
-                   loading="lazy" decoding="async" />
-            ))}
+            {tour[0] && (
+              <img class="hero-tour__thumb" src={at(tour[0].url, 372)}
+                   srcset={srcset(tour[0].url, [372, 744])}
+                   alt="" width="700" height="265" loading="lazy" decoding="async" />
+            )}
+            {tour[1] && (
+              <img class="hero-tour__avatar" src={at(tour[1].url, 124)}
+                   srcset={srcset(tour[1].url, [124, 248])}
+                   alt="" width="124" height="124" loading="lazy" decoding="async" />
+            )}
           </span>
         )}
       </a>

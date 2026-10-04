@@ -43,7 +43,7 @@ const rows = [sources, [...sources].reverse()];
   /* width/min-width keep this from taking its intrinsic width from the
      max-content track below, which otherwise makes the column 3844px wide and
      stops it shrinking inside its grid cell. */
-  .ds { display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; width: 100%; min-width: 0; height: 100%; overflow: hidden; }
+  .ds { display: flex; flex-direction: column; justify-content: center; gap: 15px; width: 100%; min-width: 0; height: 100%; overflow: hidden; }
   .ds__item:hover { z-index: 1; }
   .ds__row {
     overflow: hidden;
@@ -61,14 +61,21 @@ const rows = [sources, [...sources].reverse()];
   .ds__row[data-dir='left'] .ds__track  { animation: ds-left  60s linear infinite; }
   .ds__row[data-dir='right'] .ds__track { animation: ds-right 90s linear infinite; }
 
+  /* The original scales the circle rather than lifting it, over 300ms, and
+     carries two shadows at rest and two more on hover. */
   .ds__item {
     display: grid; place-items: center;
-    width: 64px; height: 64px; border-radius: 9999px;
-    background: #fff; box-shadow: 0 2px 8px rgb(34 36 43 / 0.08);
-    transition: transform 150ms, box-shadow 150ms;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 8px -2px rgb(16 24 40 / 0.10), 0 2px 4px -2px rgb(16 24 40 / 0.06);
+    transform: scale(1);
+    transition: box-shadow 300ms ease-in-out, transform 300ms ease-in-out;
   }
-  .ds__item:hover, .ds__item:focus-visible { transform: translateY(-3px); box-shadow: 0 6px 18px rgb(34 36 43 / 0.14); }
-  .ds__item img { width: 36px; height: 36px; object-fit: contain; }
+  .ds__item:hover, .ds__item:focus-visible {
+    transform: scale(1.05);
+    box-shadow: 0 8px 8px -4px rgb(16 24 40 / 0.03), 0 20px 24px -4px rgb(16 24 40 / 0.08);
+  }
+  .ds__item img { width: 32px; height: 32px; object-fit: contain; }
 
   .ds__label { min-height: 1.25rem; text-align: center; font-size: 0.8125rem; color: var(--color-ink-3); }
 

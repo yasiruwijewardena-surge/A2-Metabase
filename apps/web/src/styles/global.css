@@ -227,17 +227,25 @@
   /* The scales grid is capped narrower than the page container. */
   .scale-grid { width: 100%; max-width: 1174px; margin-inline: auto; }
 
-  /* Buttons: 42px tall, 12px radius, 18px inline padding, 14px bold. */
+  /* Buttons: 10px block padding over a 20px line, 18px inline, 12px radius,
+     14px bold -- 42px tall including the hairline. Both carry the border so
+     the two sit on the same baseline, and both transition over 200ms. */
   .btn-primary, .btn-secondary {
     display: inline-flex; align-items: center; justify-content: center;
     height: 42px; padding-inline: 18px; border-radius: 12px;
-    font-size: 14px; font-weight: 700; transition: background-color 150ms, border-color 150ms;
+    font-size: 14px; line-height: 20px; font-weight: 700; text-decoration: none;
+    transition: background-color 200ms, border-color 200ms, color 200ms;
   }
-  .btn-primary { background: var(--color-brand); color: #fff; }
-  .btn-primary:hover { background: var(--color-brand-hover); }
-  /* The original's outline button is a neutral hairline, not a blue one. */
+  .btn-primary {
+    border: 1px solid var(--color-brand); background: var(--color-brand); color: #fff;
+  }
+  .btn-primary:hover {
+    border-color: var(--color-brand-hover); background: var(--color-brand-hover); color: #fff;
+  }
+  /* The original's outline button is a neutral hairline, not a blue one, and
+     its hover tints the fill and the border together. */
   .btn-secondary { border: 1px solid rgb(198 201 210 / 0.5); background: #fff; color: var(--color-brand); }
-  .btn-secondary:hover { background: var(--color-brand-muted); }
+  .btn-secondary:hover { background: #eef6fc; border-color: #c2daf0; color: var(--color-brand); }
 
   /* The original leaves the love section untinted. */
   .love-revamp { background: transparent; padding-top: 140px; padding-bottom: 130px; }
@@ -261,10 +269,15 @@
   .section-head .section-standfirst { max-width: none; margin-inline: -12px; }
 
   .eyebrow-link {
+    transition: color 200ms ease-in-out; text-decoration: none;
     display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px;
     font-size: 18px; font-weight: 600; color: var(--color-brand);
   }
-  .eyebrow-link:hover { text-decoration: underline; }
+  /* The original darkens the label and nudges the arrow 2px right; it does
+     not underline. */
+  .eyebrow-link:hover { color: var(--color-brand-hover); }
+  .eyebrow-link:hover .eyebrow-arrow { transform: translateX(2px); }
+  .eyebrow-arrow { transition: transform 200ms ease-in-out; }
 }
 
 @layer components {
@@ -399,30 +412,55 @@
   .hero-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; }
   .hero-logos img { width: 135px; height: 38px; object-fit: contain; opacity: 0.6; }
 
+  /*
+   * The "watch a 1-minute demo" pill. The artwork is absolutely positioned
+   * against the pill and clipped by it: the thumbnail and the presenter both
+   * hang below the 96px band and `overflow: hidden` cuts them off, which is
+   * what gives the row its flush bottom edge. Values are the original's.
+   */
   .hero-tour {
-    display: flex; align-items: center; gap: 16px;
-    max-width: 1100px; height: 96px; margin: 56px auto 0; padding: 0 32px;
-    border: 1px solid var(--color-line); border-radius: 12px; background: #fff;
-    transition: box-shadow 150ms;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    width: calc(100% - 32px); max-width: 1100px; min-height: 96px;
+    margin: 56px auto 0; padding-inline: 32px;
+    border: 1px solid #e2e4e9; border-radius: 12px; background: #fff;
+    transition: background-color 200ms, border-color 200ms, box-shadow 200ms;
   }
-  .hero-tour:hover { box-shadow: 0 4px 16px rgb(16 24 40 / 0.08); }
-  .hero-tour__play { display: flex; color: var(--color-ink-2); }
-  .hero-tour__label { font-size: 18px; color: var(--color-ink-2); }
-  .hero-tour__media { position: relative; width: 480px; height: 94px; margin-left: auto; align-self: flex-end; }
-  .hero-tour__media img:first-child {
-    position: absolute; bottom: 0; left: 0; width: 380px; height: auto;
-    border-radius: 8px 8px 0 0; box-shadow: 0 0 0 1px rgb(0 0 0 / 0.05);
+  .hero-tour:hover {
+    background: #f1f2f4; border-color: #c6c9d2;
+    box-shadow: 0 1px 2px 0 rgb(16 24 40 / 0.05);
   }
-  .hero-tour__media img:last-child {
-    position: absolute; bottom: 0; right: 40px; width: 104px; height: 104px;
-    border-radius: 50%; object-fit: cover;
+  .hero-tour__play { display: inline-flex; align-items: center; flex-shrink: 0; }
+  .hero-tour__play svg path { fill: var(--color-brand); }
+  /* Raised above the artwork, which is absolutely positioned across the pill. */
+  .hero-tour__label {
+    position: relative; z-index: 1;
+    font-size: 18px; line-height: 26px; font-weight: 400; color: var(--color-ink-2);
   }
+  .hero-tour__label strong { font-weight: 700; color: var(--color-ink); }
+  .hero-tour__media {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 480px; pointer-events: none;
+  }
+  .hero-tour__thumb {
+    position: absolute; top: 16px; right: 140px;
+    width: 372px; height: auto; border-radius: 8px;
+  }
+  .hero-tour__avatar {
+    position: absolute; top: 12px; right: 40px;
+    width: 124px; height: 124px; border-radius: 50%;
+    border: 2px solid #fff; object-fit: cover;
+    background-image: linear-gradient(2deg, #fff 31%, #8d93a5 76%);
+    box-shadow: 0 8px 8px -4px rgb(16 24 40 / 0.03), 0 20px 24px -4px rgb(16 24 40 / 0.08);
+    transition: rotate 300ms;
+  }
+  .hero-tour:hover .hero-tour__avatar { rotate: 5deg; }
 
   @media (max-width: 767px) {
     .hero-content { margin-bottom: 48px; }
     .hero-sub { font-size: 20px; line-height: 28px; }
     .hero-cta > * { width: 100%; }
-    .hero-tour { height: auto; padding: 20px 24px; }
+    .hero-tour { min-height: 0; padding: 20px 24px; }
     .hero-tour__media { display: none; }
   }
 }
