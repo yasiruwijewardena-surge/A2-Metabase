@@ -19,10 +19,10 @@
   /* Neutrals */
   --color-ink: #22242b;            /* text primary   */
   --color-ink-2: #5a6072;          /* text secondary */
-  /* The original's tertiary is #8d93a5, which is 3.06:1 on white and fails AA
-     on the small print it is used for. Darkened to the nearest value that
-     clears 4.5:1; the difference is barely perceptible. */
-  --color-ink-3: #6f7589;
+  /* The original's tertiary, carried exactly. It is 3.06:1 on white and below
+     AA for the small print it is used on; see README "Contrast" for why the
+     replica reproduces it rather than stepping down the ramp. */
+  --color-ink-3: #8d93a5;
   --color-ink-4: #c6c9d2;          /* text faint     */
   --color-line: #e2e4e9;
   --color-surface: #f1f2f4;
@@ -110,8 +110,7 @@
     padding-block: 0.5rem;
     font-size: 1rem;
     line-height: 1.5rem;
-    /* The original's #509ee3 on #f1f2f4 is 2.9:1; one stop down the ramp. */
-    color: var(--color-brand-hover);
+    color: var(--color-brand);
     transition: color 150ms, background-color 150ms;
   }
   .pill:hover { background: var(--color-brand-hover); color: #fff; }
@@ -202,9 +201,9 @@
     border: 1px solid var(--color-line); border-radius: 12px;
     background: #fff; padding: 24px;
   }
-  .scale-card__title { margin: 28px 0 16px; font-size: 18px; line-height: 25px; font-weight: 700; }
+  .scale-card__title { margin: 28px 0 16px; font-size: 18px; line-height: 25px; font-weight: 700; color: var(--color-ink-2); }
   .scale-card__body { font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
-  .scale-card__link { font-weight: 700; color: var(--color-brand-hover); }
+  .scale-card__link { font-weight: 700; color: var(--color-brand); }
   .scale-card__link:hover { text-decoration: underline; }
 
   @media (max-width: 991px) { .scale-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -236,10 +235,8 @@
   }
   .btn-primary { background: var(--color-brand); color: #fff; }
   .btn-primary:hover { background: var(--color-brand-hover); }
-  /* The original's outline button is a neutral hairline, not a blue one; its
-     label is #509ee3, which is 3.1:1 and fails AA at 14px bold, so the label
-     steps down the ramp as elsewhere. */
-  .btn-secondary { border: 1px solid rgb(198 201 210 / 0.5); background: #fff; color: var(--color-brand-hover); }
+  /* The original's outline button is a neutral hairline, not a blue one. */
+  .btn-secondary { border: 1px solid rgb(198 201 210 / 0.5); background: #fff; color: var(--color-brand); }
   .btn-secondary:hover { background: var(--color-brand-muted); }
 
   /* The original leaves the love section untinted. */
@@ -304,12 +301,9 @@
 
   .panel-heading { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 700; }
   .panel-text { margin: 0 0 12px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
-  /* The original's CTA is #509ee3, which is 2.8:1 on the panel and fails AA on
-     16px text. Taken down to the next blue in the same ramp, as with
-     --color-ink-3; at this size the two are hard to tell apart. */
   .panel-cta {
     display: inline-flex; align-items: center; gap: 4px;
-    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+    font-size: 16px; font-weight: 700; color: var(--color-brand);
   }
   .panel-cta:hover { color: var(--color-brand-strong); }
 
@@ -322,9 +316,7 @@
   .quote-thumb { display: block; flex: none; }
   .quote-meta { display: flex; flex-direction: column; }
   .quote-author { font-size: 15px; line-height: 19.5px; font-weight: 700; color: var(--color-ink); }
-  /* The original's #8d93a5 is 2.6:1 on the panel; --color-ink-3 is still only
-     4.39:1 against #f9fafb, so the small print here steps up to secondary. */
-  .quote-company { font-size: 14px; line-height: 18.2px; color: var(--color-ink-2); }
+  .quote-company { font-size: 14px; line-height: 18.2px; color: var(--color-ink-3); }
 
   /* The mock sits in a white device frame: hairline, deep soft shadow, clipped. */
   .bi-frame {
@@ -394,8 +386,7 @@
   .hero-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
 
   .hero-trust { margin-top: 80px; text-align: center; }
-  /* The original's label is #8d93a5, which is 2.6:1 on the band. */
-  .hero-trust-label { margin-bottom: 24px; font-size: 16px; color: var(--color-ink-2); }
+  .hero-trust-label { margin-bottom: 24px; font-size: 16px; color: var(--color-ink-3); }
   .hero-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; }
   .hero-logos img { width: 135px; height: 38px; object-fit: contain; opacity: 0.6; }
 
@@ -497,10 +488,9 @@
     font-size: 20px; line-height: 28px; color: var(--color-ink-2);
   }
   .final-cta-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
-  /* The original's #8d93a5 is 2.6:1 at 14px. */
   .final-cta-points {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px;
-    margin-top: 20px; font-size: 14px; font-weight: 500; color: var(--color-ink-2);
+    margin-top: 20px; font-size: 14px; font-weight: 500; color: var(--color-ink-3);
   }
   .final-cta-points li { display: flex; align-items: center; gap: 7px; }
   .final-cta-point-icon { display: flex; align-items: center; width: 18px; height: 18px; }
@@ -898,7 +888,10 @@
      sections, whose 240 column is empty, stay top-aligned. */
   .pricing-sec:has(.pricing-label) { align-items: stretch; }
   .pricing-squiggle { display: block; margin-bottom: 24px; }
-  .pricing-sec-title { margin-bottom: 16px; font-size: 30px; line-height: 41px; font-weight: 700; }
+  .pricing-sec-title { margin-bottom: 16px; font-size: 30px; line-height: 41.25px; font-weight: 700; }
+  /* The compliance block is the one section title the original sets smaller,
+     at 20/27.5 with half the space under it. */
+  .pricing-sec-title--sm { margin-bottom: 8px; font-size: 20px; line-height: 27.5px; }
   .pricing-sub-title { margin-bottom: 8px; font-size: 20px; line-height: 28px; font-weight: 700; }
   .pricing-body { font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
   .pricing-body strong { font-weight: 700; color: var(--color-ink); }
@@ -2583,9 +2576,7 @@
     flex: none; width: 160px; height: 160px; border-radius: 12px; object-fit: cover;
   }
   .ev-body { display: block; min-width: 0; }
-  /* The original sets this #8d93a5, which is 2.9:1 on white and fails AA at
-     16px, so it steps down the ramp as the product and feature pages do. */
-  .ev-date { margin-bottom: 8px; font-size: 16px; line-height: 24px; color: var(--color-ink-2); }
+  .ev-date { margin-bottom: 8px; font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
   .ev-title { margin-bottom: 16px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
   .ev-btn {
     display: inline-flex; align-items: center; justify-content: center;

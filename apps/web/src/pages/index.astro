@@ -108,7 +108,10 @@ const biPoints = [
   <section class="hero-band">
     <div class="container-mb">
       <div class="hero-content">
-        <h1>Open source AI analytics<br />you can verify</h1>
+        {/* The space before the break is load-bearing: `<br>` ends the line but
+            contributes no whitespace, so without it the accessible name and the
+            text layer both read "analyticsyou". The original has it. */}
+        <h1>Open source AI analytics <br />you can verify</h1>
         <p class="hero-sub">
           Metabase gives you answers guided by your semantic layer — your metrics and business
           logic — whether reached by an agent or a teammate. Inspect the query behind every answer.
