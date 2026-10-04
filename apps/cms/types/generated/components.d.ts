@@ -83,7 +83,7 @@ export interface PageClosing extends Struct.ComponentSchema {
 export interface PageHero extends Struct.ComponentSchema {
   collectionName: 'components_page_heros';
   info: {
-    description: 'The top band: eyebrow, headline, standfirst, buttons, artwork and the cards beneath it. `mediaMobile` is the squarer crop the original serves under 992px, which is also what keeps mobile LCP inside budget. The trust logos are template chrome rather than fields: they are the same brand strip on every product page, and the upload provider refuses SVG.';
+    description: "The top band: eyebrow, headline, standfirst, buttons, artwork and the cards beneath it. `mediaMobile` is the squarer crop the original serves under 992px, which is also what keeps mobile LCP inside budget. The trust logos are template chrome rather than fields: they are the same brand strip on every product page, and the upload provider refuses SVG. `subRich` is used instead of `sub` where the standfirst carries an inline link, which a plain text field cannot hold; it stays a separate optional field rather than changing `sub`'s type, because that would be a migration on live data for the sake of one page.";
     displayName: 'Hero';
     icon: 'star';
   };
@@ -99,6 +99,7 @@ export interface PageHero extends Struct.ComponentSchema {
     mediaPoster: Schema.Attribute.Media<'images'>;
     pillars: Schema.Attribute.Component<'page.pillar', true>;
     sub: Schema.Attribute.Text;
+    subRich: Schema.Attribute.Blocks;
     trustLine: Schema.Attribute.String;
   };
 }

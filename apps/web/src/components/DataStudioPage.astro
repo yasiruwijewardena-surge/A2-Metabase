@@ -34,6 +34,17 @@
  * copied.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Inlines from './Inlines.astro';
+import { getMarketingPage } from '../lib/strapi';
+
+/* Hero and closing copy from Strapi. The standfirst carries an inline link, so
+   it is held as `subRich` rather than plain `sub`. */
+const mp = await getMarketingPage('data-studio');
+const hero = mp?.hero;
+const closing = mp?.closing;
+const heroCtas = hero?.ctas?.length ? hero.ctas
+  : [{ label: 'Get started', url: '/start' }, { label: 'Contact us', url: '/contact' }];
+const closeCtas = closing?.ctas?.length ? closing.ctas : heroCtas;
 
 const logos = [
   ['huma', 'huma logo', 125], ['home/airbyte', 'airbyte logo', 124],
@@ -96,16 +107,17 @@ const faqs = [
                loading="eager" decoding="sync" />
           Data Studio
         </p>
-        <h1 class="dst-h1">Curate your semantic layer right where your data gets used</h1>
-        <p class="dst-lede">
-          Wrangle your data, add the context it's missing, and define your metrics once, so
-          that every dashboard, every question and every
-          <a href="/features/metabase-ai">AI</a> answer starts from the same definitions
-          rather than from whatever the person asking happened to remember.
-        </p>
+        <h1 class="dst-h1">{hero?.heading ?? "Curate your semantic layer right where your data gets used"}</h1>
+        <p class="dst-lede">{hero?.subRich?.length
+          ? <Inlines nodes={(hero.subRich[0] as any).children} />
+          : <>Wrangle your data, add the context it's missing, and define your metrics once, so
+            that every dashboard, every question and every <a href="/features/metabase-ai">AI</a>
+            answer starts from the same definitions rather than from whatever the person asking
+            happened to remember.</>}</p>
         <p class="dst-ctas">
-          <a href="/start" class="dst-btn dst-btn--primary">Get started</a>
-          <a href="/contact" class="dst-btn dst-btn--secondary">Contact us</a>
+          {heroCtas.map((c, i) => (
+            <a href={c.url} class:list={['dst-btn', i === 0 ? 'dst-btn--primary' : 'dst-btn--secondary']}>{c.label}</a>
+          ))}
         </p>
         <p class="dst-ticks">
           {['Free 14-day trial', 'Super-fast setup', 'Secure and compliant'].map((t) => (
@@ -176,14 +188,12 @@ const faqs = [
     </section>
 
     <section class="dst-final">
-      <h2 class="dst-final-h">Bring more order to your analytics</h2>
-      <p class="dst-final-p">
-        Organize your data for clarity, so non-technical teammates can answer their own
-        questions and get the same number you would.
-      </p>
+      <h2 class="dst-final-h">{closing?.heading ?? "Bring more order to your analytics"}</h2>
+      <p class="dst-final-p">{closing?.sub ?? "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would."}</p>
       <p class="dst-ctas">
-        <a href="/start" class="dst-btn dst-btn--primary">Get started</a>
-        <a href="/contact" class="dst-btn dst-btn--secondary">Contact us</a>
+        {closeCtas.map((c, i) => (
+          <a href={c.url} class:list={['dst-btn', i === 0 ? 'dst-btn--primary' : 'dst-btn--secondary']}>{c.label}</a>
+        ))}
       </p>
       <p class="dst-ticks">
         {['Free 14-day trial', 'Super-fast setup', 'Secure and compliant'].map((t) => (

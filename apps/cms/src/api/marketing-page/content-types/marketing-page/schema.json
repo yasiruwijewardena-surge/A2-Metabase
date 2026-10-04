@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "feature_pages",
+  "collectionName": "marketing_pages",
   "info": {
-    "singularName": "feature-page",
-    "pluralName": "feature-pages",
-    "displayName": "Feature page",
-    "description": "A page under /features. Typed fields rather than a dynamic zone: unlike the product pages, these sections are one-offs, and modelling a component per single use buys nothing. Copy and artwork are editable; the order is fixed."
+    "singularName": "marketing-page",
+    "pluralName": "marketing-pages",
+    "displayName": "Marketing page",
+    "description": "A marketing page that is mostly bespoke: a hero and a closing CTA that are editable here, with the sections between them built in the front end. Typed fields rather than a dynamic zone, because those middle sections are one-offs -- a tabbed panel, a theme picker, a comparison table -- and a component per single use buys nothing. Covers the pages under /features as well as the product pages whose middles are bespoke."
   },
   "options": {
     "draftAndPublish": true

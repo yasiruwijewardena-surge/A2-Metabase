@@ -36,8 +36,21 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { preloadStatic } from '../../lib/image';
+import { getMarketingPage } from '../../lib/strapi';
 
 const A = '/images/features/metabot-ai';
+
+/* Hero and closing copy come from Strapi; the sections between them are this
+   page's own shapes and stay here. `cta` falls back to the hard-coded pair so
+   the page still renders if the record has not been filled in. */
+const mp = await getMarketingPage('metabase-ai');
+const hero = mp?.hero;
+const closing = mp?.closing;
+const heroCtas = hero?.ctas?.length ? hero.ctas : [
+  { label: 'Try Metabase AI free', url: '/start' },
+  { label: 'Deploy Metabase AI Open Source', url: '/open-source' },
+];
+const closeCtas = closing?.ctas?.length ? closing.ctas : heroCtas;
 
 const logos = [
   ['huma', 'huma logo', 125], ['home/airbyte', 'airbyte logo', 124],
@@ -193,14 +206,12 @@ const isClip = (src: string) => src.endsWith('.mp4');
       <img class="mai-sky" src={`${A}/sky.webp`} alt="" width="1500" height="458"
            loading="eager" decoding="async" />
       <div class="mai-hero-inner">
-        <h1 class="mai-h1">AI exploration built on your permissions and semantic definitions</h1>
-        <p class="mai-hero-lede">
-          AI-powered code generation and data exploration wherever you already work, grounded
-          in the definitions your organisation has already agreed on.
-        </p>
+        <h1 class="mai-h1">{hero?.heading ?? "AI exploration built on your permissions and semantic definitions"}</h1>
+        <p class="mai-hero-lede">{hero?.sub ?? "AI-powered code generation and data exploration wherever you already work, grounded in the definitions your organisation has already agreed on."}</p>
         <p class="mai-hero-ctas">
-          <a href="/start" class="mai-btn mai-btn--primary">Try Metabase AI free</a>
-          <a href="/open-source" class="mai-btn mai-btn--secondary">Deploy Metabase AI Open Source</a>
+          {heroCtas.map((c, i) => (
+            <a href={c.url} class:list={['mai-btn', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
+          ))}
         </p>
         <div class="mai-hero-frame">
           <video width="1192" height="712" poster={`${A}/hero-section-ai-poster.webp`}
@@ -412,10 +423,11 @@ const isClip = (src: string) => src.endsWith('.mp4');
     </section>
 
     <section class="mai-final">
-      <h2 class="mai-final-h">AI that respects your rules. Start exploring.</h2>
+      <h2 class="mai-final-h">{closing?.heading ?? "AI that respects your rules. Start exploring."}</h2>
       <p class="mai-hero-ctas">
-        <a href="/start" class="mai-btn mai-btn--primary">Try Metabase AI free</a>
-        <a href="/open-source" class="mai-btn mai-btn--secondary">Deploy Metabase AI Open Source</a>
+        {closeCtas.map((c, i) => (
+          <a href={c.url} class:list={['mai-btn', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
+        ))}
       </p>
     </section>
   </div>

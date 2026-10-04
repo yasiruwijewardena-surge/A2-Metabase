@@ -4,7 +4,7 @@ import type {
   Category,
   EventCategory,
   Faq,
-  FeaturePage,
+  MarketingPage,
   GlossaryTerm,
   Industry,
   Plan,
@@ -221,8 +221,8 @@ export const getProductPage = async (slug: string) =>
     'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
   }))[0] ?? null;
 
-export const getFeaturePages = () =>
-  all<FeaturePage>('feature-pages', {
+export const getMarketingPages = () =>
+  all<MarketingPage>('marketing-pages', {
     'populate[hero][populate]': '*',
     'populate[sections][populate]': '*',
     'populate[closing][populate]': '*',
@@ -230,5 +230,5 @@ export const getFeaturePages = () =>
     'populate[seo]': 'true',
   });
 
-export const getFeaturePage = async (slug: string) =>
-  (await getFeaturePages()).find((p) => p.slug === slug) ?? null;
+export const getMarketingPage = async (slug: string) =>
+  (await getMarketingPages()).find((p) => p.slug === slug) ?? null;

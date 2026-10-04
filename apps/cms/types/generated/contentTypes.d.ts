@@ -718,41 +718,6 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiFeaturePageFeaturePage extends Struct.CollectionTypeSchema {
-  collectionName: 'feature_pages';
-  info: {
-    description: 'A page under /features. Typed fields rather than a dynamic zone: unlike the product pages, these sections are one-offs, and modelling a component per single use buys nothing. Copy and artwork are editable; the order is fixed.';
-    displayName: 'Feature page';
-    pluralName: 'feature-pages';
-    singularName: 'feature-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    closing: Schema.Attribute.Component<'page.closing', false>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
-    hero: Schema.Attribute.Component<'page.hero', false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::feature-page.feature-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    sections: Schema.Attribute.Component<'page.section', true>;
-    seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiGlossaryTermGlossaryTerm
   extends Struct.CollectionTypeSchema {
   collectionName: 'glossary_terms';
@@ -829,6 +794,42 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMarketingPageMarketingPage
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'marketing_pages';
+  info: {
+    description: 'A marketing page that is mostly bespoke: a hero and a closing CTA that are editable here, with the sections between them built in the front end. Typed fields rather than a dynamic zone, because those middle sections are one-offs -- a tabbed panel, a theme picker, a comparison table -- and a component per single use buys nothing. Covers the pages under /features as well as the product pages whose middles are bespoke.';
+    displayName: 'Marketing page';
+    pluralName: 'marketing-pages';
+    singularName: 'marketing-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    closing: Schema.Attribute.Component<'page.closing', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
+    hero: Schema.Attribute.Component<'page.hero', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::marketing-page.marketing-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.Component<'page.section', true>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1664,9 +1665,9 @@ declare module '@strapi/strapi' {
       'api::event-category.event-category': ApiEventCategoryEventCategory;
       'api::event.event': ApiEventEvent;
       'api::faq.faq': ApiFaqFaq;
-      'api::feature-page.feature-page': ApiFeaturePageFeaturePage;
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
       'api::industry.industry': ApiIndustryIndustry;
+      'api::marketing-page.marketing-page': ApiMarketingPageMarketingPage;
       'api::person.person': ApiPersonPerson;
       'api::plan.plan': ApiPlanPlan;
       'api::post.post': ApiPostPost;

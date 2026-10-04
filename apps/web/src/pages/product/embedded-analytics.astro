@@ -44,7 +44,17 @@ import NavIcon from '../../components/NavIcon.astro';
 import ProductCtaRow from '../../components/ProductCtaRow.astro';
 import ProductQuoteCard from '../../components/ProductQuoteCard.astro';
 import SupportQuote from '../../components/SupportQuote.astro';
-import { getTestimonials } from '../../lib/strapi';
+import { getTestimonials, getMarketingPage } from '../../lib/strapi';
+
+/* Hero and closing copy from Strapi. The fourteen sections between them are
+   this page's own shapes -- a tabbed panel, a theming demo, a support marquee,
+   a comparison card -- and stay here; a component per single use buys nothing. */
+const mp = await getMarketingPage('embedded-analytics');
+const hero = mp?.hero;
+const closing = mp?.closing;
+const heroCtas = hero?.ctas?.length ? hero.ctas
+  : [{ label: 'Get started', url: '/start' }, { label: 'Contact us', url: '/contact' }];
+const closeCtas = closing?.ctas?.length ? closing.ctas : heroCtas;
 
 const all = await getTestimonials();
 const byOrder = (a: any, b: any) => a.displayOrder - b.displayOrder;
@@ -187,15 +197,12 @@ const faqs = [
           <rect x="9" y="34" width="28" height="6" rx="3" fill="#509EE3" opacity=".7" />
           <circle cx="46" cy="47" r="8" fill="#509EE3" />
         </svg>
-        <b>Embedded Analytics</b>
+        <b>{hero?.eyebrow ?? "Embedded Analytics"}</b>
       </p>
-      <h1 class="pp-hero-title">Get in-product reporting in days, not sprints</h1>
-      <p class="pp-hero-sub">
-        Hand-rolling analytics is never what you think it is going to be. Ship the reporting
-        your customers are asking for, and keep your roadmap for your own product.
-      </p>
-      <ProductCtaRow primary={{ href: '/start', label: 'Get started' }}
-                     secondary={{ href: '/contact', label: 'Contact us' }} />
+      <h1 class="pp-hero-title">{hero?.heading ?? "Get in-product reporting in days, not sprints"}</h1>
+      <p class="pp-hero-sub">{hero?.sub ?? "Hand-rolling analytics is never what you think it is going to be. Ship the reporting your customers are asking for, and keep your roadmap for your own product."}</p>
+      <ProductCtaRow primary={{ href: heroCtas[0].url, label: heroCtas[0].label }}
+                     secondary={heroCtas[1] && { href: heroCtas[1].url, label: heroCtas[1].label }} />
       {/* A narrow crop for phones, which is what keeps mobile LCP down: the
           source art is 3018px wide for a 998px slot. */}
       <picture class="pp-hero-pic">
@@ -528,13 +535,10 @@ Sign up, connect to your data, and get your first visualization embedded.
 
   <section class="pp-final">
     <div class="container-mb pp-center">
-      <h2 class="pp-h36 pp-final-title">Ready to get started?</h2>
-      <p class="pp-band-sub pp-band-sub--600">
-        Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what
-        you are trying to put in front of your customers.
-      </p>
-      <ProductCtaRow primary={{ href: '/start', label: 'Get started' }}
-                     secondary={{ href: '/contact', label: 'Contact us' }} small />
+      <h2 class="pp-h36 pp-final-title">{closing?.heading ?? "Ready to get started?"}</h2>
+      <p class="pp-band-sub pp-band-sub--600">{closing?.sub ?? "Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what you are trying to put in front of your customers."}</p>
+      <ProductCtaRow primary={{ href: closeCtas[0].url, label: closeCtas[0].label }}
+                     secondary={closeCtas[1] && { href: closeCtas[1].url, label: closeCtas[1].label }} small />
       <div class="ea-final-media">
         <div class="ea-final-frame">
           <img src="/images/product/embedded-analytics/application-screenshot.webp"
