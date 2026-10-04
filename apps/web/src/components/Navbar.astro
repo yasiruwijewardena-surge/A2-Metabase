@@ -98,7 +98,7 @@ const resources: [string, string, string, string][] = [
               <div>
                 {col.map(([label, href, icon, badge]) => (
                   <a href={href} class="nav-icon-link">
-                    <NavIcon name={icon} size={23} />
+                    <NavIcon name={icon} size={24} />
                     <span>{label}</span>
                     {badge && <span class="nav-badge">{badge}</span>}
                   </a>
@@ -165,7 +165,7 @@ const resources: [string, string, string, string][] = [
             <div class="nav-res-links">
               {resources.map(([label, href, icon, sub]) => (
                 <a href={href} class="nav-rich nav-rich--sm">
-                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={23} /></span>
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={24} /></span>
                   <span>
                     <span class="nav-rich-title">{label}</span>
                     <span class="nav-rich-desc">{sub}</span>
@@ -318,7 +318,7 @@ const resources: [string, string, string, string][] = [
   /* --- shared ---------------------------------------------------------- */
   .nav-cards { display: flex; gap: 12px; padding: 24px; }
   .nav-card {
-    display: block; flex: 1; min-width: 0;
+    display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
   .nav-card { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
@@ -334,7 +334,7 @@ const resources: [string, string, string, string][] = [
      live data rather than a picture. Measured heights, rest and hovered. */
   .nav-bars {
     display: flex; align-items: flex-end; gap: 4px;
-    width: 65px; height: 48px; margin-bottom: 24px;
+    width: 65px; height: 48px;
     padding: 7px 8px 6px; border-radius: 8px;
     background: #eef6fc;
   }
@@ -360,7 +360,7 @@ const resources: [string, string, string, string][] = [
      straightening on hover over 400ms. */
   .nav-embed {
     display: grid; place-items: center;
-    width: 64px; height: 48px; margin-bottom: 24px;
+    width: 64px; height: 48px;
     border-radius: 8px;
     background: url('/images/nav/embed-background.svg') center / cover no-repeat;
   }
@@ -402,7 +402,7 @@ const resources: [string, string, string, string][] = [
      label renders #5a6072 and the icon #8d93a5. Item box 232x33, rows 45
      apart, 16/24/700, colour transitioning over 300ms. */
   .nav-icon-link {
-    display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 32px;
+    display: flex; align-items: center; gap: 10px; padding: 4px 8px; height: 33px;
     font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2);
     transition: color 300ms ease;
   }
@@ -425,7 +425,17 @@ const resources: [string, string, string, string][] = [
     border-radius: 50%; background: #fff; color: var(--color-brand);
     box-shadow: inset 0 0 0 1px var(--color-brand-muted);
   }
-  .nav-rich--sm .nav-rich-ico { width: 38px; height: 38px; }
+  /* Resources rows are the muted grey of every other menu list; only the Docs
+     category illustrations are brand blue, which is why one rule for both put
+     blue icons down the Resources column. Their rows are also tighter: the
+     original sets 4px 8px against the 12px 0 the Docs rows use. */
+  .nav-rich--sm { padding: 4px 8px; }
+  .nav-rich--sm .nav-rich-ico {
+    width: 38px; height: 38px;
+    color: var(--color-ink-3);
+    background: transparent; box-shadow: none;
+  }
+  .nav-rich--sm:hover .nav-rich-ico { color: var(--color-brand); }
   .nav-rich-label { display: block; font-size: 14px; line-height: 26px; color: var(--color-ink-3); }
   .nav-rich-title { display: block; font-size: 14px; line-height: 24px; font-weight: 700; color: var(--color-ink-2); }
   .nav-rich-desc { display: block; font-size: 14px; line-height: 20px; font-weight: 700; color: var(--color-ink-2); }
