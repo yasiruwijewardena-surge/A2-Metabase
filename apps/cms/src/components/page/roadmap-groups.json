@@ -9,13 +9,32 @@
     "heading": {
       "type": "string"
     },
-    "standfirst": {
-      "type": "text"
+    "tabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
     },
     "groups": {
       "type": "component",
       "repeatable": true,
       "component": "page.roadmap-group"
+    },
+    "footLead": {
+      "type": "string"
+    },
+    "footLinkLabel": {
+      "type": "string"
+    },
+    "footLinkUrl": {
+      "type": "string"
+    },
+    "note": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.roadmap-card"
     }
   }
 }

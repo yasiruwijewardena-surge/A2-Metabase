@@ -375,6 +375,35 @@ export interface EventsIndexSection extends SectionBase {
   watchCta?: string | null;
 }
 
+export interface PricingIndexSection extends SectionBase {
+  __component: 'page.pricing-index';
+  titleSuffix?: string | null;
+  deploymentLabel?: string | null;
+  plansLabel?: string | null;
+  usersLabel?: string | null;
+  taxNote?: string | null;
+  optionalHeading?: string | null;
+  optionalBody?: string | null;
+  usageLabel?: string | null;
+  usagePill?: string | null;
+  faqHeading?: string | null;
+  faqBody?: string | null;
+  faqCtaLabel?: string | null;
+  faqCtaUrl?: string | null;
+  complianceHeading?: string | null;
+  complianceBody?: string | null;
+  embedLabel?: string | null;
+  embedHeading?: string | null;
+  embedPrice?: string | null;
+  embedPriceUnit?: string | null;
+  embedNote?: string | null;
+  embedLinkLabel?: string | null;
+  embedLinkUrl?: string | null;
+  embedMedia?: StrapiImage | null;
+  badges?: StrapiImage[];
+  footNote?: string | null;
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -404,20 +433,37 @@ export interface FaqListSection extends SectionBase {
   faqs?: Faq[];
 }
 
-export interface RoadmapGroup { id: number; heading?: string | null; body?: string | null; items?: Bullet[] }
+export interface RoadmapCard {
+  id: number; heading?: string | null; strong?: string | null;
+  body?: string | null; linkLabel?: string | null; linkUrl?: string | null;
+}
+
+export interface RoadmapGroup {
+  id: number;
+  anchor?: string | null;
+  navLabel?: string | null;
+  heading?: string | null;
+  tone?: 'green' | 'amber' | 'blue' | null;
+  items?: Bullet[];
+}
 
 export interface RoadmapGroupsSection extends SectionBase {
   __component: 'page.roadmap-groups';
   heading?: string | null;
-  standfirst?: string | null;
+  tabs?: Cta[];
   groups?: RoadmapGroup[];
+  footLead?: string | null;
+  footLinkLabel?: string | null;
+  footLinkUrl?: string | null;
+  note?: string | null;
+  cards?: RoadmapCard[];
 }
 
 export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */

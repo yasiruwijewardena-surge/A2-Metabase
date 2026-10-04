@@ -6,11 +6,22 @@
   },
   "options": {},
   "attributes": {
+    "anchor": {
+      "type": "string"
+    },
+    "navLabel": {
+      "type": "string"
+    },
     "heading": {
       "type": "string"
     },
-    "body": {
-      "type": "text"
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "green",
+        "amber",
+        "blue"
+      ]
     },
     "items": {
       "type": "component",

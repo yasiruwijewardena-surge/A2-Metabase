@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_page_roadmap_cards",
+  "info": {
+    "displayName": "Roadmap card",
+    "icon": "file"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "strong": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

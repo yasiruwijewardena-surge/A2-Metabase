@@ -492,7 +492,7 @@ async function main() {
       /* Media fields that hold a list of paths rather than one. The alt text
          for each sits in a parallel `<field>Alts` array, because a file's
          alternativeText belongs to the file and these are uploaded here. */
-      const MEDIA_LISTS = { logos: 'logoAlts', tourMedia: null };
+      const MEDIA_LISTS = { logos: 'logoAlts', tourMedia: null, badges: null };
 
       const buildSection = async (raw) => {
         const s = { ...raw };
@@ -516,7 +516,7 @@ async function main() {
           s[field] = richParagraph(s.__subRich);
           delete s.__subRich;
         }
-        for (const k of ['media', 'mediaMobile', 'mediaPoster', 'illustration']) {
+        for (const k of ['media', 'mediaMobile', 'mediaPoster', 'illustration', 'embedMedia']) {
           if (s[k]) s[k] = await upload(s[k]);
         }
         for (const [field, altField] of Object.entries(MEDIA_LISTS)) {

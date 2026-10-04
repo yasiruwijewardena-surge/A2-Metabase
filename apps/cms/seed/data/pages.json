@@ -642,6 +642,217 @@
           "layout": "case-study-index"
         }
       ]
+    },
+    {
+      "title": "Roadmap",
+      "slug": "roadmap",
+      "seo": {
+        "title": "Roadmap | Metabase",
+        "description": "Highlights of what we're cooking: what is actively being built, what is planned for the next release or two, and what is coming in the next six months."
+      },
+      "sections": [
+        {
+          "__component": "page.roadmap-groups",
+          "heading": "Highlights of what we're cooking",
+          "tabs": [
+            {
+              "label": "What’s new",
+              "url": "/releases",
+              "style": "text"
+            },
+            {
+              "label": "Roadmap",
+              "url": "/roadmap",
+              "style": "primary"
+            }
+          ],
+          "groups": [
+            {
+              "anchor": "now",
+              "navLabel": "Now",
+              "heading": "Actively being built",
+              "tone": "green",
+              "items": [
+                {
+                  "title": "Explorations",
+                  "body": "A new way to work through your data, with AI alongside you rather than in the way."
+                },
+                {
+                  "title": "Transform indexes",
+                  "body": "Create indexes on your transforms and keep them persisted between runs."
+                },
+                {
+                  "title": "Treemaps",
+                  "body": "A new tree map chart type, for when a pie has too many slices to read."
+                },
+                {
+                  "title": "Dashboard invites",
+                  "body": "Share a dashboard with someone outside Metabase in a single click."
+                },
+                {
+                  "title": "PDFs in subscriptions",
+                  "body": "Attach a dashboard to a subscription as a PDF, not just inline images."
+                },
+                {
+                  "title": "More AI providers",
+                  "body": "Support for Azure and AWS Bedrock models alongside the current providers."
+                }
+              ]
+            },
+            {
+              "anchor": "soon",
+              "navLabel": "Soon",
+              "heading": "Planned for the next release or two",
+              "tone": "amber",
+              "items": [
+                {
+                  "title": "Workspaces",
+                  "body": "Isolated data warehouse space for each agent, so one cannot disturb another."
+                },
+                {
+                  "title": "Data apps",
+                  "body": "Custom applications built on top of the Metabase semantic layer."
+                },
+                {
+                  "title": "Product analytics",
+                  "body": "Track and analyse product events natively, without a second tool to reconcile."
+                },
+                {
+                  "title": "Content optimizer",
+                  "body": "Organise what already exists and surface the parts actually worth reading."
+                },
+                {
+                  "title": "Transform improvements",
+                  "body": "Faster transforms, clearer error handling, and a number of smaller fixes."
+                },
+                {
+                  "title": "Transform tests",
+                  "body": "Verification for the semantic layer, so a model can be trusted on sight."
+                },
+                {
+                  "title": "Two-factor authentication (2FA)",
+                  "body": "Add support for two-factor authentication, where SSO is not the answer."
+                }
+              ]
+            },
+            {
+              "anchor": "later",
+              "navLabel": "Later",
+              "heading": "Coming in the next 6 months or so",
+              "tone": "blue",
+              "items": [
+                {
+                  "title": "Data catalog",
+                  "body": "Track lineage, PII and data quality, and help people find the right table."
+                },
+                {
+                  "title": "Data warehouse cost insights",
+                  "body": "Know what your queries cost, and optimise or stop the expensive ones."
+                },
+                {
+                  "title": "Mandatory filters and partition support",
+                  "body": "Require a filter on every GUI query, so partitioned tables stay affordable."
+                },
+                {
+                  "title": "Permissions debugger",
+                  "body": "Troubleshoot permissions as an admin, and set them with more confidence."
+                },
+                {
+                  "title": "Better control over auto-refresh",
+                  "body": "Pre-configured intervals, finer increments, and a clearer interface for both."
+                },
+                {
+                  "title": "Better search UX",
+                  "body": "Easier access to filters, and a full results page worth landing on."
+                },
+                {
+                  "title": "LLM-powered data extraction",
+                  "body": "Pull structure out of unstructured data, without writing the parser yourself."
+                },
+                {
+                  "title": "More improvements to table viz",
+                  "body": "Column totals, multi-select, and much better handling of very wide tables."
+                },
+                {
+                  "title": "Relative date expressions in SQL",
+                  "body": "More flexible date filters, expressed relative to when the query runs."
+                },
+                {
+                  "title": "SQL editor improvements",
+                  "body": "Better ergonomics for the querying you actually do every day."
+                },
+                {
+                  "title": "User and instance attributes in parameters",
+                  "body": "Reference things like user.email or instance.timezone in a query."
+                },
+                {
+                  "title": "Dynamic goals",
+                  "body": "Define a goal line using another question, rather than a fixed number."
+                }
+              ]
+            }
+          ],
+          "footLead": "Want to see what we shipped recently?",
+          "footLinkLabel": "See what's new",
+          "footLinkUrl": "/releases",
+          "note": "Keep in mind that these are non-exhaustive plans and subject to change. We ship when something is ready rather than when a date says so, which means the order here moves around more than we would like.",
+          "cards": [
+            {
+              "strong": "Have a great feature idea?",
+              "linkLabel": "Submit on GitHub",
+              "linkUrl": "https://github.com/metabase/metabase/discussions"
+            },
+            {
+              "heading": "What’s new",
+              "body": "Want to see what we shipped recently?",
+              "linkLabel": "See what's new",
+              "linkUrl": "/releases"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Pricing",
+      "slug": "pricing",
+      "seo": {
+        "title": "Pricing | Metabase",
+        "description": "Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
+      },
+      "sections": [
+        {
+          "__component": "page.pricing-index",
+          "titleSuffix": "pricing",
+          "deploymentLabel": "Deployment",
+          "plansLabel": "Plans",
+          "usersLabel": "Users",
+          "taxNote": "Prices exclude any applicable taxes",
+          "optionalHeading": "Everything else is optional",
+          "optionalBody": "Beyond hosting costs, our additional paid features are optional and have included credits to get you started, and usage based pricing once you use up your credits.",
+          "usageLabel": "Usage-based pricing",
+          "usagePill": "Optional features",
+          "faqHeading": "FAQ",
+          "faqBody": "Have more questions? We'd be happy to help.",
+          "faqCtaLabel": "Talk to a person",
+          "faqCtaUrl": "/start",
+          "complianceHeading": "First-class compliance",
+          "complianceBody": "Metabase upholds SOC 2 Type II and SOC 1 certifications while ensuring full compliance with regulations like GDPR and CCPA.",
+          "badges": [
+            "../../web/public/images/home/soc-2-type-1-badge.png",
+            "../../web/public/images/home/soc-2-type-2-badge.png",
+            "../../web/public/images/home/gdpr-certificate-badge.png"
+          ],
+          "embedLabel": "Embedding",
+          "embedHeading": "Get in-product reporting in days, not sprints",
+          "embedPrice": "From $575",
+          "embedPriceUnit": "/ month",
+          "embedNote": "Advanced embedding features are available on the Pro and Enterprise plans, with multi-tenant data segregation and full white-labelling.",
+          "embedLinkLabel": "Embedded analytics pricing",
+          "embedLinkUrl": "/pricing",
+          "embedMedia": "../../web/public/images/home/embedding-promo.webp",
+          "footNote": "Prices and tiers mirror metabase.com. This is a replica built for an assignment — nothing here can be purchased."
+        }
+      ]
     }
   ]
 }

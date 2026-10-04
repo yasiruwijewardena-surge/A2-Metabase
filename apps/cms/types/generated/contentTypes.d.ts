@@ -874,6 +874,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'page.feature-grid',
         'page.final-cta',
         'page.events-index',
+        'page.pricing-index',
         'page.closing',
       ]
     >;

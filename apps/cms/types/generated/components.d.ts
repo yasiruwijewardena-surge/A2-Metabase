@@ -387,6 +387,42 @@ export interface PagePillars extends Struct.ComponentSchema {
   };
 }
 
+export interface PagePricingIndex extends Struct.ComponentSchema {
+  collectionName: 'components_page_pricing_indexes';
+  info: {
+    description: 'The /pricing page. Plans, add-ons and FAQs are their own types; this holds the copy around them. One section rather than several because the :has() filtering spans the whole page.';
+    displayName: 'Pricing index';
+    icon: 'priceTag';
+  };
+  attributes: {
+    badges: Schema.Attribute.Media<'images', true>;
+    complianceBody: Schema.Attribute.Text;
+    complianceHeading: Schema.Attribute.String;
+    deploymentLabel: Schema.Attribute.String;
+    embedHeading: Schema.Attribute.String;
+    embedLabel: Schema.Attribute.String;
+    embedLinkLabel: Schema.Attribute.String;
+    embedLinkUrl: Schema.Attribute.String;
+    embedMedia: Schema.Attribute.Media<'images'>;
+    embedNote: Schema.Attribute.Text;
+    embedPrice: Schema.Attribute.String;
+    embedPriceUnit: Schema.Attribute.String;
+    faqBody: Schema.Attribute.Text;
+    faqCtaLabel: Schema.Attribute.String;
+    faqCtaUrl: Schema.Attribute.String;
+    faqHeading: Schema.Attribute.String;
+    footNote: Schema.Attribute.Text;
+    optionalBody: Schema.Attribute.Text;
+    optionalHeading: Schema.Attribute.String;
+    plansLabel: Schema.Attribute.String;
+    taxNote: Schema.Attribute.Text;
+    titleSuffix: Schema.Attribute.String;
+    usageLabel: Schema.Attribute.String;
+    usagePill: Schema.Attribute.String;
+    usersLabel: Schema.Attribute.String;
+  };
+}
+
 export interface PageProse extends Struct.ComponentSchema {
   collectionName: 'components_page_proses';
   info: {
@@ -415,6 +451,21 @@ export interface PageQuote extends Struct.ComponentSchema {
   };
 }
 
+export interface PageRoadmapCard extends Struct.ComponentSchema {
+  collectionName: 'components_page_roadmap_cards';
+  info: {
+    displayName: 'Roadmap card';
+    icon: 'file';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    strong: Schema.Attribute.String;
+  };
+}
+
 export interface PageRoadmapGroup extends Struct.ComponentSchema {
   collectionName: 'components_page_roadmap_groups';
   info: {
@@ -422,9 +473,11 @@ export interface PageRoadmapGroup extends Struct.ComponentSchema {
     icon: 'calendar';
   };
   attributes: {
-    body: Schema.Attribute.Text;
+    anchor: Schema.Attribute.String;
     heading: Schema.Attribute.String;
     items: Schema.Attribute.Component<'page.bullet', true>;
+    navLabel: Schema.Attribute.String;
+    tone: Schema.Attribute.Enumeration<['green', 'amber', 'blue']>;
   };
 }
 
@@ -435,9 +488,14 @@ export interface PageRoadmapGroups extends Struct.ComponentSchema {
     icon: 'calendar';
   };
   attributes: {
+    cards: Schema.Attribute.Component<'page.roadmap-card', true>;
+    footLead: Schema.Attribute.String;
+    footLinkLabel: Schema.Attribute.String;
+    footLinkUrl: Schema.Attribute.String;
     groups: Schema.Attribute.Component<'page.roadmap-group', true>;
     heading: Schema.Attribute.String;
-    standfirst: Schema.Attribute.Text;
+    note: Schema.Attribute.Text;
+    tabs: Schema.Attribute.Component<'shared.cta', true>;
   };
 }
 
@@ -580,8 +638,10 @@ declare module '@strapi/strapi' {
       'page.pillar': PagePillar;
       'page.pillar-card': PagePillarCard;
       'page.pillars': PagePillars;
+      'page.pricing-index': PagePricingIndex;
       'page.prose': PageProse;
       'page.quote': PageQuote;
+      'page.roadmap-card': PageRoadmapCard;
       'page.roadmap-group': PageRoadmapGroup;
       'page.roadmap-groups': PageRoadmapGroups;
       'page.scale-card': PageScaleCard;

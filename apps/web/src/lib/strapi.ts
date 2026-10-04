@@ -232,9 +232,14 @@ const ZONE: Record<string, Record<string, string>> = {
   'page.collection-list': { '': '*' },
   'page.prose': { '': '*' },
   'page.events-index': { '': '*' },
+  'page.pricing-index': { '': '*' },
   'page.demo': { '': '*' },
   'page.faq-list': { '[faqs]': 'true' },
-  'page.roadmap-groups': { '[groups][populate]': '*' },
+  'page.roadmap-groups': {
+    '[groups][populate]': '*',
+    '[tabs]': 'true',
+    '[cards]': 'true',
+  },
   'page.final-cta': { '': '*' },
   'page.closing': { '': '*' },
 };

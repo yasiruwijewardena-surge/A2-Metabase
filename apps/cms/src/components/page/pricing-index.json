@@ -1,0 +1,94 @@
+{
+  "collectionName": "components_page_pricing_indexes",
+  "info": {
+    "displayName": "Pricing index",
+    "icon": "priceTag",
+    "description": "The /pricing page. Plans, add-ons and FAQs are their own types; this holds the copy around them. One section rather than several because the :has() filtering spans the whole page."
+  },
+  "options": {},
+  "attributes": {
+    "titleSuffix": {
+      "type": "string"
+    },
+    "deploymentLabel": {
+      "type": "string"
+    },
+    "plansLabel": {
+      "type": "string"
+    },
+    "usersLabel": {
+      "type": "string"
+    },
+    "taxNote": {
+      "type": "text"
+    },
+    "optionalHeading": {
+      "type": "string"
+    },
+    "optionalBody": {
+      "type": "text"
+    },
+    "usageLabel": {
+      "type": "string"
+    },
+    "usagePill": {
+      "type": "string"
+    },
+    "faqHeading": {
+      "type": "string"
+    },
+    "faqBody": {
+      "type": "text"
+    },
+    "faqCtaLabel": {
+      "type": "string"
+    },
+    "faqCtaUrl": {
+      "type": "string"
+    },
+    "complianceHeading": {
+      "type": "string"
+    },
+    "complianceBody": {
+      "type": "text"
+    },
+    "embedLabel": {
+      "type": "string"
+    },
+    "embedHeading": {
+      "type": "string"
+    },
+    "embedPrice": {
+      "type": "string"
+    },
+    "embedPriceUnit": {
+      "type": "string"
+    },
+    "embedNote": {
+      "type": "text"
+    },
+    "embedLinkLabel": {
+      "type": "string"
+    },
+    "embedLinkUrl": {
+      "type": "string"
+    },
+    "embedMedia": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "badges": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "footNote": {
+      "type": "text"
+    }
+  }
+}

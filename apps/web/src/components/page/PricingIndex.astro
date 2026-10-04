@@ -12,26 +12,24 @@
  * Plans come from Strapi: one record per tier, declaring which deployments and
  * use cases it belongs to, rather than one record per combination.
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getPlans, getUseCases, getFaqs, getPricingAddons } from '../lib/strapi';
+import { getPlans, getUseCases, getFaqs, getPricingAddons } from '../../lib/strapi';
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
 
 const [plans, useCases, faqs, addons] = await Promise.all([
   getPlans(), getUseCases(), getFaqs('pricing'), getPricingAddons(),
 ]);
 
-const slugOf = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const slugOf = (x: string) => x.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const money = (n: number) => `$${n.toLocaleString('en-US')}`;
 ---
-
-<BaseLayout
-  title="Pricing | Metabase"
-  description="Plans for self-service business intelligence and for embedded analytics, on Metabase Cloud or self-hosted."
->
   <div class="pricing container-mb">
     <h1 class="pricing-title">
       <span class="pricing-title-uc" data-uc="business-intelligence">Business intelligence</span>{' '}
       <span class="pricing-title-uc" data-uc="embedded-analytics">Embedded analytics</span>{' '}
-      pricing
+      {s.titleSuffix}
     </h1>
 
     <fieldset class="pricing-axis pricing-axis--uc">
@@ -45,7 +43,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
     </fieldset>
 
     <section class="pricing-row">
-      <div class="pricing-label pricing-label--mid"><h2 class="pricing-row-head">Deployment</h2></div>
+      <div class="pricing-label pricing-label--mid"><h2 class="pricing-row-head">{s.deploymentLabel}</h2></div>
       <fieldset class="pricing-deploys">
         <legend class="sr-only">Where should Metabase run?</legend>
         {[
@@ -68,7 +66,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
 
     <section class="pricing-row pricing-row--plans">
       <div class="pricing-label">
-        <h2 class="pricing-row-head">Plans</h2>
+        <h2 class="pricing-row-head">{s.plansLabel}</h2>
         <fieldset class="pricing-billing">
           <legend class="sr-only">Billing period</legend>
           {[['monthly', 'Monthly billing', null], ['yearly', 'Yearly', 'Save 10%']].map(([value, label, badge], i) => (
@@ -156,7 +154,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
       fill that column with a tinted panel; the prose sections leave it empty.
     */}
     <section class="pricing-row pricing-row--block">
-      <div class="pricing-label"><h2 class="pricing-row-head">Users</h2></div>
+      <div class="pricing-label"><h2 class="pricing-row-head">{s.usersLabel}</h2></div>
       <div class="pricing-block">
         <p class="pricing-fine">
           Both your internal team developing analytics and users of your embeds accessed
@@ -183,7 +181,7 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
       </div>
     </section>
 
-    <p class="pricing-tax">Prices exclude any applicable taxes</p>
+    <p class="pricing-tax">{s.taxNote}</p>
 
     <section class="pricing-row pricing-sec">
       <div class="pricing-spacer"></div>
@@ -192,22 +190,19 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
           <path d="M1 5.5c4-5 8-5 12 0s8 5 12 0 8-5 12 0 8 5 12 0 8-5 12 0"
                 stroke="#509EE3" stroke-width="2" stroke-linecap="round" />
         </svg>
-        <h2 class="pricing-sec-title">Everything else is optional</h2>
-        <p class="pricing-body">
-          Beyond hosting costs, our additional paid features are optional and have included
-          credits to get you started, and usage based pricing once you use up your credits.
-        </p>
+        <h2 class="pricing-sec-title">{s.optionalHeading}</h2>
+        <p class="pricing-body">{s.optionalBody}</p>
       </div>
     </section>
 
     <section class="pricing-row pricing-sec">
-      <div class="pricing-label"><h2 class="pricing-row-head">Usage-based pricing</h2></div>
+      <div class="pricing-label"><h2 class="pricing-row-head">{s.usageLabel}</h2></div>
       <div class="pricing-card">
         <span class="pricing-pill">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 7.5v.5" stroke-linecap="round" />
           </svg>
-          Optional features
+          {s.usagePill}
         </span>
         <ul class="pricing-addons">
           {addons.map((a) => (
@@ -224,9 +219,9 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
     <section class="pricing-row pricing-sec">
       <div class="pricing-spacer"></div>
       <div class="pricing-block">
-        <h2 class="pricing-sec-title">FAQ</h2>
-        <p class="pricing-body">Have more questions? We'd be happy to help.</p>
-        <a href="/start" class="pricing-talk">Talk to a person</a>
+        <h2 class="pricing-sec-title">{s.faqHeading}</h2>
+        <p class="pricing-body">{s.faqBody}</p>
+        <a href={s.faqCtaUrl} class="pricing-talk">{s.faqCtaLabel}</a>
         <div class="pricing-faq">
           {faqs.map((f) => (
             <article>
@@ -244,15 +239,12 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
     <section class="pricing-row pricing-sec pricing-sec--compliance">
       <div class="pricing-spacer"></div>
       <div class="pricing-narrow">
-        <h2 class="pricing-sec-title pricing-sec-title--sm">First-class compliance</h2>
-        <p class="pricing-body">
-          Metabase upholds SOC 2 Type II and SOC 1 certifications while ensuring full
-          compliance with regulations like GDPR and CCPA.
-        </p>
+        <h2 class="pricing-sec-title pricing-sec-title--sm">{s.complianceHeading}</h2>
+        <p class="pricing-body">{s.complianceBody}</p>
       </div>
       <div class="pricing-badges">
-        {['soc-2-type-1-badge', 'soc-2-type-2-badge', 'gdpr-certificate-badge'].map((f) => (
-          <img src={`/images/home/${f}.png`} alt="" width="80" height="80" loading="lazy" decoding="async" />
+        {(s.badges ?? []).map((b) => (
+          <img src={b.url} alt="" width="80" height="80" loading="lazy" decoding="async" />
         ))}
       </div>
     </section>
@@ -261,27 +253,20 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
         and hides it once you switch to Embedded Analytics, since by then you
         are already reading the thing it advertises. */}
     <section class="pricing-row pricing-sec pricing-embed">
-      <div class="pricing-label"><h2 class="pricing-row-head">Embedding</h2></div>
+      <div class="pricing-label"><h2 class="pricing-row-head">{s.embedLabel}</h2></div>
       <div class="pricing-embed-card">
         <div class="pricing-embed-copy">
-          <h3 class="pricing-embed-title">Get in-product reporting in days, not sprints</h3>
-          <p class="pricing-embed-price">From $575 <span>/ month</span></p>
-          <p class="pricing-embed-note">
-            Advanced embedding features are available on the Pro and Enterprise plans,
-            with multi-tenant data segregation and full white-labelling.
-          </p>
-          <a href="/pricing" class="pricing-embed-link">Embedded analytics pricing</a>
+          <h3 class="pricing-embed-title">{s.embedHeading}</h3>
+          <p class="pricing-embed-price">{s.embedPrice} <span>{s.embedPriceUnit}</span></p>
+          <p class="pricing-embed-note">{s.embedNote}</p>
+          <a href={s.embedLinkUrl} class="pricing-embed-link">{s.embedLinkLabel}</a>
         </div>
         <div class="pricing-embed-media" aria-hidden="true">
-          <img src="/images/home/embedding-promo.webp" alt="" width="471" height="267"
-               loading="lazy" decoding="async" />
+          {s.embedMedia && <img src={s.embedMedia.url} alt="" width="471" height="267"
+               loading="lazy" decoding="async" />}
         </div>
       </div>
     </section>
 
-    <p class="pricing-note">
-      Prices and tiers mirror metabase.com. This is a replica built for an assignment —
-      nothing here can be purchased.
-    </p>
+    <p class="pricing-note">{s.footNote}</p>
   </div>
-</BaseLayout>
