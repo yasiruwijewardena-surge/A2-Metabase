@@ -247,9 +247,36 @@ const orderArea = `${oPadL},${oH - oPadB} ${orderLine} ${ox(ORDERS.length - 1)},
       el.setPointerCapture(id);
     });
 
+    /* The original keeps the window over its dashboard rather than letting it
+       be dragged across the page. Clamped against the offset parent's box, so
+       the window can be moved anywhere within the artwork and no further. */
+    const limits = () => {
+      const host = el.offsetParent as HTMLElement | null;
+      if (!host) return null;
+      const h = host.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      const t = new DOMMatrixReadOnly(getComputedStyle(el).transform);
+      /* Where the box sits with no transform applied. */
+      const left = r.left - t.m41;
+      const top = r.top - t.m42;
+      return {
+        minX: h.left - left,
+        maxX: h.right - r.width - left,
+        minY: h.top - top,
+        maxY: h.bottom - r.height - top,
+      };
+    };
+
     el.addEventListener('pointermove', (e) => {
       if (id === null || e.pointerId !== id) return;
-      el.style.transform = `translate(${ox + e.clientX - sx}px, ${oy + e.clientY - sy}px)`;
+      let x = ox + e.clientX - sx;
+      let y = oy + e.clientY - sy;
+      const l = limits();
+      if (l) {
+        x = Math.min(Math.max(x, l.minX), Math.max(l.minX, l.maxX));
+        y = Math.min(Math.max(y, l.minY), Math.max(l.minY, l.maxY));
+      }
+      el.style.transform = `translate(${x}px, ${y}px)`;
     });
 
     const release = (e: PointerEvent) => {
