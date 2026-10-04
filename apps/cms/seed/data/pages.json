@@ -166,5 +166,161 @@
       ]
     }
   ],
-  "featurePages": []
+  "marketingPages": [
+    {
+      "title": "Embedded Analytics",
+      "slug": "embedded-analytics",
+      "hero": {
+        "__component": "page.hero",
+        "eyebrow": "Embedded Analytics",
+        "heading": "Get in-product reporting in days, not sprints",
+        "sub": "Hand-rolling analytics is never what you think it is going to be. Ship the reporting your customers are asking for, and keep your roadmap for your own product.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": "/start"
+          },
+          {
+            "label": "Contact us",
+            "url": "/contact"
+          }
+        ],
+        "media": "../../web/public/images/product/embedded-analytics/hero_image.webp",
+        "mediaMobile": "../../web/public/images/product/embedded-analytics/hero_image-mobile.webp",
+        "mediaLabel": "Metabase dashboards embedded inside a customer-facing product",
+        "trustLine": "Metabase is trusted by 100,000+ companies"
+      },
+      "closing": {
+        "__component": "page.closing",
+        "heading": "Ready to get started?",
+        "sub": "Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what you are trying to put in front of your customers.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": "/start"
+          },
+          {
+            "label": "Contact us",
+            "url": "/contact"
+          }
+        ],
+        "media": "../../web/public/images/product/embedded-analytics/application-screenshot.webp",
+        "mediaLabel": "The Metabase application embedded in a product"
+      }
+    },
+    {
+      "title": "Data Studio",
+      "slug": "data-studio",
+      "hero": {
+        "__component": "page.hero",
+        "eyebrow": "Data Studio",
+        "heading": "Curate your semantic layer right where your data gets used",
+        "__subRich": [
+          {
+            "t": "Wrangle your data, add the context it's missing, and define your metrics once, so that every dashboard, every question and every "
+          },
+          {
+            "t": "AI",
+            "href": "/features/metabase-ai"
+          },
+          {
+            "t": " answer starts from the same definitions rather than from whatever the person asking happened to remember."
+          }
+        ],
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": "/start"
+          },
+          {
+            "label": "Contact us",
+            "url": "/contact"
+          }
+        ]
+      },
+      "closing": {
+        "__component": "page.closing",
+        "heading": "Bring more order to your analytics",
+        "sub": "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": "/start"
+          },
+          {
+            "label": "Contact us",
+            "url": "/contact"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Metabase AI",
+      "slug": "metabase-ai",
+      "hero": {
+        "__component": "page.hero",
+        "heading": "AI exploration built on your permissions and semantic definitions",
+        "sub": "AI-powered code generation and data exploration wherever you already work, grounded in the definitions your organisation has already agreed on.",
+        "ctas": [
+          {
+            "label": "Try Metabase AI free",
+            "url": "/start"
+          },
+          {
+            "label": "Deploy Metabase AI Open Source",
+            "url": "/open-source"
+          }
+        ],
+        "media": "../../web/public/images/features/metabot-ai/hero-section-ai.mp4",
+        "mediaPoster": "../../web/public/images/features/metabot-ai/hero-section-ai-poster.webp",
+        "mediaLabel": "Metabot answering a question and showing the query behind it",
+        "trustLine": "Metabase is trusted by 100,000+ companies"
+      },
+      "closing": {
+        "__component": "page.closing",
+        "heading": "AI that respects your rules. Start exploring.",
+        "ctas": [
+          {
+            "label": "Try Metabase AI free",
+            "url": "/start"
+          },
+          {
+            "label": "Deploy Metabase AI Open Source",
+            "url": "/open-source"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Data segregation",
+      "slug": "data-segregation",
+      "hero": {
+        "__component": "page.hero",
+        "eyebrow": "Data segregation",
+        "heading": "Set strong boundaries around your multi-tenant data",
+        "sub": "Methods to fit your configuration preferences and your security requirements."
+      },
+      "closing": {
+        "__component": "page.closing",
+        "heading": "Try Metabase free for 14 days",
+        "sub": "Keep sensitive, or simply irrelevant, data under wraps. Sandboxing and the rest of these methods are available on Pro and Enterprise plans, and you can try either without talking to anyone first.",
+        "ctas": [
+          {
+            "label": "Get started",
+            "url": "/start"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Features",
+      "slug": "features-index",
+      "hero": {
+        "__component": "page.hero",
+        "eyebrow": "Features",
+        "heading": "Built for data, made for everyone",
+        "sub": "Even if you aren't an analyst, Metabase can make you feel like one. And if you are, it will stay out of your way."
+      }
+    }
+  ]
 }

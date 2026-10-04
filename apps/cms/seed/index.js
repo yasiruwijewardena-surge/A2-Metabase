@@ -157,7 +157,7 @@ let phase = null;
 
 const ORDER = [
   'api::product-page.product-page',
-  'api::feature-page.feature-page',
+  'api::marketing-page.marketing-page',
   'api::event.event',
   'api::event-category.event-category',
   'api::faq.faq',
@@ -489,7 +489,14 @@ async function main() {
           delete s.__quote;
           return t ? { ...s, testimonial: t.documentId } : null;
         }
-        if (s.__subRich) { s.sub = richParagraph(s.__subRich); delete s.__subRich; }
+        if (s.__subRich) {
+          /* The band holds its standfirst in `sub`; the hero keeps `sub` plain
+             and puts the rich version in `subRich`, so the two are not the
+             same field under different names. */
+          const field = s.__component === 'page.hero' ? 'subRich' : 'sub';
+          s[field] = richParagraph(s.__subRich);
+          delete s.__subRich;
+        }
         for (const k of ['media', 'mediaMobile', 'mediaPoster']) {
           if (s[k]) s[k] = await upload(s[k]);
         }
@@ -506,7 +513,7 @@ async function main() {
           { title: page.title, slug: page.slug, seo: page.seo, sections });
       }
 
-      for (const page of pagesData.featurePages ?? []) {
+      for (const page of pagesData.marketingPages ?? []) {
         const data = { title: page.title, slug: page.slug, seo: page.seo };
         if (page.hero) data.hero = await buildSection(page.hero);
         if (page.closing) data.closing = await buildSection(page.closing);
@@ -514,7 +521,7 @@ async function main() {
           data.sections = [];
           for (const raw of page.sections) data.sections.push(await buildSection(raw));
         }
-        await upsert(app, 'api::feature-page.feature-page', { slug: page.slug }, data);
+        await upsert(app, 'api::marketing-page.marketing-page', { slug: page.slug }, data);
       }
     }
 

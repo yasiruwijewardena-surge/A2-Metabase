@@ -148,6 +148,31 @@ would mean storing the same image eighteen times and letting them drift.
 partner tech talks — have a poster but no square, because neither has run an
 event yet; the front end falls back to the poster rather than showing a gap.
 
+### Marketing pages
+
+| Type | Key fields | Relations |
+|---|---|---|
+| `product-page` | title, slug, **sections** (dynamic zone), seo | quote sections → testimonial |
+| `marketing-page` | title, slug, hero, sections[], closing, seo | → faqs |
+
+Two shapes because the pages are two shapes.
+
+`product-page` is a **dynamic zone** of `page.hero`, `page.split`, `page.band`,
+`page.accordion`, `page.quote` and `page.closing`. Business Intelligence is
+built from that vocabulary end to end, so its sections can be reordered, added
+and removed without a deploy.
+
+`marketing-page` is **typed fields** — a hero and a closing CTA, with whatever
+sits between them built in the front end. Embedded Analytics, Data Studio,
+Metabase AI, Data segregation and the features index are mostly bespoke: a
+tabbed panel, a theming demo, a support marquee, a comparison table, each used
+exactly once. Modelling a component per single use would buy nothing and clutter
+the admin, so those middles stay in the components and the parts that repeat --
+the headline, standfirst, buttons and hero artwork -- are editable here.
+
+The front end falls back to its own copy when a record is missing, so a page
+still renders if the CMS has not been filled in.
+
 ### Reference
 
 | Type | Key fields |

@@ -271,7 +271,7 @@ export interface ProductPage {
   seo?: Seo | null;
 }
 
-export interface FeatureSection extends SectionBase {
+export interface MarketingSection extends SectionBase {
   __component: 'page.section';
   heading: string;
   body?: string | null;
@@ -282,11 +282,11 @@ export interface FeatureSection extends SectionBase {
   reverse?: boolean;
 }
 
-export interface FeaturePage {
+export interface MarketingPage {
   title: string;
   slug: string;
   hero?: HeroSection | null;
-  sections?: FeatureSection[];
+  sections?: MarketingSection[];
   closing?: ClosingSection | null;
   faqs?: Faq[];
   seo?: Seo | null;

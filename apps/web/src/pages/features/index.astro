@@ -18,6 +18,9 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import NavIcon from '../../components/NavIcon.astro';
+import { getMarketingPage } from '../../lib/strapi';
+
+const hero = (await getMarketingPage('features-index'))?.hero;
 
 const cards = [
   ['dashboards', '/features/analytics-dashboards', 'Analytics dashboard',
@@ -54,12 +57,9 @@ const cards = [
   <div class="fi">
     <div class="fi-container">
       <header class="fi-hero">
-        <p class="fi-eyebrow">Features</p>
-        <h1 class="fi-h1">Built for data, made for everyone</h1>
-        <p class="fi-lede">
-          Even if you aren't an analyst, Metabase can make you feel like one. And if you are,
-          it will stay out of your way.
-        </p>
+        <p class="fi-eyebrow">{hero?.eyebrow ?? "Features"}</p>
+        <h1 class="fi-h1">{hero?.heading ?? "Built for data, made for everyone"}</h1>
+        <p class="fi-lede">{hero?.sub ?? "Even if you aren't an analyst, Metabase can make you feel like one. And if you are, it will stay out of your way."}</p>
       </header>
       <ul class="fi-grid">
         {cards.map(([icon, href, title, body]) => (

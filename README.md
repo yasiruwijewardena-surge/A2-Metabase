@@ -234,8 +234,9 @@ with a matching `imagesrcset`.
 
 Known gaps, in the order they are worth closing:
 
-- [ ] Marketing copy on the product, features and roadmap pages is held in the
-      Astro components rather than Strapi. The brief requires the blog, filters
-      and testimonials to be CMS-driven and those are; this is the next step up
-      in content modelling, not an unmet requirement.
+- [ ] The bespoke middles of the marketing pages -- a tabbed panel, a theming
+      demo, a support marquee, a comparison table -- are still in the Astro
+      components. Their heroes and closing CTAs are in Strapi, and Business
+      Intelligence is modelled end to end. Each of those middles is one-of-one,
+      so a component apiece would clutter the admin for no reuse.
 - [ ] 75 of the replicated navigation's paths have no page behind them.

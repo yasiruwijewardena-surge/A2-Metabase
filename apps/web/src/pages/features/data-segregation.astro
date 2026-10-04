@@ -27,6 +27,13 @@
  * is written here.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getMarketingPage } from '../../lib/strapi';
+
+/* Hero and closing copy from Strapi; the comparison grid between them is this
+   page's own shape and stays here. */
+const mp = await getMarketingPage('data-segregation');
+const hero = mp?.hero;
+const closing = mp?.closing;
 
 const tabs = [
   {
@@ -111,11 +118,9 @@ const rows = [
   <div class="dseg">
     <div class="ds-hero">
       <div class="container-mb ds-hero-inner">
-        <h2 class="ds-eyebrow">Data segregation</h2>
-        <h1 class="ds-h1">Set strong boundaries around your multi-tenant data</h1>
-        <p class="ds-lede">
-          Methods to fit your configuration preferences and your security requirements.
-        </p>
+        <h2 class="ds-eyebrow">{hero?.eyebrow ?? "Data segregation"}</h2>
+        <h1 class="ds-h1">{hero?.heading ?? "Set strong boundaries around your multi-tenant data"}</h1>
+        <p class="ds-lede">{hero?.sub ?? "Methods to fit your configuration preferences and your security requirements."}</p>
 
         <div class="ds-switch">
           {tabs.map((t, i) => (
@@ -165,13 +170,9 @@ const rows = [
 
     <section class="ds-final">
       <div class="container-mb">
-        <h2 class="ds-final-h">Try Metabase free for 14 days</h2>
-        <p class="ds-final-p">
-          Keep sensitive, or simply irrelevant, data under wraps. Sandboxing and the rest of
-          these methods are available on Pro and Enterprise plans, and you can try either
-          without talking to anyone first.
-        </p>
-        <a href="/start" class="ds-final-btn">Get started</a>
+        <h2 class="ds-final-h">{closing?.heading ?? "Try Metabase free for 14 days"}</h2>
+        <p class="ds-final-p">{closing?.sub ?? "Keep sensitive, or simply irrelevant, data under wraps. Sandboxing and the rest of these methods are available on Pro and Enterprise plans, and you can try either without talking to anyone first."}</p>
+        <a href={closing?.ctas?.[0]?.url ?? "/start"} class="ds-final-btn">{closing?.ctas?.[0]?.label ?? "Get started"}</a>
       </div>
     </section>
   </div>
