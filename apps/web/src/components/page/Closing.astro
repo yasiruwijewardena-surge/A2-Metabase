@@ -1,0 +1,23 @@
+---
+/* The last band: heading, standfirst, the button pair, and a wide screenshot. */
+import ProductCtaRow from '../ProductCtaRow.astro';
+import Media from './Media.astro';
+import type { ClosingSection } from '../../lib/types';
+
+interface Props { section: ClosingSection }
+const { section: s } = Astro.props;
+const cta = s.ctas?.length
+  ? { primary: { href: s.ctas[0].url, label: s.ctas[0].label },
+      secondary: s.ctas[1] ? { href: s.ctas[1].url, label: s.ctas[1].label } : undefined }
+  : {};
+---
+<section class="pp-final">
+  <div class="container-mb pp-center">
+    <h2 class="pp-h36 pp-final-title">{s.heading}</h2>
+    {s.sub && <p class="pp-band-sub">{s.sub}</p>}
+    <ProductCtaRow {...cta} />
+    {s.media?.url && (
+      <Media media={s.media} label={s.mediaLabel} width={1020} height={537} class="pp-final-img" />
+    )}
+  </div>
+</section>

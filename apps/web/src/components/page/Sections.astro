@@ -1,0 +1,29 @@
+---
+/*
+ * Renders a product page's dynamic zone in the order the CMS holds it.
+ *
+ * `__component` is the only thing that decides the shape, so adding a section
+ * type here is the one place the front end has to learn about it.
+ */
+import Hero from './Hero.astro';
+import Split from './Split.astro';
+import Band from './Band.astro';
+import Accordion from './Accordion.astro';
+import Closing from './Closing.astro';
+import ProductQuote from '../ProductQuote.astro';
+import type { PageSection } from '../../lib/types';
+
+interface Props { sections?: PageSection[] }
+const { sections = [] } = Astro.props;
+---
+{sections.map((s) => {
+  switch (s.__component) {
+    case 'page.hero':      return <Hero section={s} />;
+    case 'page.split':     return <Split section={s} />;
+    case 'page.band':      return <Band section={s} />;
+    case 'page.accordion': return <Accordion section={s} />;
+    case 'page.closing':   return <Closing section={s} />;
+    case 'page.quote':     return s.testimonial ? <ProductQuote quote={s.testimonial} /> : null;
+    default:               return null;
+  }
+})}

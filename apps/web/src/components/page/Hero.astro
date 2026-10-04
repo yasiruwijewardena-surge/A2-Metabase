@@ -1,0 +1,81 @@
+---
+/*
+ * The product hero. Measured values live in global.css against `.pp-hero-*`;
+ * this only decides what goes in them.
+ *
+ * The trust logos are not fields: they are the same brand strip on every
+ * product page, and the upload provider refuses SVG, so they stay template
+ * chrome. The line above them is editable because that is the part that
+ * changes.
+ */
+import NavIcon from '../NavIcon.astro';
+import ProductCtaRow from '../ProductCtaRow.astro';
+import { src as atWidth } from '../../lib/image';
+import type { HeroSection } from '../../lib/types';
+
+interface Props { section: HeroSection }
+const { section: s } = Astro.props;
+
+const LOGOS: [string, string, number][] = [
+  ['Huggingface', 'huggingface logo', 135], ['mcdonalds', 'mcdonalds logo', 67],
+  ['huma', 'huma logo', 128], ['capital-one', 'capital-one logo', 129],
+  ['mistral', 'Mistral AI logo', 135], ['linear', 'linear logo', 116],
+  ['deutsche-telekom', 'Deutsche Telekom logo', 58], ['kong', 'kong logo', 129],
+];
+const cta = s.ctas?.length
+  ? { primary: { href: s.ctas[0].url, label: s.ctas[0].label },
+      secondary: s.ctas[1] ? { href: s.ctas[1].url, label: s.ctas[1].label } : undefined }
+  : {};
+---
+<div class="pp-hero-band">
+  <div class="container-mb pp-center">
+    {s.eyebrow && (
+      <p class="pp-eyebrow">
+        {s.eyebrowIcon && (
+          <svg class="pp-eyebrow-icon" width="62" height="70" viewBox="0 0 62 70" fill="none" aria-hidden="true">
+            <rect x="1" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".3" />
+            <rect x="35" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".55" />
+            <rect x="9.5" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" opacity=".75" />
+            <rect x="31" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" />
+          </svg>
+        )}
+        <b>{s.eyebrow}</b>
+      </p>
+    )}
+    <h1 class="pp-hero-title">{s.heading}</h1>
+    {s.sub && <p class="pp-hero-sub">{s.sub}</p>}
+    <ProductCtaRow {...cta} />
+
+    {s.media?.url && (
+      <picture class="pp-hero-pic">
+        {s.mediaMobile?.url && (
+          <source media="(max-width: 991px)" srcset={atWidth(s.mediaMobile.url, 764)}
+                  width="764" height="742" />
+        )}
+        <img class="pp-hero-img" src={atWidth(s.media.url, 998)}
+             alt={s.mediaLabel ?? ''} width="998" height="634"
+             loading="eager" fetchpriority="high" decoding="sync" />
+      </picture>
+    )}
+
+    {s.pillars && s.pillars.length > 0 && (
+      <ul class="pp-pillars">
+        {s.pillars.map((p) => (
+          <li class="pp-pillar">
+            {p.icon && <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />}
+            <h2 class="pp-pillar-title">{p.title}</h2>
+            {p.body && <p class="pp-pillar-body">{p.body}</p>}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {s.trustLine && <p class="pp-trust">{s.trustLine}</p>}
+    <ul class="pp-logos">
+      {LOGOS.map(([file, alt, w]) => (
+        <li><img src={`/images/logos/${file}.svg`} alt={alt} width={w} height="38"
+                 style={`width:${w}px`} loading="lazy" decoding="async" /></li>
+      ))}
+    </ul>
+  </div>
+</div>

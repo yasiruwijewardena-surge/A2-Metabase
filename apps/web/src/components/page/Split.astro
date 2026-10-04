@@ -1,0 +1,32 @@
+---
+/* Artwork one side, copy the other. `reverse` swaps them; `frameTheme` is the
+ * tint behind the artwork. The play caption only appears on video sections. */
+import Media from './Media.astro';
+import type { SplitSection } from '../../lib/types';
+
+interface Props { section: SplitSection }
+const { section: s } = Astro.props;
+const theme = s.frameTheme && s.frameTheme !== 'none' ? `pp-frame--${s.frameTheme}` : '';
+---
+<section class:list={['pp-split', 'container-mb', s.reverse && 'pp-split--reverse']}>
+  <div class="pp-split-media">
+    <div class:list={['pp-frame', theme]}>
+      <Media media={s.media} poster={s.mediaPoster} label={s.mediaLabel} width={630} height={630} />
+    </div>
+    {s.caption && (
+      <p class="pp-play-caption">
+        <svg width="15" height="18" viewBox="0 0 15 18" fill="currentColor" aria-hidden="true"><path d="M0 0l15 9L0 18z" /></svg>
+        {s.caption}
+      </p>
+    )}
+  </div>
+  <div class="pp-split-copy">
+    <h3 class="pp-h30">{s.heading}</h3>
+    {s.lede && <p class="pp-lede">{s.lede}</p>}
+    {s.bullets && s.bullets.length > 0 && (
+      <ul class="pp-rich">
+        {s.bullets.map((b) => <li><b>{b.title}</b>{b.body && <><br />{b.body}</>}</li>)}
+      </ul>
+    )}
+  </div>
+</section>

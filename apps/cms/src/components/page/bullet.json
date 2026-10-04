@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_page_bullets",
+  "info": {
+    "displayName": "Bullet",
+    "icon": "list",
+    "description": "One item in a split section list: a bold lead-in and its sentence."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text"
+    }
+  }
+}

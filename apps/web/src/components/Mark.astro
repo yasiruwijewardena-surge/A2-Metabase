@@ -1,0 +1,18 @@
+---
+/*
+ * One text node with its marks. Astro frontmatter is TypeScript, not JSX, so
+ * the nesting happens here in the template rather than in a helper.
+ *
+ * Bold with italic is the one combination the content actually uses; the rest
+ * are single marks, which is what Strapi's editor produces for this copy.
+ */
+interface Props { node: { text: string; bold?: boolean; italic?: boolean; underline?: boolean; strikethrough?: boolean; code?: boolean } }
+const { node: n } = Astro.props;
+---
+{n.bold
+  ? <strong>{n.italic ? <em>{n.text}</em> : n.text}</strong>
+  : n.italic ? <em>{n.text}</em>
+  : n.code ? <code>{n.text}</code>
+  : n.underline ? <u>{n.text}</u>
+  : n.strikethrough ? <s>{n.text}</s>
+  : n.text}

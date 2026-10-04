@@ -1,0 +1,51 @@
+---
+/*
+ * A heading and standfirst over an image and a feature list, one open at a
+ * time. Radio inputs plus `:has()`, as the rest of the site filters, so it
+ * behaves like the original's accordion while shipping no JavaScript.
+ *
+ * The radio group needs a name unique to the section, because a page may hold
+ * more than one of these; the component's own id provides it.
+ */
+import NavIcon from '../NavIcon.astro';
+import Media from './Media.astro';
+import type { AccordionSection } from '../../lib/types';
+
+interface Props { section: AccordionSection }
+const { section: s } = Astro.props;
+const group = `acc-${s.id}`;
+---
+<section class="pp-band container-mb">
+  <div class="pp-center">
+    <h2 class="pp-h36">{s.heading}</h2>
+    {s.sub && <p class="pp-band-sub">{s.sub}</p>}
+  </div>
+  <div class="pp-accordion">
+    <div class="pp-frame pp-frame--grey pp-accordion-media">
+      <Media media={s.media} label={s.mediaLabel} width={602} height={555} />
+    </div>
+    <ul class="pp-features">
+      {(s.items ?? []).map((f, i) => (
+        <li class="pp-feature">
+          <input class="pp-feature-radio" type="radio" name={group}
+                 id={`${group}-${i}`} checked={i === 0} />
+          <span class="pp-feature-rail" aria-hidden="true"></span>
+          <div class="pp-feature-body">
+            {f.icon && <NavIcon name={f.icon} size={32} class="pp-feature-icon" />}
+            {f.badge && (
+              <span class="pp-feature-badge">
+                {f.icon && <NavIcon name={f.icon} size={24} class="pp-feature-badge-icon" />}
+                {f.badge}
+              </span>
+            )}
+            <h3 class="pp-feature-title"><label for={`${group}-${i}`}>{f.title}</label></h3>
+            <div class="pp-feature-detail">
+              {f.body && <p class="pp-feature-text">{f.body}</p>}
+              {f.linkLabel && f.linkUrl && <a class="pp-feature-link" href={f.linkUrl}>{f.linkLabel}</a>}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

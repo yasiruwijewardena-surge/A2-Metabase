@@ -1,0 +1,170 @@
+{
+  "productPages": [
+    {
+      "title": "Self-service Business Intelligence",
+      "slug": "business-intelligence",
+      "seo": {
+        "metaTitle": "Self-service Business Intelligence | Metabase",
+        "metaDescription": "The fastest way to go from database to dashboards: a clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL whenever you need it."
+      },
+      "sections": [
+        {
+          "__component": "page.hero",
+          "eyebrowIcon": "bi",
+          "eyebrow": "Business Intelligence",
+          "heading": "The fastest way to go from database to dashboards",
+          "sub": "A clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL when you need it.",
+          "media": "../../web/public/images/product/business-intelligence/hero.webp",
+          "mediaMobile": "../../web/public/images/product/business-intelligence/hero-mobile.webp",
+          "mediaLabel": "A Metabase dashboard of business metrics",
+          "framed": false,
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "pillars": [
+            {
+              "icon": "rocket",
+              "title": "Quick to set up",
+              "body": "Skip the ETL and the modelling layer to begin with. Layer in structure later."
+            },
+            {
+              "icon": "cloud",
+              "title": "Self-host or deploy on Metabase Cloud",
+              "body": "Go hands-free on our cloud, run it on your own hardware, or air-gap it entirely."
+            },
+            {
+              "icon": "permissions",
+              "title": "Secure data sharing",
+              "body": "Share a dashboard with the whole company, or one row with one customer."
+            }
+          ]
+        },
+        {
+          "__component": "page.split",
+          "heading": "You could be querying 5 minutes from now",
+          "lede": "Regardless of what state your DB is in.",
+          "media": "../../web/public/images/home/query-builder.mp4",
+          "mediaPoster": "../../web/public/images/home/query-builder-poster.webp",
+          "mediaLabel": "Building a question in the visual query builder",
+          "frameTheme": "blue",
+          "caption": "Watch how quick and easy it is to go from zero to chart",
+          "bullets": [
+            {
+              "title": "Low-lift to get started",
+              "body": "Write your config up in a single YAML file, or tidy away things like experimental column headers right in the admin UI."
+            },
+            {
+              "title": "Curate what you expose",
+              "body": "Choose the tables people see and edit their metadata in the UI, so self-service answers come out right."
+            },
+            {
+              "title": "Start simple before your first data hire joins the team",
+              "body": "Add modelling layers as the data grows and more data-focused people come onboard."
+            }
+          ]
+        },
+        {
+          "__component": "page.accordion",
+          "heading": "Avoid repeated requests with reports anyone can run",
+          "sub": "Let people dive deeper into data on their own without the hand-holding.",
+          "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-1.webp",
+          "mediaLabel": "A dashboard being filtered through a drill-through menu",
+          "items": [
+            {
+              "icon": "ai",
+              "badge": "Metabot",
+              "title": "Ask Metabot AI",
+              "body": "Chat with your database to get answers in natural language, so the people who need a number can go and get it themselves.",
+              "linkLabel": "Chat with your database",
+              "linkUrl": "/features/metabase-ai"
+            },
+            {
+              "icon": "drill",
+              "title": "Click on charts to drill into data",
+              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it."
+            },
+            {
+              "icon": "query",
+              "title": "Query data with or without SQL",
+              "body": "Put queries together intuitively in the visual query builder without writing any SQL, then drop into the editor when a question earns it.",
+              "linkLabel": "visual query builder",
+              "linkUrl": "/features/query-builder"
+            },
+            {
+              "icon": "services",
+              "title": "Make content trustworthy and easy to find",
+              "body": "Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections."
+            },
+            {
+              "icon": "csv",
+              "title": "Put the most valuable data in front of people",
+              "body": "Schedule reports out to anyone, inside the organisation or outside it, over Slack or email."
+            }
+          ]
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 0
+        },
+        {
+          "__component": "page.split",
+          "heading": "Make sure people only see what they need to",
+          "lede": "Granular permissions keep people safe from accidentally seeing — or breaking — data that was never theirs to touch.",
+          "media": "../../web/public/images/product/business-intelligence/permissions2.mp4",
+          "mediaPoster": "../../web/public/images/product/business-intelligence/permissions2-poster.webp",
+          "mediaLabel": "Setting table, row and column permissions for a group",
+          "frameTheme": "grey",
+          "bullets": [
+            {
+              "title": "Limit access at the table, row or column level",
+              "body": "Lock down the sensitive tables, fields and columns while people carry on using the rest of the data."
+            },
+            {
+              "title": "Manage role-based permissions with SSO",
+              "body": "Set visibility by role — marketing sees one thing, support another — with view and edit granted separately."
+            },
+            {
+              "title": "Keep track of who's doing what, when",
+              "body": "Set alerts on access and downloads, and read the rest back out of usage analytics."
+            }
+          ]
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 1
+        },
+        {
+          "__component": "page.band",
+          "heading": "Works with your stack for live visualizations and reports, not extracts",
+          "__subRich": [
+            {
+              "t": "Metabase is a visualization and querying layer that sits on top of the database you already run, across "
+            },
+            {
+              "t": "20 data sources",
+              "href": "/data-sources"
+            },
+            {
+              "t": ", so the numbers people read are the numbers that are in there right now — not the ones that were true when last night's export finished."
+            }
+          ],
+          "media": "seed:product-pages/works-with-your-stack.webp",
+          "mediaLabel": "Metabase connected to a warehouse and several application databases",
+          "linkLabel": "Learn more about how Metabase works with your database",
+          "linkUrl": "/data-sources",
+          "centred": true
+        },
+        {
+          "__component": "page.quote",
+          "__quote": 2
+        },
+        {
+          "__component": "page.closing",
+          "heading": "Ready to get started?",
+          "sub": "Visualize your data in minutes. Let non-technical teammates explore and share what they find, with no queue behind your data team.",
+          "media": "../../web/public/images/product/business-intelligence/application-screenshot.webp",
+          "mediaLabel": "The Metabase application, showing a collection of dashboards"
+        }
+      ]
+    }
+  ],
+  "featurePages": []
+}

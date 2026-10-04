@@ -1,6 +1,21 @@
 import type {
-  Author, CaseStudy, Category, Faq, GlossaryTerm, Industry, Plan, Post, PricingAddon, Tag,
-  Testimonial, UseCase, SiteEvent, EventCategory,} from './types';
+  Author,
+  CaseStudy,
+  Category,
+  EventCategory,
+  Faq,
+  FeaturePage,
+  GlossaryTerm,
+  Industry,
+  Plan,
+  Post,
+  PricingAddon,
+  ProductPage,
+  SiteEvent,
+  Tag,
+  Testimonial,
+  UseCase,
+} from './types';
 
 const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
   .replace(/\/+$/, '');
@@ -178,3 +193,42 @@ export const getFaqs = (page = 'pricing') =>
 
 export const getPricingAddons = () =>
   all<PricingAddon>('pricing-addons', { sort: 'displayOrder:asc' });
+
+/* ---------------------------------------------------------------------------
+ * Marketing pages
+ *
+ * A dynamic zone has to say what to populate for each component it may hold --
+ * `populate=*` stops at the zone itself and returns only the scalar fields, so
+ * the media, pillars, bullets and quote relations come back empty. Hence the
+ * `[on][page.x]` form, one entry per component in the zone.
+ * ------------------------------------------------------------------------ */
+
+const ZONE = ['hero', 'split', 'band', 'accordion', 'quote', 'closing'];
+
+const zonePopulate = (field: string) =>
+  Object.fromEntries(ZONE.flatMap((c) => (c === 'quote'
+    /* The quote holds a relation to a testimonial, which has relations of its
+       own, so it needs the nested form. Asking for `*` as well as the nested
+       path is a 400 -- they are two ways to populate the same component. */
+    ? [[`populate[${field}][on][page.quote][populate][testimonial][populate]`, '*']]
+    : [[`populate[${field}][on][page.${c}][populate]`, '*']])));
+
+export const getProductPages = () =>
+  all<ProductPage>('product-pages', { ...zonePopulate('sections'), 'populate[seo]': 'true' });
+
+export const getProductPage = async (slug: string) =>
+  (await all<ProductPage>('product-pages', {
+    'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
+  }))[0] ?? null;
+
+export const getFeaturePages = () =>
+  all<FeaturePage>('feature-pages', {
+    'populate[hero][populate]': '*',
+    'populate[sections][populate]': '*',
+    'populate[closing][populate]': '*',
+    'populate[faqs]': 'true',
+    'populate[seo]': 'true',
+  });
+
+export const getFeaturePage = async (slug: string) =>
+  (await getFeaturePages()).find((p) => p.slug === slug) ?? null;

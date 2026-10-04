@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "feature_pages",
+  "info": {
+    "singularName": "feature-page",
+    "pluralName": "feature-pages",
+    "displayName": "Feature page",
+    "description": "A page under /features. Typed fields rather than a dynamic zone: unlike the product pages, these sections are one-offs, and modelling a component per single use buys nothing. Copy and artwork are editable; the order is fixed."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "hero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.hero"
+    },
+    "sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.section"
+    },
+    "closing": {
+      "type": "component",
+      "repeatable": false,
+      "component": "page.closing"
+    },
+    "faqs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::faq.faq"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

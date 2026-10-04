@@ -1,0 +1,51 @@
+---
+/*
+ * One piece of section artwork, from Strapi.
+ *
+ * A video and an image are the same field in the CMS, so the shape is decided
+ * here by mime rather than by asking an editor to pick the right slot. Videos
+ * keep the original's autoplay-loop-muted treatment and carry their poster;
+ * images keep explicit width and height, which is what holds CLS at 0.
+ */
+import { cld, src as atWidth, srcset } from '../../lib/image';
+import type { StrapiImage } from '../../lib/types';
+
+interface Props {
+  media?: StrapiImage | null;
+  poster?: StrapiImage | null;
+  label?: string | null;
+  width: number;
+  height: number;
+  class?: string;
+  /** The LCP image on the page. */
+  priority?: boolean;
+  widths?: number[];
+  sizes?: string;
+}
+const {
+  media, poster, label, width, height,
+  class: cls = '', priority = false, widths, sizes,
+} = Astro.props;
+
+const isVideo = !!media?.mime?.startsWith('video/');
+/* Cloudinary serves video under /video/upload; `cld` rewrites the transform
+   segment either way, so the poster and the file agree on dimensions. */
+const posterUrl = poster?.url ? cld(poster.url, `f_auto,q_auto,c_limit,w_${width}`) : undefined;
+const list = widths ?? [width, width * 2];
+---
+{media && (isVideo ? (
+  <video width={width} height={height} poster={posterUrl}
+         autoplay loop muted playsinline preload="none" class={cls}
+         aria-label={label ?? undefined}>
+    <source src={media.url} type={media.mime} />
+  </video>
+) : (
+  <img src={atWidth(media.url, width)}
+       srcset={srcset(media.url, list)}
+       sizes={sizes ?? `${width}px`}
+       width={width} height={height} class={cls}
+       alt={label ?? media.alternativeText ?? ''}
+       loading={priority ? 'eager' : 'lazy'}
+       fetchpriority={priority ? 'high' : 'auto'}
+       decoding={priority ? 'sync' : 'async'} />
+))}
