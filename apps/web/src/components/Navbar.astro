@@ -66,14 +66,14 @@ const resources: [string, string, string, string][] = [
               bars re-sort on hover, and Embedded Analytics is a flat
               illustration on a tinted plate. An icon in a tile was neither. */}
           <div class="nav-cards">
-            <a href="/product/business-intelligence" class="nav-card">
+            <a href="/product/business-intelligence" class="nav-card nav-card--stack">
               <span class="nav-bars" aria-hidden="true">
                 {[20, 30, 35, 24, 16, 20].map(() => <span></span>)}
               </span>
               <span class="nav-card-title">Business Intelligence</span>
               <span class="nav-card-sub">Self-service analytics for your team</span>
             </a>
-            <a href="/product/embedded-analytics" class="nav-card">
+            <a href="/product/embedded-analytics" class="nav-card nav-card--stack">
               <span class="nav-embed" aria-hidden="true">
                 <img src="/images/nav/embed.svg" width="64" height="56" alt="" />
               </span>
@@ -134,11 +134,11 @@ const resources: [string, string, string, string][] = [
           <div class="nav-sub-section">
             <div class="nav-col-wide">
               <span class="nav-eyebrow">Getting started</span>
-              {[['Querying and dashboards', 'Everyone exploring and analyzing data', 'query'],
+              {[['Querying and dashboards', 'Everyone exploring and analyzing data', 'catQuerying'],
                 ['Embedding', 'Developers building in-product analytics', 'embed'],
                 ['Administration', "People running their company's instance", 'gear']].map(([label, desc, icon]) => (
                 <a href="/learn" class="nav-rich">
-                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={52} /></span>
+                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={54} /></span>
                   <span>
                     <span class="nav-rich-label">{label}</span>
                     <span class="nav-rich-desc">{desc}</span>
@@ -318,9 +318,12 @@ const resources: [string, string, string, string][] = [
   /* --- shared ---------------------------------------------------------- */
   .nav-cards { display: flex; gap: 12px; padding: 24px; }
   .nav-card {
-    display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
     border: 1px solid #eef6fc; border-radius: 8px; padding: 12px;
   }
+  /* Product stands its artwork above the label; Docs sets it beside, which is
+     why those cards are 71 tall against 143. */
+  .nav-card--stack { flex-direction: column; align-items: stretch; }
   .nav-card { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
   .nav-card:hover {
     background: var(--color-brand-faint);
@@ -413,17 +416,23 @@ const resources: [string, string, string, string][] = [
   /* --- Docs: tinted lower section ---------------------------------------- */
   .nav-sub-section { display: flex; gap: 12px; padding: 0 24px; background: var(--color-brand-faint); }
   /* 427 / 255 on the original, with a hairline between them. */
+  /* The original's two columns are 427 and 255 inside the section's own 24 of
+     padding, with nothing between them but the 12 gap. The inner padding here
+     was eating 24 off each, which is why every row in this menu measured
+     exactly 24 narrow. */
   .nav-col-wide {
-    flex: 0 0 427px; min-width: 0; padding: 24px 24px 24px 0;
+    flex: 0 0 427px; min-width: 0; padding: 24px 0;
     border-right: 1px solid var(--color-brand-muted);
   }
-  .nav-col-narrow { flex: 1; min-width: 0; padding: 24px 0 24px 24px; }
+  .nav-col-narrow { flex: 1; min-width: 0; padding: 24px 0; }
 
   .nav-rich { display: flex; gap: 10px; align-items: center; padding: 12px 0; }
+  /* The last row in each list drops its bottom padding, which is what keeps
+     the Docs panel 419 tall rather than 430. */
+  .nav-rich:last-child { padding-bottom: 0; }
   .nav-rich-ico {
     display: grid; place-items: center; flex: none; width: 54px; height: 54px;
-    border-radius: 50%; background: #fff; color: var(--color-brand);
-    box-shadow: inset 0 0 0 1px var(--color-brand-muted);
+    color: var(--color-brand);
   }
   /* Resources rows are the muted grey of every other menu list; only the Docs
      category illustrations are brand blue, which is why one rule for both put
@@ -447,6 +456,7 @@ const resources: [string, string, string, string][] = [
     border-bottom: 1px solid var(--color-brand-muted);
     font-size: 14px; line-height: 21px; font-weight: 700; color: var(--color-ink-2);
   }
+  .nav-ruled:last-child { padding-bottom: 0; border-bottom: 0; }
   /* Resources lists its posts with a 12px gap and no rule — only the Docs
      guides column is ruled. */
   .nav-post {
