@@ -45,12 +45,55 @@ const ANSWERS = {
 <div class="hchat" data-hero-chat>
   <div class="hchat__head">
     <p class="hchat__heading">Chat with Metabot</p>
-    <button type="button" class="hchat__clear" data-hero-clear hidden>Clear chat</button>
+    <span class="hchat__head-actions">
+      <button type="button" class="hchat__clear" data-hero-clear aria-label="Clear chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13M10 11v6M14 11v6" />
+        </svg>
+      </button>
+      <button type="button" class="hchat__close" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+             stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </span>
   </div>
 
-  <div class="hchat__thread" data-hero-thread role="log" aria-live="polite" aria-label="Conversation with Metabot"></div>
+  {/* The original's column arrives with this exchange already on screen -- no
+      empty state, no chips, nothing to wait for. The chips are still here for
+      after the thread is cleared, and the other two answers still work when
+      asked for; they just are not what the panel opens on. */}
+  <div class="hchat__thread" data-hero-thread role="log" aria-live="polite" aria-label="Conversation with Metabot">
+    <p class="hchat__user">{SUGGESTIONS[1][1]}</p>
+    <div class="hchat__bot">
+      <p class="hchat__lead"><b>{ANSWERS.sources.lead}</b>{ANSWERS.sources.leadTail}</p>
+      <div class="hchat__source">
+        <p class="hchat__source-head">Data Sources</p>
+        <div class="hchat__source-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18M9 9v11" />
+          </svg>
+          <span><b>{ANSWERS.sources.source}</b><small>Data library</small></span>
+          <span class="hchat__votes">
+            <button type="button" aria-label="Good answer" data-vote="up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 5h5a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 17 20H7" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button type="button" aria-label="Bad answer" data-vote="down">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-3-2l1-5H6a2 2 0 0 1-2-2.3l1-6A2 2 0 0 1 7 4h10" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </span>
+        </div>
+      </div>
+      {ANSWERS.sources.body.map((t) => <p>{t}</p>)}
+      <p class="hchat__follow">{ANSWERS.sources.followUp[0]}<span class="hchat__metric">{ANSWERS.sources.followUp[1]}</span>{ANSWERS.sources.followUp[2]}</p>
+    </div>
+  </div>
 
-  <div class="hchat__suggestions" data-hero-suggestions>
+  <div class="hchat__suggestions" data-hero-suggestions hidden>
     <p class="hchat__hint">Try one of these</p>
     {SUGGESTIONS.map(([id, text]) => (
       <button type="button" class="hchat__chip" data-ask={id}>{text}</button>
@@ -78,8 +121,16 @@ const ANSWERS = {
           </svg>
           <span><b>{a.source}</b><small>Data library</small></span>
           <span class="hchat__votes">
-            <button type="button" aria-label="Good answer" data-vote="up">👍</button>
-            <button type="button" aria-label="Bad answer" data-vote="down">👎</button>
+            <button type="button" aria-label="Good answer" data-vote="up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 3 2l-1 5h5a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 17 20H7" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button type="button" aria-label="Bad answer" data-vote="down">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-3-2l1-5H6a2 2 0 0 1-2-2.3l1-6A2 2 0 0 1 7 4h10" stroke-linejoin="round" />
+              </svg>
+            </button>
           </span>
         </div>
       </div>
@@ -91,38 +142,63 @@ const ANSWERS = {
 
 <style is:global>
   .hchat { display: flex; flex-direction: column; height: 100%; min-height: 0; font-size: 0.8125rem; }
-  .hchat__head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.9rem; }
-  .hchat__heading { margin: 0; font-size: 0.875rem; font-weight: 700; }
-  .hchat__clear {
-    border: 0; background: none; cursor: pointer;
-    font-size: 0.75rem; color: var(--color-brand-hover); font-weight: 700;
+  .hchat__head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 24px; }
+  /* The original sets these as a bin and a cross rather than a worded button. */
+  .hchat__head-actions { display: flex; align-items: center; gap: 2px; }
+  .hchat__head-actions button {
+    display: grid; place-items: center; border: 0; background: none; cursor: pointer;
+    width: 24px; height: 24px; padding: 4px; color: var(--color-ink-3);
   }
+  .hchat__head-actions button:hover { color: var(--color-ink); }
+  .hchat__head-actions svg { width: 16px; height: 16px; }
+  .hchat__heading { margin: 0; font-size: 0.875rem; font-weight: 700; }
+
   .hchat__clear:hover { text-decoration: underline; }
 
-  .hchat__thread { flex: 1; min-height: 0; overflow-y: auto; }
+  .hchat__thread {
+    display: flex; flex-direction: column; gap: 24px;
+    flex: 1; min-height: 0; overflow-y: auto;
+    /* 8 either side and 24 beneath, which leaves the bot blocks 356 wide --
+       the width at which the finding wraps to three lines as it does there. */
+    margin-top: -8px; padding: 8px 8px 24px;
+  }
   .hchat__thread:empty { flex: 0; }
   .hchat__user {
-    margin: 0 0 0.9rem; margin-inline-start: auto; width: fit-content; max-width: 85%;
-    border: 1px solid var(--color-line); border-radius: 0.75rem; padding: 0.55rem 0.85rem;
+    /* 303 on the original, which is what makes the question wrap to two lines. */
+    margin: 0 0 0 auto; width: fit-content; max-width: 303px;
+    border: 1px solid var(--color-line); border-radius: 0.75rem;
+    padding: 12px 16px;
+    font-size: 14px; line-height: 24px; color: var(--color-ink);
   }
   .hchat__bot { margin-bottom: 1.1rem; }
-  .hchat__bot p { margin: 0 0 0.6rem; color: var(--color-ink-2); line-height: 1.55; }
+  .hchat__bot { display: flex; flex-direction: column; gap: 24px; }
+  .hchat__bot p { margin: 0; font-size: 14px; line-height: 24px; color: var(--color-ink); }
   .hchat__lead b { color: var(--color-ink); font-weight: 700; }
+  .hchat__lead { font-weight: 400; }
   .hchat__metric {
     border-radius: 0.25rem; background: var(--color-brand-muted);
     padding: 0.05rem 0.3rem; color: var(--color-brand-hover); font-weight: 700;
+    font-weight: 400;
   }
-  .hchat__follow { color: var(--color-ink-3) !important; }
+  .hchat__follow { font-weight: 400; color: var(--color-ink) !important; }
 
   .hchat__source { margin-bottom: 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; }
-  .hchat__source-head { margin: 0 !important; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--color-line); font-weight: 700; color: var(--color-ink-2) !important; }
-  .hchat__source-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; }
+  .hchat__bot .hchat__source-head {
+    margin: 0; padding: 8px 16px; border-bottom: 1px solid var(--color-line);
+    font-size: 12px; line-height: 18px; font-weight: 700; color: var(--color-ink);
+  }
+  .hchat__source-row { display: flex; align-items: center; gap: 0.5rem; padding: 12px 16px; }
   .hchat__source-row svg { width: 15px; height: 15px; color: var(--color-brand); flex-shrink: 0; }
-  .hchat__source-row b { display: block; font-weight: 700; }
-  .hchat__source-row small { color: var(--color-ink-3); }
+  .hchat__source-row b { display: block; font-size: 14px; line-height: 16px; font-weight: 700; color: var(--color-ink); }
+  .hchat__source-row small { font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
   .hchat__votes { margin-inline-start: auto; display: flex; gap: 0.25rem; }
-  .hchat__votes button { border: 0; background: none; cursor: pointer; opacity: 0.45; font-size: 0.8125rem; }
-  .hchat__votes button:hover, .hchat__votes button[data-on='true'] { opacity: 1; }
+  /* Drawn rather than set in emoji, so they take the panel's ink and size. */
+  .hchat__votes button {
+    display: grid; place-items: center; border: 0; background: none; cursor: pointer;
+    padding: 2px; color: var(--color-ink-3);
+  }
+  .hchat__votes svg { width: 18px; height: 18px; }
+  .hchat__votes button:hover, .hchat__votes button[data-on='true'] { color: var(--color-brand); }
 
   .hchat__typing { display: flex; gap: 4px; padding: 0.3rem 0 1rem; }
   .hchat__typing span { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-ink-4); animation: hchat-dot 1.2s infinite; }
