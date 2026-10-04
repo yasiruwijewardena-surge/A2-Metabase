@@ -23,12 +23,22 @@ import paths from '../data/ia-paths.json';
 import type { Page } from '../lib/types';
 
 export async function getStaticPaths() {
+  /* Declared in here, not in the frontmatter: Astro hoists getStaticPaths into
+     a scope of its own, so anything it names has to be inside it or imported.
+
+     The row whose slug is "home" is the site root -- a rest parameter produces
+     "/" when it is undefined, which is how one route covers both. */
+  const pathOf = (slug: string) => {
+    const clean = slug.replace(/^\/+/, '');
+    return clean === 'home' ? undefined : clean;
+  };
+
   const pages = await getPages();
-  const taken = new Set(pages.map((p) => `/${p.slug.replace(/^\/+/, '')}`));
+  const taken = new Set(pages.map((p) => `/${pathOf(p.slug) ?? ''}`));
 
   return [
     ...pages.map((page) => ({
-      params: { path: page.slug.replace(/^\/+/, '') },
+      params: { path: pathOf(page.slug) },
       props: { page },
     })),
     ...(paths as string[])
@@ -40,7 +50,7 @@ export async function getStaticPaths() {
 interface Props { page: Page | null }
 const { page } = Astro.props;
 
-const here = `/${Astro.params.path}`;
+const here = `/${Astro.params.path ?? ''}`;
 
 /** The sections of the replica that are built, for somewhere to go next. */
 const built: [string, string, string][] = [
