@@ -90,7 +90,7 @@ few places — see `../../SITE-ANALYSIS.md` §6 for the reasoning behind each.
 |---|---|---|
 | `post` | title, slug, excerpt, body (blocks), coverImage, publishedDate, readTimeMinutes, featured | → category (M:1), tags (M:N), author (M:1), relatedPosts (self M:N), seo |
 | `category` | name, slug, description | ← posts |
-| `tag` | name, slug | ← posts |
+| `tag` | name, slug | ← posts — filterable at `/blog/tag/[slug]` |
 | `author` | name, slug, role, bio, avatar, socialX, socialLinkedIn | ← posts |
 
 `category` and `tag` are separate on purpose. The original has a single

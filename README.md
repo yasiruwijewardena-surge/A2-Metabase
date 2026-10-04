@@ -20,7 +20,7 @@ and the front end built in Astro.
 │   ├── cms/              Strapi 5 — content model, admin, REST API
 │   │   └── seed/         Idempotent seeder + the pipeline that produced its data
 │   │       └── assets/   Images the seed uploads that have no source URL
-│   └── web/              Astro front end — 299 static routes
+│   └── web/              Astro front end — 310 static routes
 │       ├── src/components/demos/   The homepage's interactive islands
 │       ├── src/lib/      Strapi client, Cloudinary helpers
 │       └── src/styles/   Design tokens and component layers
@@ -111,7 +111,12 @@ changing how a page looks. The ones acted on so far:
   `/love`, with nothing linking them. Here one `testimonial` type with a
   `variant` discriminator covers all three.
 - **Category and tag are separate.** The original's single free-text category
-  caps the blog at one filter dimension.
+  caps the blog at one filter dimension. Both are filterable here:
+  `/blog/category/[slug]` and `/blog/tag/[slug]`. The original has neither —
+  its pills toggle DOM visibility with no URL change — so these are real
+  routes on purpose, because a filtered view that is shareable and indexable
+  beats one that is neither. Tags sit in the sidebar rather than the header,
+  which was measured against the original and is left as it was.
 - **SEO metadata is separate from the card excerpt.** The original reuses one
   `description` field for the listing card, the meta description and
   `og:description`.
@@ -126,7 +131,7 @@ the nav and footer carry its full link set. What is built:
 | Section | Routes |
 |---|---|
 | Home | `/` |
-| Blog | listing, posts, by category, by author |
+| Blog | listing, posts, by category, by tag, by author |
 | Case studies | listing, studies, by industry, by use case, use case × industry |
 | Events | `/events` — upcoming, recordings, filterable by series |
 | Testimonials | `/love` |
@@ -217,7 +222,7 @@ with a matching `imagesrcset`.
 - [x] Deploy Strapi + Postgres to Railway
 - [x] Seed content (`npm run seed`, idempotent — safe to re-run)
 - [x] Scaffold Astro with the design tokens
-- [x] Build the pages (299 static routes)
+- [x] Build the pages (310 static routes)
 - [x] Deploy the front end
 - [x] Optimise and record PageSpeed results — 9 pages, both strategies
 - [x] Match the homepage, blog and case studies against measured values
@@ -229,9 +234,6 @@ with a matching `imagesrcset`.
 
 Known gaps, in the order they are worth closing:
 
-- [ ] `tag` is modelled with 11 records and a relation to `post`, but there is
-      no `/blog/tag/[slug]` route, so it cannot be filtered on. Either build the
-      route or drop the field — a relation nothing can reach reads as unfinished.
 - [ ] Marketing copy on the product, features and roadmap pages is held in the
       Astro components rather than Strapi. The brief requires the blog, filters
       and testimonials to be CMS-driven and those are; this is the next step up

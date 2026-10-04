@@ -2,26 +2,27 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { preloadFor } from '../../../lib/image';
 import BlogListing from '../../../components/BlogListing.astro';
-import { getPosts, getCategories } from '../../../lib/strapi';
+import { getPosts, getCategories, getTags } from '../../../lib/strapi';
 
 export async function getStaticPaths() {
-  const [posts, categories] = await Promise.all([getPosts(), getCategories()]);
+  const [posts, categories, tags] = await Promise.all([getPosts(), getCategories(), getTags()]);
   return categories.map((category) => ({
     params: { slug: category.slug },
     props: {
       category,
       categories,
+      tags,
       posts: posts.filter((p) => p.category?.slug === category.slug),
     },
   }));
 }
 
-const { category, categories, posts } = Astro.props;
+const { category, categories, tags, posts } = Astro.props;
 ---
 <BaseLayout
   title={`${category.name} | Metabase Blog`}
   description={category.description ?? `Posts in ${category.name}.`}
   preload={preloadFor(posts[0]?.coverImage?.url)}
 >
-  <BlogListing posts={posts} categories={categories} active={category.slug} />
+  <BlogListing posts={posts} categories={categories} tags={tags} activeCategory={category.slug} />
 </BaseLayout>
