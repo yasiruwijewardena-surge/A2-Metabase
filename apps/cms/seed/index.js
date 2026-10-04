@@ -162,8 +162,6 @@ const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase)
 let phase = null;
 
 const ORDER = [
-  'api::product-page.product-page',
-  'api::marketing-page.marketing-page',
   'api::page.page',
   'api::event.event',
   'api::event-category.event-category',
@@ -542,27 +540,6 @@ async function main() {
         }
         return s;
       };
-
-      for (const page of pagesData.productPages ?? []) {
-        const sections = [];
-        for (const raw of page.sections) {
-          const built = await buildSection(raw);
-          if (built) sections.push(built);
-        }
-        await upsert(app, 'api::product-page.product-page', { slug: page.slug },
-          { title: page.title, slug: page.slug, seo: page.seo, sections });
-      }
-
-      for (const page of pagesData.marketingPages ?? []) {
-        const data = { title: page.title, slug: page.slug, seo: page.seo };
-        if (page.hero) data.hero = await buildSection(page.hero);
-        if (page.closing) data.closing = await buildSection(page.closing);
-        if (page.sections) {
-          data.sections = [];
-          for (const raw of page.sections) data.sections.push(await buildSection(raw));
-        }
-        await upsert(app, 'api::marketing-page.marketing-page', { slug: page.slug }, data);
-      }
 
       for (const page of pagesData.pages ?? []) {
         const sections = [];

@@ -235,6 +235,40 @@ export interface PageCompareTab extends Struct.ComponentSchema {
   };
 }
 
+export interface PageDataStudio extends Struct.ComponentSchema {
+  collectionName: 'components_page_data_studios';
+  info: {
+    displayName: 'Data Studio page';
+    icon: 'layer';
+  };
+  attributes: {
+    badgeImage: Schema.Attribute.String;
+    cards: Schema.Attribute.Component<'page.feature-card', true>;
+    closingCtas: Schema.Attribute.Component<'shared.cta', true>;
+    closingHeading: Schema.Attribute.String;
+    closingSub: Schema.Attribute.Text;
+    eyebrow: Schema.Attribute.String;
+    faqHeading: Schema.Attribute.String;
+    faqMoreLabel: Schema.Attribute.String;
+    faqMoreText: Schema.Attribute.String;
+    faqMoreUrl: Schema.Attribute.String;
+    faqs: Schema.Attribute.Component<'page.faq-item', true>;
+    featsHeading: Schema.Attribute.String;
+    featsLede: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    heroCtas: Schema.Attribute.Component<'shared.cta', true>;
+    ledeAfter: Schema.Attribute.Text;
+    ledeBefore: Schema.Attribute.Text;
+    ledeLinkLabel: Schema.Attribute.String;
+    ledeLinkUrl: Schema.Attribute.String;
+    logos: Schema.Attribute.Component<'page.logo-item', true>;
+    shotAlt: Schema.Attribute.String;
+    shotImage: Schema.Attribute.String;
+    ticks: Schema.Attribute.Component<'page.text-item', true>;
+    trustLine: Schema.Attribute.String;
+  };
+}
+
 export interface PageDemo extends Struct.ComponentSchema {
   collectionName: 'components_page_demos';
   info: {
@@ -256,6 +290,161 @@ export interface PageDemo extends Struct.ComponentSchema {
         'compliance-badges',
       ]
     >;
+  };
+}
+
+export interface PageEaImpl extends Struct.ComponentSchema {
+  collectionName: 'components_page_ea_impls';
+  info: {
+    displayName: 'Implementation';
+    icon: 'layer';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    image: Schema.Attribute.String;
+    imageAlt: Schema.Attribute.String;
+    imageH: Schema.Attribute.Integer;
+    imageW: Schema.Attribute.Integer;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    points: Schema.Attribute.Component<'page.ea-impl-point', true>;
+    sub: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface PageEaImplPoint extends Struct.ComponentSchema {
+  collectionName: 'components_page_ea_impl_points';
+  info: {
+    displayName: 'Implementation point';
+    icon: 'bulletList';
+  };
+  attributes: {
+    lead: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    rest: Schema.Attribute.Text;
+  };
+}
+
+export interface PageEaPillar extends Struct.ComponentSchema {
+  collectionName: 'components_page_ea_pillars';
+  info: {
+    displayName: 'Pillar';
+    icon: 'layer';
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface PageEaTab extends Struct.ComponentSchema {
+  collectionName: 'components_page_ea_tabs';
+  info: {
+    displayName: 'Embedded tab';
+    icon: 'layer';
+  };
+  attributes: {
+    anchor: Schema.Attribute.String;
+    body: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    image: Schema.Attribute.String;
+    imageAlt: Schema.Attribute.String;
+    imageH: Schema.Attribute.Integer;
+    imageW: Schema.Attribute.Integer;
+    label: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface PageEmbeddedAnalytics extends Struct.ComponentSchema {
+  collectionName: 'components_page_embedded_analyticss';
+  info: {
+    displayName: 'Embedded Analytics page';
+    icon: 'puzzle';
+  };
+  attributes: {
+    appearanceLabel: Schema.Attribute.String;
+    balanceHeading: Schema.Attribute.String;
+    balanceLinkLabel: Schema.Attribute.String;
+    balanceLinkUrl: Schema.Attribute.String;
+    balanceSub: Schema.Attribute.Text;
+    chartColorsLabel: Schema.Attribute.String;
+    closingCtas: Schema.Attribute.Component<'shared.cta', true>;
+    closingHeading: Schema.Attribute.String;
+    closingSub: Schema.Attribute.Text;
+    customersHeading: Schema.Attribute.String;
+    customersLinkLabel: Schema.Attribute.String;
+    customersLinkUrl: Schema.Attribute.String;
+    customersSub: Schema.Attribute.Text;
+    eyebrow: Schema.Attribute.String;
+    faqHeading: Schema.Attribute.String;
+    faqs: Schema.Attribute.Component<'page.faq-item', true>;
+    fontLabel: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    heroCtas: Schema.Attribute.Component<'shared.cta', true>;
+    heroImage: Schema.Attribute.String;
+    heroImageAlt: Schema.Attribute.String;
+    heroImageMobile: Schema.Attribute.String;
+    implementations: Schema.Attribute.Component<'page.ea-impl', true>;
+    implHeading: Schema.Attribute.String;
+    implLinkLabel: Schema.Attribute.String;
+    implLinkUrl: Schema.Attribute.String;
+    implSub: Schema.Attribute.Text;
+    logos: Schema.Attribute.Component<'page.logo-item', true>;
+    presets: Schema.Attribute.Component<'page.text-item', true>;
+    prototypeHeading: Schema.Attribute.String;
+    prototypeSub: Schema.Attribute.Text;
+    securityHeading: Schema.Attribute.String;
+    securityPillars: Schema.Attribute.Component<'page.ea-pillar', true>;
+    securitySubAfter: Schema.Attribute.Text;
+    securitySubBefore: Schema.Attribute.Text;
+    securitySubLinkLabel: Schema.Attribute.String;
+    securitySubLinkUrl: Schema.Attribute.String;
+    stackHeading: Schema.Attribute.String;
+    stackPillars: Schema.Attribute.Component<'page.ea-pillar', true>;
+    stackSub: Schema.Attribute.Text;
+    storyAlt: Schema.Attribute.String;
+    storyH: Schema.Attribute.Integer;
+    storyLinkLabel: Schema.Attribute.String;
+    storyLinkUrl: Schema.Attribute.String;
+    storyPoster: Schema.Attribute.String;
+    storyTitle: Schema.Attribute.Text;
+    storyVideo: Schema.Attribute.String;
+    storyW: Schema.Attribute.Integer;
+    sub: Schema.Attribute.Text;
+    supportHeading: Schema.Attribute.String;
+    supportLead: Schema.Attribute.String;
+    supportLeadText: Schema.Attribute.Text;
+    supportLede: Schema.Attribute.String;
+    supportPoints: Schema.Attribute.Component<'page.text-item', true>;
+    tabs: Schema.Attribute.Component<'page.ea-tab', true>;
+    tabsHeading: Schema.Attribute.String;
+    tabsSub: Schema.Attribute.Text;
+    themeH: Schema.Attribute.Integer;
+    themeImage: Schema.Attribute.String;
+    themeImageAlt: Schema.Attribute.String;
+    themeW: Schema.Attribute.Integer;
+    trustLine: Schema.Attribute.String;
+    usageHeading: Schema.Attribute.String;
+    usageImage: Schema.Attribute.String;
+    usageImageAlt: Schema.Attribute.String;
+    usageImageH: Schema.Attribute.Integer;
+    usageImageW: Schema.Attribute.Integer;
+    usageLedeAfter: Schema.Attribute.Text;
+    usageLedeLinkLabel: Schema.Attribute.String;
+    usageLedeLinkUrl: Schema.Attribute.String;
+    usageLinkLabel: Schema.Attribute.String;
+    usageLinkSr: Schema.Attribute.String;
+    usageLinkUrl: Schema.Attribute.String;
+    usagePoints: Schema.Attribute.Component<'page.bullet', true>;
+    vsGroups: Schema.Attribute.Component<'page.vs-group', true>;
+    vsHeading: Schema.Attribute.String;
   };
 }
 
@@ -825,24 +1014,6 @@ export interface PageScaleCards extends Struct.ComponentSchema {
   };
 }
 
-export interface PageSection extends Struct.ComponentSchema {
-  collectionName: 'components_page_sections';
-  info: {
-    description: 'A plain heading-body-artwork section, used by the feature pages where the shapes are one-offs rather than a shared vocabulary.';
-    displayName: 'Section';
-    icon: 'file';
-  };
-  attributes: {
-    body: Schema.Attribute.Text;
-    bullets: Schema.Attribute.Component<'page.bullet', true>;
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    media: Schema.Attribute.Media<'images' | 'videos'>;
-    mediaLabel: Schema.Attribute.String;
-    mediaPoster: Schema.Attribute.Media<'images'>;
-    reverse: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-  };
-}
-
 export interface PageSplit extends Struct.ComponentSchema {
   collectionName: 'components_page_splits';
   info: {
@@ -872,6 +1043,31 @@ export interface PageTextItem extends Struct.ComponentSchema {
   };
   attributes: {
     text: Schema.Attribute.Text;
+  };
+}
+
+export interface PageVsGroup extends Struct.ComponentSchema {
+  collectionName: 'components_page_vs_groups';
+  info: {
+    displayName: 'Comparison group';
+    icon: 'layer';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    lines: Schema.Attribute.Component<'page.vs-line', true>;
+  };
+}
+
+export interface PageVsLine extends Struct.ComponentSchema {
+  collectionName: 'components_page_vs_lines';
+  info: {
+    displayName: 'Comparison line';
+    icon: 'dashboard';
+  };
+  attributes: {
+    post: Schema.Attribute.Text;
+    pre: Schema.Attribute.Text;
+    strong: Schema.Attribute.String;
   };
 }
 
@@ -941,7 +1137,13 @@ declare module '@strapi/strapi' {
       'page.compare-grid': PageCompareGrid;
       'page.compare-row': PageCompareRow;
       'page.compare-tab': PageCompareTab;
+      'page.data-studio': PageDataStudio;
       'page.demo': PageDemo;
+      'page.ea-impl': PageEaImpl;
+      'page.ea-impl-point': PageEaImplPoint;
+      'page.ea-pillar': PageEaPillar;
+      'page.ea-tab': PageEaTab;
+      'page.embedded-analytics': PageEmbeddedAnalytics;
       'page.events-index': PageEventsIndex;
       'page.faq-item': PageFaqItem;
       'page.faq-list': PageFaqList;
@@ -971,9 +1173,10 @@ declare module '@strapi/strapi' {
       'page.roadmap-groups': PageRoadmapGroups;
       'page.scale-card': PageScaleCard;
       'page.scale-cards': PageScaleCards;
-      'page.section': PageSection;
       'page.split': PageSplit;
       'page.text-item': PageTextItem;
+      'page.vs-group': PageVsGroup;
+      'page.vs-line': PageVsLine;
       'shared.cta': SharedCta;
       'shared.metric': SharedMetric;
       'shared.seo': SharedSeo;

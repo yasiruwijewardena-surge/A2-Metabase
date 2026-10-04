@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_vs_lines",
+  "info": {
+    "displayName": "Comparison line",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "pre": {
+      "type": "text"
+    },
+    "strong": {
+      "type": "string"
+    },
+    "post": {
+      "type": "text"
+    }
+  }
+}

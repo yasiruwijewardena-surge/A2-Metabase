@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_page_ea_impls",
+  "info": {
+    "displayName": "Implementation",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "badge": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "points": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-impl-point"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageW": {
+      "type": "integer"
+    },
+    "imageH": {
+      "type": "integer"
+    },
+    "imageAlt": {
+      "type": "string"
+    }
+  }
+}

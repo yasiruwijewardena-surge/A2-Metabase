@@ -45,6 +45,8 @@
         "page.link-grid",
         "page.compare-grid",
         "page.metabase-ai",
+        "page.data-studio",
+        "page.embedded-analytics",
         "page.closing"
       ]
     },

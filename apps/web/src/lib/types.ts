@@ -501,6 +501,32 @@ export interface MetabaseAiSection extends SectionBase {
   closingHeading?: string | null; closingSub?: string | null; closingCtas?: Cta[];
 }
 
+export interface DataStudioSection extends SectionBase {
+  __component: 'page.data-studio';
+  eyebrow?: string | null; badgeImage?: string | null; heading?: string | null;
+  ledeBefore?: string | null; ledeLinkLabel?: string | null; ledeLinkUrl?: string | null;
+  ledeAfter?: string | null;
+  heroCtas?: Cta[];
+  ticks?: { id: number; text?: string | null }[];
+  shotImage?: string | null; shotAlt?: string | null;
+  trustLine?: string | null;
+  logos?: { id: number; src?: string | null; alt?: string | null; width?: number | null }[];
+  featsHeading?: string | null; featsLede?: string | null;
+  cards?: FeatureCardItem[];
+  faqHeading?: string | null;
+  faqs?: { id: number; question?: string | null; answer?: string | null }[];
+  faqMoreText?: string | null; faqMoreLabel?: string | null; faqMoreUrl?: string | null;
+  closingHeading?: string | null; closingSub?: string | null; closingCtas?: Cta[];
+}
+
+/* 70-odd fields, because this page is a run of one-off bands rather than
+   repeats of a shape. Worth re-modelling onto the generic band/split
+   components, which would make it reorderable and far easier to edit. */
+export interface EmbeddedAnalyticsSection extends SectionBase {
+  __component: 'page.embedded-analytics';
+  [key: string]: any;
+}
+
 export interface ProseSection extends SectionBase {
   __component: 'page.prose';
   heading?: string | null;
@@ -560,7 +586,7 @@ export type PageSection =
   | HomeHeroSection | HeroSection | PillarsSection | PanelGroupSection
   | FeatureGridSection | SplitSection | BandSection | AccordionSection
   | ScaleCardsSection | CollectionListSection | ProseSection | DemoSection
-  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection | LinkGridSection | CompareGridSection | MetabaseAiSection
+  | FinalCtaSection | FaqListSection | RoadmapGroupsSection | EventsIndexSection | PricingIndexSection | FeatureDetailSection | LinkGridSection | CompareGridSection | MetabaseAiSection | DataStudioSection | EmbeddedAnalyticsSection
   | QuoteSection | ClosingSection;
 
 /** A composed page: one row per URL, its shape held in the zone. */
@@ -571,30 +597,5 @@ export interface Page {
   seo?: Seo | null;
 }
 
-export interface ProductPage {
-  title: string;
-  slug: string;
-  sections?: PageSection[];
-  seo?: Seo | null;
-}
 
-export interface MarketingSection extends SectionBase {
-  __component: 'page.section';
-  heading: string;
-  body?: string | null;
-  bullets?: Bullet[];
-  media?: StrapiImage | null;
-  mediaPoster?: StrapiImage | null;
-  mediaLabel?: string | null;
-  reverse?: boolean;
-}
 
-export interface MarketingPage {
-  title: string;
-  slug: string;
-  hero?: HeroSection | null;
-  sections?: MarketingSection[];
-  closing?: ClosingSection | null;
-  faqs?: Faq[];
-  seo?: Seo | null;
-}

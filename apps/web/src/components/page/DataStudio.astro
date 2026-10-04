@@ -1,0 +1,149 @@
+---
+/*
+ * Data Studio — the semantic layer page.
+ *
+ * The original serves this one page at three URLs: /features/semantic-layer,
+ * /product/data-studio and /features/models all return identical markup at
+ * 5017px, so this renders all three from one file.
+ *
+ * Measured off the original at 1512 with `npm run metrics --root
+ * div.data-studio-page`:
+ *   hero     #fafbfe, padding 56/24, margin-bottom 150
+ *            badge 69x69 inside an 18/21/700 brand heading, mb 32
+ *            h1 420 30/36/700 mb 12 · lede 760 20/28 mb 32
+ *            buttons 16/24/700 padded 12/20 (50 tall), then three 12px ticks
+ *            shot framed at 1014x605 on #eef6fc, r24, 1px, padding 12,
+ *              margin 64 top and -160 bottom so it overhangs the band
+ *   trust    a 346-wide 18px line, mb 24, then six logos 38 tall
+ *   features h3 800 30/36/700, margin 128 top / 18 bottom
+ *            lede 800 24/32 mb 64
+ *            six cards two up: 384 wide, white, r12, 1px, p24, 32 apart
+ *              h5 18/26/700 muted (mt 24, mb 4), h4 20/28/700 mb 12,
+ *              then a 16/24 line
+ *   faq      #fafbfe banded top and bottom, margin-top 128
+ *            h4 652 30/40/700 mb 32, then a 652 white r12 box of details
+ *            summaries 16px/700 padded 24, each after the first ruled above
+ *            then a 648-wide #eef6fc r12 note with a button
+ *   final    white, padding 80/76, h3 457 30/33/700 mb 16,
+ *            lede 576 20/30 mb 32, buttons, ticks
+ *
+ * On the original the FAQ answers sit one question out of step with their
+ * headings ("How does Data Studio help AI give accurate answers?" is
+ * answered with "Yes, you can build and define your semantic layer…").
+ * The pairs here are the correct ones, and the prose is written rather than
+ * copied.
+ */
+import type { PageSection } from '../../lib/types';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+
+const heroCtas = s.heroCtas ?? [];
+const closeCtas = s.closingCtas?.length ? s.closingCtas : heroCtas;
+const ticks = s.ticks ?? [];
+const logos = s.logos ?? [];
+const cards = s.cards ?? [];
+const faqs = s.faqs ?? [];
+---
+
+  <div class="dst">
+    <section class="dst-hero">
+      <div class="dst-wrap">
+        <p class="dst-eyebrow">
+          <img src={s.badgeImage} width="69" height="69" alt=""
+               loading="eager" decoding="sync" />
+          {s.eyebrow}
+        </p>
+        <h1 class="dst-h1">{s.heading}</h1>
+        <p class="dst-lede">{s.ledeBefore}<a href={s.ledeLinkUrl}>{s.ledeLinkLabel}</a>{s.ledeAfter}</p>
+        <p class="dst-ctas">
+          {heroCtas.map((c, i) => (
+            <a href={c.url} class:list={['dst-btn', i === 0 ? 'dst-btn--primary' : 'dst-btn--secondary']}>{c.label}</a>
+          ))}
+        </p>
+        <p class="dst-ticks">
+          {ticks.map((t) => (
+            <span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+                <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.6"
+                      stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {t.text}
+            </span>
+          ))}
+        </p>
+        <div class="dst-shot">
+          <img src={s.shotImage}
+               alt={s.shotAlt}
+               width="988" height="579" loading="eager" fetchpriority="high" decoding="sync" />
+        </div>
+      </div>
+    </section>
+
+    <div class="dst-trust">
+      <p>{s.trustLine}</p>
+      <ul>
+        {logos.map((l) => (
+          <li><img src={`/images/logos/${l.src}.svg`} alt={l.alt} width={l.width} height="38"
+                   style={`width:${l.width}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    </div>
+
+    <section class="dst-feats">
+      <h2 class="dst-feats-h">{s.featsHeading}</h2>
+      <p class="dst-feats-lede">{s.featsLede}</p>
+      <ul class="dst-grid">
+        {cards.map((c) => (
+          <li class="dst-card">
+            <p class="dst-card-label">{c.icon}</p>
+            <h3 class="dst-card-h">{c.title}</h3>
+            <p class="dst-card-p">{c.body} <a href={c.trailingUrl}>{c.trailingLabel}</a></p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="dst-faq">
+      <h2 class="dst-faq-h">{s.faqHeading}</h2>
+      <div class="dst-faq-box">
+        {faqs.map((f) => (
+          <details class="dst-faq-item">
+            <summary>
+              {f.question}
+              <svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+      </div>
+      <p class="dst-more">
+        <span>{s.faqMoreText}</span>
+        <a href={s.faqMoreUrl} class="dst-more-btn">{s.faqMoreLabel}</a>
+      </p>
+    </section>
+
+    <section class="dst-final">
+      <h2 class="dst-final-h">{s.closingHeading}</h2>
+      <p class="dst-final-p">{s.closingSub}</p>
+      <p class="dst-ctas">
+        {closeCtas.map((c, i) => (
+          <a href={c.url} class:list={['dst-btn', i === 0 ? 'dst-btn--primary' : 'dst-btn--secondary']}>{c.label}</a>
+        ))}
+      </p>
+      <p class="dst-ticks">
+        {ticks.map((t) => (
+          <span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+              <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {t.text}
+          </span>
+        ))}
+      </p>
+    </section>
+  </div>

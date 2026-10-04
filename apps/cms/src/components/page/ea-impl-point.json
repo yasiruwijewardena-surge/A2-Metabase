@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_page_ea_impl_points",
+  "info": {
+    "displayName": "Implementation point",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "lead": {
+      "type": "string"
+    },
+    "rest": {
+      "type": "text"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

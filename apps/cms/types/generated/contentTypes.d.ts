@@ -800,42 +800,6 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiMarketingPageMarketingPage
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'marketing_pages';
-  info: {
-    description: 'A marketing page that is mostly bespoke: a hero and a closing CTA that are editable here, with the sections between them built in the front end. Typed fields rather than a dynamic zone, because those middle sections are one-offs -- a tabbed panel, a theme picker, a comparison table -- and a component per single use buys nothing. Covers the pages under /features as well as the product pages whose middles are bespoke.';
-    displayName: 'Marketing page';
-    pluralName: 'marketing-pages';
-    singularName: 'marketing-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    closing: Schema.Attribute.Component<'page.closing', false>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    faqs: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'>;
-    hero: Schema.Attribute.Component<'page.hero', false>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::marketing-page.marketing-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    sections: Schema.Attribute.Component<'page.section', true>;
-    seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -879,6 +843,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'page.link-grid',
         'page.compare-grid',
         'page.metabase-ai',
+        'page.data-studio',
+        'page.embedded-analytics',
         'page.closing',
       ]
     >;
@@ -1049,47 +1015,6 @@ export interface ApiPricingAddonPricingAddon
     publishedAt: Schema.Attribute.DateTime;
     rate: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'name'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiProductPageProductPage extends Struct.CollectionTypeSchema {
-  collectionName: 'product_pages';
-  info: {
-    description: 'A page under /product. The body is a dynamic zone because these pages are built from one shared vocabulary -- splits, bands and a closing CTA -- so sections can be reordered, added and removed without a deploy.';
-    displayName: 'Product page';
-    pluralName: 'product-pages';
-    singularName: 'product-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-page.product-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    sections: Schema.Attribute.DynamicZone<
-      [
-        'page.hero',
-        'page.split',
-        'page.band',
-        'page.accordion',
-        'page.quote',
-        'page.closing',
-      ]
-    >;
-    seo: Schema.Attribute.Component<'shared.seo', false>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1724,13 +1649,11 @@ declare module '@strapi/strapi' {
       'api::faq.faq': ApiFaqFaq;
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
       'api::industry.industry': ApiIndustryIndustry;
-      'api::marketing-page.marketing-page': ApiMarketingPageMarketingPage;
       'api::page.page': ApiPagePage;
       'api::person.person': ApiPersonPerson;
       'api::plan.plan': ApiPlanPlan;
       'api::post.post': ApiPostPost;
       'api::pricing-addon.pricing-addon': ApiPricingAddonPricingAddon;
-      'api::product-page.product-page': ApiProductPageProductPage;
       'api::tag.tag': ApiTagTag;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::use-case.use-case': ApiUseCaseUseCase;

@@ -1,0 +1,262 @@
+{
+  "collectionName": "components_page_embedded_analyticss",
+  "info": {
+    "displayName": "Embedded Analytics page",
+    "icon": "puzzle"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "sub": {
+      "type": "text"
+    },
+    "heroCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "heroImage": {
+      "type": "string"
+    },
+    "heroImageMobile": {
+      "type": "string"
+    },
+    "heroImageAlt": {
+      "type": "string"
+    },
+    "trustLine": {
+      "type": "string"
+    },
+    "logos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.logo-item"
+    },
+    "securityHeading": {
+      "type": "string"
+    },
+    "securityPillars": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-pillar"
+    },
+    "stackHeading": {
+      "type": "string"
+    },
+    "stackPillars": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-pillar"
+    },
+    "implHeading": {
+      "type": "string"
+    },
+    "implementations": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-impl"
+    },
+    "tabsHeading": {
+      "type": "string"
+    },
+    "tabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-tab"
+    },
+    "usageHeading": {
+      "type": "string"
+    },
+    "usagePoints": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.bullet"
+    },
+    "supportHeading": {
+      "type": "string"
+    },
+    "supportPoints": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    },
+    "vsHeading": {
+      "type": "string"
+    },
+    "vsGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.vs-group"
+    },
+    "faqHeading": {
+      "type": "string"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.faq-item"
+    },
+    "closingHeading": {
+      "type": "string"
+    },
+    "closingSub": {
+      "type": "text"
+    },
+    "closingCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "prototypeHeading": {
+      "type": "string"
+    },
+    "customersHeading": {
+      "type": "string"
+    },
+    "balanceHeading": {
+      "type": "string"
+    },
+    "prototypeSub": {
+      "type": "text"
+    },
+    "customersSub": {
+      "type": "text"
+    },
+    "implSub": {
+      "type": "text"
+    },
+    "tabsSub": {
+      "type": "text"
+    },
+    "stackSub": {
+      "type": "text"
+    },
+    "balanceSub": {
+      "type": "text"
+    },
+    "customersLinkLabel": {
+      "type": "string"
+    },
+    "customersLinkUrl": {
+      "type": "string"
+    },
+    "storyTitle": {
+      "type": "text"
+    },
+    "storyVideo": {
+      "type": "string"
+    },
+    "storyPoster": {
+      "type": "string"
+    },
+    "storyAlt": {
+      "type": "string"
+    },
+    "storyLinkLabel": {
+      "type": "string"
+    },
+    "storyLinkUrl": {
+      "type": "string"
+    },
+    "implLinkLabel": {
+      "type": "string"
+    },
+    "implLinkUrl": {
+      "type": "string"
+    },
+    "storyW": {
+      "type": "integer"
+    },
+    "storyH": {
+      "type": "integer"
+    },
+    "balanceLinkLabel": {
+      "type": "string"
+    },
+    "balanceLinkUrl": {
+      "type": "string"
+    },
+    "themeImage": {
+      "type": "string"
+    },
+    "themeImageAlt": {
+      "type": "string"
+    },
+    "chartColorsLabel": {
+      "type": "string"
+    },
+    "fontLabel": {
+      "type": "string"
+    },
+    "appearanceLabel": {
+      "type": "string"
+    },
+    "usageImage": {
+      "type": "string"
+    },
+    "usageImageAlt": {
+      "type": "string"
+    },
+    "usageLedeLinkLabel": {
+      "type": "string"
+    },
+    "usageLedeLinkUrl": {
+      "type": "string"
+    },
+    "usageLinkLabel": {
+      "type": "string"
+    },
+    "usageLinkSr": {
+      "type": "string"
+    },
+    "usageLinkUrl": {
+      "type": "string"
+    },
+    "supportLede": {
+      "type": "string"
+    },
+    "supportLead": {
+      "type": "string"
+    },
+    "usageImageW": {
+      "type": "integer"
+    },
+    "usageImageH": {
+      "type": "integer"
+    },
+    "themeW": {
+      "type": "integer"
+    },
+    "themeH": {
+      "type": "integer"
+    },
+    "usageLedeAfter": {
+      "type": "text"
+    },
+    "supportLeadText": {
+      "type": "text"
+    },
+    "presets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    },
+    "securitySubBefore": {
+      "type": "text"
+    },
+    "securitySubLinkLabel": {
+      "type": "string"
+    },
+    "securitySubLinkUrl": {
+      "type": "string"
+    },
+    "securitySubAfter": {
+      "type": "text"
+    }
+  }
+}

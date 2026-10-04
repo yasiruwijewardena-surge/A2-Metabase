@@ -5,14 +5,12 @@ import type {
   Category,
   EventCategory,
   Faq,
-  MarketingPage,
   Page,
   GlossaryTerm,
   Industry,
   Plan,
   Post,
   PricingAddon,
-  ProductPage,
   SiteEvent,
   Tag,
   Testimonial,
@@ -242,6 +240,28 @@ const ZONE: Record<string, Record<string, string>> = {
   },
   /* Cards sit two levels down -- section, row, card -- so the path is spelled
      all the way rather than stopping at `*`. */
+  'page.embedded-analytics': {
+    '[heroCtas]': 'true',
+    '[logos]': 'true',
+    '[securityPillars]': 'true',
+    '[stackPillars]': 'true',
+    '[implementations][populate][points]': 'true',
+    '[tabs]': 'true',
+    '[usagePoints]': 'true',
+    '[supportPoints]': 'true',
+    '[presets]': 'true',
+    '[vsGroups][populate][lines]': 'true',
+    '[faqs]': 'true',
+    '[closingCtas]': 'true',
+  },
+  'page.data-studio': {
+    '[heroCtas]': 'true',
+    '[ticks]': 'true',
+    '[logos]': 'true',
+    '[cards][populate]': '*',
+    '[faqs]': 'true',
+    '[closingCtas]': 'true',
+  },
   'page.metabase-ai': {
     '[heroCtas]': 'true',
     '[logos]': 'true',
@@ -279,29 +299,6 @@ const zonePopulate = (field: string, components: string[] = Object.keys(ZONE)) =
       )
     )
   );
-
-/** The six a product page's zone is limited to. */
-const PRODUCT_ZONE = ['page.hero', 'page.split', 'page.band', 'page.accordion', 'page.quote', 'page.closing'];
-
-export const getProductPages = () =>
-  all<ProductPage>('product-pages', { ...zonePopulate('sections', PRODUCT_ZONE), 'populate[seo]': 'true' });
-
-export const getProductPage = async (slug: string) =>
-  (await all<ProductPage>('product-pages', {
-    'filters[slug][$eq]': slug, ...zonePopulate('sections', PRODUCT_ZONE), 'populate[seo]': 'true',
-  }))[0] ?? null;
-
-export const getMarketingPages = () =>
-  all<MarketingPage>('marketing-pages', {
-    'populate[hero][populate]': '*',
-    'populate[sections][populate]': '*',
-    'populate[closing][populate]': '*',
-    'populate[faqs]': 'true',
-    'populate[seo]': 'true',
-  });
-
-export const getMarketingPage = async (slug: string) =>
-  (await getMarketingPages()).find((p) => p.slug === slug) ?? null;
 
 /* ---------------------------------------------------------------------------
  * Pages

@@ -1,0 +1,94 @@
+{
+  "collectionName": "components_page_data_studios",
+  "info": {
+    "displayName": "Data Studio page",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "badgeImage": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "ledeBefore": {
+      "type": "text"
+    },
+    "ledeLinkLabel": {
+      "type": "string"
+    },
+    "ledeLinkUrl": {
+      "type": "string"
+    },
+    "ledeAfter": {
+      "type": "text"
+    },
+    "heroCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "ticks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.text-item"
+    },
+    "shotImage": {
+      "type": "string"
+    },
+    "shotAlt": {
+      "type": "string"
+    },
+    "trustLine": {
+      "type": "string"
+    },
+    "logos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.logo-item"
+    },
+    "featsHeading": {
+      "type": "string"
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.feature-card"
+    },
+    "faqHeading": {
+      "type": "string"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.faq-item"
+    },
+    "closingHeading": {
+      "type": "string"
+    },
+    "closingSub": {
+      "type": "text"
+    },
+    "closingCtas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.cta"
+    },
+    "featsLede": {
+      "type": "text"
+    },
+    "faqMoreText": {
+      "type": "string"
+    },
+    "faqMoreLabel": {
+      "type": "string"
+    },
+    "faqMoreUrl": {
+      "type": "string"
+    }
+  }
+}

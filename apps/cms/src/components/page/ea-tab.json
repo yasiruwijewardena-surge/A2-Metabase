@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_page_ea_tabs",
+  "info": {
+    "displayName": "Embedded tab",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "anchor": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageW": {
+      "type": "integer"
+    },
+    "imageH": {
+      "type": "integer"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

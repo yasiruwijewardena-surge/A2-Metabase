@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_page_ea_pillars",
+  "info": {
+    "displayName": "Pillar",
+    "icon": "layer"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    }
+  }
+}

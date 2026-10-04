@@ -1,0 +1,413 @@
+---
+/*
+ * Embedded Analytics.
+ *
+ * The largest page in the replica: the original runs 11,917px over sixteen
+ * sections. Structure and every size below come off an element dump at 1512
+ * (`npm run metrics -- <url> --root .embedding-page.embedded-analytics`).
+ *
+ * Section order, with the numbers that drive the CSS:
+ *   1  hero band #fafbfe, eyebrow + h1 580x112 48/56, img 998x595
+ *   2  band h2 640x96 36/48 + standfirst 400x64 20/32
+ *   3  split  video 630 in a 632 frame / h3 30/35 + lede + quote card 560
+ *   4  split  img 770x428 overflowing a 632x514 frame / 488 copy
+ *   5  split  img 570x463 in a 632x649 frame / 560 copy
+ *   6  band + three 389x207 pillar cards
+ *   7  #fafbfe r24 panel: customer story, 559x405 clip in a #eef6fc r8 frame
+ *   8  two 616x813 implementation cards, h6 badge + h4 24/32 + h5 20/28
+ *   9  tabbed panel, three 224x52 tabs over a 632 frame + 536 copy
+ *  10  band + three 389x231 pillar cards
+ *  11  #fafbfe r24 panel: the theming demo, 822x350 canvas + 182 controls
+ *  12  split  img 590x511 in a 632x623 frame / 560 copy + rich list
+ *  13  #fafbfe r24 panel: support team, copy beside a marquee of 567 cards
+ *  14  "Why not just build it?" — an 800x439 #fafbfe r12 comparison card
+ *  15  FAQ, 602-wide details/summary at 16/26
+ *  16  closing CTA, 892x467 screenshot in a 894x469 white r24 frame
+ *
+ * Divergences, each for a reason:
+ *  - Heading tags follow the document outline rather than the original's
+ *    (which sets h3 36/48 above h2 30/35); the sizes are the original's.
+ *  - The tab strip, the theme presets and the FAQ all run on radio inputs
+ *    and `:has()`, so the page ships no JavaScript.
+ *  - The theming demo's canvas is a screenshot, not the original's live
+ *    iframe: a third-party frame here would cost both the performance
+ *    budget and the visitor's privacy. The controls are real and do retint
+ *    the panel.
+ *  - The 6MB sincera.gif is served as a 130KB muted video, and fastsetup.mp4
+ *    came 2160x2160 for a 630px slot and was re-encoded to 1296 at 417KB.
+ *  - Quotes come from Strapi. The original names real customers and real
+ *    support engineers throughout; writing lines for them is not something
+ *    a replica should do.
+ */
+import NavIcon from '../NavIcon.astro';
+import ProductCtaRow from '../ProductCtaRow.astro';
+import ProductQuoteCard from '../ProductQuoteCard.astro';
+import SupportQuote from '../SupportQuote.astro';
+import type { PageSection } from '../../lib/types';
+import { getTestimonials } from '../../lib/strapi';
+
+interface Props { section: PageSection }
+const { section: s } = Astro.props;
+
+const all = await getTestimonials();
+const byOrder = (a: any, b: any) => a.displayOrder - b.displayOrder;
+const pulls = all.filter((t) => t.variant === 'pull-quote').sort(byOrder).slice(3);
+const support = all.filter((t) => t.variant === 'social').sort(byOrder);
+
+const heroCtas = s.heroCtas ?? [];
+const closeCtas = s.closingCtas?.length ? s.closingCtas : heroCtas;
+const logos = s.logos ?? [];
+const securityPillars = s.securityPillars ?? [];
+const stackPillars = s.stackPillars ?? [];
+const implementations = s.implementations ?? [];
+const tabs = s.tabs ?? [];
+const usagePoints = s.usagePoints ?? [];
+const supportPoints = s.supportPoints ?? [];
+const buildVsBuy = s.vsGroups ?? [];
+const faqs = s.faqs ?? [];
+---
+  <div class="ea-page">
+  <div class="pp-hero-band">
+    <div class="container-mb pp-center">
+      <p class="pp-eyebrow">
+        <svg class="pp-eyebrow-icon" width="62" height="70" viewBox="0 0 62 70" fill="none" aria-hidden="true">
+          <rect x="1" y="12" width="60" height="44" rx="6" fill="#509EE3" opacity=".25" />
+          <rect x="9" y="22" width="44" height="6" rx="3" fill="#509EE3" />
+          <rect x="9" y="34" width="28" height="6" rx="3" fill="#509EE3" opacity=".7" />
+          <circle cx="46" cy="47" r="8" fill="#509EE3" />
+        </svg>
+        <b>{s.eyebrow}</b>
+      </p>
+      <h1 class="pp-hero-title">{s.heading}</h1>
+      <p class="pp-hero-sub">{s.sub}</p>
+      <ProductCtaRow primary={{ href: heroCtas[0].url, label: heroCtas[0].label }}
+                     secondary={heroCtas[1] && { href: heroCtas[1].url, label: heroCtas[1].label }} />
+      {/* A narrow crop for phones, which is what keeps mobile LCP down: the
+          source art is 3018px wide for a 998px slot. */}
+      <picture class="pp-hero-pic">
+        <source media="(max-width: 991px)" srcset={s.heroImageMobile}
+                width="764" height="456" />
+        <img class="pp-hero-img pp-hero-img--bare" src={s.heroImage}
+             alt={s.heroImageAlt}
+             width="998" height="595" loading="eager" fetchpriority="high" decoding="sync" />
+      </picture>
+      <p class="pp-trust">{s.trustLine}</p>
+      <ul class="pp-logos">
+        {logos.map((l) => (
+          <li><img src={`/images/logos/${l.src}.svg`} alt={l.alt} width={l.width} height="38"
+                   style={`width:${l.width}px`} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36 pp-h36--tall">{s.prototypeHeading}</h2>
+    <p class="pp-band-sub pp-band-sub--narrow">{s.prototypeSub}</p>
+  </section>
+
+  <section class="pp-split container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--grey">
+        <video width="630" height="630" poster="/images/product/embedded-analytics/fastsetup-poster.webp"
+               autoplay loop muted playsinline preload="none"
+               aria-label="Setting up an embedded dashboard from scratch">
+          <source src="/images/product/embedded-analytics/fastsetup.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+    <div class="pp-split-copy">
+      <h3 class="pp-h30">Get to proof of concept really fast</h3>
+      <p class="pp-lede">
+        Let your customers get at reports without having to ask, whether that is one chart
+        in a sidebar or a whole analytics area.
+      </p>
+      <ProductQuoteCard quote={pulls[0]} />
+    </div>
+  </section>
+
+  <section class="pp-split pp-split--reverse container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--grey pp-frame--bleed">
+        <img src="/images/product/embedded-analytics/flexible-solutions.webp"
+             alt="Low-code embedding beside an SDK integration" width="770" height="428"
+             loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="pp-split-copy pp-split-copy--narrow">
+      <h3 class="pp-h30">Flexible solutions for every stage</h3>
+      <p class="pp-lede">
+        Choose a low-code implementation for speed, or the
+        <a href="/product/embedded-analytics-sdk">Modular Embedding SDK</a> for more control
+        over how the views look and behave inside your product.
+      </p>
+      <ProductQuoteCard quote={pulls[1]} width={488} />
+    </div>
+  </section>
+
+  <section class="pp-split container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--grey">
+        <img src="/images/product/embedded-analytics/need-a-change.webp"
+             alt="Editing an embedded dashboard without touching application code"
+             width="570" height="463" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="pp-split-copy">
+      <h3 class="pp-h30">No-code iteration</h3>
+      <p class="pp-lede">
+        Query and visualize data, and even define custom click behaviour, without going back
+        to the application code every time a customer asks for something.
+      </p>
+      <ProductQuoteCard quote={pulls[2]} />
+    </div>
+  </section>
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36 pp-h36--tall">{s.securityHeading}</h2>
+    <p class="pp-band-sub pp-band-sub--tight">
+      {s.securitySubBefore}<a href={s.securitySubLinkUrl}>{s.securitySubLinkLabel}</a>{s.securitySubAfter}
+    </p>
+    <ul class="pp-pillars">
+      {securityPillars.map((p) => (
+        <li class="pp-pillar">
+          <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />
+          <h3 class="pp-pillar-title">{p.title}</h3>
+          <p class="pp-pillar-body">{p.body}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container-mb">
+    <div class="ea-panel">
+      <div class="pp-center">
+        <h2 class="pp-h36">{s.customersHeading}</h2>
+        <p class="pp-band-sub">{s.customersSub}</p>
+      </div>
+      <div class="ea-story">
+        <div class="ea-story-media">
+          <video width={s.storyW} height={s.storyH} poster={s.storyPoster}
+                 autoplay loop muted playsinline preload="none"
+                 aria-label={s.storyAlt}>
+            <source src={s.storyVideo} type="video/mp4" />
+          </video>
+        </div>
+        <div class="ea-story-copy">
+          <h3 class="ea-story-title">{s.storyTitle}</h3>
+          <ProductQuoteCard quote={pulls[3]} width={463} />
+          <a href={s.storyLinkUrl} class="pp-band-link">
+            {s.storyLinkLabel}
+            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+                 stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-band container-mb">
+    <div class="pp-center">
+      <h2 class="ea-impl-title">{s.implHeading}</h2>
+      <p class="pp-band-sub">{s.implSub}</p>
+      <a href={s.implLinkUrl} class="pp-band-link ea-demo-link">{s.implLinkLabel}</a>
+    </div>
+    <div class="ea-impls">
+      {implementations.map((im) => (
+        <article class="ea-impl">
+          <p class="ea-impl-badge"><NavIcon name={im.icon} size={24} class="ea-impl-badge-icon" />{im.badge}</p>
+          <h3 class="ea-impl-h">{im.title}</h3>
+          <p class="ea-impl-sub">{im.sub}</p>
+          <ul class="ea-impl-points">
+            {(im.points ?? []).map((pt) => (
+              <li>{pt.linkUrl ? <a href={pt.linkUrl}>{pt.lead}</a> : <b>{pt.lead}</b>}{pt.rest}</li>
+            ))}
+          </ul>
+          <a href={im.linkUrl} class="pp-band-link">{im.linkLabel}</a>
+          <img class="ea-impl-img" src={im.image} alt={im.imageAlt}
+               width={im.imageW} height={im.imageH} loading="lazy" decoding="async" />
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="pp-band container-mb">
+    <div class="pp-center">
+      <h2 class="pp-h36">{s.tabsHeading}</h2>
+      <p class="pp-band-sub">{s.tabsSub}</p>
+    </div>
+    <div class="ea-tabs">
+      {tabs.map((t, i) => (
+        <input class="ea-tab-radio" type="radio" name="ea-tab" id={`tab-${t.anchor}`} checked={i === 0} />
+      ))}
+      <div class="ea-tabstrip">
+        {tabs.map((t) => (
+          <label class="ea-tab" for={`tab-${t.anchor}`} data-tab={t.anchor}>
+            <NavIcon name={t.icon} size={24} class="ea-tab-icon" />{t.label}
+          </label>
+        ))}
+      </div>
+      {tabs.map((t) => (
+        <div class="ea-panelrow" data-tab={t.anchor}>
+          <div class="pp-frame pp-frame--grey ea-tab-media">
+            <img src={t.image} alt={t.imageAlt} width={t.imageW} height={t.imageH}
+                 loading="lazy" decoding="async" />
+          </div>
+          <div class="ea-tab-copy">
+            <h3 class="pp-h30">{t.title}</h3>
+            <p class="ea-tab-body">{t.body} <a href={t.linkUrl}>{t.linkLabel}</a></p>
+            <ProductQuoteCard quote={pulls[4]} width={536} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36 pp-h36--tall">{s.stackHeading}</h2>
+    <p class="pp-band-sub pp-band-sub--wide">{s.stackSub}</p>
+    <ul class="pp-pillars pp-pillars--tall">
+      {stackPillars.map((p) => (
+        <li class="pp-pillar">
+          <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />
+          <h3 class="pp-pillar-title">{p.title}</h3>
+          <p class="pp-pillar-body">{p.body}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container-mb">
+    <div class="ea-panel">
+      <div class="pp-center">
+        <h2 class="pp-h36">{s.balanceHeading}</h2>
+        <p class="pp-band-sub">
+          {s.balanceSub}
+          <a href={s.balanceLinkUrl}>{s.balanceLinkLabel}</a>
+        </p>
+      </div>
+      {/* The presets are real radios; each one retints the canvas and updates
+          the readouts below, so the demo works with no JavaScript. */}
+      <div class="ea-theme">
+        {['classic', 'tech', 'elegant', 'playful'].map((t, i) => (
+          <input class="ea-theme-radio" type="radio" name="ea-theme" id={`th-${t}`} checked={i === 0} />
+        ))}
+        <div class="ea-theme-stage">
+          <div class="ea-theme-canvas">
+            <img src={s.themeImage} alt={s.themeImageAlt}
+                 width={s.themeW} height={s.themeH} loading="lazy" decoding="async" />
+          </div>
+          <div class="ea-theme-controls">
+            <h3 class="ea-theme-label">{s.chartColorsLabel}</h3>
+            <p class="ea-theme-val"><span class="ea-sw ea-sw-1"></span><span class="ea-hex ea-hex-1"></span></p>
+            <p class="ea-theme-val"><span class="ea-sw ea-sw-2"></span><span class="ea-hex ea-hex-2"></span></p>
+            <p class="ea-theme-val"><span class="ea-sw ea-sw-3"></span><span class="ea-hex ea-hex-3"></span></p>
+            <h3 class="ea-theme-label">{s.fontLabel}</h3>
+            <p class="ea-theme-val"><span class="ea-font"></span></p>
+            <h3 class="ea-theme-label">{s.appearanceLabel}</h3>
+            <p class="ea-theme-val"><span class="ea-mode"></span></p>
+          </div>
+        </div>
+        <div class="ea-theme-presets">
+          {['Classic', 'Tech', 'Elegant', 'Playful'].map((t) => (
+            <label class="ea-preset" for={`th-${t.toLowerCase()}`} data-theme={t.toLowerCase()}>
+              <span class="ea-preset-dot"></span><b>{t}</b>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-split container-mb">
+    <div class="pp-split-media">
+      <div class="pp-frame pp-frame--grey">
+        <img src={s.usageImage} alt={s.usageImageAlt}
+             width={s.usageImageW} height={s.usageImageH} loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <div class="pp-split-copy">
+      <h3 class="pp-h30">{s.usageHeading}</h3>
+      <p class="pp-lede">
+        <a href={s.usageLedeLinkUrl}>{s.usageLedeLinkLabel}</a>{s.usageLedeAfter}
+      </p>
+      <ul class="pp-rich">
+        {usagePoints.map((u) => <li><b>{u.title}</b><br />{u.body}</li>)}
+      </ul>
+      <a href={s.usageLinkUrl} class="pp-band-link">
+        {s.usageLinkLabel}<span class="sr-only">{s.usageLinkSr}</span>
+        <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+             stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="container-mb">
+    <div class="ea-panel ea-support">
+      <div class="ea-support-copy">
+        <h2 class="pp-h30">{s.supportHeading}</h2>
+        <p class="pp-lede">{s.supportLede}</p>
+        <p class="ea-support-lead"><b>{s.supportLeadText}</b></p>
+        <ul class="ea-support-points">
+          {supportPoints.map((pt) => <li>{pt.text}</li>)}
+        </ul>
+      </div>
+      {/* Duplicated once so the vertical scroll loops seamlessly; the copy is
+          hidden from assistive tech. The animation stops for
+          prefers-reduced-motion, which leaves a plain scrollable column. */}
+      <div class="ea-marquee">
+        <div class="ea-marquee-track">
+          {support.map((q) => <SupportQuote quote={q} />)}
+        </div>
+        <div class="ea-marquee-track" aria-hidden="true">
+          {support.map((q) => <SupportQuote quote={q} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36">{s.vsHeading}</h2>
+    <div class="ea-vs">
+      {buildVsBuy.map((g) => (
+        <div class="ea-vs-group">
+          <h3 class="ea-vs-h">{g.heading}</h3>
+          <ul class="ea-vs-list">
+            {(g.lines ?? []).map((l) => <li>{l.pre}<b>{l.strong}</b>{l.post}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pp-band container-mb pp-center">
+    <h2 class="pp-h36">{s.faqHeading}</h2>
+    <div class="ea-faq">
+      {faqs.map((f) => (
+        <details class="ea-faq-item">
+          <summary>{f.question}<svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg></summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="pp-final">
+    <div class="container-mb pp-center">
+      <h2 class="pp-h36 pp-final-title">{s.closingHeading}</h2>
+      <p class="pp-band-sub pp-band-sub--600">{s.closingSub}</p>
+      <ProductCtaRow primary={{ href: closeCtas[0].url, label: closeCtas[0].label }}
+                     secondary={closeCtas[1] && { href: closeCtas[1].url, label: closeCtas[1].label }} small />
+      <div class="ea-final-media">
+        <div class="ea-final-frame">
+          <img src="/images/product/embedded-analytics/application-screenshot.webp"
+               alt="The Metabase application embedded in a product"
+               width="892" height="467" loading="lazy" decoding="async" />
+        </div>
+        <img class="ea-final-snippet" src="/images/product/embedded-analytics/sdk-code-snippet.webp"
+             alt="A React component embedding a Metabase dashboard"
+             width="460" height="343" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+  </div>

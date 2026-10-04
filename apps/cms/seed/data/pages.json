@@ -1,328 +1,4 @@
 {
-  "productPages": [
-    {
-      "title": "Self-service Business Intelligence",
-      "slug": "business-intelligence",
-      "seo": {
-        "metaTitle": "Self-service Business Intelligence | Metabase",
-        "metaDescription": "The fastest way to go from database to dashboards: a clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL whenever you need it."
-      },
-      "sections": [
-        {
-          "__component": "page.hero",
-          "eyebrowIcon": "bi",
-          "eyebrow": "Business Intelligence",
-          "heading": "The fastest way to go from database to dashboards",
-          "sub": "A clean UI that won't scare off your teammates, governance so things don't go wrong, and SQL when you need it.",
-          "media": "../../web/public/images/product/business-intelligence/hero.webp",
-          "mediaMobile": "../../web/public/images/product/business-intelligence/hero-mobile.webp",
-          "mediaLabel": "A Metabase dashboard of business metrics",
-          "framed": false,
-          "trustLine": "Metabase is trusted by 100,000+ companies",
-          "pillars": [
-            {
-              "icon": "rocket",
-              "title": "Quick to set up",
-              "body": "Skip the ETL and the modelling layer to begin with. Layer in structure later."
-            },
-            {
-              "icon": "cloud",
-              "title": "Self-host or deploy on Metabase Cloud",
-              "body": "Go hands-free on our cloud, run it on your own hardware, or air-gap it entirely."
-            },
-            {
-              "icon": "permissions",
-              "title": "Secure data sharing",
-              "body": "Share a dashboard with the whole company, or one row with one customer."
-            }
-          ]
-        },
-        {
-          "__component": "page.split",
-          "heading": "You could be querying 5 minutes from now",
-          "lede": "Regardless of what state your DB is in.",
-          "media": "../../web/public/images/home/query-builder.mp4",
-          "mediaPoster": "../../web/public/images/home/query-builder-poster.webp",
-          "mediaLabel": "Building a question in the visual query builder",
-          "frameTheme": "blue",
-          "caption": "Watch how quick and easy it is to go from zero to chart",
-          "bullets": [
-            {
-              "title": "Low-lift to get started",
-              "body": "Write your config up in a single YAML file, or tidy away things like experimental column headers right in the admin UI."
-            },
-            {
-              "title": "Curate what you expose",
-              "body": "Choose the tables people see and edit their metadata in the UI, so self-service answers come out right."
-            },
-            {
-              "title": "Start simple before your first data hire joins the team",
-              "body": "Add modelling layers as the data grows and more data-focused people come onboard."
-            }
-          ]
-        },
-        {
-          "__component": "page.accordion",
-          "heading": "Avoid repeated requests with reports anyone can run",
-          "sub": "Let people dive deeper into data on their own without the hand-holding.",
-          "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-1.webp",
-          "mediaLabel": "A dashboard being filtered through a drill-through menu",
-          "items": [
-            {
-              "icon": "ai",
-              "badge": "Metabot",
-              "title": "Ask Metabot AI",
-              "body": "Chat with your database to get answers in natural language, so the people who need a number can go and get it themselves.",
-              "linkLabel": "Chat with your database",
-              "linkUrl": "/features/metabase-ai"
-            },
-            {
-              "icon": "drill",
-              "title": "Click on charts to drill into data",
-              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it."
-            },
-            {
-              "icon": "query",
-              "title": "Query data with or without SQL",
-              "body": "Put queries together intuitively in the visual query builder without writing any SQL, then drop into the editor when a question earns it.",
-              "linkLabel": "visual query builder",
-              "linkUrl": "/features/query-builder"
-            },
-            {
-              "icon": "services",
-              "title": "Make content trustworthy and easy to find",
-              "body": "Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections."
-            },
-            {
-              "icon": "csv",
-              "title": "Put the most valuable data in front of people",
-              "body": "Schedule reports out to anyone, inside the organisation or outside it, over Slack or email."
-            }
-          ]
-        },
-        {
-          "__component": "page.quote",
-          "__quote": 0
-        },
-        {
-          "__component": "page.split",
-          "heading": "Make sure people only see what they need to",
-          "lede": "Granular permissions keep people safe from accidentally seeing — or breaking — data that was never theirs to touch.",
-          "media": "../../web/public/images/product/business-intelligence/permissions2.mp4",
-          "mediaPoster": "../../web/public/images/product/business-intelligence/permissions2-poster.webp",
-          "mediaLabel": "Setting table, row and column permissions for a group",
-          "frameTheme": "grey",
-          "bullets": [
-            {
-              "title": "Limit access at the table, row or column level",
-              "body": "Lock down the sensitive tables, fields and columns while people carry on using the rest of the data."
-            },
-            {
-              "title": "Manage role-based permissions with SSO",
-              "body": "Set visibility by role — marketing sees one thing, support another — with view and edit granted separately."
-            },
-            {
-              "title": "Keep track of who's doing what, when",
-              "body": "Set alerts on access and downloads, and read the rest back out of usage analytics."
-            }
-          ]
-        },
-        {
-          "__component": "page.quote",
-          "__quote": 1
-        },
-        {
-          "__component": "page.band",
-          "heading": "Works with your stack for live visualizations and reports, not extracts",
-          "__subRich": [
-            {
-              "t": "Metabase is a visualization and querying layer that sits on top of the database you already run, across "
-            },
-            {
-              "t": "20 data sources",
-              "href": "/data-sources"
-            },
-            {
-              "t": ", so the numbers people read are the numbers that are in there right now — not the ones that were true when last night's export finished."
-            }
-          ],
-          "media": "seed:product-pages/works-with-your-stack.webp",
-          "mediaLabel": "Metabase connected to a warehouse and several application databases",
-          "linkLabel": "Learn more about how Metabase works with your database",
-          "linkUrl": "/data-sources",
-          "centred": true
-        },
-        {
-          "__component": "page.quote",
-          "__quote": 2
-        },
-        {
-          "__component": "page.closing",
-          "heading": "Ready to get started?",
-          "sub": "Visualize your data in minutes. Let non-technical teammates explore and share what they find, with no queue behind your data team.",
-          "media": "../../web/public/images/product/business-intelligence/application-screenshot.webp",
-          "mediaLabel": "The Metabase application, showing a collection of dashboards"
-        }
-      ]
-    }
-  ],
-  "marketingPages": [
-    {
-      "title": "Embedded Analytics",
-      "slug": "embedded-analytics",
-      "hero": {
-        "__component": "page.hero",
-        "eyebrow": "Embedded Analytics",
-        "heading": "Get in-product reporting in days, not sprints",
-        "sub": "Hand-rolling analytics is never what you think it is going to be. Ship the reporting your customers are asking for, and keep your roadmap for your own product.",
-        "ctas": [
-          {
-            "label": "Get started",
-            "url": "/start"
-          },
-          {
-            "label": "Contact us",
-            "url": "/contact"
-          }
-        ],
-        "media": "../../web/public/images/product/embedded-analytics/hero_image.webp",
-        "mediaMobile": "../../web/public/images/product/embedded-analytics/hero_image-mobile.webp",
-        "mediaLabel": "Metabase dashboards embedded inside a customer-facing product",
-        "trustLine": "Metabase is trusted by 100,000+ companies"
-      },
-      "closing": {
-        "__component": "page.closing",
-        "heading": "Ready to get started?",
-        "sub": "Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what you are trying to put in front of your customers.",
-        "ctas": [
-          {
-            "label": "Get started",
-            "url": "/start"
-          },
-          {
-            "label": "Contact us",
-            "url": "/contact"
-          }
-        ],
-        "media": "../../web/public/images/product/embedded-analytics/application-screenshot.webp",
-        "mediaLabel": "The Metabase application embedded in a product"
-      }
-    },
-    {
-      "title": "Data Studio",
-      "slug": "data-studio",
-      "hero": {
-        "__component": "page.hero",
-        "eyebrow": "Data Studio",
-        "heading": "Curate your semantic layer right where your data gets used",
-        "__subRich": [
-          {
-            "t": "Wrangle your data, add the context it's missing, and define your metrics once, so that every dashboard, every question and every "
-          },
-          {
-            "t": "AI",
-            "href": "/features/metabase-ai"
-          },
-          {
-            "t": " answer starts from the same definitions rather than from whatever the person asking happened to remember."
-          }
-        ],
-        "ctas": [
-          {
-            "label": "Get started",
-            "url": "/start"
-          },
-          {
-            "label": "Contact us",
-            "url": "/contact"
-          }
-        ]
-      },
-      "closing": {
-        "__component": "page.closing",
-        "heading": "Bring more order to your analytics",
-        "sub": "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would.",
-        "ctas": [
-          {
-            "label": "Get started",
-            "url": "/start"
-          },
-          {
-            "label": "Contact us",
-            "url": "/contact"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Metabase AI",
-      "slug": "metabase-ai",
-      "hero": {
-        "__component": "page.hero",
-        "heading": "AI exploration built on your permissions and semantic definitions",
-        "sub": "AI-powered code generation and data exploration wherever you already work, grounded in the definitions your organisation has already agreed on.",
-        "ctas": [
-          {
-            "label": "Try Metabase AI free",
-            "url": "/start"
-          },
-          {
-            "label": "Deploy Metabase AI Open Source",
-            "url": "/open-source"
-          }
-        ],
-        "media": "../../web/public/images/features/metabot-ai/hero-section-ai.mp4",
-        "mediaPoster": "../../web/public/images/features/metabot-ai/hero-section-ai-poster.webp",
-        "mediaLabel": "Metabot answering a question and showing the query behind it",
-        "trustLine": "Metabase is trusted by 100,000+ companies"
-      },
-      "closing": {
-        "__component": "page.closing",
-        "heading": "AI that respects your rules. Start exploring.",
-        "ctas": [
-          {
-            "label": "Try Metabase AI free",
-            "url": "/start"
-          },
-          {
-            "label": "Deploy Metabase AI Open Source",
-            "url": "/open-source"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Data segregation",
-      "slug": "data-segregation",
-      "hero": {
-        "__component": "page.hero",
-        "eyebrow": "Data segregation",
-        "heading": "Set strong boundaries around your multi-tenant data",
-        "sub": "Methods to fit your configuration preferences and your security requirements."
-      },
-      "closing": {
-        "__component": "page.closing",
-        "heading": "Try Metabase free for 14 days",
-        "sub": "Keep sensitive, or simply irrelevant, data under wraps. Sandboxing and the rest of these methods are available on Pro and Enterprise plans, and you can try either without talking to anyone first.",
-        "ctas": [
-          {
-            "label": "Get started",
-            "url": "/start"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Features",
-      "slug": "features-index",
-      "hero": {
-        "__component": "page.hero",
-        "eyebrow": "Features",
-        "heading": "Built for data, made for everyone",
-        "sub": "Even if you aren't an analyst, Metabase can make you feel like one. And if you are, it will stay out of your way."
-      }
-    }
-  ],
   "pages": [
     {
       "title": "Home",
@@ -2479,6 +2155,900 @@
             }
           ],
           "closingHeading": "AI that respects your rules. Start exploring.",
+          "closingCtas": []
+        }
+      ]
+    },
+    {
+      "title": "Data Studio",
+      "slug": "product/data-studio",
+      "seo": {
+        "metaTitle": "Data Studio: curate your semantic layer | Metabase",
+        "metaDescription": "Wrangle your data, add the context it's missing, and define metrics once, right where your data gets used. Transforms, metadata, metrics and lineage in one place."
+      },
+      "sections": [
+        {
+          "__component": "page.data-studio",
+          "eyebrow": "Data Studio",
+          "badgeImage": "/images/icons/badges/data-studio-badge.svg",
+          "heading": "Curate your semantic layer right where your data gets used",
+          "ledeBefore": "Wrangle your data, add the context it's missing, and define your metrics once, so that every dashboard, every question and every ",
+          "ledeLinkLabel": "AI",
+          "ledeLinkUrl": "/features/metabase-ai",
+          "ledeAfter": " answer starts from the same definitions rather than from whatever the person asking happened to remember.",
+          "heroCtas": [
+            {
+              "label": "Get started",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Contact us",
+              "url": "/contact",
+              "style": "secondary"
+            }
+          ],
+          "ticks": [
+            {
+              "text": "Free 14-day trial"
+            },
+            {
+              "text": "Super-fast setup"
+            },
+            {
+              "text": "Secure and compliant"
+            }
+          ],
+          "shotImage": "/images/product/data-studio/data-studio-interface.webp",
+          "shotAlt": "The Data Studio interface, showing transforms and their metadata",
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "logos": [
+            {
+              "src": "huma",
+              "alt": "huma logo",
+              "width": 125
+            },
+            {
+              "src": "home/airbyte",
+              "alt": "airbyte logo",
+              "width": 124
+            },
+            {
+              "src": "linear",
+              "alt": "linear logo",
+              "width": 113
+            },
+            {
+              "src": "betterment",
+              "alt": "betterment logo",
+              "width": 135
+            },
+            {
+              "src": "kong",
+              "alt": "kong logo",
+              "width": 126
+            },
+            {
+              "src": "home/superhuman",
+              "alt": "superhuman logo",
+              "width": 135
+            }
+          ],
+          "featsHeading": "All in one place, connected, and observable",
+          "featsLede": "Data Studio is where you shape the data your analytics depends on, and where you can see what depends on what, so you find out what a change will break before somebody else does.",
+          "cards": [
+            {
+              "icon": "Transforms",
+              "title": "Speed up queries by cleaning up tables for analytics",
+              "body": "Clean, join or pre-aggregate data in SQL or Python and persist the result as a new table, so the expensive work happens once.",
+              "trailingLabel": "SQL or Python",
+              "trailingUrl": "/features/sql-editor"
+            },
+            {
+              "icon": "Metadata",
+              "title": "Add the context raw tables don't have",
+              "body": "Rename columns, write descriptions and set semantic types, so a table means something to the person who did not build it.",
+              "trailingLabel": "set semantic types",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Metrics",
+              "title": "Calculations defined once, used by everyone",
+              "body": "Save the aggregation logic as a metric, so ARR is computed the same way in every dashboard that mentions it.",
+              "trailingLabel": "metric",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Lineage",
+              "title": "Make a change, see what breaks",
+              "body": "Trace lineage from raw tables through to the dashboards and questions that depend on them, before you change a column name.",
+              "trailingLabel": "Trace lineage",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Dependency diagnostics",
+              "title": "Find and fix broken dependencies without hunting them down",
+              "body": "Detect broken dependencies from tables to dashboards, and fix them before somebody opens the report and finds out for you.",
+              "trailingLabel": "Detect broken dependencies",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Versioned dataset publishing",
+              "title": "Make it clear which data is meant to be reused",
+              "body": "Create a shared library of canonical datasets, so teams can tell what is production and what is someone thinking out loud.",
+              "trailingLabel": "shared library",
+              "trailingUrl": "/features/collections"
+            }
+          ],
+          "faqHeading": "Frequently asked questions",
+          "faqs": [
+            {
+              "question": "What is Data Studio in Metabase?",
+              "answer": "Data Studio is the part of Metabase where teams shape the data their analytics depends on: transforms, metadata, metrics and the lineage between them, all in the same place people already ask their questions."
+            },
+            {
+              "question": "Can I define a semantic layer inside Metabase?",
+              "answer": "Yes. You can build and define your semantic layer inside Data Studio, rather than maintaining it in a separate tool and hoping the two stay in agreement."
+            },
+            {
+              "question": "How does Data Studio help AI give accurate answers?",
+              "answer": "Metabot and the other AI features draw on the metrics, descriptions and semantic types you have defined. The more context the layer carries, the less the model has to guess at what a column means."
+            },
+            {
+              "question": "Who is Data Studio for?",
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+            },
+            {
+              "question": "What problem does Data Studio solve?",
+              "answer": "As analytics grows, teams run into duplicated logic, definitions that disagree with each other, and nobody being sure which table is the real one. Data Studio is where you settle that once."
+            },
+            {
+              "question": "Can Data Studio structure data for embedded analytics and customer-facing reporting?",
+              "answer": "Yes, and it works the same way whether the analytics are internal or embedded in your product. The same metrics and metadata back both, so a customer-facing number matches the internal one."
+            },
+            {
+              "question": "What plan is Data Studio available on?",
+              "answer": "Data Studio is an always-on part of Metabase. The core capabilities are available on every plan, with the governance pieces on Pro and Enterprise."
+            },
+            {
+              "question": "How do I get started with Data Studio?",
+              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+            },
+            {
+              "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
+              "answer": "It can support full transformation workflows for many teams, and it also sits happily downstream of dbt or a warehouse-native setup, adding the context and the metrics that layer does not carry."
+            }
+          ],
+          "faqMoreText": "Have more questions? We'd be happy to help.",
+          "faqMoreLabel": "Contact us",
+          "faqMoreUrl": "/contact",
+          "closingHeading": "Bring more order to your analytics",
+          "closingSub": "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would.",
+          "closingCtas": []
+        }
+      ]
+    },
+    {
+      "title": "Models",
+      "slug": "features/models",
+      "seo": {
+        "metaTitle": "Data Studio: curate your semantic layer | Metabase",
+        "metaDescription": "Wrangle your data, add the context it's missing, and define metrics once, right where your data gets used. Transforms, metadata, metrics and lineage in one place."
+      },
+      "sections": [
+        {
+          "__component": "page.data-studio",
+          "eyebrow": "Data Studio",
+          "badgeImage": "/images/icons/badges/data-studio-badge.svg",
+          "heading": "Curate your semantic layer right where your data gets used",
+          "ledeBefore": "Wrangle your data, add the context it's missing, and define your metrics once, so that every dashboard, every question and every ",
+          "ledeLinkLabel": "AI",
+          "ledeLinkUrl": "/features/metabase-ai",
+          "ledeAfter": " answer starts from the same definitions rather than from whatever the person asking happened to remember.",
+          "heroCtas": [
+            {
+              "label": "Get started",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Contact us",
+              "url": "/contact",
+              "style": "secondary"
+            }
+          ],
+          "ticks": [
+            {
+              "text": "Free 14-day trial"
+            },
+            {
+              "text": "Super-fast setup"
+            },
+            {
+              "text": "Secure and compliant"
+            }
+          ],
+          "shotImage": "/images/product/data-studio/data-studio-interface.webp",
+          "shotAlt": "The Data Studio interface, showing transforms and their metadata",
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "logos": [
+            {
+              "src": "huma",
+              "alt": "huma logo",
+              "width": 125
+            },
+            {
+              "src": "home/airbyte",
+              "alt": "airbyte logo",
+              "width": 124
+            },
+            {
+              "src": "linear",
+              "alt": "linear logo",
+              "width": 113
+            },
+            {
+              "src": "betterment",
+              "alt": "betterment logo",
+              "width": 135
+            },
+            {
+              "src": "kong",
+              "alt": "kong logo",
+              "width": 126
+            },
+            {
+              "src": "home/superhuman",
+              "alt": "superhuman logo",
+              "width": 135
+            }
+          ],
+          "featsHeading": "All in one place, connected, and observable",
+          "featsLede": "Data Studio is where you shape the data your analytics depends on, and where you can see what depends on what, so you find out what a change will break before somebody else does.",
+          "cards": [
+            {
+              "icon": "Transforms",
+              "title": "Speed up queries by cleaning up tables for analytics",
+              "body": "Clean, join or pre-aggregate data in SQL or Python and persist the result as a new table, so the expensive work happens once.",
+              "trailingLabel": "SQL or Python",
+              "trailingUrl": "/features/sql-editor"
+            },
+            {
+              "icon": "Metadata",
+              "title": "Add the context raw tables don't have",
+              "body": "Rename columns, write descriptions and set semantic types, so a table means something to the person who did not build it.",
+              "trailingLabel": "set semantic types",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Metrics",
+              "title": "Calculations defined once, used by everyone",
+              "body": "Save the aggregation logic as a metric, so ARR is computed the same way in every dashboard that mentions it.",
+              "trailingLabel": "metric",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Lineage",
+              "title": "Make a change, see what breaks",
+              "body": "Trace lineage from raw tables through to the dashboards and questions that depend on them, before you change a column name.",
+              "trailingLabel": "Trace lineage",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Dependency diagnostics",
+              "title": "Find and fix broken dependencies without hunting them down",
+              "body": "Detect broken dependencies from tables to dashboards, and fix them before somebody opens the report and finds out for you.",
+              "trailingLabel": "Detect broken dependencies",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Versioned dataset publishing",
+              "title": "Make it clear which data is meant to be reused",
+              "body": "Create a shared library of canonical datasets, so teams can tell what is production and what is someone thinking out loud.",
+              "trailingLabel": "shared library",
+              "trailingUrl": "/features/collections"
+            }
+          ],
+          "faqHeading": "Frequently asked questions",
+          "faqs": [
+            {
+              "question": "What is Data Studio in Metabase?",
+              "answer": "Data Studio is the part of Metabase where teams shape the data their analytics depends on: transforms, metadata, metrics and the lineage between them, all in the same place people already ask their questions."
+            },
+            {
+              "question": "Can I define a semantic layer inside Metabase?",
+              "answer": "Yes. You can build and define your semantic layer inside Data Studio, rather than maintaining it in a separate tool and hoping the two stay in agreement."
+            },
+            {
+              "question": "How does Data Studio help AI give accurate answers?",
+              "answer": "Metabot and the other AI features draw on the metrics, descriptions and semantic types you have defined. The more context the layer carries, the less the model has to guess at what a column means."
+            },
+            {
+              "question": "Who is Data Studio for?",
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+            },
+            {
+              "question": "What problem does Data Studio solve?",
+              "answer": "As analytics grows, teams run into duplicated logic, definitions that disagree with each other, and nobody being sure which table is the real one. Data Studio is where you settle that once."
+            },
+            {
+              "question": "Can Data Studio structure data for embedded analytics and customer-facing reporting?",
+              "answer": "Yes, and it works the same way whether the analytics are internal or embedded in your product. The same metrics and metadata back both, so a customer-facing number matches the internal one."
+            },
+            {
+              "question": "What plan is Data Studio available on?",
+              "answer": "Data Studio is an always-on part of Metabase. The core capabilities are available on every plan, with the governance pieces on Pro and Enterprise."
+            },
+            {
+              "question": "How do I get started with Data Studio?",
+              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+            },
+            {
+              "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
+              "answer": "It can support full transformation workflows for many teams, and it also sits happily downstream of dbt or a warehouse-native setup, adding the context and the metrics that layer does not carry."
+            }
+          ],
+          "faqMoreText": "Have more questions? We'd be happy to help.",
+          "faqMoreLabel": "Contact us",
+          "faqMoreUrl": "/contact",
+          "closingHeading": "Bring more order to your analytics",
+          "closingSub": "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would.",
+          "closingCtas": []
+        }
+      ]
+    },
+    {
+      "title": "Semantic layer",
+      "slug": "features/semantic-layer",
+      "seo": {
+        "metaTitle": "Data Studio: curate your semantic layer | Metabase",
+        "metaDescription": "Wrangle your data, add the context it's missing, and define metrics once, right where your data gets used. Transforms, metadata, metrics and lineage in one place."
+      },
+      "sections": [
+        {
+          "__component": "page.data-studio",
+          "eyebrow": "Data Studio",
+          "badgeImage": "/images/icons/badges/data-studio-badge.svg",
+          "heading": "Curate your semantic layer right where your data gets used",
+          "ledeBefore": "Wrangle your data, add the context it's missing, and define your metrics once, so that every dashboard, every question and every ",
+          "ledeLinkLabel": "AI",
+          "ledeLinkUrl": "/features/metabase-ai",
+          "ledeAfter": " answer starts from the same definitions rather than from whatever the person asking happened to remember.",
+          "heroCtas": [
+            {
+              "label": "Get started",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Contact us",
+              "url": "/contact",
+              "style": "secondary"
+            }
+          ],
+          "ticks": [
+            {
+              "text": "Free 14-day trial"
+            },
+            {
+              "text": "Super-fast setup"
+            },
+            {
+              "text": "Secure and compliant"
+            }
+          ],
+          "shotImage": "/images/product/data-studio/data-studio-interface.webp",
+          "shotAlt": "The Data Studio interface, showing transforms and their metadata",
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "logos": [
+            {
+              "src": "huma",
+              "alt": "huma logo",
+              "width": 125
+            },
+            {
+              "src": "home/airbyte",
+              "alt": "airbyte logo",
+              "width": 124
+            },
+            {
+              "src": "linear",
+              "alt": "linear logo",
+              "width": 113
+            },
+            {
+              "src": "betterment",
+              "alt": "betterment logo",
+              "width": 135
+            },
+            {
+              "src": "kong",
+              "alt": "kong logo",
+              "width": 126
+            },
+            {
+              "src": "home/superhuman",
+              "alt": "superhuman logo",
+              "width": 135
+            }
+          ],
+          "featsHeading": "All in one place, connected, and observable",
+          "featsLede": "Data Studio is where you shape the data your analytics depends on, and where you can see what depends on what, so you find out what a change will break before somebody else does.",
+          "cards": [
+            {
+              "icon": "Transforms",
+              "title": "Speed up queries by cleaning up tables for analytics",
+              "body": "Clean, join or pre-aggregate data in SQL or Python and persist the result as a new table, so the expensive work happens once.",
+              "trailingLabel": "SQL or Python",
+              "trailingUrl": "/features/sql-editor"
+            },
+            {
+              "icon": "Metadata",
+              "title": "Add the context raw tables don't have",
+              "body": "Rename columns, write descriptions and set semantic types, so a table means something to the person who did not build it.",
+              "trailingLabel": "set semantic types",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Metrics",
+              "title": "Calculations defined once, used by everyone",
+              "body": "Save the aggregation logic as a metric, so ARR is computed the same way in every dashboard that mentions it.",
+              "trailingLabel": "metric",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Lineage",
+              "title": "Make a change, see what breaks",
+              "body": "Trace lineage from raw tables through to the dashboards and questions that depend on them, before you change a column name.",
+              "trailingLabel": "Trace lineage",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Dependency diagnostics",
+              "title": "Find and fix broken dependencies without hunting them down",
+              "body": "Detect broken dependencies from tables to dashboards, and fix them before somebody opens the report and finds out for you.",
+              "trailingLabel": "Detect broken dependencies",
+              "trailingUrl": "/features/models"
+            },
+            {
+              "icon": "Versioned dataset publishing",
+              "title": "Make it clear which data is meant to be reused",
+              "body": "Create a shared library of canonical datasets, so teams can tell what is production and what is someone thinking out loud.",
+              "trailingLabel": "shared library",
+              "trailingUrl": "/features/collections"
+            }
+          ],
+          "faqHeading": "Frequently asked questions",
+          "faqs": [
+            {
+              "question": "What is Data Studio in Metabase?",
+              "answer": "Data Studio is the part of Metabase where teams shape the data their analytics depends on: transforms, metadata, metrics and the lineage between them, all in the same place people already ask their questions."
+            },
+            {
+              "question": "Can I define a semantic layer inside Metabase?",
+              "answer": "Yes. You can build and define your semantic layer inside Data Studio, rather than maintaining it in a separate tool and hoping the two stay in agreement."
+            },
+            {
+              "question": "How does Data Studio help AI give accurate answers?",
+              "answer": "Metabot and the other AI features draw on the metrics, descriptions and semantic types you have defined. The more context the layer carries, the less the model has to guess at what a column means."
+            },
+            {
+              "question": "Who is Data Studio for?",
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+            },
+            {
+              "question": "What problem does Data Studio solve?",
+              "answer": "As analytics grows, teams run into duplicated logic, definitions that disagree with each other, and nobody being sure which table is the real one. Data Studio is where you settle that once."
+            },
+            {
+              "question": "Can Data Studio structure data for embedded analytics and customer-facing reporting?",
+              "answer": "Yes, and it works the same way whether the analytics are internal or embedded in your product. The same metrics and metadata back both, so a customer-facing number matches the internal one."
+            },
+            {
+              "question": "What plan is Data Studio available on?",
+              "answer": "Data Studio is an always-on part of Metabase. The core capabilities are available on every plan, with the governance pieces on Pro and Enterprise."
+            },
+            {
+              "question": "How do I get started with Data Studio?",
+              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+            },
+            {
+              "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
+              "answer": "It can support full transformation workflows for many teams, and it also sits happily downstream of dbt or a warehouse-native setup, adding the context and the metrics that layer does not carry."
+            }
+          ],
+          "faqMoreText": "Have more questions? We'd be happy to help.",
+          "faqMoreLabel": "Contact us",
+          "faqMoreUrl": "/contact",
+          "closingHeading": "Bring more order to your analytics",
+          "closingSub": "Organize your data for clarity, so non-technical teammates can answer their own questions and get the same number you would.",
+          "closingCtas": []
+        }
+      ]
+    },
+    {
+      "title": "Embedded Analytics",
+      "slug": "product/embedded-analytics",
+      "seo": {
+        "metaTitle": "Embedded Analytics | Metabase",
+        "metaDescription": "Get in-product reporting in days, not sprints. Embed charts and interactive dashboards with a low-code integration, or compose them from React components with the Modular Embedding SDK."
+      },
+      "sections": [
+        {
+          "__component": "page.embedded-analytics",
+          "eyebrow": "Embedded Analytics",
+          "heading": "Get in-product reporting in days, not sprints",
+          "sub": "Hand-rolling analytics is never what you think it is going to be. Ship the reporting your customers are asking for, and keep your roadmap for your own product.",
+          "heroCtas": [
+            {
+              "label": "Get started",
+              "url": "/start",
+              "style": "primary"
+            },
+            {
+              "label": "Contact us",
+              "url": "/contact",
+              "style": "secondary"
+            }
+          ],
+          "heroImage": "/images/product/embedded-analytics/hero_image.webp",
+          "heroImageMobile": "/images/product/embedded-analytics/hero_image-mobile.webp",
+          "heroImageAlt": "Metabase dashboards embedded inside a customer-facing product",
+          "trustLine": "Metabase is trusted by 100,000+ companies",
+          "logos": [
+            {
+              "src": "Huggingface",
+              "alt": "huggingface logo",
+              "width": 135
+            },
+            {
+              "src": "mcdonalds",
+              "alt": "mcdonalds logo",
+              "width": 67
+            },
+            {
+              "src": "huma",
+              "alt": "huma logo",
+              "width": 128
+            },
+            {
+              "src": "capital-one",
+              "alt": "capital-one logo",
+              "width": 129
+            },
+            {
+              "src": "mistral",
+              "alt": "Mistral AI logo",
+              "width": 135
+            },
+            {
+              "src": "linear",
+              "alt": "linear logo",
+              "width": 116
+            },
+            {
+              "src": "deutsche-telekom",
+              "alt": "Deutsche Telekom logo",
+              "width": 58
+            },
+            {
+              "src": "kong",
+              "alt": "kong logo",
+              "width": 129
+            }
+          ],
+          "prototypeHeading": "Super fast to prototype, fast to implement, fast to iterate",
+          "prototypeSub": "Sign up, connect to your data, and get your first visualization embedded.",
+          "securityHeading": "Multi-tenant and secure to keep customer data separate",
+          "securitySubBefore": "Segregate data with ",
+          "securitySubLinkLabel": "granular permissions",
+          "securitySubLinkUrl": "/features/permissions",
+          "securitySubAfter": " and strong perimeters.",
+          "securityPillars": [
+            {
+              "icon": "permissions",
+              "title": "Keep data secure",
+              "body": "Make sure each customer only ever sees their own rows. Define who can see what once, and have it hold everywhere."
+            },
+            {
+              "icon": "segregation",
+              "title": "Flexible access controls",
+              "body": "Set permissions at the organisation, user, table, even the row or column level, and sandbox what is left."
+            },
+            {
+              "icon": "gear",
+              "title": "Permissions in the UI",
+              "body": "No engineer grows up dreaming of managing permissions. Hand them to the people who own the question instead."
+            }
+          ],
+          "customersHeading": "Our customers build great data experiences",
+          "customersSub": "See how leading companies help their users work with data.",
+          "storyW": 559,
+          "storyH": 405,
+          "storyPoster": "/images/embedding/sincera-poster.webp",
+          "storyVideo": "/images/embedding/sincera.mp4",
+          "storyAlt": "An embedded analytics area inside a customer's product",
+          "storyTitle": "Northwind Lending uses Metabase embedding to give their customers a reporting area they do not have to maintain",
+          "storyLinkLabel": "Read the full story",
+          "storyLinkUrl": "/case-studies",
+          "implHeading": "The right implementation type for whatever you need",
+          "implSub": "Embed production-ready analytics components in your product, from a single chart to a whole self-service area, and change your mind later without starting over.",
+          "implLinkLabel": "Check out the live demo",
+          "implLinkUrl": "/start",
+          "implementations": [
+            {
+              "badge": "Low-code",
+              "icon": "embed",
+              "title": "Embed charts and interactive dashboards fast with little engineering lift",
+              "sub": "Outrun competitors and boost revenue with reporting as a product feature.",
+              "points": [
+                {
+                  "lead": "Set up in minutes",
+                  "rest": " — validate your in-app reporting needs before you commit a sprint to them."
+                },
+                {
+                  "lead": "White label with your branding",
+                  "rest": ", customise navigation and the surrounding experience with a low-code integration.",
+                  "linkLabel": "White label with your branding",
+                  "linkUrl": "/features/white-label-analytics"
+                },
+                {
+                  "lead": "Customize theming and interactivity",
+                  "rest": " per component, per organisation or per user."
+                },
+                {
+                  "lead": "Limit exploration",
+                  "rest": " with guest embedding, or give carte blanche reporting access with full app embedding."
+                }
+              ],
+              "linkLabel": "Learn more about low-code embedding",
+              "linkUrl": "/learn/metabase-basics/embedding/overview",
+              "image": "/images/product/embedded-analytics/embed-with-iframes-or-sdk.webp",
+              "imageW": 602,
+              "imageH": 377,
+              "imageAlt": "A dashboard embedded in a customer-facing application"
+            },
+            {
+              "badge": "Modular Embedding SDK for React",
+              "icon": "sdk",
+              "title": "More control, more customization",
+              "sub": "Customers want data. Check it off your list.",
+              "points": [
+                {
+                  "lead": "Build custom analytics experiences",
+                  "rest": " with a powerful alternative to hand-rolling your in-app reporting, and keep the parts you have already built."
+                },
+                {
+                  "lead": "Compose from React components",
+                  "rest": " and drop them wherever the product already has a place for them."
+                },
+                {
+                  "lead": "Manage the UX",
+                  "rest": " with custom behaviours, menu items, flows and formats."
+                },
+                {
+                  "lead": "Ship with your own design system",
+                  "rest": " so the embedded views stop looking embedded."
+                }
+              ],
+              "linkLabel": "Learn more about Modular Embedding SDK",
+              "linkUrl": "/product/embedded-analytics-sdk",
+              "image": "/images/product/embedded-analytics/more-control-more-customization.webp",
+              "imageW": 554,
+              "imageH": 354,
+              "imageAlt": "React components composing an embedded analytics view"
+            }
+          ],
+          "tabsHeading": "Easy to use for all types of customers",
+          "tabsSub": "Self-service analytics that lets everyone work with data, from the people who want one number to the ones who write SQL.",
+          "tabs": [
+            {
+              "anchor": "metabot",
+              "label": "Metabot AI",
+              "icon": "ai",
+              "title": "Embed the AI data assistant",
+              "body": "Make it easier for your customers to get answers from data by putting a chat interface where the question actually comes up.",
+              "linkLabel": "Metabot chat interface",
+              "linkUrl": "/features/metabase-ai",
+              "image": "/images/product/embedded-analytics/how-are-our-apps-doing.webp",
+              "imageW": 651,
+              "imageH": 443,
+              "imageAlt": "An embedded assistant answering a question about app performance"
+            },
+            {
+              "anchor": "explore",
+              "label": "Click to explore",
+              "icon": "drill",
+              "title": "Let customers drill in for themselves",
+              "body": "Drill-through menus turn a chart into a starting point, so the follow-up question does not come back to you as a support ticket.",
+              "linkLabel": "the visual query builder",
+              "linkUrl": "/features/query-builder",
+              "image": "/images/product/embedded-analytics/embed-with-iframes-or-sdk.webp",
+              "imageW": 602,
+              "imageH": 377,
+              "imageAlt": "A customer drilling into an embedded chart"
+            },
+            {
+              "anchor": "simple",
+              "label": "Simple reporting",
+              "icon": "dashboards",
+              "title": "Or keep it to the numbers that matter",
+              "body": "Not every customer wants a query tool. Ship a fixed, fast dashboard and let the ones who want more ask for it.",
+              "linkLabel": "static embedding",
+              "linkUrl": "/learn/metabase-basics/embedding/overview",
+              "image": "/images/product/embedded-analytics/more-control-more-customization.webp",
+              "imageW": 554,
+              "imageH": 354,
+              "imageAlt": "A compact embedded reporting view"
+            }
+          ],
+          "stackHeading": "Works with your stack for live visualizations and reports, not extracts",
+          "stackSub": "Your data stays in your database. Metabase does not ingest it, so there is no pipeline to run and nothing to go stale between refreshes.",
+          "stackPillars": [
+            {
+              "icon": "data",
+              "title": "Integrates with your database and stack",
+              "body": "Metabase connects to 20+ data sources, with embedding that fits whatever framework the product already runs on."
+            },
+            {
+              "icon": "bi",
+              "title": "Open source, proven reliability",
+              "body": "No black boxes and no vendor lock-in, backed by a large community and a decade of production use."
+            },
+            {
+              "icon": "cloud",
+              "title": "Self-host or cloud",
+              "body": "Keep control of your data and your deployment, or hand the hosting to us and stop thinking about it."
+            }
+          ],
+          "balanceHeading": "The perfect balance of plug – and – play and customizability",
+          "balanceSub": "You sweat every detail of your product, so we will make sure the analytics inside it look like they belong there.",
+          "balanceLinkLabel": "Customize labels, colors, fonts, branding",
+          "balanceLinkUrl": "/features/white-label-analytics",
+          "themeImage": "/images/product/embedded-analytics/application-screenshot.webp",
+          "themeW": 892,
+          "themeH": 467,
+          "themeImageAlt": "An embedded dashboard restyled to match the host application",
+          "chartColorsLabel": "Chart colors",
+          "fontLabel": "Font",
+          "appearanceLabel": "Appearance",
+          "presets": [
+            {
+              "text": "Classic"
+            },
+            {
+              "text": "Tech"
+            },
+            {
+              "text": "Elegant"
+            },
+            {
+              "text": "Playful"
+            }
+          ],
+          "usageHeading": "Track how your in-app reporting is used",
+          "usageImage": "/images/product/embedded-analytics/track-in-app-reporting.webp",
+          "usageImageW": 590,
+          "usageImageH": 511,
+          "usageImageAlt": "Usage analytics showing which embedded reports are opened most",
+          "usageLedeLinkLabel": "Usage analytics",
+          "usageLedeLinkUrl": "/features/usage-analytics",
+          "usageLedeAfter": " tells you who is doing what and when, so you can act on it rather than guess.",
+          "usagePoints": [
+            {
+              "title": "See how often people use your customer-facing analytics.",
+              "body": "Validate the investment you have made in your in-app reporting."
+            },
+            {
+              "title": "Understand what your customers are most interested in.",
+              "body": "Give people more of what they want, and archive the unused."
+            },
+            {
+              "title": "Get a comprehensive activity log for auditing and security purposes.",
+              "body": "You can even set alerts to be notified about unusual activity."
+            }
+          ],
+          "usageLinkLabel": "Learn more",
+          "usageLinkSr": " about usage analytics",
+          "usageLinkUrl": "/features/usage-analytics",
+          "supportHeading": "Help from our world-class success team",
+          "supportLede": "We don't like to brag, so we'll let our customers do it for us.",
+          "supportLeadText": "With Embedding on Pro and Enterprise plans, you'll get access to our success team:",
+          "supportPoints": [
+            {
+              "text": "Support from actual technical experts. We are all avid Metabase users ourselves."
+            },
+            {
+              "text": "Help with whatever the problem is, be it admin troubleshooting or a modelling question."
+            },
+            {
+              "text": "No chat bots, no hold lines, no customer service runaround."
+            }
+          ],
+          "vsHeading": "Why not just build it?",
+          "vsGroups": [
+            {
+              "heading": "DIY and Charting libraries:",
+              "lines": [
+                {
+                  "pre": "Seems simple at first but ",
+                  "strong": "quickly balloons in scope",
+                  "post": ". Think permissions, new visualization types, drill-through, scheduling."
+                },
+                {
+                  "pre": "",
+                  "strong": "Requires ongoing dev time",
+                  "post": " for maintenance, bug fixes, security and scaling."
+                },
+                {
+                  "pre": "",
+                  "strong": "No built-in permissions",
+                  "post": ", multi-tenancy, self-service analytics or exports."
+                }
+              ]
+            },
+            {
+              "heading": "Other Embedded Analytics solutions:",
+              "lines": [
+                {
+                  "pre": "",
+                  "strong": "Priced per end user",
+                  "post": ", which turns your own growth into a bill you cannot forecast."
+                },
+                {
+                  "pre": "",
+                  "strong": "Long implementations",
+                  "post": " before anything reaches a customer, and a modelling layer you have to adopt wholesale."
+                },
+                {
+                  "pre": "",
+                  "strong": "Rigid",
+                  "post": " — your product has to look like their product."
+                }
+              ]
+            },
+            {
+              "heading": "Metabase:",
+              "lines": [
+                {
+                  "pre": "",
+                  "strong": "Live on your database",
+                  "post": ", so there is nothing to sync and nothing to go stale."
+                },
+                {
+                  "pre": "",
+                  "strong": "Low-code to start, an SDK when you need it",
+                  "post": ", without starting over in between."
+                },
+                {
+                  "pre": "",
+                  "strong": "Open source",
+                  "post": ", so the thing underneath your product is not a black box."
+                }
+              ]
+            }
+          ],
+          "faqHeading": "Frequently asked questions",
+          "faqs": [
+            {
+              "question": "How does Metabase perform when embedded in our app?",
+              "answer": "Metabase is optimised for speed and runs live on your data, so there is no ingest step and no copy to keep in sync. Queries go to your database with caching in front of the ones that are asked most."
+            },
+            {
+              "question": "How customizable is it?",
+              "answer": "White label the embedded charts and dashboards, set theming per component, per organisation or per user, and with the SDK compose the views out of React components using your own design system."
+            },
+            {
+              "question": "Is it secure enough to ensure my customers never see another customer’s data?",
+              "answer": "Row and column permissions are applied before the query runs, not filtered out afterwards, and sandboxing scopes every embedded session to one tenant. Metabase is up to date with first-class compliance certifications."
+            },
+            {
+              "question": "Can we start simple and transition to the SDK later?",
+              "answer": "Yes, and that is the common path. Start with low-code embedding to validate what customers actually want, then move to the SDK for a more integrated, branded experience without throwing the first version away."
+            }
+          ],
+          "closingHeading": "Ready to get started?",
+          "closingSub": "Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what you are trying to put in front of your customers.",
           "closingCtas": []
         }
       ]
