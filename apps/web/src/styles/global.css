@@ -336,7 +336,7 @@
   }
   /* The first panel's frame is the one rounded at 24; the other two sit at 16. */
   .bi-frame--query { border-radius: 24px; aspect-ratio: 647 / 692; }
-  .bi-frame--share { aspect-ratio: 647 / 681; }
+  .bi-frame--share { aspect-ratio: 620 / 653; }  /* the demo's own canvas */
   .bi-frame--guide { aspect-ratio: 647 / 578; }
   /* The demo keeps its own internals but gives up its card chrome to the frame. */
   .bi-frame > * { flex: 1; min-height: 0; }
@@ -360,7 +360,6 @@
  *     on document order.
  */
 .bi-frame > .mbot,
-.bi-frame > .pdash,
 .bi-frame > .dstudio {
   border: 0;
   border-radius: 0;

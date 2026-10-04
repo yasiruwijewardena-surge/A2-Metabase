@@ -2,9 +2,12 @@
 /**
  * The interactive payments dashboard from the Business Intelligence section.
  *
- * The original serves this as a self-contained page inside an iframe. Built
- * here as an island instead: same behaviour, no extra document, and the charts
- * inherit the page's own tokens.
+ * The original serves this as a self-contained page inside an iframe sized
+ * 620x653 and scaled to the column (`--bi-share-scale`). Built here as an
+ * island instead -- same behaviour, no extra document -- but on the same fixed
+ * design canvas, because every measurement below is one of the original's and
+ * only holds at that width. The wrapper carries the aspect ratio and the
+ * canvas is scaled into it, exactly as the iframe is.
  *
  * Two filters drive three cards. Time grouping switches the series between
  * day / week / month / year; Plan narrows every card to one plan. Both are
@@ -18,183 +21,245 @@ const UNITS = [
   ['day', 'Day'], ['week', 'Week'], ['month', 'Month'], ['year', 'Year'],
 ] as const;
 ---
-<div class="pdash" data-pdash>
-  <div class="pdash__filters">
-    <div class="pdash__filter" data-filter="time">
-      <button class="pdash__pill" type="button" data-pill="time" aria-haspopup="listbox" aria-expanded="false">
-        <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <circle cx="12" cy="12" r="9" /><path stroke-linecap="round" d="M12 7v5l3 2" />
-        </svg>
-        <span class="pdash__pill-body">
-          <span class="pdash__pill-name">Time grouping:</span>
-          <span class="pdash__pill-value" data-time-value>Month</span>
-        </span>
-        <span class="pdash__clear" data-time-clear role="button" tabindex="0" aria-label="Reset time grouping">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
-            <path d="M6 6l12 12M18 6L6 18" />
+<div class="pdash-wrap" data-pdash-wrap>
+  <div class="pdash" data-pdash>
+    <div class="pdash__filters">
+      <div class="pdash__filter">
+        <button class="pdash__pill" type="button" data-pill="time" aria-haspopup="listbox" aria-expanded="false">
+          <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" /><path stroke-linecap="round" d="M12 7v5l3 2" />
           </svg>
-        </span>
-      </button>
-      <div class="pdash__dd" data-dd="time" role="listbox" aria-label="Time grouping" hidden>
-        {UNITS.map(([unit, label]) => (
-          <div class="pdash__opt" role="option" tabindex="0" data-unit={unit} aria-selected={unit === 'month'}>{label}</div>
-        ))}
-      </div>
-    </div>
-
-    <div class="pdash__filter" data-filter="plan">
-      <button class="pdash__pill" type="button" data-pill="plan" aria-haspopup="dialog" aria-expanded="false">
-        <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 5h16M4 5v2M20 5v2M12 5v13M9 20h6" />
-        </svg>
-        <span class="pdash__pill-body" data-plan-body><span class="pdash__pill-name">Plan</span></span>
-        <svg class="pdash__chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <path d="M2.5 4.5 6 8l3.5-3.5" />
-        </svg>
-      </button>
-      <div class="pdash__dd pdash__dd--plan" data-dd="plan" role="dialog" aria-label="Filter by plan" hidden>
-        <div class="pdash__search">
-          <label class="sr-only" for="pdash-plan-search">Search the list</label>
-          <input id="pdash-plan-search" type="text" placeholder="Search the list" autocomplete="off" data-plan-search />
-        </div>
-        <ul class="pdash__list" data-plan-list>
-          {PLANS.map((p) => (
-            <li><button type="button" class="pdash__plan" data-plan={p}>{p}</button></li>
+          <span class="pdash__pill-content">
+            <span class="pdash__pill-name">Time grouping:</span>
+            <span class="pdash__pill-value" data-time-value>Month</span>
+            <span class="pdash__clear" data-time-clear role="button" tabindex="0" aria-label="Clear"></span>
+          </span>
+        </button>
+        <div class="pdash__dd pdash__dd--time" data-dd="time" role="listbox" aria-label="Time grouping" hidden>
+          {UNITS.map(([unit, label]) => (
+            <div class="pdash__opt" role="option" tabindex="0" data-unit={unit} aria-selected={unit === 'month'}>{label}</div>
           ))}
-        </ul>
-        <div class="pdash__foot">
-          <button type="button" class="pdash__add" data-plan-add disabled>Add filter</button>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="pdash__grid">
-    <section class="pdash__card pdash__card--pie">
-      <p class="pdash__card-title">Payments amounts by plan</p>
-      <div class="pdash__pie-row">
-        <ul class="pdash__legend" data-pie-legend></ul>
-        <div class="pdash__pie-wrap">
-          <svg viewBox="0 0 160 160" class="pdash__pie" role="img" aria-label="Payment amounts by plan" data-pie></svg>
-          <div class="pdash__pie-center">
-            <strong data-pie-total>$4.7M</strong>
-            <span>Total</span>
+      <div class="pdash__filter">
+        <button class="pdash__pill pdash__pill--unset" type="button" data-pill="plan" aria-haspopup="dialog" aria-expanded="false">
+          <svg class="pdash__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 5h16M4 5v2M20 5v2M12 5v13M9 20h6" />
+          </svg>
+          <span class="pdash__pill-content" data-plan-body></span>
+        </button>
+        <div class="pdash__dd pdash__dd--plan" data-dd="plan" role="dialog" aria-label="Filter by plan" hidden>
+          <div class="pdash__search">
+            <label class="sr-only" for="pdash-plan-search">Search the list</label>
+            <input id="pdash-plan-search" type="text" placeholder="Search the list" autocomplete="off" data-plan-search />
+          </div>
+          <ul class="pdash__list" data-plan-list>
+            {PLANS.map((p) => (
+              <li><button type="button" class="pdash__plan" data-plan={p}>{p}</button></li>
+            ))}
+          </ul>
+          <div class="pdash__foot">
+            <button type="button" class="pdash__add" data-plan-add disabled>Add filter</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="pdash__card pdash__card--trend">
-      <p class="pdash__card-title">Total Payments</p>
-      <p class="pdash__trend-value" data-trend-value>1,148</p>
-      <p class="pdash__trend-period" data-trend-period>2026</p>
-      <p class="pdash__trend-compare" data-trend-compare></p>
-    </section>
+    <div class="pdash__grid">
+      <section class="pdash__card pdash__card--pie">
+        <div class="pdash__head"><div class="pdash__card-title">Payments amounts by plan</div></div>
+        <div class="pdash__body">
+          <div class="pdash__pie-row">
+            <div class="pdash__legend" data-pie-legend></div>
+            <div class="pdash__pie-chart">
+              <svg class="pdash__pie" viewBox="0 0 200 200" role="img"
+                   aria-label="Donut chart of payment amounts by plan" data-pie></svg>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section class="pdash__card pdash__card--bar">
-      <p class="pdash__card-title">Payment amounts over time</p>
-      <div class="pdash__bar-wrap">
-        <svg class="pdash__bar" role="img" aria-label="Payment amounts over time" data-bar></svg>
-      </div>
-      <p class="pdash__axis-label">Date Received</p>
-    </section>
+      <section class="pdash__card pdash__card--trend">
+        <div class="pdash__head"><div class="pdash__card-title">Total Payments</div></div>
+        <div class="pdash__body">
+          <div class="pdash__trend-body">
+            <div class="pdash__trend-value" data-trend-value>299</div>
+            <div class="pdash__trend-period" data-trend-period>May 2026</div>
+            <div class="pdash__trend-compare" data-trend-compare></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pdash__card pdash__card--bar">
+        <div class="pdash__head"><div class="pdash__card-title">Payment amounts over time</div></div>
+        <div class="pdash__body">
+          <div class="pdash__chart-wrap" data-bar-wrap>
+            <svg class="pdash__bar" role="img" aria-label="Bar chart of payment amounts over time" data-bar></svg>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <span class="pdash__cursor" data-cursor aria-hidden="true"></span>
+    <script type="application/json" data-pdash-data set:html={JSON.stringify(data)} />
   </div>
-
-  <span class="pdash__cursor" data-cursor aria-hidden="true"></span>
-  <script type="application/json" data-pdash-data set:html={JSON.stringify(data)} />
 </div>
 
-<!-- is:global because the legend, bars and comparison are injected at runtime:
-     Astro's scoping stamps an attribute on template elements only, so scoped
-     rules never reach innerHTML content. Every selector is .pdash-prefixed. -->
+<!-- is:global because the legend, pill bodies, bars and comparison are all
+     injected at runtime: Astro's scoping stamps an attribute on template
+     elements only, so scoped rules never reach innerHTML content. Every
+     selector is .pdash-prefixed. Values are the original's own, in px. -->
 <style is:global>
+  .pdash-wrap {
+    position: relative; overflow: hidden;
+    aspect-ratio: 620 / 653; width: 100%;
+  }
   .pdash {
-    position: relative;
-    border-radius: 1rem; border: 1px solid var(--color-line);
-    background: var(--color-brand-faint); padding: 1rem;
-    font-size: 0.8125rem;
+    position: absolute; top: 0; left: 0;
+    width: 620px; height: 653px;
+    transform-origin: 0 0; transform: scale(var(--pdash-scale, 1));
+    padding: 12px 16px 16px;
+    background: #f9f9fa;
+    font-family: Lato, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: rgb(7 23 34 / 0.84);
+    /* The original's iframe sets no line-height, so everything inside it
+       resolves to `normal`; without this the site's 1.5 leaks in. */
+    line-height: normal;
+    -webkit-font-smoothing: antialiased;
   }
-  .pdash__filters { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .pdash *, .pdash *::before, .pdash *::after { box-sizing: border-box; }
+  /* `width: 100%` belongs to the bar chart alone. As a `.pdash svg` rule it
+     would outrank every single-class icon size below -- the original wins the
+     same contest with a bare `svg` selector, which an is:global block cannot
+     use. */
+  .pdash svg { display: block; }
+  .pdash__chart-wrap svg { width: 100%; }
+
+  /* ---- filter bar ---- */
+  .pdash__filters { display: flex; flex-wrap: wrap; gap: 10px; padding: 6px 0 16px; }
   .pdash__filter { position: relative; }
-
   .pdash__pill {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    border: 1px solid var(--color-line); border-radius: 0.5rem;
-    background: #fff; padding: 0.55rem 0.75rem; cursor: pointer;
-    font-size: 0.8125rem; color: var(--color-ink);
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 36px; padding: 0 12px; margin: 0;
+    background: #fff; border: 1px solid #dcdfe0; border-radius: 8px;
+    font: inherit; font-size: 14px; color: #696e7b;
+    white-space: nowrap; cursor: pointer; user-select: none;
   }
-  .pdash__pill[aria-expanded='true'] { border-color: var(--color-brand); box-shadow: 0 0 0 2px var(--color-brand-muted); }
-  .pdash__ic, .pdash__chev { width: 14px; height: 14px; color: var(--color-ink-3); }
-  .pdash__pill-body { display: inline-flex; align-items: center; gap: 0.35rem; }
-  .pdash__pill-name { color: var(--color-ink-2); }
-  .pdash__pill-value { font-weight: 700; color: var(--color-brand-hover); }
-  .pdash__clear { display: none; color: var(--color-brand); }
-  .pdash__clear svg { width: 11px; height: 11px; }
-  .pdash__pill[data-dirty='true'] .pdash__clear { display: inline-flex; }
+  .pdash__pill:hover { border-color: #c7cccf; }
+  .pdash__pill[aria-expanded='true'] { border-color: #509ee3; box-shadow: 0 0 0 1px rgb(80 158 226 / 0.25); }
+  .pdash__pill[aria-expanded='true'] .pdash__ic { color: #509ee3; }
+  .pdash__ic { width: 15px; height: 15px; flex-shrink: 0; color: #949aab; display: block; }
+  .pdash__pill-content { display: inline-flex; align-items: center; }
+  .pdash__pill-name { color: #696e7b; }
+  .pdash__pill-value { color: #509ee3; font-weight: 700; margin-left: 0.25em; }
+  .pdash__plan-label { color: rgb(7 23 34 / 0.84); font-weight: 700; }
+  .pdash__chev { width: 14px; height: 14px; color: #949aab; margin-left: auto; }
+  .pdash__clear {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; flex-shrink: 0; margin-left: 6px;
+    transform: translate(2px, 1px); color: #509ee3;
+  }
+  .pdash__clear svg { width: 13px; height: 13px; }
+  /* The unset Plan pill is wider, with the chevron pushed to the far right. */
+  .pdash__pill--unset { min-width: 210px; }
+  .pdash__pill--unset .pdash__pill-content { flex: 1; min-width: 0; }
 
-  .pdash__dd {
-    position: absolute; top: calc(100% + 6px); left: 0; z-index: 5; min-width: 190px;
-    border: 1px solid var(--color-line); border-radius: 0.5rem; background: #fff;
-    box-shadow: 0 10px 28px rgb(34 36 43 / 0.14); padding: 0.35rem;
+  /* ---- dropdowns ---- */
+  .pdash__dd { position: absolute; top: 42px; left: 0; z-index: 50; }
+  .pdash__dd--time {
+    background: #fff; border: 1px solid #dcdfe0; border-radius: 8px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.08); padding: 8px; min-width: 180px;
   }
-  .pdash__dd--plan { min-width: 250px; }
-  .pdash__opt, .pdash__plan {
-    display: block; width: 100%; text-align: start;
-    padding: 0.5rem 0.6rem; border: 0; background: none; border-radius: 0.375rem;
-    cursor: pointer; font-size: 0.8125rem; color: var(--color-ink);
+  .pdash__opt {
+    padding: 8px; border-radius: 4px; font-size: 14px;
+    color: rgb(7 23 34 / 0.84); cursor: pointer;
   }
-  .pdash__opt:hover, .pdash__plan:hover,
-  .pdash__opt:focus-visible, .pdash__plan:focus-visible { background: var(--color-brand-faint); }
-  .pdash__opt[aria-selected='true'], .pdash__plan[data-on='true'] { color: var(--color-brand); font-weight: 700; }
-  .pdash__search { padding: 0.35rem; }
+  .pdash__opt:hover, .pdash__opt:focus-visible { background: rgb(7 23 34 / 0.05); }
+  .pdash__opt[aria-selected='true'] { background: rgb(80 158 226 / 0.21); }
+
+  .pdash__dd--plan {
+    background: #fff; border: 1px solid #dcdfe0; border-radius: 6px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.05); width: 318px; padding: 0; overflow: hidden;
+  }
+  .pdash__search { padding: 12px 12px 6px; }
   .pdash__search input {
-    width: 100%; border: 1px solid var(--color-brand); border-radius: 0.375rem;
-    padding: 0.5rem 0.6rem; font-size: 0.8125rem;
+    width: 100%; height: 39px; font: inherit; font-size: 14px; color: rgb(7 23 34 / 0.84);
+    border: 1px solid #dcdfe0; border-radius: 8px; padding: 10px 12px; outline: none;
   }
-  .pdash__list { list-style: none; margin: 0; padding: 0; max-height: 160px; overflow-y: auto; }
-  .pdash__foot { padding: 0.35rem; }
+  .pdash__search input:focus { border-color: #509ee3; }
+  .pdash__search input::placeholder { color: #949aab; }
+  .pdash__list { list-style: none; margin: 0; padding: 4px 8px; max-height: 220px; overflow-y: auto; }
+  .pdash__plan {
+    display: block; width: 100%; text-align: start; border: 0; background: none;
+    padding: 9px 10px; border-radius: 4px; font: inherit; font-size: 14px;
+    color: rgb(7 23 34 / 0.84); cursor: pointer;
+  }
+  .pdash__plan:hover, .pdash__plan:focus-visible { background: rgb(7 23 34 / 0.05); }
+  .pdash__plan[data-on='true'] { background: rgb(80 158 226 / 0.21); }
+  .pdash__foot { padding: 8px 12px 12px; }
   .pdash__add {
-    width: 100%; border: 0; border-radius: 0.375rem; padding: 0.6rem;
-    background: var(--color-surface); color: var(--color-ink-3); font-weight: 700; font-size: 0.8125rem;
+    width: 100%; height: 36px; border: 0; border-radius: 6px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    background: rgb(7 23 34 / 0.05); color: rgb(7 23 34 / 0.44);
   }
-  .pdash__add:not([disabled]) { background: var(--color-brand); color: #fff; cursor: pointer; }
+  .pdash__add:not([disabled]) { background: #509ee3; color: #fff; cursor: pointer; }
 
-  .pdash__grid { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
-  @media (min-width: 640px) {
-    .pdash__grid { grid-template-columns: 1.4fr 1fr; }
-    .pdash__card--bar { grid-column: 1 / -1; }
+  /* ---- grid ---- */
+  .pdash__grid { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 16px; }
+  .pdash__card {
+    background: #fff; border: 1px solid rgb(7 23 34 / 0.10); border-radius: 8px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+    display: flex; flex-direction: column; min-width: 0; overflow: hidden;
   }
-  .pdash__card { border: 1px solid var(--color-line); border-radius: 0.625rem; background: #fff; padding: 0.85rem; }
-  .pdash__card-title { margin: 0 0 0.6rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-ink); }
+  .pdash__card--pie { grid-column: 1 / 16; }
+  .pdash__card--trend { grid-column: 16 / 25; }
+  .pdash__card--bar { grid-column: 1 / 25; }
+  .pdash__head { display: flex; align-items: flex-start; justify-content: space-between; padding: 13px 16px 4px; }
+  .pdash__card-title { font-size: 14px; font-weight: 700; color: rgb(7 23 34 / 0.84); line-height: 1.25; }
+  .pdash__body { flex: 1; padding: 4px 16px 16px; position: relative; min-width: 0; }
 
-  .pdash__pie-row { display: flex; align-items: center; gap: 0.75rem; }
-  .pdash__legend { flex: 1; list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
-  .pdash__legend li { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 0.5rem; }
-  .pdash__legend i { width: 10px; height: 10px; border-radius: 9999px; }
-  .pdash__legend b { font-weight: 700; }
-  .pdash__legend span { color: var(--color-ink-2); }
-  .pdash__pie-wrap { position: relative; width: 112px; height: 112px; flex-shrink: 0; }
-  .pdash__pie { width: 112px; height: 112px; }
-  .pdash__pie-center {
-    position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1.15;
+  /* ---- donut ---- */
+  .pdash__pie-row { display: flex; align-items: center; height: 100%; min-height: 138px; gap: 10px; }
+  .pdash__legend {
+    display: grid; grid-template-columns: auto auto; gap: 11px 18px;
+    align-content: center; padding-left: 8px; flex-shrink: 0;
   }
-  .pdash__pie-center strong { display: block; font-size: 0.9375rem; font-weight: 900; }
-  .pdash__pie-center span { font-size: 0.6875rem; color: var(--color-ink-3); }
+  .pdash__legend .pdash__name { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 700; color: rgb(7 23 34 / 0.84); }
+  .pdash__legend .pdash__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .pdash__legend .pdash__pct { font-size: 14px; color: rgb(7 23 34 / 0.84); text-align: right; }
+  .pdash__pie-chart { flex: 1; display: flex; justify-content: center; align-items: center; min-width: 0; }
+  .pdash__pie-chart svg { width: 158px; height: 158px; max-width: 100%; }
+  .pdash__pie-value { font-size: 25px; font-weight: 700; fill: rgb(7 23 34 / 0.84); }
+  .pdash__pie-label { font-size: 13px; fill: #696e7b; }
 
-  .pdash__trend-value { margin: 0.3rem 0 0; font-size: 2.75rem; line-height: 1; font-weight: 900; letter-spacing: -0.02em; }
-  .pdash__trend-period { margin: 0.5rem 0 0; font-weight: 700; color: var(--color-ink-2); }
-  .pdash__trend-compare { margin: 0.2rem 0 0; color: var(--color-ink-3); }
-  .pdash__trend-compare b { font-weight: 700; }
-  .pdash__trend-compare b[data-dir='up'] { color: var(--color-ok-strong); }
-  .pdash__trend-compare b[data-dir='down'] { color: #c0392b; }
+  /* ---- trend ---- */
+  .pdash__trend-body {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; height: 100%; min-height: 138px; padding: 14px;
+  }
+  .pdash__trend-value { font-size: 56px; font-weight: 700; color: rgb(7 23 34 / 0.84); line-height: 0.95; letter-spacing: -0.01em; }
+  .pdash__trend-period { margin-top: 14px; font-size: 15px; font-weight: 700; color: rgb(7 23 34 / 0.84); }
+  .pdash__trend-compare {
+    margin-top: 8px; font-size: 14px; display: inline-flex; align-items: baseline;
+    gap: 7px; white-space: nowrap; flex-wrap: wrap; justify-content: center;
+  }
+  .pdash__trend-compare .pdash__vs { color: #696e7b; }
+  .pdash__trend-compare .pdash__delta { font-weight: 700; display: inline-flex; align-items: baseline; gap: 4px; }
+  .pdash__trend-compare .pdash__arr { font-size: 13px; font-weight: 900; }
+  .pdash__trend-compare .pdash__delta[data-dir='up'] { color: #689735; }
+  .pdash__trend-compare .pdash__delta[data-dir='down'] { color: #e35a4b; }
+  .pdash__trend-compare .pdash__delta[data-dir='flat'] { color: #696e7b; }
 
-  .pdash__bar-wrap { height: 150px; }
-  .pdash__bar { width: 100%; height: 100%; }
-  .pdash__axis-label { margin: 0.35rem 0 0; text-align: center; color: var(--color-ink-3); font-size: 0.6875rem; }
+  /* ---- bar ---- */
+  .pdash__chart-wrap { position: relative; }
+  .pdash__axis-label { font-size: 12px; fill: #696e7b; }
+  .pdash__x-title { font-size: 13px; fill: #696e7b; }
 
+  /* ---- simulated cursor ---- */
   .pdash__cursor {
-    position: absolute; top: 0; left: 0; width: 18px; height: 18px; z-index: 20;
+    position: absolute; top: 0; left: 0; width: 18px; height: 18px; z-index: 60;
     pointer-events: none; opacity: 0; transition: opacity 200ms;
     background: no-repeat center/contain
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 10-6 1 3 7-3 1-3-7-5 4z' fill='%2322242b' stroke='%23fff' stroke-width='1.2'/%3E%3C/svg%3E");
@@ -205,17 +270,95 @@ const UNITS = [
 </style>
 
 <script>
-  type Trend = { v: number; p: number; d: string };
+  type Trend = { v: number; p: number | null; d: string };
   type Data = {
     bar: Record<string, Record<string, number[]>>;
-    barYears: Record<string, string[]>;
-    barMonths: Record<string, string[]>;
     trend: Record<string, Record<string, Trend>>;
   };
 
-  const COLOURS: Record<string, string> = { Basic: '#51528d', Business: '#509ee3', Premium: '#ef8c8c' };
-  const SHARES: Record<string, number> = { Basic: 60.78, Business: 36.79, Premium: 2.43 };
-  const TOTAL = 4_700_000;
+  /* The three plans and their lifetime totals, which is what the donut
+     divides -- it does not follow the time grouping. */
+  const PLAN_BASE = [
+    { name: 'Basic', value: 2_830_513, colour: '#51528d' },
+    { name: 'Business', value: 1_713_344.7, colour: '#509ee3' },
+    { name: 'Premium', value: 113_180.1, colour: '#ef8c8c' },
+  ];
+
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const ICON_X =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  const ICON_RESET =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
+  const ICON_CHEV =
+    '<svg class="pdash__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+  const DESIGN_W = 620;
+
+  // ---- formatters ----------------------------------------------------------
+  /* Zero is bare; every other y tick carries two decimals. */
+  const fmtY = (n: number) =>
+    n === 0 ? '$0' : '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const compactCurrency = (n: number) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', maximumFractionDigits: 1 })
+      .format(n).replace('K', 'k');
+  const pctStr = (p: number) =>
+    Math.round(p * 100) / 100 === Math.round(p) ? `${Math.round(p)}%` : p.toFixed(2) + '%';
+
+  /* Dates are read and written in UTC throughout: the ISO keys are plain
+     calendar dates, and letting the local zone touch them shifts the first of
+     the month into the previous one west of Greenwich. */
+  const parseISO = (s: string) => {
+    const [y, m, d] = s.split('-').map(Number);
+    return new Date(Date.UTC(y, m - 1, d));
+  };
+  const toISO = (d: Date) =>
+    `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+
+  function fmtPeriod(iso: string, unit: string): string {
+    const d = parseISO(iso), y = d.getUTCFullYear(), m = d.getUTCMonth(), day = d.getUTCDate();
+    if (unit === 'year') return String(y);
+    if (unit === 'month') return `${MONTHS[m]} ${y}`;
+    if (unit === 'day') return `${MONTHS[m]} ${day}, ${y}`;
+    // week: the labelled start plus six days
+    const e = new Date(d.getTime());
+    e.setUTCDate(e.getUTCDate() + 6);
+    const em = e.getUTCMonth(), ed = e.getUTCDate(), ey = e.getUTCFullYear();
+    if (y === ey && m === em) return `${MONTHS[m]} ${day}–${ed}, ${y}`;
+    if (y === ey) return `${MONTHS[m]} ${day} – ${MONTHS[em]} ${ed}, ${y}`;
+    return `${MONTHS[m]} ${day}, ${y} – ${MONTHS[em]} ${ed}, ${ey}`;
+  }
+
+  /* The comparison names the previous period rather than saying "previous
+     month": May 2026 reads "vs. April". */
+  function fmtPreviousPeriod(iso: string, unit: string): string {
+    const prev = parseISO(iso);
+    if (unit === 'year') { prev.setUTCFullYear(prev.getUTCFullYear() - 1); return String(prev.getUTCFullYear()); }
+    if (unit === 'month') { prev.setUTCMonth(prev.getUTCMonth() - 1); return MONTHS[prev.getUTCMonth()]; }
+    if (unit === 'day') {
+      prev.setUTCDate(prev.getUTCDate() - 1);
+      return `${MONTHS[prev.getUTCMonth()]} ${prev.getUTCDate()}, ${prev.getUTCFullYear()}`;
+    }
+    prev.setUTCDate(prev.getUTCDate() - 7);
+    return fmtPeriod(toISO(prev), 'week');
+  }
+
+  /* The y axis is picked with ECharts' interval algorithm at splitNumber 5,
+     which is why it reads 0 / 50,000 / ... / 250,000 rather than fifths of
+     the maximum. */
+  function niceTicks(max: number) {
+    if (!(max > 0)) return { ticks: [0], niceMax: 1 };
+    const raw = max / 5;
+    const exp = Math.floor(Math.log(raw) / Math.LN10);
+    const f = raw / Math.pow(10, exp);
+    const nf = f < 1.5 ? 1 : f < 2.5 ? 2 : f < 4 ? 3 : f < 7 ? 5 : 10;
+    const interval = nf * Math.pow(10, exp);
+    const niceMax = Math.ceil(max / interval) * interval;
+    const ticks: number[] = [];
+    for (let t = 0; t <= niceMax + interval * 1e-9; t += interval) ticks.push(Math.round(t));
+    return { ticks, niceMax };
+  }
 
   document.querySelectorAll<HTMLElement>('[data-pdash]').forEach((root) => {
     const raw = root.querySelector<HTMLScriptElement>('[data-pdash-data]')?.textContent;
@@ -223,117 +366,153 @@ const UNITS = [
     const data: Data = JSON.parse(raw);
 
     const q = <T extends HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
-    const state = { unit: 'month', plan: 'all' as string };
+    const state = { unit: 'month', plan: null as string | null };
+    const planKey = () => state.plan ?? 'all';
 
-    // ---- rendering ---------------------------------------------------------
-    const money = (n: number) =>
-      n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(1)}M` : `$${Math.round(n / 1000)}K`;
+    // ---- scale the fixed canvas into its column --------------------------
+    const wrap = root.parentElement!;
+    const fit = () => {
+      const w = wrap.clientWidth;
+      if (w) root.style.setProperty('--pdash-scale', String(w / DESIGN_W));
+    };
+    fit();
+    new ResizeObserver(fit).observe(wrap);
+
+    // ---- donut -----------------------------------------------------------
+    const polar = (cx: number, cy: number, r: number, deg: number) => {
+      const a = (deg * Math.PI) / 180;
+      return [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+    };
+    function arc(cx: number, cy: number, R: number, r: number, a1: number, a2: number) {
+      const o1 = polar(cx, cy, R, a1), o2 = polar(cx, cy, R, a2);
+      const i2 = polar(cx, cy, r, a2), i1 = polar(cx, cy, r, a1);
+      const large = a2 - a1 > 180 ? 1 : 0;
+      return `M${o1[0].toFixed(2)},${o1[1].toFixed(2)} A${R},${R} 0 ${large} 1 ${o2[0].toFixed(2)},${o2[1].toFixed(2)}` +
+             ` L${i2[0].toFixed(2)},${i2[1].toFixed(2)} A${r},${r} 0 ${large} 0 ${i1[0].toFixed(2)},${i1[1].toFixed(2)} Z`;
+    }
 
     function renderPie() {
-      const svg = q<SVGSVGElement>('[data-pie]');
-      const legend = q('[data-pie-legend]');
-      const shown = state.plan === 'all' ? Object.keys(SHARES) : [state.plan];
-      const sum = shown.reduce((a, k) => a + SHARES[k], 0);
+      const svg = q<HTMLElement>('[data-pie]');
+      const cx = 100, cy = 100, R = 82, r = 52;
+      const slices = state.plan ? PLAN_BASE.filter((s) => s.name === state.plan) : PLAN_BASE.slice();
+      const total = slices.reduce((s, d) => s + d.value, 0);
 
-      legend.innerHTML = shown
-        .map((k) => `<li><i style="background:${COLOURS[k]}"></i><b>${k}</b><span>${((SHARES[k] / sum) * 100).toFixed(2)}%</span></li>`)
-        .join('');
+      /* A single slice is a full ring, which no single arc can draw. */
+      const shape = slices.length === 1
+        ? `<circle cx="${cx}" cy="${cy}" r="${(R + r) / 2}" fill="none" stroke="${slices[0].colour}" stroke-width="${R - r}"/>`
+        : slices.map((d, i, all) => {
+            const before = all.slice(0, i).reduce((s, x) => s + x.value, 0);
+            const a1 = (before / total) * 360;
+            const a2 = a1 + (d.value / total) * 360;
+            return `<path d="${arc(cx, cy, R, r, a1, a2)}" fill="${d.colour}" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>`;
+          }).join('');
 
-      const R = 62, r = 38, cx = 80, cy = 80;
-      let a0 = -Math.PI / 2;
-      svg.innerHTML = shown
-        .map((k) => {
-          const frac = SHARES[k] / sum;
-          const a1 = a0 + frac * Math.PI * 2;
-          const large = frac > 0.5 ? 1 : 0;
-          const pt = (ang: number, rad: number) => `${cx + Math.cos(ang) * rad} ${cy + Math.sin(ang) * rad}`;
-          // A near-full ring cannot be drawn as one arc; nudge it closed.
-          const end = frac > 0.999 ? a1 - 0.001 : a1;
-          const d = `M ${pt(a0, R)} A ${R} ${R} 0 ${large} 1 ${pt(end, R)} L ${pt(end, r)} A ${r} ${r} 0 ${large} 0 ${pt(a0, r)} Z`;
-          a0 = a1;
-          return `<path d="${d}" fill="${COLOURS[k]}" />`;
-        })
-        .join('');
+      svg.innerHTML = shape +
+        `<text x="${cx}" y="${cy + 2}" text-anchor="middle" class="pdash__pie-value">${compactCurrency(total)}</text>` +
+        `<text x="${cx}" y="${cy + 22}" text-anchor="middle" class="pdash__pie-label">Total</text>`;
 
-      const share = shown.reduce((a, k) => a + SHARES[k], 0) / 100;
-      q('[data-pie-total]').textContent = money(TOTAL * share);
-    }
-
-    function renderTrend() {
-      const t = data.trend[state.unit]?.[state.plan];
-      if (!t) return;
-      q('[data-trend-value]').textContent = t.v.toLocaleString('en-US');
-
-      const d = new Date(t.d);
-      const period =
-        state.unit === 'year' ? String(d.getFullYear())
-        : state.unit === 'month' ? d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-        : d.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-      q('[data-trend-period]').textContent = period;
-
-      const prev = t.p || 0;
-      const pct = prev ? ((t.v - prev) / prev) * 100 : 0;
-      const dir = pct >= 0 ? 'up' : 'down';
-      const prevLabel =
-        state.unit === 'year' ? String(d.getFullYear() - 1) : `previous ${state.unit}`;
-      q('[data-trend-compare]').innerHTML =
-        `<b data-dir="${dir}">${dir === 'up' ? '↑' : '↓'} ${Math.abs(pct).toFixed(2)}%</b> vs. ${prevLabel}`;
-    }
-
-    function niceMax(v: number) {
-      const mag = Math.pow(10, Math.floor(Math.log10(v || 1)));
-      return Math.ceil(v / mag) * mag;
-    }
-
-    function renderBar() {
-      const svg = q<SVGSVGElement>('[data-bar]');
-      const series = data.bar[state.unit]?.[state.plan] ?? [];
-      const labels =
-        state.unit === 'year' ? data.barYears[state.plan] ?? []
-        : state.unit === 'month' ? data.barMonths[state.plan] ?? []
-        : [];
-
-      const W = svg.clientWidth || 640, H = 150;
-      const padL = 54, padB = 20, padT = 6;
-      const max = niceMax(Math.max(...series, 1));
-      const plotH = H - padB - padT;
-      const bw = (W - padL) / Math.max(series.length, 1);
-
-      const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(max * f));
-      const grid = ticks
-        .map((t) => {
-          const y = padT + plotH - (t / max) * plotH;
-          return `<line x1="${padL}" x2="${W}" y1="${y}" y2="${y}" stroke="#e2e4e9"/>` +
-                 `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#8d93a5">$${t.toLocaleString('en-US')}</text>`;
-        })
-        .join('');
-
-      const bars = series
-        .map((v, i) => {
-          const h = (v / max) * plotH;
-          return `<rect x="${padL + i * bw + bw * 0.12}" y="${padT + plotH - h}" width="${Math.max(bw * 0.76, 1)}" height="${h}" fill="#509ee3"/>`;
-        })
-        .join('');
-
-      // Thin the axis labels so they never collide.
-      const step = Math.max(1, Math.ceil(labels.length / 7));
-      const axis = labels
-        .map((l, i) =>
-          i % step
-            ? ''
-            : `<text x="${padL + i * bw + bw / 2}" y="${H - 6}" text-anchor="middle" font-size="9" fill="#8d93a5">${
-                state.unit === 'month' ? new Date(l + '-01').toLocaleDateString('en-US', { month: 'short', year: '2-digit' }) : l
-              }</text>`
+      q('[data-pie-legend]').innerHTML = slices
+        .map((d) =>
+          `<span class="pdash__name"><span class="pdash__dot" style="background:${d.colour}"></span>${d.name}</span>` +
+          `<span class="pdash__pct">${pctStr((d.value / total) * 100)}</span>`
         )
         .join('');
-
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      svg.innerHTML = grid + bars + axis;
     }
 
-    const renderAll = () => { renderPie(); renderTrend(); renderBar(); };
+    // ---- trend -----------------------------------------------------------
+    function renderTrend() {
+      const t = data.trend[state.unit]?.[planKey()];
+      if (!t) return;
+      q('[data-trend-value]').textContent = t.v.toLocaleString('en-US');
+      q('[data-trend-period]').textContent = fmtPeriod(t.d, state.unit);
 
-    // ---- filter wiring -----------------------------------------------------
+      const cmp = q('[data-trend-compare]');
+      if (t.p == null) { cmp.innerHTML = ''; return; }
+      const vs = `<span class="pdash__vs">vs. ${fmtPreviousPeriod(t.d, state.unit)}</span>`;
+      if (t.v === t.p) {
+        cmp.innerHTML = `<span class="pdash__delta" data-dir="flat">No change</span>${vs}`;
+        return;
+      }
+      const up = t.v > t.p;
+      const pct = Math.abs((t.v - t.p) / t.p) * 100;
+      cmp.innerHTML =
+        `<span class="pdash__delta" data-dir="${up ? 'up' : 'down'}"><span class="pdash__arr">${up ? '↑' : '↓'}</span>${pct.toFixed(2)}%</span>${vs}`;
+    }
+
+    // ---- bar -------------------------------------------------------------
+    function renderBar() {
+      const svg = q<HTMLElement>('[data-bar]');
+      const values = data.bar[state.unit]?.[planKey()] ?? [];
+      const n = values.length;
+
+      const W = q('[data-bar-wrap]').clientWidth || 554, H = 280;
+      const mLeft = 78, mRight = 16, mTop = 12, mBottom = 34;
+      const innerW = W - mLeft - mRight;
+      const innerH = H - mTop - mBottom;
+      const slot = n ? innerW / n : innerW;
+      const nice = niceTicks(n ? Math.max(...values) : 0);
+      const y = (v: number) => mTop + innerH - (v / nice.niceMax) * innerH;
+
+      const grid = nice.ticks
+        .map((tk) => {
+          const yy = y(tk);
+          return `<line x1="${mLeft}" x2="${mLeft + innerW}" y1="${yy}" y2="${yy}" stroke="${tk === 0 ? '#d7d7da' : '#ededed'}" stroke-width="1"/>` +
+                 `<text x="${mLeft - 10}" y="${yy + 4}" text-anchor="end" class="pdash__axis-label">${fmtY(tk)}</text>`;
+        })
+        .join('');
+
+      const barW = slot * 0.72;
+      const bars = values
+        .map((v, i) => {
+          const bx = mLeft + i * slot + (slot - barW) / 2, yTop = y(v);
+          return `<rect x="${bx.toFixed(2)}" y="${yTop.toFixed(2)}" width="${Math.max(0.6, barW).toFixed(2)}" height="${Math.max(0, mTop + innerH - yTop).toFixed(2)}" fill="#509ee3"/>`;
+        })
+        .join('');
+
+      /* The x axis carries its title and nothing else -- no per-bar dates. */
+      const title = `<text x="${mLeft + innerW / 2}" y="${H - 8}" text-anchor="middle" class="pdash__x-title">Date Received</text>`;
+
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.setAttribute('width', String(W));
+      svg.setAttribute('height', String(H));
+      svg.innerHTML = grid + bars + title;
+    }
+
+    // ---- pills -----------------------------------------------------------
+    function renderTimePill() {
+      q('[data-time-value]').textContent = state.unit.charAt(0).toUpperCase() + state.unit.slice(1);
+      root.querySelectorAll<HTMLElement>('[data-unit]').forEach((o) =>
+        o.setAttribute('aria-selected', String(o.dataset.unit === state.unit))
+      );
+      /* Month -- the default -- offers a plain clear; any other unit offers a
+         reset-to-default arrow instead. */
+      const clear = q('[data-time-clear]');
+      const isDefault = state.unit === 'month';
+      clear.innerHTML = isDefault ? ICON_X : ICON_RESET;
+      const tip = isDefault ? 'Clear' : 'Reset filter to default state';
+      clear.setAttribute('title', tip);
+      clear.setAttribute('aria-label', tip);
+    }
+
+    function renderPlanPill() {
+      const pill = q('[data-pill="plan"]');
+      const body = q('[data-plan-body]');
+      if (state.plan) {
+        pill.classList.remove('pdash__pill--unset');
+        body.innerHTML =
+          `<span class="pdash__pill-name">Plan:</span> <span class="pdash__pill-value">${state.plan}</span>` +
+          `<span class="pdash__clear" data-plan-clear role="button" tabindex="0" aria-label="Clear">${ICON_X}</span>`;
+      } else {
+        pill.classList.add('pdash__pill--unset');
+        body.innerHTML = `<span class="pdash__plan-label">Plan</span>${ICON_CHEV}`;
+      }
+      root.querySelectorAll<HTMLElement>('[data-plan]').forEach((b) => (b.dataset.on = String(b.dataset.plan === state.plan)));
+      q<HTMLButtonElement>('[data-plan-add]').disabled = !state.plan;
+    }
+
+    const renderAll = () => { renderPie(); renderTrend(); renderBar(); renderTimePill(); renderPlanPill(); };
+
+    // ---- filter wiring ---------------------------------------------------
     const closeAll = () => {
       root.querySelectorAll<HTMLElement>('[data-dd]').forEach((d) => (d.hidden = true));
       root.querySelectorAll<HTMLElement>('[data-pill]').forEach((p) => p.setAttribute('aria-expanded', 'false'));
@@ -348,51 +527,31 @@ const UNITS = [
       pill.setAttribute('aria-expanded', String(!open));
     };
 
+    const setUnit = (unit: string) => { state.unit = unit; renderAll(); };
+    const setPlan = (plan: string | null) => { state.plan = plan; renderAll(); };
+
     root.querySelectorAll<HTMLElement>('[data-pill]').forEach((pill) =>
       pill.addEventListener('click', (e) => {
-        if ((e.target as HTMLElement).closest('[data-time-clear]')) return;
+        const target = e.target as HTMLElement;
+        if (target.closest('[data-time-clear]')) { stopDemo(); setUnit('month'); return; }
+        if (target.closest('[data-plan-clear]')) { stopDemo(); closeAll(); setPlan(null); return; }
         stopDemo();
         toggle(pill.dataset.pill!);
       })
     );
 
-    const setUnit = (unit: string, label: string) => {
-      state.unit = unit;
-      q('[data-time-value]').textContent = label;
-      root.querySelectorAll<HTMLElement>('[data-unit]').forEach((o) =>
-        o.setAttribute('aria-selected', String(o.dataset.unit === unit))
-      );
-      q('[data-pill="time"]').dataset.dirty = String(unit !== 'month');
-      renderAll();
-    };
-
     root.querySelectorAll<HTMLElement>('[data-unit]').forEach((opt) => {
-      const pick = () => { stopDemo(); setUnit(opt.dataset.unit!, opt.textContent!.trim()); closeAll(); };
+      const pick = () => { stopDemo(); setUnit(opt.dataset.unit!); closeAll(); };
       opt.addEventListener('click', pick);
       opt.addEventListener('keydown', (e) => {
         if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') { e.preventDefault(); pick(); }
       });
     });
 
-    q('[data-time-clear]').addEventListener('click', (e) => { e.stopPropagation(); stopDemo(); setUnit('month', 'Month'); });
-
-    const setPlan = (plan: string) => {
-      state.plan = plan;
-      const body = q('[data-plan-body]');
-      body.innerHTML = plan === 'all'
-        ? '<span class="pdash__pill-name">Plan</span>'
-        : `<span class="pdash__pill-name">Plan is</span> <span class="pdash__pill-value">${plan}</span>`;
-      root.querySelectorAll<HTMLElement>('[data-plan]').forEach((b) =>
-        (b.dataset.on = String(b.dataset.plan === plan))
-      );
-      q<HTMLButtonElement>('[data-plan-add]').disabled = plan === 'all';
-      renderAll();
-    };
-
     root.querySelectorAll<HTMLElement>('[data-plan]').forEach((btn) =>
       btn.addEventListener('click', () => {
         stopDemo();
-        setPlan(state.plan === btn.dataset.plan ? 'all' : btn.dataset.plan!);
+        setPlan(state.plan === btn.dataset.plan ? null : btn.dataset.plan!);
       })
     );
 
@@ -407,9 +566,8 @@ const UNITS = [
 
     document.addEventListener('click', (e) => { if (!root.contains(e.target as Node)) closeAll(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
-    window.addEventListener('resize', renderBar);
 
-    // ---- idle demonstration -------------------------------------------------
+    // ---- idle demonstration ----------------------------------------------
     // The original drives its own controls on a loop so the panel is never
     // static. Stops for good on the first real interaction.
     const cursor = q('[data-cursor]');
@@ -424,11 +582,15 @@ const UNITS = [
 
     const sleep = (ms: number) => new Promise<void>((r) => { demoTimer = window.setTimeout(r, ms); });
 
+    /* The canvas is scaled, so the cursor is placed in unscaled canvas
+       coordinates -- it is a child of the same transformed element. */
     function moveTo(el: Element) {
+      const scale = root.getBoundingClientRect().width / DESIGN_W || 1;
       const a = root.getBoundingClientRect(), b = el.getBoundingClientRect();
       cursor.dataset.on = 'true';
       cursor.style.transition = 'translate 700ms cubic-bezier(.4,0,.2,1), opacity 200ms';
-      cursor.style.translate = `${b.left - a.left + b.width / 2}px ${b.top - a.top + b.height / 2}px`;
+      cursor.style.translate =
+        `${(b.left - a.left + b.width / 2) / scale}px ${(b.top - a.top + b.height / 2) / scale}px`;
     }
 
     async function runDemo() {
@@ -437,11 +599,9 @@ const UNITS = [
         ['[data-plan="Business"]', () => setPlan('Business')],
         ['[data-plan-add]', () => closeAll()],
         ['[data-pill="time"]', () => toggle('time')],
-        ['[data-unit="year"]', () => { setUnit('year', 'Year'); closeAll(); }],
-        ['[data-time-clear]', () => setUnit('month', 'Month')],
-        ['[data-pill="plan"]', () => toggle('plan')],
-        ['[data-plan="Business"]', () => setPlan('all')],
-        ['[data-plan-add]', () => closeAll()],
+        ['[data-unit="year"]', () => { setUnit('year'); closeAll(); }],
+        ['[data-time-clear]', () => setUnit('month')],
+        ['[data-plan-clear]', () => setPlan(null)],
       ];
 
       while (demoOn) {
@@ -460,10 +620,9 @@ const UNITS = [
       }
     }
 
-    // Only run while the panel is on screen.
     renderAll();
-    setPlan('all');
 
+    // Only run while the panel is on screen.
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting && demoOn && !demoTimer) runDemo();
