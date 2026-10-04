@@ -31,24 +31,52 @@ const YEARS = [
   { year: 2026, v: [ 62, 18, 30, 20, 32] },
 ];
 
-const AX_W = 720, AX_H = 210, PAD_L = 42, PAD_B = 26;
-const scale = (v: number) => ((AX_H - PAD_B) * v) / 400;
-const bandW = (AX_W - PAD_L) / YEARS.length;
-const barW = bandW * 0.56;
+/*
+ * New Accounts by Source, drawn 1:1 in a 494x162 viewBox as the original does.
+ * Measured off it: baseline y=132 with gridlines every 30 up to 400, value
+ * labels at x=26 in 11px, year labels at y=152 in 12px on a 75.2 pitch, and
+ * bars 49.72 wide centred on each year.
+ */
+const AX = { w: 494, h: 162, base: 132, left: 34, right: 486, step: 30, barW: 49.72, pitch: 75.2, x0: 72 };
+const scale = (v: number) => (v / 100) * AX.step;
 
-// Payments received per quarter by plan — a denser series, as on the original.
+/*
+ * Payments received per quarter by plan.
+ *
+ * Drawn 1:1 in a 764x300 viewBox, which is what the original does -- its svg
+ * is 764x300 and its viewBox is the same, so nothing scales. This used to be a
+ * 960x170 box stretched to fit with `preserveAspectRatio="none"`, which pulled
+ * it 0.80 across and 1.73 down. Non-uniform scaling distorts the text as well
+ * as the bars, which is why the axis numbers read as stretched.
+ *
+ * Measured off the original: baseline y=270, gridlines every 51.6 up from it
+ * between x=52 and x=754, value labels at x=44 in 11px, month labels at y=290
+ * in 12px, and 72 bars -- monthly over six years, not quarterly -- 7.8 wide on
+ * a 9.75 pitch, stacked business, premium, basic from the baseline up.
+ */
 const PLANS = [
   { name: 'Basic',    color: '#87BCEC' },
   { name: 'Premium',  color: '#EF8C8C' },
   { name: 'Business', color: '#227FD2' },
 ];
-const quarters = Array.from({ length: 48 }, (_, i) => {
-  const cycle = i % 8;
-  const growth = 1 + Math.floor(i / 8) * 0.22;
-  const basic = (14 + cycle * 11) * growth;
-  return { basic, premium: basic * 0.06, business: basic * (cycle > 5 ? 0.62 : 0.3) };
+
+const CH = { w: 764, h: 300, base: 270, left: 52, right: 754, step: 51.6, barW: 7.8, pitch: 9.75 };
+
+/* Six years of months. The shape is the original's: a yearly cycle that peaks
+   late, climbing year on year, with business taking a bigger share as it goes. */
+const months = Array.from({ length: 72 }, (_, i) => {
+  const m = i % 12;
+  const year = Math.floor(i / 12);
+  const growth = 1 + year * 0.42;
+  const season = 0.35 + Math.pow(m / 11, 2.1) * 1.9;
+  const basic = 9000 * season * growth;
+  return {
+    basic,
+    premium: basic * 0.07,
+    business: basic * (0.22 + year * 0.07) * (m > 8 ? 1.7 : 1),
+  };
 });
-const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
+const maxQ = 250000;
 ---
 
 <div class="hero-demo-panel" data-hero-dash>
@@ -78,30 +106,32 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
               <span class="hd-legend-item"><span class="hd-dot" style={`background:${s.color}`}></span>{s.name}</span>
             ))}
           </div>
-          <div class="hd-bar-wrap">
-            <svg viewBox={`0 0 ${AX_W} ${AX_H}`} preserveAspectRatio="none" role="img"
+          <div class="hd-bar-wrap hd-bar-wrap--acc">
+            <svg viewBox={`0 0 ${AX.w} ${AX.h}`} role="img"
                  aria-label="Stacked bar chart of accounts added per year by source">
               {[0, 100, 200, 300, 400].map((t) => {
-                const y = AX_H - PAD_B - scale(t);
+                const y = AX.base - scale(t);
                 return (
                   <>
-                    <line x1={PAD_L} x2={AX_W} y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" vector-effect="non-scaling-stroke" />
-                    <text x={PAD_L - 8} y={y + 4} text-anchor="end" font-size="12" fill="#8d93a5">{t}</text>
+                    <line x1={AX.left} x2={AX.right} y1={y} y2={y}
+                          stroke={t === 0 ? '#e3e7eb' : '#eef0f2'} stroke-width="1"
+                          vector-effect="non-scaling-stroke" />
+                    <text x="26" y={y + 4} text-anchor="end" font-size="11" fill="#5a6072">{t}</text>
                   </>
                 );
               })}
               {YEARS.map((row, i) => {
                 let acc = 0;
-                const x = PAD_L + i * bandW + (bandW - barW) / 2;
+                const x = AX.x0 + i * AX.pitch - AX.barW / 2;
                 return (
                   <>
                     {row.v.map((v, si) => {
                       const h = scale(v);
-                      const y = AX_H - PAD_B - scale(acc) - h;
+                      const y = AX.base - scale(acc) - h;
                       acc += v;
-                      return <rect x={x} y={y} width={barW} height={h} fill={SOURCES[si].color} class="hd-bar" style={`--d:${i * 70}ms`} />;
+                      return <rect x={x} y={y} width={AX.barW} height={h} fill={SOURCES[si].color} class="hd-bar" style={`--d:${i * 70}ms`} />;
                     })}
-                    <text x={x + barW / 2} y={AX_H - 8} text-anchor="middle" font-size="12" fill="#8d93a5">{row.year}</text>
+                    <text x={AX.x0 + i * AX.pitch} y="152" text-anchor="middle" font-size="12" fill="#5a6072">{row.year}</text>
                   </>
                 );
               })}
@@ -119,33 +149,37 @@ const maxQ = Math.max(...quarters.map((q) => q.basic + q.premium + q.business));
               <span class="hd-legend-item"><span class="hd-dot" style={`background:${p.color}`}></span>{p.name}</span>
             ))}
           </div>
-          <div class="hd-bar-wrap">
-            <svg viewBox="0 0 960 170" preserveAspectRatio="none" role="img"
+          <div class="hd-bar-wrap hd-bar-wrap--pay">
+            <svg viewBox={`0 0 ${CH.w} ${CH.h}`} role="img"
                  aria-label="Stacked bar chart of payments received per quarter by plan">
               {[0, 1, 2, 3, 4, 5].map((t) => {
-                const y = 150 - (t / 5) * 140;
-                return <line x1="56" x2="960" y1={y} y2={y} stroke="#e2e4e9" stroke-width="1" vector-effect="non-scaling-stroke" />;
+                const y = CH.base - t * CH.step;
+                return <line x1={CH.left} x2={CH.right} y1={y} y2={y}
+                             stroke={t === 0 ? '#e3e7eb' : '#eef0f2'} stroke-width="1"
+                             vector-effect="non-scaling-stroke" />;
               })}
-              {['250,000','200,000','150,000','100,000','50,000','0'].map((lbl, i) => (
-                <text x="48" y={150 - ((5 - i) / 5) * 140 + 4} text-anchor="end" font-size="11" fill="#8d93a5">{lbl}</text>
+              {[0, 1, 2, 3, 4, 5].map((t) => (
+                <text x="44" y={CH.base - t * CH.step + 4} text-anchor="end"
+                      font-size="11" fill="#5a6072">
+                  {t === 0 ? '0' : (t * 50000).toLocaleString('en-US')}
+                </text>
               ))}
-              {quarters.map((q, i) => {
-                const w = (960 - 56) / quarters.length;
-                const x = 56 + i * w;
-                const bw = w * 0.72;
-                const hb = (q.basic / maxQ) * 140;
-                const hp = (q.premium / maxQ) * 140;
-                const hu = (q.business / maxQ) * 140;
+              {months.map((q, i) => {
+                const x = 52.98 + i * CH.pitch;
+                const u = (v: number) => (v / maxQ) * (CH.step * 5);
+                const hu = u(q.business);
+                const hp = u(q.premium);
+                const hb = u(q.basic);
                 return (
                   <>
-                    <rect x={x} y={150 - hu} width={bw} height={hu} fill="#227FD2" class="hd-bar" style={`--d:${i * 9}ms`} />
-                    <rect x={x} y={150 - hu - hp} width={bw} height={hp} fill="#EF8C8C" class="hd-bar" style={`--d:${i * 9}ms`} />
-                    <rect x={x} y={150 - hu - hp - hb} width={bw} height={hb} fill="#87BCEC" class="hd-bar" style={`--d:${i * 9}ms`} />
+                    <rect x={x} y={CH.base - hu} width={CH.barW} height={hu} fill="#227FD2" class="hd-bar" style={`--d:${i * 6}ms`} />
+                    <rect x={x} y={CH.base - hu - hp} width={CH.barW} height={hp} fill="#EF8C8C" class="hd-bar" style={`--d:${i * 6}ms`} />
+                    <rect x={x} y={CH.base - hu - hp - hb} width={CH.barW} height={hb} fill="#87BCEC" class="hd-bar" style={`--d:${i * 6}ms`} />
                   </>
                 );
               })}
               {[0, 1, 2, 3, 4, 5].map((i) => (
-                <text x={56 + i * 150 + 30} y="166" text-anchor="middle" font-size="11" fill="#8d93a5">
+                <text x={57 + i * 117} y="290" text-anchor="middle" font-size="12" fill="#5a6072">
                   Jan {2021 + i}
                 </text>
               ))}
