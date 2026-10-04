@@ -1,5 +1,6 @@
 ---
 import { getPosts } from '../lib/strapi';
+import Logo from './Logo.astro';
 
 // The original's megamenu carries a live "Recent Blog Posts" column. Resolved
 // at build time, so it costs nothing at runtime.
@@ -50,12 +51,7 @@ const resources: [string, string, string, string][] = [
       of where the original has it. */}
   <nav class="nav-row" aria-label="Main">
     <a href="/" class="nav-logo" aria-label="Metabase home">
-      <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
-        <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
-        <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
-        <circle cx="5" cy="19" r="2.6"/><circle cx="12" cy="20" r="2.2" opacity=".75"/><circle cx="19" cy="19" r="2.6"/>
-      </svg>
-      <span class="nav-logo-word">Metabase</span>
+      <Logo width={129} />
     </a>
 
     <ul class="nav-menu hidden lg:flex" data-menu-root>
