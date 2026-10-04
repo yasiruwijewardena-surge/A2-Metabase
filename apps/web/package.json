@@ -17,7 +17,8 @@
     "metrics": "node scripts/page-metrics.mjs",
     "assets": "node scripts/page-assets.mjs",
     "psi": "node scripts/psi.mjs",
-    "interactions": "node scripts/page-interactions.mjs"
+    "interactions": "node scripts/page-interactions.mjs",
+    "census": "node scripts/page-census.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
