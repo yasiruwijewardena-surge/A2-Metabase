@@ -8,10 +8,15 @@ const recent = (await getPosts()).slice(0, 5);
 
 /*
  * Every panel was measured separately: they do not share one anatomy. Product
- * and Pricing are cards with the icon on a tile above the label; Docs puts its
- * card icon beside the label and adds a tinted two-column section below;
+ * and Pricing are cards with the icon on a tile above the label;
  * Features is two columns of icon links over a button strip; Resources is two
  * columns of title-and-description links. Widths are per panel too.
+ *
+ * Only destinations this build actually serves appear here. The original's
+ * Docs menu, its Product footer strip (data sources, security, cloud) and a
+ * few feature entries point at pages that were never built, so they are not
+ * drawn rather than drawn dead -- the information architecture is still
+ * recorded in ia-paths.json and reachable by URL.
  */
 import NavIcon from './NavIcon.astro';
 
@@ -22,12 +27,10 @@ const features: [string, string, string, string?][] = [
   ['Query builder', '/features/query-builder', 'query'],
   ['Data segregation', '/features/data-segregation', 'segregation'],
   ['Usage analytics', '/features/usage-analytics', 'usage'],
-  ['Embedded analytics SDK', '/product/embedded-analytics-sdk', 'sdk'],
   ['White-label analytics', '/features/white-label-analytics', 'whitelabel'],
   ['Drill-through', '/features/drill-through', 'drill'],
   ['SQL editor', '/features/sql-editor', 'sql'],
   ['Permissions', '/features/permissions', 'permissions'],
-  ['CSV upload', '/product/csv-uploads', 'csv'],
 ];
 
 /*
@@ -81,11 +84,6 @@ const resources: [string, string, string, string][] = [
               <span class="nav-card-sub">Fast, flexible customer-facing analytics</span>
             </a>
           </div>
-          <div class="nav-foot">
-            {[['Data sources', '/data-sources', 'data'], ['Security', '/security', 'permissions'], ['Cloud', '/cloud', 'cloud']].map(([t, href, icon]) => (
-              <a href={href}><NavIcon name={icon} size={24} /> {t}</a>
-            ))}
-          </div>
         </div>
       </li>
 
@@ -107,51 +105,7 @@ const resources: [string, string, string, string][] = [
             ))}
           </div>
           <div class="nav-foot">
-            <a href="/releases"><NavIcon name="news" size={24} /> What’s new</a>
             <a href="/roadmap"><NavIcon name="roadmap" size={24} /> Roadmap</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="relative">
-        <button type="button" class="nav-trigger" aria-expanded="false" data-menu="docs">Docs<svg class="nav-chevron" width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg></button>
-        {/* Docs: cards with the icon beside the label, then a tinted section of
-            two columns — illustrated rows on the left, ruled links on the
-            right. 742 wide. */}
-        <div class="nav-panel" style="width:742px" data-panel="docs">
-          <div class="nav-cards">
-            {[['Documentation', '/docs', 'docs', 'The Metabase manual'],
-              ['Learn', '/learn', 'learn', 'Guides and tutorials']].map(([t, href, icon, sub]) => (
-              <a href={href} class="nav-card nav-card--row">
-                <span class="nav-card-ico" aria-hidden="true"><NavIcon name={icon} /></span>
-                <span>
-                  <span class="nav-card-title">{t}</span>
-                  <span class="nav-card-sub">{sub}</span>
-                </span>
-              </a>
-            ))}
-          </div>
-          <div class="nav-sub-section">
-            <div class="nav-col-wide">
-              <span class="nav-eyebrow">Getting started</span>
-              {[['Querying and dashboards', 'Everyone exploring and analyzing data', 'catQuerying'],
-                ['Embedding', 'Developers building in-product analytics', 'embed'],
-                ['Administration', "People running their company's instance", 'gear']].map(([label, desc, icon]) => (
-                <a href="/learn" class="nav-rich">
-                  <span class="nav-rich-ico" aria-hidden="true"><NavIcon name={icon} size={54} /></span>
-                  <span>
-                    <span class="nav-rich-label">{label}</span>
-                    <span class="nav-rich-desc">{desc}</span>
-                  </span>
-                </a>
-              ))}
-            </div>
-            <div class="nav-col-narrow">
-              <span class="nav-eyebrow">Guides</span>
-              {['Installing Metabase', 'Adding a database', 'Asking questions', 'Creating a dashboard', 'Solving common problems'].map((t) => (
-                <a href="/learn" class="nav-ruled">{t}</a>
-              ))}
-            </div>
           </div>
         </div>
       </li>
@@ -224,8 +178,8 @@ const resources: [string, string, string, string][] = [
           <path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.3-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.3-.52-1.48.11-3.08 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.6.23 2.78.12 3.07.74.82 1.18 1.85 1.18 3.11 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/>
         </svg>
       </a>
-      <a href="/login" class="btn-secondary hidden sm:inline-flex">Log in</a>
-      <a href="/start" class="btn-primary">Get started</a>
+      <a href="/pricing" class="btn-secondary hidden sm:inline-flex">Log in</a>
+      <a href="/pricing" class="btn-primary">Get started</a>
       <button type="button" class="lg:hidden" data-mobile-toggle aria-expanded="false" aria-label="Open menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 6h18M3 12h18M3 18h18"/>
@@ -236,7 +190,7 @@ const resources: [string, string, string, string][] = [
 
   <div class="container-mb hidden border-t border-(--color-line) py-4 lg:!hidden" data-mobile-panel hidden>
     <ul class="space-y-2">
-      {[['Product','/product/business-intelligence'],['Docs','/docs'],['Blog','/blog'],['Customers','/case-studies'],['Love','/love'],['Glossary','/glossary'],['Pricing','/pricing']].map(([l,h]) => (
+      {[['Product','/product/business-intelligence'],['Blog','/blog'],['Customers','/case-studies'],['Love','/love'],['Glossary','/glossary'],['Pricing','/pricing']].map(([l,h]) => (
         <li><a href={h} class="block py-1 font-bold text-(--color-ink)">{l}</a></li>
       ))}
     </ul>

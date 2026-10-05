@@ -1,21 +1,25 @@
 ---
 /*
- * Site footer, measured off the original: five columns laid out
- * space-between, each holding one or two labelled groups, over a bottom bar
- * ruled off with a hairline.
+ * Site footer, measured off the original: columns laid out space-between,
+ * each holding one or two labelled groups, over a bottom bar ruled off with
+ * a hairline.
+ *
+ * Only destinations this build serves are listed. The original's Company,
+ * Support and Comparisons columns, and a number of Product and Resources
+ * entries, point at pages that were never built; they are left out rather
+ * than linked dead. The full information architecture is still recorded in
+ * ia-paths.json and those URLs still resolve if typed.
  */
-const columns: { title: string; links: [string, string][]; badge?: string; dot?: string }[][] = [
+const columns: { title: string; links: [string, string][] }[][] = [
   [
-    { title: 'Product', links: [
-      ['Watch Demo', '/demo'], ['Data Sources', '/data-sources'], ['Security', '/security'],
-      ['Cloud', '/cloud'], ['Roadmap', '/roadmap'], ["What's New", '/releases'],
-    ]},
-    { title: 'Pricing', links: [['Plans', '/pricing'], ['Open Source', '/open-source']] },
+    { title: 'Product', links: [['Roadmap', '/roadmap']] },
+    { title: 'Pricing', links: [['Plans', '/pricing']] },
   ],
   [
     { title: 'Use cases', links: [
       ['Self-Service Business Intelligence', '/product/business-intelligence'],
       ['Embedded Analytics', '/product/embedded-analytics'],
+      ['Data Studio', '/product/data-studio'],
     ]},
     { title: 'Metabase plans', links: [
       ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
@@ -27,32 +31,20 @@ const columns: { title: string; links: [string, string][]; badge?: string; dot?:
       ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
       ['Dashboards and reporting', '/features/analytics-dashboards'],
       ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
-      ['Embedded analytics SDK', '/product/embedded-analytics-sdk'],
-    ]},
-  ],
-  [
-    { title: 'Company', badge: 'Jobs', links: [
-      ['Jobs', '/jobs'], ['Privacy Policies', '/privacy'], ['Terms of Service', '/terms'],
-      ['License', '/license'], ['Brand Guidelines', '/brand'],
-    ]},
-    { title: 'Support', dot: 'Status', links: [
-      ['Documentation', '/docs'], ['Help', '/help'],
-      ['Professional Services', '/professional-services'], ['Status', '/status'],
+      ['Data segregation', '/features/data-segregation'],
+      ['Usage analytics', '/features/usage-analytics'],
+      ['White-label analytics', '/features/white-label-analytics'],
+      ['All features', '/features'],
     ]},
   ],
   [
     { title: 'Resources', links: [
-      ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Learn', '/learn'],
-      ['Community Stories', '/community-posts'], ['Partners', '/partners'],
-      ['Example Dashboards', '/dashboards'],
-    ]},
-    { title: 'Comparisons', links: [
-      ['Metabase vs. Tableau', '/vs/tableau'], ['Metabase vs. Looker', '/vs/looker'],
-      ['Metabase vs. Looker Studio', '/vs/looker-studio'], ['Metabase vs. PowerBI', '/vs/power-bi'],
-      ['Metabase vs. Superset', '/vs/superset'], ['Metabase vs. Omni', '/vs/omni'],
+      ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Events', '/events'],
+      ['Glossary', '/glossary'], ['Customer love', '/love'],
     ]},
   ],
 ];
+
 
 const social: [string, string, string][] = [
   ['YouTube', 'https://www.youtube.com/@metabasedata',
@@ -74,13 +66,7 @@ const social: [string, string, string][] = [
           {col.map((group) => (
             <div class="site-footer-group">
               <span class="site-footer-heading">{group.title}</span>
-              {group.links.map(([label, href]) => (
-                <a href={href}>
-                  {label}
-                  {group.badge === label && <span class="site-footer-badge">We're hiring!</span>}
-                  {group.dot === label && <span class="site-footer-dot" aria-hidden="true"></span>}
-                </a>
-              ))}
+              {group.links.map(([label, href]) => <a href={href}>{label}</a>)}
             </div>
           ))}
         </div>
