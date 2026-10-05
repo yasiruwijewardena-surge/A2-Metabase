@@ -1,5 +1,6 @@
 ---
-/* Artwork one side, copy the other. `reverse` swaps them; `frameTheme` is the
+/* Copy one side, artwork the other. The copy comes first, so the default
+ * is copy-left as on the original; `reverse` swaps them; `frameTheme` is the
  * tint behind the artwork. The play caption only appears on video sections. */
 import Media from './Media.astro';
 import type { SplitSection } from '../../lib/types';
@@ -9,17 +10,6 @@ const { section: s } = Astro.props;
 const theme = s.frameTheme && s.frameTheme !== 'none' ? `pp-frame--${s.frameTheme}` : '';
 ---
 <section class:list={['pp-split', 'container-mb', s.reverse && 'pp-split--reverse']}>
-  <div class="pp-split-media">
-    <div class:list={['pp-frame', theme]}>
-      <Media media={s.media} poster={s.mediaPoster} label={s.mediaLabel} width={630} height={630} />
-    </div>
-    {s.caption && (
-      <p class="pp-play-caption">
-        <svg width="15" height="18" viewBox="0 0 15 18" fill="currentColor" aria-hidden="true"><path d="M0 0l15 9L0 18z" /></svg>
-        {s.caption}
-      </p>
-    )}
-  </div>
   <div class="pp-split-copy">
     <h3 class="pp-h30">{s.heading}</h3>
     {s.lede && <p class="pp-lede">{s.lede}</p>}
@@ -27,6 +17,22 @@ const theme = s.frameTheme && s.frameTheme !== 'none' ? `pp-frame--${s.frameThem
       <ul class="pp-rich">
         {s.bullets.map((b) => <li><b>{b.title}</b>{b.body && <><br />{b.body}</>}</li>)}
       </ul>
+    )}
+  </div>
+  <div class="pp-split-media">
+    <div class:list={['pp-frame', theme]}>
+      <Media media={s.media} poster={s.mediaPoster} label={s.mediaLabel} width={630} height={630} />
+    </div>
+    {s.caption && (
+      <p class="pp-play-caption">
+        {/* A curved arrow pointing back up at the clip, not a play mark --
+            the original draws it and flips it 180deg. */}
+        <svg class="pp-play-arrow" width="15" height="18" viewBox="0 0 15 18" fill="none" aria-hidden="true">
+          <path d="M10.4163 10.2554L7.20956 16.1204L1.5 12.6445" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M6.60556 14.3929C6.60556 14.3929 5.39062 12.8742 5.39062 6.19204C5.39062 -0.49012 13.8952 1.63598 13.8952 1.63598" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        {s.caption}
+      </p>
     )}
   </div>
 </section>

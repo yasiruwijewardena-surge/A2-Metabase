@@ -1164,10 +1164,12 @@
   .pp-split-copy { flex: 0 0 632px; max-width: 100%; min-width: 0; padding-left: 72px; }
 
   .pp-play-caption {
-    display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 17px;
-    font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink-2);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin: 17px 20px 0;
+    font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink-3);
   }
   .pp-play-caption svg { display: block; flex: none; }
+  .pp-play-arrow { rotate: 180deg; translate: 0 -4px; }
 
   .pp-h30 {
     margin-bottom: 24px;
@@ -1184,9 +1186,13 @@
   }
   .pp-rich > li:last-child { margin-bottom: 0; }
   .pp-rich > li b { font-weight: 700; }
+  /* A blue tick, 20 square with the mark set to the top of the box -- the
+     original's own asset, not a bullet dot. */
   .pp-rich > li::before {
-    content: ''; position: absolute; left: 0; top: 9px;
-    width: 8px; height: 8px; border-radius: 50%; background: var(--color-brand);
+    content: ''; position: absolute; left: 0; top: 5px;
+    width: 20px; height: 20px;
+    background: url('/images/check-rounded-blue.svg') no-repeat top center;
+    background-size: 100%;
   }
 
   /* --- centred copy band ------------------------------------------------ */
