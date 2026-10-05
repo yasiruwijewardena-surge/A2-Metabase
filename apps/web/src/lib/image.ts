@@ -67,6 +67,12 @@ export function preloadStatic(href: string | null | undefined): PreloadAttrs | n
  * downloading the image twice. `imagesrcset`/`imagesizes` must mirror the <img>
  * exactly, so both come from the same helpers CldImage uses.
  */
+/** A preload for a fixed-size slot served at 1x/2x, matching a density srcset. */
+export function preloadAt(url: string | null | undefined, w: number): PreloadAttrs | null {
+  if (!url) return null;
+  return { href: at(url, w), imagesrcset: `${at(url, w)} 1x, ${at(url, w * 2)} 2x` };
+}
+
 export function preloadFor(
   url: string | null | undefined,
   widths: number[] = [400, 760, 1140],

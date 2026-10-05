@@ -551,9 +551,9 @@
           "trustLine": "Metabase is trusted by 100,000+ companies",
           "pillars": [
             {
-              "icon": "rocket",
-              "title": "Quick to set up",
-              "body": "Skip the ETL and the modelling layer to begin with. Layer in structure later."
+              "icon": "terminal",
+              "title": "Open source and scalable",
+              "body": "Run it free and self-hosted, and keep running it the same way at a thousand seats. The licence does not change under you as you grow."
             },
             {
               "icon": "cloud",
@@ -561,7 +561,7 @@
               "body": "Go hands-free on our cloud, run it on your own hardware, or air-gap it entirely."
             },
             {
-              "icon": "permissions",
+              "icon": "shield",
               "title": "Secure data sharing",
               "body": "Share a dashboard with the whole company, or one row with one customer."
             }

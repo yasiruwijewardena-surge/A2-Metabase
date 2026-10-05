@@ -11,6 +11,7 @@
 import NavIcon from '../NavIcon.astro';
 import ProductCtaRow from '../ProductCtaRow.astro';
 import ProductEyebrowIcon from './ProductEyebrowIcon.astro';
+import ProductPillarIcon from './ProductPillarIcon.astro';
 import { src as atWidth } from '../../lib/image';
 import type { HeroSection } from '../../lib/types';
 
@@ -43,10 +44,15 @@ const cta = s.ctas?.length
     {s.media?.url && (
       <picture class="pp-hero-pic">
         {s.mediaMobile?.url && (
-          <source media="(max-width: 991px)" srcset={atWidth(s.mediaMobile.url, 764)}
+          <source media="(max-width: 991px)"
+                  srcset={`${atWidth(s.mediaMobile.url, 764)} 1x, ${atWidth(s.mediaMobile.url, 1528)} 2x`}
                   width="764" height="742" />
         )}
+        {/* A fixed 998 slot, so it needs the 2x as well: the source is
+            2027 wide and asking Cloudinary for 998 alone leaves it soft on
+            every retina screen. */}
         <img class="pp-hero-img" src={atWidth(s.media.url, 998)}
+             srcset={`${atWidth(s.media.url, 998)} 1x, ${atWidth(s.media.url, 1996)} 2x`}
              alt={s.mediaLabel ?? ''} width="998" height="634"
              loading="eager" fetchpriority="high" decoding="sync" />
       </picture>
@@ -56,7 +62,7 @@ const cta = s.ctas?.length
       <ul class="pp-pillars">
         {s.pillars.map((p) => (
           <li class="pp-pillar">
-            {p.icon && <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />}
+            {p.icon && <ProductPillarIcon name={p.icon} />}
             <h2 class="pp-pillar-title">{p.title}</h2>
             {p.body && <p class="pp-pillar-body">{p.body}</p>}
           </li>

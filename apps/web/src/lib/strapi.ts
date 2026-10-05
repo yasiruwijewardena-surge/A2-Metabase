@@ -1,4 +1,4 @@
-import { preloadFor, preloadStatic } from './image';
+import { preloadFor, preloadStatic, preloadAt } from './image';
 import type {
   Author,
   CaseStudy,
@@ -330,7 +330,10 @@ export async function pagePreload(page: Page | null) {
   if (ai) return preloadStatic('/images/features/metabot-ai/hero-section-ai-poster.webp');
   /* Otherwise the LCP image is the hero's own artwork, when it has one. */
   const hero = (page?.sections ?? []).find((s) => s.__component === 'page.hero');
-  return preloadFor(hero && 'media' in hero ? hero.media?.url : undefined);
+  /* The product hero fills a fixed 998 slot at 1x/2x, so its preload has to
+     carry the same density descriptors the <img> does or the browser fetches
+     a second copy. */
+  return preloadAt(hero && 'media' in hero ? hero.media?.url : undefined, 998);
 }
 
 export const getPage = async (slug: string) =>

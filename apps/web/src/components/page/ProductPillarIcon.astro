@@ -1,0 +1,24 @@
+---
+/*
+ * The three icons under a product hero. Paths are the original's, with its
+ * hardcoded #509ee3 swapped for currentColor so the colour lives in CSS.
+ * The cloud glyph is 25 wide, the other two 24 -- the original's own sizes.
+ */
+interface Props { name?: string | null }
+const { name } = Astro.props;
+---
+{name === 'terminal' && (
+  <svg class="pp-pillar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <Fragment set:html={`<path d="M17.25 4.75H6.75C5.64543 4.75 4.75 5.64543 4.75 6.75V17.25C4.75 18.3546 5.64543 19.25 6.75 19.25H17.25C18.3546 19.25 19.25 18.3546 19.25 17.25V6.75C19.25 5.64543 18.3546 4.75 17.25 4.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M8.75 10.75L11.25 13L8.75 15.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`} />
+  </svg>
+)}
+{name === 'cloud' && (
+  <svg class="pp-pillar-icon" width="25" height="24" viewBox="0 0 25 24" fill="none" aria-hidden="true">
+    <Fragment set:html={`<path d="M5.25 8L12.5 4.75L19.75 8L12.5 11.25L5.25 8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M5.25 16L12.5 19.25L19.75 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M19.75 8V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M5.25 8V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M12.5 11.5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`} />
+  </svg>
+)}
+{name === 'shield' && (
+  <svg class="pp-pillar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <Fragment set:html={`<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.003 4.75 4.753 8s-.75 11.25 7.25 11.25S19.253 8 19.253 8l-7.25-3.25Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m9.75 12.75 1.25 1.5 3.25-4.5"/>`} />
+  </svg>
+)}
