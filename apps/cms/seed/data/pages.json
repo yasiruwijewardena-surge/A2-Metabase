@@ -2896,17 +2896,17 @@
           "stackSub": "Your data stays in your database. Metabase does not ingest it, so there is no pipeline to run and nothing to go stale between refreshes.",
           "stackPillars": [
             {
-              "icon": "data",
+              "icon": "people",
               "title": "Integrates with your database and stack",
               "body": "Metabase connects to 20+ data sources, with embedding that fits whatever framework the product already runs on."
             },
             {
-              "icon": "bi",
+              "icon": "people",
               "title": "Open source, proven reliability",
               "body": "No black boxes and no vendor lock-in, backed by a large community and a decade of production use."
             },
             {
-              "icon": "cloud",
+              "icon": "servers",
               "title": "Self-host or cloud",
               "body": "Keep control of your data and your deployment, or hand the hosting to us and stop thinking about it."
             }

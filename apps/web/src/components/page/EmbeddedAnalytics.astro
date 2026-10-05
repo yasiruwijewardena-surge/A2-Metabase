@@ -40,6 +40,7 @@
  *    a replica should do.
  */
 import NavIcon from '../NavIcon.astro';
+import ProductPillarIcon from './ProductPillarIcon.astro';
 import ProductCtaRow from '../ProductCtaRow.astro';
 import ProductQuoteCard from '../ProductQuoteCard.astro';
 import SupportQuote from '../SupportQuote.astro';
@@ -171,7 +172,7 @@ const faqs = s.faqs ?? [];
     <ul class="pp-pillars">
       {securityPillars.map((p) => (
         <li class="pp-pillar">
-          <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />
+          <ProductPillarIcon name={p.icon} />
           <h3 class="pp-pillar-title">{p.title}</h3>
           <p class="pp-pillar-body">{p.body}</p>
         </li>
@@ -236,7 +237,7 @@ const faqs = s.faqs ?? [];
       <h2 class="pp-h36">{s.tabsHeading}</h2>
       <p class="pp-band-sub">{s.tabsSub}</p>
     </div>
-    <div class="ea-tabs">
+    <div class="ea-tabs" data-tabs>
       {tabs.map((t, i) => (
         <input class="ea-tab-radio" type="radio" name="ea-tab" id={`tab-${t.anchor}`} checked={i === 0} />
       ))}
@@ -244,6 +245,9 @@ const faqs = s.faqs ?? [];
         {tabs.map((t) => (
           <label class="ea-tab" for={`tab-${t.anchor}`} data-tab={t.anchor}>
             <NavIcon name={t.icon} size={24} class="ea-tab-icon" />{t.label}
+            {/* The underline is the clock: it fills over the dwell and its
+                end is what advances the strip. */}
+            <i class="ea-tab-fill" aria-hidden="true"></i>
           </label>
         ))}
       </div>
@@ -269,7 +273,7 @@ const faqs = s.faqs ?? [];
     <ul class="pp-pillars pp-pillars--tall">
       {stackPillars.map((p) => (
         <li class="pp-pillar">
-          <NavIcon name={p.icon} size={24} class="pp-pillar-icon" />
+          <ProductPillarIcon name={p.icon} />
           <h3 class="pp-pillar-title">{p.title}</h3>
           <p class="pp-pillar-body">{p.body}</p>
         </li>
@@ -411,3 +415,56 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
   </div>
+
+<style is:global>
+  .ea-tab { position: relative; }
+  .ea-tab-fill {
+    position: absolute; left: 0; bottom: -2px; height: 2px; width: 0;
+    background: var(--color-brand); border-radius: 2px;
+  }
+  .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'] .ea-tab-fill,
+  .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'] .ea-tab-fill,
+  .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] .ea-tab-fill {
+    animation: ea-tab-fill var(--ea-dwell, 7s) linear forwards;
+  }
+  [data-tabs][data-paused='true'] .ea-tab-fill { animation-play-state: paused; }
+  @keyframes ea-tab-fill { from { width: 0; } to { width: 100%; } }
+
+  /* With the fill carrying the progress, the open tab's own border would
+     double it, so it stays transparent and the fill draws the line. */
+  .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'],
+  .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'],
+  .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] {
+    border-bottom-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ea-tab-fill { animation: none !important; }
+    .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'] .ea-tab-fill,
+    .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'] .ea-tab-fill,
+    .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] .ea-tab-fill { width: 100%; }
+  }
+</style>
+
+<script>
+  /* Advances the tab strip when the open tab's underline finishes filling.
+     Stops on the first real interaction; idles while off screen. */
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const radios = [...root.querySelectorAll<HTMLInputElement>('.ea-tab-radio')];
+    if (radios.length < 2) return;
+
+    let auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    radios.forEach((r) => r.addEventListener('change', () => { auto = false; }));
+
+    root.addEventListener('animationend', (e) => {
+      if (!auto || (e as AnimationEvent).animationName !== 'ea-tab-fill') return;
+      const i = radios.findIndex((r) => r.checked);
+      radios[(i + 1) % radios.length].checked = true;
+    });
+
+    new IntersectionObserver(
+      ([entry]) => root.setAttribute('data-paused', String(!entry.isIntersecting)),
+      { threshold: 0.3 },
+    ).observe(root);
+  });
+</script>

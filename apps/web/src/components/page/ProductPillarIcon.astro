@@ -22,3 +22,13 @@ const { name } = Astro.props;
     <Fragment set:html={`<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.003 4.75 4.753 8s-.75 11.25 7.25 11.25S19.253 8 19.253 8l-7.25-3.25Z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m9.75 12.75 1.25 1.5 3.25-4.5"/>`} />
   </svg>
 )}
+{name === 'people' && (
+  <svg class="pp-pillar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <Fragment set:html={`<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.782 19.25h7.436c.565 0 1.009-.468.896-1.021C13.804 16.7 12.79 14 9.5 14s-4.304 2.701-4.615 4.229c-.112.553.332 1.021.897 1.021ZM15.75 14c2.079 0 2.93 2.148 3.274 3.696.185.836-.49 1.554-1.347 1.554h-.927M9.5 10.25a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5ZM14.75 10.25c1.519 0 2.5-1.231 2.5-2.75s-.981-2.75-2.5-2.75"/>`} />
+  </svg>
+)}
+{name === 'servers' && (
+  <svg class="pp-pillar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <Fragment set:html={`<path d="M4.75 5.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM4.75 14.75a1 1 0 0 1 1-1h12.5a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1H5.75a1 1 0 0 1-1-1v-3.5ZM16.25 5v5M16.25 14v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`} />
+  </svg>
+)}
