@@ -1007,6 +1007,10 @@
     .pricing-spacer { display: none; }
     .pricing-card { padding: 24px; }
     .pricing-sec-title { font-size: 26px; line-height: 34px; }
+    /* Stacked, these stop being side labels and read as headings, which is
+       why the original sizes them up rather than down here -- all but the
+       deployment row, which it leaves as a label. */
+    .pricing-row:not(:first-of-type) .pricing-row-head { font-size: 20px; line-height: 28px; }
     .pricing-badges { margin-left: 0; }
   }
 }
@@ -1380,7 +1384,6 @@
   /* The second step the original takes, at 768. */
   @media (max-width: 767px) {
     .pp-h36 { font-size: 30px; line-height: 36px; }
-    .pp-h36--tall { line-height: 36px; }
     /* The -90 that tucks the hero shot under the trust line is a desktop
        number; at phone height it eats the bottom of the shot. */
     .pp-hero-img--bare { margin-bottom: 0; }
@@ -1396,6 +1399,7 @@
 @layer components {
   /* --- shared .pp-* variants this page needs ---------------------------- */
   .pp-h36--tall { line-height: 48px; }
+  @media (max-width: 991px) { .pp-h36--tall { line-height: 36px; } }
   .pp-band-sub--narrow { max-width: 400px; }
   .pp-band-sub--tight { max-width: 565px; }
   /* This page measures its headings and standfirsts at 568 and sets the
