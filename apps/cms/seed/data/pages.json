@@ -604,29 +604,39 @@
               "title": "Ask Metabot AI",
               "body": "Chat with your database to get answers in natural language, so the people who need a number can go and get it themselves.",
               "linkLabel": "Chat with your database",
-              "linkUrl": "/features/metabase-ai"
+              "linkUrl": "/features/metabase-ai",
+              "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-1.webp",
+              "mediaLabel": "Metabot answering a question about the data"
             },
             {
               "icon": "drill",
               "title": "Click on charts to drill into data",
-              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it."
+              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it.",
+              "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-2.webp",
+              "mediaLabel": "Drilling into a chart to see the rows behind a bar"
             },
             {
               "icon": "query",
               "title": "Query data with or without SQL",
               "body": "Put queries together intuitively in the visual query builder without writing any SQL, then drop into the editor when a question earns it.",
               "linkLabel": "visual query builder",
-              "linkUrl": "/features/query-builder"
+              "linkUrl": "/features/query-builder",
+              "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-3.webp",
+              "mediaLabel": "Building a question in the query builder, and the SQL behind it"
             },
             {
               "icon": "services",
               "title": "Make content trustworthy and easy to find",
-              "body": "Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections."
+              "body": "Mark dashboards, models, metrics and questions as official, and keep everything else organised in collections.",
+              "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-4.webp",
+              "mediaLabel": "A verified model marked as the trusted source"
             },
             {
               "icon": "csv",
               "title": "Put the most valuable data in front of people",
-              "body": "Schedule reports out to anyone, inside the organisation or outside it, over Slack or email."
+              "body": "Schedule reports out to anyone, inside the organisation or outside it, over Slack or email.",
+              "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-5.webp",
+              "mediaLabel": "A dashboard pinned to the top of a collection"
             }
           ]
         },

@@ -20,16 +20,25 @@ const group = `acc-${s.id}`;
     <h2 class="pp-h36">{s.heading}</h2>
     {s.sub && <p class="pp-band-sub">{s.sub}</p>}
   </div>
-  <div class="pp-accordion">
+  <div class="pp-accordion" data-carousel>
     <div class="pp-frame pp-frame--grey pp-accordion-media">
-      <Media media={s.media} label={s.mediaLabel} width={602} height={555} />
+      {/* One shot per item; only the selected one is shown. Falls back to the
+          section's own media when the items carry none. */}
+      {(s.items ?? []).some((f) => f.media?.url)
+        ? (s.items ?? []).map((f, i) => (
+            <Media media={f.media ?? s.media} label={f.mediaLabel ?? s.mediaLabel}
+                   width={602} height={555} class={`pp-accordion-shot pp-accordion-shot--${i}`} />
+          ))
+        : <Media media={s.media} label={s.mediaLabel} width={602} height={555} />}
     </div>
     <ul class="pp-features">
       {(s.items ?? []).map((f, i) => (
         <li class="pp-feature">
           <input class="pp-feature-radio" type="radio" name={group}
                  id={`${group}-${i}`} checked={i === 0} />
-          <span class="pp-feature-rail" aria-hidden="true"></span>
+          {/* The rail doubles as the clock: its fill animates over the dwell
+              time and the script advances when that animation ends. */}
+          <span class="pp-feature-rail" aria-hidden="true"><i class="pp-feature-fill"></i></span>
           <div class="pp-feature-body">
             {f.icon && <NavIcon name={f.icon} size={32} class="pp-feature-icon" />}
             {f.badge && (
@@ -49,3 +58,62 @@ const group = `acc-${s.id}`;
     </ul>
   </div>
 </section>
+
+<style is:global>
+  /* Only the selected item's shot is shown; the rest are stacked under it. */
+  .pp-accordion-media { position: relative; }
+  .pp-accordion-shot { display: none; }
+  .pp-feature-rail { position: relative; overflow: hidden; }
+  .pp-feature-fill {
+    display: block; position: absolute; inset: 0 0 auto 0;
+    height: 0; background: var(--color-brand); border-radius: inherit;
+  }
+  /* The fill runs only while its own item is open, and its end is the cue to
+     advance. Paused when the carousel is not on screen, and never started at
+     all under prefers-reduced-motion. */
+  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-fill {
+    animation: pp-fill var(--pp-dwell, 6s) linear forwards;
+  }
+  [data-carousel][data-paused='true'] .pp-feature-fill { animation-play-state: paused; }
+  @keyframes pp-fill { from { height: 0; } to { height: 100%; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pp-feature:has(.pp-feature-radio:checked) .pp-feature-fill { animation: none; height: 100%; }
+  }
+</style>
+
+<script>
+  /*
+   * Advances the carousel when the open item's rail finishes filling, which
+   * keeps the timing in CSS and the rail honest about how long is left.
+   * Stops for good on the first real interaction, and only runs while the
+   * section is on screen.
+   */
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const radios = [...root.querySelectorAll<HTMLInputElement>('.pp-feature-radio')];
+    if (radios.length < 2) return;
+
+    const shots = [...root.querySelectorAll<HTMLElement>('.pp-accordion-shot')];
+    const showShot = () => {
+      const i = radios.findIndex((r) => r.checked);
+      shots.forEach((el, n) => (el.style.display = n === i ? 'block' : 'none'));
+    };
+    showShot();
+
+    let auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    radios.forEach((r) => r.addEventListener('change', () => { auto = false; showShot(); }));
+
+    root.addEventListener('animationend', (e) => {
+      if (!auto || (e as AnimationEvent).animationName !== 'pp-fill') return;
+      const i = radios.findIndex((r) => r.checked);
+      radios[(i + 1) % radios.length].checked = true;
+      showShot();
+    });
+
+    const io = new IntersectionObserver(
+      ([entry]) => root.setAttribute('data-paused', String(!entry.isIntersecting)),
+      { threshold: 0.3 },
+    );
+    io.observe(root);
+  });
+</script>

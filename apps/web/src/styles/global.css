@@ -1265,6 +1265,9 @@
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-rail { background: var(--color-brand); }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { color: var(--color-ink-2); }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-badge { display: none; }
+  /* The open item is labelled by its badge, so the large icon steps aside --
+     the original shows one or the other, never both. */
+  .pp-feature:has(.pp-feature-radio:checked):has(.pp-feature-badge) .pp-feature-icon { display: none; }
   .pp-feature-radio:focus-visible + .pp-feature-rail { outline: 2px solid var(--color-brand); outline-offset: 2px; }
 
   /* --- customer quote --------------------------------------------------- */

@@ -25,6 +25,16 @@
     },
     "linkUrl": {
       "type": "string"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mediaLabel": {
+      "type": "string"
     }
   }
 }

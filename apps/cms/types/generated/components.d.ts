@@ -29,6 +29,8 @@ export interface PageAccordionItem extends Struct.ComponentSchema {
     icon: Schema.Attribute.String;
     linkLabel: Schema.Attribute.String;
     linkUrl: Schema.Attribute.String;
+    media: Schema.Attribute.Media<'images'>;
+    mediaLabel: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
