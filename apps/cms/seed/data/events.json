@@ -68,111 +68,210 @@
       "series": "mastering-metabase",
       "inDays": 10,
       "featured": true,
-      "description": "A walk through building a dashboard from a cold database, with Metabot alongside and then switched off, so you can see what each one is actually doing."
+      "description": "A walk through building a dashboard from a cold database, with Metabot alongside and then switched off, so you can see what each one is actually doing.",
+      "durationMinutes": 45,
+      "guests": [
+        "anjali-deshpande",
+        "rebecca-lund",
+        "tomas-ferreira"
+      ]
     },
     {
       "title": "Embedded analytics workshop: from iframe to SDK",
       "series": "workshops",
       "inDays": 24,
-      "description": "Start with a low-code embed, then move the same dashboard onto the React SDK and see what changes."
+      "description": "Start with a low-code embed, then move the same dashboard onto the React SDK and see what changes.",
+      "durationMinutes": 60,
+      "guests": [
+        "tomas-ferreira",
+        "priya-raman"
+      ]
     },
     {
       "title": "Designing a dev-led BI stack",
       "series": "fireside-chats",
       "inDays": 38,
-      "description": "What changes when the people who own the pipeline also own the dashboards."
+      "description": "What changes when the people who own the pipeline also own the dashboards.",
+      "durationMinutes": 90,
+      "guests": [
+        "wei-lin-tan",
+        "freja-nielsen",
+        "grace-mwangi"
+      ]
     },
     {
       "title": "From terminal to dashboard with the Metabase MCP server",
       "series": "working-with-data",
       "inDays": -6,
-      "description": "Connect an AI client to Metabase over MCP and query your warehouse without leaving the editor."
+      "description": "Connect an AI client to Metabase over MCP and query your warehouse without leaving the editor.",
+      "durationMinutes": 90,
+      "guests": [
+        "jonas-kleine",
+        "anjali-deshpande",
+        "nikhil-sharma"
+      ]
     },
     {
       "title": "Introducing the Embedded Analytics SDK for React",
       "series": "whats-new",
       "inDays": -20,
-      "description": "What the SDK does that an iframe cannot, and when it is worth the extra work."
+      "description": "What the SDK does that an iframe cannot, and when it is worth the extra work.",
+      "durationMinutes": 30,
+      "guests": [
+        "pieter-van-dijk",
+        "anjali-deshpande"
+      ]
     },
     {
       "title": "How a lending team replaced four spreadsheets",
       "series": "customer-stories",
       "inDays": -31,
-      "description": "A finance team talks through what they stopped maintaining by hand and what it cost them to get there."
+      "description": "A finance team talks through what they stopped maintaining by hand and what it cost them to get there.",
+      "durationMinutes": 45,
+      "guests": [
+        "anjali-deshpande",
+        "freja-nielsen",
+        "maya-okonkwo"
+      ]
     },
     {
       "title": "Row and column security without losing the SQL editor",
       "series": "mastering-metabase",
       "inDays": -44,
-      "description": "Sandboxing, impersonation and routing, and how to pick between them."
+      "description": "Sandboxing, impersonation and routing, and how to pick between them.",
+      "durationMinutes": 45,
+      "guests": [
+        "nikhil-sharma",
+        "rebecca-lund"
+      ]
     },
     {
       "title": "Data, dashboards and drinks in New York",
       "series": "meetabase",
       "inDays": -52,
       "location": "New York, NY",
-      "description": "An evening with the Metabase community, no slides after the first twenty minutes."
+      "description": "An evening with the Metabase community, no slides after the first twenty minutes.",
+      "durationMinutes": 45,
+      "guests": [
+        "jonas-kleine",
+        "wei-lin-tan",
+        "grace-mwangi"
+      ]
     },
     {
       "title": "Metrics that survive contact with a growing team",
       "series": "fireside-chats",
       "inDays": -60,
-      "description": "Why the same number ends up with three values, and what to do about it."
+      "description": "Why the same number ends up with three values, and what to do about it.",
+      "durationMinutes": 45,
+      "guests": [
+        "priya-raman",
+        "rebecca-lund"
+      ]
     },
     {
       "title": "AI analytics, with a build button",
       "series": "ai-analytics-week",
       "inDays": -67,
-      "description": "Letting people ask questions in plain language without giving up on knowing how the answer was produced."
+      "description": "Letting people ask questions in plain language without giving up on knowing how the answer was produced.",
+      "durationMinutes": 60,
+      "guests": [
+        "jonas-kleine",
+        "rebecca-lund",
+        "anjali-deshpande"
+      ]
     },
     {
       "title": "Modelling a messy warehouse in an afternoon",
       "series": "working-with-data",
       "inDays": -74,
-      "description": "A code-along on transforms, metadata and the metrics layer."
+      "description": "A code-along on transforms, metadata and the metrics layer.",
+      "durationMinutes": 60,
+      "guests": [
+        "pieter-van-dijk",
+        "nikhil-sharma",
+        "freja-nielsen"
+      ]
     },
     {
       "title": "What shipped this quarter",
       "series": "whats-new",
       "inDays": -81,
-      "description": "A run through the release notes with the people who wrote them."
+      "description": "A run through the release notes with the people who wrote them.",
+      "durationMinutes": 30,
+      "guests": [
+        "maya-okonkwo",
+        "aisling-doyle"
+      ]
     },
     {
       "title": "Permissions, debugged",
       "series": "workshops",
       "inDays": -95,
-      "description": "Working through the permission setups that most often go wrong, and why."
+      "description": "Working through the permission setups that most often go wrong, and why.",
+      "durationMinutes": 60,
+      "guests": [
+        "aisling-doyle",
+        "maya-okonkwo"
+      ]
     },
     {
       "title": "Self-service analytics that people actually use",
       "series": "customer-stories",
       "inDays": -108,
-      "description": "An operations lead on getting a non-technical team to answer its own questions."
+      "description": "An operations lead on getting a non-technical team to answer its own questions.",
+      "durationMinutes": 60,
+      "guests": [
+        "maya-okonkwo",
+        "rebecca-lund"
+      ]
     },
     {
       "title": "Dashboards for people who do not like dashboards",
       "series": "mastering-metabase",
       "inDays": -120,
-      "description": "Fewer cards, better defaults, and filters that make sense to the person reading them."
+      "description": "Fewer cards, better defaults, and filters that make sense to the person reading them.",
+      "durationMinutes": 60,
+      "guests": [
+        "wei-lin-tan",
+        "tomas-ferreira",
+        "rebecca-lund"
+      ]
     },
     {
       "title": "Meetabase London",
       "series": "meetabase",
       "inDays": -133,
       "location": "London, UK",
-      "description": "Talks from three teams running Metabase in production, then the pub."
+      "description": "Talks from three teams running Metabase in production, then the pub.",
+      "durationMinutes": 90,
+      "guests": [
+        "jonas-kleine",
+        "freja-nielsen"
+      ]
     },
     {
       "title": "Prompting against your own semantic layer",
       "series": "ai-analytics-week",
       "inDays": -140,
-      "description": "Why the definitions you have already written are what make AI answers trustworthy."
+      "description": "Why the definitions you have already written are what make AI answers trustworthy.",
+      "durationMinutes": 45,
+      "guests": [
+        "freja-nielsen",
+        "priya-raman",
+        "rebecca-lund"
+      ]
     },
     {
       "title": "Query builder deep dive",
       "series": "mastering-metabase",
       "inDays": -154,
-      "description": "Joins, custom expressions and multi-level aggregation, without writing SQL."
+      "description": "Joins, custom expressions and multi-level aggregation, without writing SQL.",
+      "durationMinutes": 30,
+      "guests": [
+        "freja-nielsen",
+        "wei-lin-tan"
+      ]
     }
   ]
 }

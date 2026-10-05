@@ -172,6 +172,8 @@ export const getEvents = () =>
     'populate[category][populate][artwork]': 'true',
     'populate[category][populate][poster]': 'true',
     'populate[seo]': 'true',
+    /* The guests are people, and each carries an avatar and a company. */
+    'populate[guests][populate]': '*',
     sort: 'startsAt:desc',
   });
 

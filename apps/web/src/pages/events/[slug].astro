@@ -15,6 +15,7 @@
  * field -- rather than inventing either.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Avatar from '../../components/Avatar.astro';
 import { getEvents } from '../../lib/strapi';
 import { cld } from '../../lib/image';
 import type { StrapiImage } from '../../lib/types';
@@ -77,8 +78,26 @@ const others = events
         <h1 class="ev-one-title">{event.title}</h1>
         <p class="ev-one-meta">
           <time datetime={starts.toISOString()}>{fmtFull} (UTC)</time>
+          {event.durationMinutes && <> &middot; {event.durationMinutes} minutes</>}
           {event.location && <> &middot; {event.location}</>}
         </p>
+
+        {!isPast && (
+          /* Counts down to the start. Rendered server-side from the build's
+             own clock so there is something before hydration, then corrected
+             on load -- a static page is otherwise as stale as its build. */
+          <p class="ev-one-timer" data-countdown={starts.toISOString()}>
+            {[['days', 'days'], ['hours', 'hours'], ['minutes', 'minutes'], ['seconds', 'seconds']].map(([k, label], i) => (
+              <>
+                {i > 0 && <span class="ev-one-timer-sep" aria-hidden="true">:</span>}
+                <span class="ev-one-timer-part">
+                  <b data-unit={k}>--</b>
+                  <small>{label}</small>
+                </span>
+              </>
+            ))}
+          </p>
+        )}
         {cta.href && <a class="ev-one-cta" href={cta.href}>{cta.label}</a>}
       </div>
 
@@ -86,6 +105,23 @@ const others = events
         <div class="ev-one-intro">
           <h2 class="ev-one-h">About this event</h2>
           <p>{event.description}</p>
+        </div>
+      )}
+
+      {event.guests && event.guests.length > 0 && (
+        <div class="ev-one-guests">
+          <h2 class="ev-one-h">Guests</h2>
+          {event.guests.map((g) => (
+            <div class="ev-one-guest">
+              <Avatar image={g.avatar} name={g.name} size={48} class="ev-one-guest-face" />
+              <span class="ev-one-guest-who">
+                <span class="ev-one-guest-name">{g.name}</span>
+                <span class="ev-one-guest-role">
+                  {g.role}{g.company?.name && <>, {g.company.name}</>}
+                </span>
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -116,3 +152,39 @@ const others = events
     )}
   </div>
 </BaseLayout>
+
+<script>
+  /*
+   * The countdown. A static build bakes in the moment it ran, so the numbers
+   * are corrected on load and then ticked once a second. It stops at zero
+   * rather than counting up, and the tick is dropped once the event starts.
+   */
+  document.querySelectorAll<HTMLElement>('[data-countdown]').forEach((el) => {
+    const target = new Date(el.dataset.countdown!).getTime();
+    const unit = (u: string) => el.querySelector<HTMLElement>(`[data-unit="${u}"]`);
+    const pad = (n: number) => String(n).padStart(2, '0');
+
+    const tick = () => {
+      const left = target - Date.now();
+      if (left <= 0) {
+        el.hidden = true;
+        clearInterval(timer);
+        return;
+      }
+      const s = Math.floor(left / 1000);
+      const parts: [string, number][] = [
+        ['days', Math.floor(s / 86400)],
+        ['hours', Math.floor(s / 3600) % 24],
+        ['minutes', Math.floor(s / 60) % 60],
+        ['seconds', s % 60],
+      ];
+      for (const [u, v] of parts) {
+        const node = unit(u);
+        if (node) node.textContent = u === 'days' ? String(v) : pad(v);
+      }
+    };
+
+    tick();
+    const timer = window.setInterval(tick, 1000);
+  });
+</script>

@@ -161,6 +161,10 @@ const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase)
  */
 let phase = null;
 
+/* Links that cannot be written when their own phase runs, because the other
+   side does not exist yet. The `related` pass drains this. */
+const pending = {};
+
 const ORDER = [
   'api::page.page',
   'api::event.event',
@@ -286,8 +290,12 @@ async function main() {
         { ...s, ...(artwork ? { artwork } : {}), ...(poster ? { poster } : {}) });
     }
     const dayMs = 24 * 60 * 60 * 1000;
+    /* Guests are people, and people are not seeded until the phase after this
+       one, so the slugs are held here and linked in the `related` pass. */
+    const eventGuests = {};
     for (const e of eventsData.events) {
-      const { inDays, series, ...rest } = e;
+      const { inDays, series, guests, ...rest } = e;
+      if (guests?.length) eventGuests[slugify(e.title)] = guests;
       const startsAt = new Date(Date.now() + inDays * dayMs);
       /* Sessions run in the evening; without this they all land at the minute
          the seed happened to run. */
@@ -299,6 +307,7 @@ async function main() {
         category: seriesMap[series]?.documentId,
       });
     }
+    pending.eventGuests = eventGuests;
 
     phase = 'companies';
     // ---- 2. companies, then people --------------------------------------
@@ -426,6 +435,24 @@ async function main() {
       await app.documents('api::post.post').update({
         documentId: self.documentId,
         data: { relatedPosts: siblings },
+        status: 'published',
+      });
+      stats.linked++;
+    }
+
+    /* Event guests: the events phase ran before people existed, so the link
+       is made here from the slugs it set aside. */
+    for (const [eventSlug, guestSlugs] of Object.entries(pending.eventGuests ?? {})) {
+      const self = await app.documents('api::event.event').findFirst({
+        filters: { slug: eventSlug }, status: 'published',
+      });
+      /* personMap is keyed by name; the guest list is written as slugs. */
+      const bySlug = Object.fromEntries(Object.values(personMap).map((d) => [d.slug, d]));
+      const ids = guestSlugs.map((g) => bySlug[g]?.documentId).filter(Boolean);
+      if (!self || !ids.length) continue;
+      await app.documents('api::event.event').update({
+        documentId: self.documentId,
+        data: { guests: ids },
         status: 'published',
       });
       stats.linked++;

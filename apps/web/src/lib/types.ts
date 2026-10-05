@@ -125,7 +125,9 @@ export interface SiteEvent {
   registrationUrl?: string | null;
   recordingUrl?: string | null;
   featured?: boolean;
+  durationMinutes?: number | null;
   category?: EventCategory | null;
+  guests?: Person[];
   seo?: Seo | null;
 }
 

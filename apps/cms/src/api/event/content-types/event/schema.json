@@ -27,6 +27,10 @@
       "type": "datetime",
       "required": true
     },
+    "durationMinutes": {
+      "type": "integer",
+      "min": 1
+    },
     "location": {
       "type": "string"
     },
@@ -50,6 +54,11 @@
       "relation": "manyToOne",
       "target": "api::event-category.event-category",
       "inversedBy": "events"
+    },
+    "guests": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::person.person"
     }
   }
 }

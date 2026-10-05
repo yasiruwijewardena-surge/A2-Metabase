@@ -2853,6 +2853,10 @@
   .ev-one-cta:hover { background: var(--color-brand-hover); }
 
   .ev-one-intro { max-width: 600px; margin: 96px auto 0; font-size: 20px; line-height: 30px; color: var(--color-ink-2); }
+  /* None of the seeded events carries a registration or recording URL, so the
+     head often ends without a button. Close the gap it would have filled
+     rather than leave a hole in the middle of the card. */
+  .ev-one-head:not(:has(.ev-one-cta)) + .ev-one-intro { margin-top: 48px; }
   .ev-one-h { margin-bottom: 32px; font-size: 20px; font-weight: 700; color: var(--color-ink); }
 
   .ev-one-more-h { margin-bottom: 32px; font-size: 24px; font-weight: 700; color: var(--color-ink); text-align: center; }
@@ -2873,4 +2877,39 @@
     .ev-one-title { font-size: 24px; line-height: 32px; }
     .ev-one-intro { margin-top: 48px; padding-inline: 32px; }
   }
+}
+
+@layer components {
+  /* --- event countdown -------------------------------------------------- */
+  .ev-one-timer {
+    display: flex; align-items: flex-start; justify-content: center; gap: 8px;
+    margin-bottom: 32px;
+  }
+  .ev-one-timer-part { display: flex; flex-direction: column; align-items: center; min-width: 56px; }
+  .ev-one-timer-part b {
+    font-size: 36px; line-height: 44px; font-weight: 400; color: var(--color-brand);
+    font-variant-numeric: tabular-nums;
+  }
+  .ev-one-timer-part small { font-size: 14px; line-height: 20px; color: var(--color-ink-3); }
+  .ev-one-timer-sep {
+    font-size: 36px; line-height: 44px; color: var(--color-brand);
+  }
+
+  /* --- event guests ----------------------------------------------------- */
+  .ev-one-guests {
+    max-width: 600px; margin: 48px auto 0; padding: 24px;
+    border: 1px solid var(--color-brand-muted); border-radius: 12px; background: #fff;
+    box-shadow: 0 1px 3px rgb(16 24 40 / 0.04);
+  }
+  .ev-one-guests .ev-one-h { margin-bottom: 32px; }
+  .ev-one-guest { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+  .ev-one-guest:last-child { margin-bottom: 0; }
+  .ev-one-guest-face {
+    width: 48px; height: 48px; border-radius: 50%; flex: none;
+    border: 2px solid #fff; box-shadow: 0 1px 2px 0 rgb(16 24 40 / 0.16);
+    object-fit: cover;
+  }
+  .ev-one-guest-who { display: flex; flex-direction: column; }
+  .ev-one-guest-name { font-size: 16px; line-height: 22px; font-weight: 700; color: var(--color-ink); }
+  .ev-one-guest-role { font-size: 16px; line-height: 22px; color: var(--color-ink-2); }
 }
