@@ -25,13 +25,13 @@ const theme = s.frameTheme && s.frameTheme !== 'none' ? `pp-frame--${s.frameThem
     </div>
     {s.caption && (
       <p class="pp-play-caption">
-        {/* A curved arrow pointing back up at the clip, not a play mark --
-            the original draws it and flips it 180deg. */}
+        {s.caption}
+        {/* A curved arrow pointing back up at the clip, not a play mark. The
+            original draws it after the words and flips it 180deg. */}
         <svg class="pp-play-arrow" width="15" height="18" viewBox="0 0 15 18" fill="none" aria-hidden="true">
           <path d="M10.4163 10.2554L7.20956 16.1204L1.5 12.6445" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M6.60556 14.3929C6.60556 14.3929 5.39062 12.8742 5.39062 6.19204C5.39062 -0.49012 13.8952 1.63598 13.8952 1.63598" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        {s.caption}
       </p>
     )}
   </div>

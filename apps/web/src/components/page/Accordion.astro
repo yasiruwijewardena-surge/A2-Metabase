@@ -20,6 +20,9 @@ const group = `acc-${s.id}`;
     <h2 class="pp-h36">{s.heading}</h2>
     {s.sub && <p class="pp-band-sub">{s.sub}</p>}
   </div>
+  {/* The track gives the pinned carousel something to scroll through. Its
+      height is the original's 3000px of scrub plus a viewport. */}
+  <div class="pp-accordion-track" data-track>
   <div class="pp-accordion" data-carousel>
     <div class="pp-frame pp-frame--grey pp-accordion-media">
       {/* One shot per item; only the selected one is shown. Falls back to the
@@ -57,6 +60,7 @@ const group = `acc-${s.id}`;
       ))}
     </ul>
   </div>
+  </div>
 </section>
 
 <style is:global>
@@ -68,52 +72,95 @@ const group = `acc-${s.id}`;
     display: block; position: absolute; inset: 0 0 auto 0;
     height: 0; background: var(--color-brand); border-radius: inherit;
   }
-  /* The fill runs only while its own item is open, and its end is the cue to
-     advance. Paused when the carousel is not on screen, and never started at
-     all under prefers-reduced-motion. */
-  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-fill {
-    animation: pp-fill var(--pp-dwell, 6s) linear forwards;
-  }
-  [data-carousel][data-paused='true'] .pp-feature-fill { animation-play-state: paused; }
-  @keyframes pp-fill { from { height: 0; } to { height: 100%; } }
 
-  @media (prefers-reduced-motion: reduce) {
-    .pp-feature:has(.pp-feature-radio:checked) .pp-feature-fill { animation: none; height: 100%; }
+  /*
+   * The original pins this section and scrubs through its items as you
+   * scroll, over 3000px: five steps, each taking a fifth of that, with the
+   * rail filling by however far into its own step you are. The track below
+   * is that scroll distance; the carousel sticks to the top of the viewport
+   * while you move through it.
+   */
+  .pp-accordion-track { position: relative; }
+  @media (min-width: 769px) {
+    .pp-accordion-track[data-track] { height: calc(100vh + 3000px); }
+    .pp-accordion-track[data-track] > .pp-accordion {
+      position: sticky; top: 0;
+      min-height: 100vh; display: flex; align-items: center;
+    }
   }
+
+  /* Without script, or with reduced motion, it is a plain click accordion and
+     the track collapses to its content. */
+  @media (prefers-reduced-motion: reduce) {
+    .pp-accordion-track[data-track] { height: auto; }
+    .pp-accordion-track[data-track] > .pp-accordion { position: static; min-height: 0; }
+  }
+  .pp-accordion-track:not([data-pinned]) { height: auto; }
+  .pp-accordion-track:not([data-pinned]) > .pp-accordion { position: static; min-height: 0; }
 </style>
 
 <script>
   /*
-   * Advances the carousel when the open item's rail finishes filling, which
-   * keeps the timing in CSS and the rail honest about how long is left.
-   * Stops for good on the first real interaction, and only runs while the
-   * section is on screen.
+   * Scroll-driven, as the original is: the section pins and the five items
+   * advance as you scroll through a fixed distance, the active item's rail
+   * filling by the fraction of its own step you have covered.
+   *
+   * The original does this with GSAP's ScrollTrigger (pin + scrub over
+   * 3000px). This uses a sticky element inside a track of the same height,
+   * which needs no library and degrades to a click accordion when script or
+   * motion is unavailable -- the radios underneath still work either way.
    */
+  const SCRUB = 3000;
+
   document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.closest<HTMLElement>('[data-track]');
     const radios = [...root.querySelectorAll<HTMLInputElement>('.pp-feature-radio')];
-    if (radios.length < 2) return;
-
+    const fills = [...root.querySelectorAll<HTMLElement>('.pp-feature-fill')];
     const shots = [...root.querySelectorAll<HTMLElement>('.pp-accordion-shot')];
-    const showShot = () => {
-      const i = radios.findIndex((r) => r.checked);
+    if (!track || radios.length < 2) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const wide = window.matchMedia('(min-width: 769px)');
+
+    const showShot = (i: number) =>
       shots.forEach((el, n) => (el.style.display = n === i ? 'block' : 'none'));
+
+    /* Opt the track in only when it is actually driving, so the CSS above can
+       fall back to a plain accordion otherwise. */
+    const arm = () => {
+      const on = wide.matches && !reduced.matches;
+      track.toggleAttribute('data-pinned', on);
+      if (!on) {
+        fills.forEach((f) => (f.style.height = ''));
+        showShot(radios.findIndex((r) => r.checked));
+      }
+      return on;
     };
-    showShot();
 
-    let auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    radios.forEach((r) => r.addEventListener('change', () => { auto = false; showShot(); }));
+    const update = () => {
+      if (!track.hasAttribute('data-pinned')) return;
+      const top = track.getBoundingClientRect().top;
+      const progress = Math.min(Math.max(-top / SCRUB, 0), 1);
 
-    root.addEventListener('animationend', (e) => {
-      if (!auto || (e as AnimationEvent).animationName !== 'pp-fill') return;
-      const i = radios.findIndex((r) => r.checked);
-      radios[(i + 1) % radios.length].checked = true;
-      showShot();
-    });
+      const raw = progress * radios.length;
+      const active = Math.min(Math.floor(raw), radios.length - 1);
+      const within = raw - active;
 
-    const io = new IntersectionObserver(
-      ([entry]) => root.setAttribute('data-paused', String(!entry.isIntersecting)),
-      { threshold: 0.3 },
-    );
-    io.observe(root);
+      if (!radios[active].checked) radios[active].checked = true;
+      showShot(active);
+      fills.forEach((f, i) => {
+        f.style.height = i < active ? '100%' : i > active ? '0%' : `${within * 100}%`;
+      });
+    };
+
+    /* A click still picks an item; the next scroll takes over again. */
+    radios.forEach((r) => r.addEventListener('change', () => showShot(radios.indexOf(r))));
+
+    arm();
+    showShot(radios.findIndex((r) => r.checked));
+    update();
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', () => { arm(); update(); }, { passive: true });
+    reduced.addEventListener('change', () => { arm(); update(); });
   });
 </script>

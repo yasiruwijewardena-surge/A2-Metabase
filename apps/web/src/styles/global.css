@@ -1158,17 +1158,17 @@
   .pp-frame > video, .pp-frame > img { display: block; width: 100%; height: auto; }
 
   /* --- media beside copy ------------------------------------------------ */
-  .pp-split { display: flex; align-items: center; padding-block: 0 144px; }
+  .pp-split { display: flex; margin-block: 40px 140px; }
   .pp-split-media { flex: 0 0 632px; max-width: 100%; min-width: 0; }
   /* 632 column less the 72px gutter leaves the original's 560 copy measure. */
   .pp-split-copy { flex: 0 0 632px; max-width: 100%; min-width: 0; padding-left: 72px; }
 
   .pp-play-caption {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin: 17px 20px 0;
+    margin: 0 20px; text-align: center;
     font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink-3);
   }
-  .pp-play-caption svg { display: block; flex: none; }
+  /* Inline, so it follows the words rather than sitting in its own flex cell. */
+  .pp-play-caption svg { display: inline; flex: none; vertical-align: middle; }
   .pp-play-arrow { rotate: 180deg; translate: 0 -4px; }
 
   .pp-h30 {
