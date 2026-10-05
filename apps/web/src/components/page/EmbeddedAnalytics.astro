@@ -63,6 +63,10 @@ const securityPillars = s.securityPillars ?? [];
 const stackPillars = s.stackPillars ?? [];
 const implementations = s.implementations ?? [];
 const tabs = s.tabs ?? [];
+/* The original gives each tab its own dwell (13s, then 30s twice) through a
+   `--tabs-duration` custom property on the button; the strip reads like a
+   different component at a uniform speed, so the three are kept. */
+const DWELL = [13, 30, 30];
 const usagePoints = s.usagePoints ?? [];
 const supportPoints = s.supportPoints ?? [];
 const buildVsBuy = s.vsGroups ?? [];
@@ -144,10 +148,10 @@ const faqs = s.faqs ?? [];
 
   <section class="pp-split container-mb">
     <div class="pp-split-media">
-      <div class="pp-frame pp-frame--grey">
+      <div class="pp-frame pp-frame--grey pp-frame--inset" style="--inset:92px 0 92px 60px">
         <img src="/images/product/embedded-analytics/need-a-change.webp"
              alt="Editing an embedded dashboard without touching application code"
-             width="570" height="463" loading="lazy" decoding="async" />
+             width="570" height="463" style="--shot-w:570px" loading="lazy" decoding="async" />
       </div>
     </div>
     <div class="pp-split-copy">
@@ -160,7 +164,7 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb pp-center">
+  <section class="pp-band container-mb pp-center ea-sec--cards">
     <h2 class="pp-h36 pp-h36--tall">{s.securityHeading}</h2>
     <p class="pp-band-sub pp-band-sub--tight">
       {s.securitySubBefore}<a href={s.securitySubLinkUrl}>{s.securitySubLinkLabel}</a>{s.securitySubAfter}
@@ -180,7 +184,7 @@ const faqs = s.faqs ?? [];
     <div class="ea-panel">
       <div class="pp-center">
         <h2 class="pp-h36">{s.customersHeading}</h2>
-        <p class="pp-band-sub">{s.customersSub}</p>
+        <p class="pp-band-sub pp-band-sub--far">{s.customersSub}</p>
       </div>
       <div class="ea-story">
         <div class="ea-story-media">
@@ -203,7 +207,7 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb">
+  <section class="pp-band container-mb ea-sec--pad80">
     <div class="pp-center">
       <h2 class="ea-impl-title">{s.implHeading}</h2>
       <p class="pp-band-sub">{s.implSub}</p>
@@ -228,19 +232,20 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb">
+  <section class="pp-band container-mb ea-sec--pad32">
     <div class="pp-center">
-      <h2 class="pp-h36">{s.tabsHeading}</h2>
-      <p class="pp-band-sub">{s.tabsSub}</p>
+      <h2 class="pp-h36 pp-h36--close">{s.tabsHeading}</h2>
+      <p class="pp-band-sub pp-band-sub--far">{s.tabsSub}</p>
     </div>
     <div class="ea-tabs" data-tabs>
       {tabs.map((t, i) => (
         <input class="ea-tab-radio" type="radio" name="ea-tab" id={`tab-${t.anchor}`} checked={i === 0} />
       ))}
       <div class="ea-tabstrip">
-        {tabs.map((t) => (
-          <label class="ea-tab" for={`tab-${t.anchor}`} data-tab={t.anchor}>
-            <NavIcon name={t.icon} size={24} class="ea-tab-icon" />{t.label}
+        {tabs.map((t, i) => (
+          <label class="ea-tab" for={`tab-${t.anchor}`} data-tab={t.anchor}
+                 style={`--ea-dwell:${DWELL[i] ?? 13}s`}>
+            {t.label}
             {/* The underline is the clock: it fills over the dwell and its
                 end is what advances the strip. */}
             <i class="ea-tab-fill" aria-hidden="true"></i>
@@ -251,7 +256,7 @@ const faqs = s.faqs ?? [];
         <div class="ea-panelrow" data-tab={t.anchor}>
           <div class="pp-frame pp-frame--grey ea-tab-media">
             <img src={t.image} alt={t.imageAlt} width={t.imageW} height={t.imageH}
-                 loading="lazy" decoding="async" />
+                 style={`--shot-w:${t.imageW}px`} loading="lazy" decoding="async" />
           </div>
           <div class="ea-tab-copy">
             <h3 class="pp-h30">{t.title}</h3>
@@ -263,7 +268,7 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb pp-center">
+  <section class="pp-band container-mb pp-center ea-sec--cards">
     <h2 class="pp-h36 pp-h36--tall">{s.stackHeading}</h2>
     <p class="pp-band-sub pp-band-sub--wide">{s.stackSub}</p>
     <ul class="pp-pillars pp-pillars--tall">
@@ -277,11 +282,11 @@ const faqs = s.faqs ?? [];
     </ul>
   </section>
 
-  <section class="container-mb">
+  <section class="container-mb ea-sec--clear">
     <div class="ea-panel">
       <div class="pp-center">
         <h2 class="pp-h36">{s.balanceHeading}</h2>
-        <p class="pp-band-sub">
+        <p class="pp-band-sub pp-band-sub--far">
           {s.balanceSub}
           <a href={s.balanceLinkUrl}>{s.balanceLinkLabel}</a>
         </p>
@@ -311,7 +316,7 @@ const faqs = s.faqs ?? [];
         <div class="ea-theme-presets">
           {['Classic', 'Tech', 'Elegant', 'Playful'].map((t) => (
             <label class="ea-preset" for={`th-${t.toLowerCase()}`} data-theme={t.toLowerCase()}>
-              <span class="ea-preset-dot"></span><b>{t}</b>
+              <b>{t}</b>
             </label>
           ))}
         </div>
@@ -321,9 +326,10 @@ const faqs = s.faqs ?? [];
 
   <section class="pp-split container-mb">
     <div class="pp-split-media">
-      <div class="pp-frame pp-frame--grey">
+      <div class="pp-frame pp-frame--grey pp-frame--inset" style="--inset:70px 0 40px 40px">
         <img src={s.usageImage} alt={s.usageImageAlt}
-             width={s.usageImageW} height={s.usageImageH} loading="lazy" decoding="async" />
+             width={s.usageImageW} height={s.usageImageH}
+             style={`--shot-w:${s.usageImageW}px`} loading="lazy" decoding="async" />
       </div>
     </div>
     <div class="pp-split-copy">
@@ -342,7 +348,7 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="container-mb">
+  <section class="container-mb ea-sec--flow">
     <div class="ea-panel ea-support">
       <div class="ea-support-copy">
         <h2 class="pp-h30">{s.supportHeading}</h2>
@@ -366,8 +372,8 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb pp-center">
-    <h2 class="pp-h36">{s.vsHeading}</h2>
+  <section class="pp-band container-mb pp-center ea-sec--pad32">
+    <h2 class="pp-h36 pp-h36--clear">{s.vsHeading}</h2>
     <div class="ea-vs">
       {buildVsBuy.map((g) => (
         <div class="ea-vs-group">
@@ -380,12 +386,12 @@ const faqs = s.faqs ?? [];
     </div>
   </section>
 
-  <section class="pp-band container-mb pp-center">
+  <section class="pp-band container-mb pp-center ea-sec--faq">
     <h2 class="pp-h36">{s.faqHeading}</h2>
     <div class="ea-faq">
       {faqs.map((f) => (
         <details class="ea-faq-item">
-          <summary>{f.question}<svg width="14" height="19" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg></summary>
+          <summary>{f.question}<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5.5L7 9.5l4-4" stroke-linecap="round" stroke-linejoin="round" /></svg></summary>
           <p>{f.answer}</p>
         </details>
       ))}
@@ -413,10 +419,15 @@ const faqs = s.faqs ?? [];
   </div>
 
 <style is:global>
+  /* Every tab carries the full-width grey rule; the brand fill grows over it. */
   .ea-tab { position: relative; }
+  .ea-tab::before {
+    content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 4px;
+    background: #f1f2f4;
+  }
   .ea-tab-fill {
-    position: absolute; left: 0; bottom: -2px; height: 2px; width: 0;
-    background: var(--color-brand); border-radius: 2px;
+    position: absolute; left: 0; bottom: 0; height: 4px; width: 0;
+    background: var(--color-brand);
   }
   .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'] .ea-tab-fill,
   .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'] .ea-tab-fill,
@@ -425,14 +436,6 @@ const faqs = s.faqs ?? [];
   }
   [data-tabs][data-paused='true'] .ea-tab-fill { animation-play-state: paused; }
   @keyframes ea-tab-fill { from { width: 0; } to { width: 100%; } }
-
-  /* With the fill carrying the progress, the open tab's own border would
-     double it, so it stays transparent and the fill draws the line. */
-  .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'],
-  .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'],
-  .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] {
-    border-bottom-color: transparent;
-  }
 
   @media (prefers-reduced-motion: reduce) {
     .ea-tab-fill { animation: none !important; }

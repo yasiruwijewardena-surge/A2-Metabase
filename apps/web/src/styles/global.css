@@ -1155,6 +1155,11 @@
   }
   .pp-frame--blue { background: #eef6fc; }
   .pp-frame--grey { background: var(--color-brand-faint); }
+  /* Two of the split shots sit inset in a taller frame, at their own size,
+     and are allowed to run off its right edge. Each sets --inset itself. */
+  .pp-frame--inset { align-items: flex-start; justify-content: flex-start; padding: var(--inset); }
+  /* Each inset shot renders at its own width rather than filling the frame. */
+  .pp-frame--inset > img { width: var(--shot-w, 100%); max-width: none; }
   .pp-frame > video, .pp-frame > img { display: block; width: 100%; height: auto; }
 
   /* --- media beside copy ------------------------------------------------ */
@@ -1215,7 +1220,7 @@
   .pp-band-link:hover { color: var(--color-brand-hover); text-decoration: underline; }
   /* Inside a split the original sets this link larger and further down, and
      lets it fill the copy column rather than shrink to its text. */
-  .pp-split .pp-band-link { display: flex; margin-top: 28px; font-size: 18px; }
+  .pp-split .pp-band-link { display: flex; margin-top: 28px; font-size: 18px; line-height: 26px; }
   .pp-band-link svg { display: block; flex: none; }
 
   /* --- feature accordion ------------------------------------------------ */
@@ -1364,11 +1369,32 @@
   /* This page measures its headings and standfirsts at 568 and sets the
    * standfirsts at 20/28, where Business Intelligence uses 600 and 20/32.
    * The exceptions carry their own modifier. */
-  .ea-page .pp-band-sub { max-width: 568px; line-height: 28px; }
-  .ea-page .pp-h36 { max-width: 568px; }
+  .ea-page .pp-band-sub { max-width: 568px; margin-bottom: 16px; line-height: 28px; }
+  /* Two of them stand well clear of what follows; the closing CTA keeps 32. */
+  .ea-page .pp-band-sub--far { margin-bottom: 56px; }
+  .ea-page .pp-band-sub--600 { margin-bottom: 32px; }
+  /* Section rhythm. This page spaces itself section by section rather than
+   * from one band rule, so the shared 144 comes off and each section below
+   * carries the margins or padding the original gives it. */
+  .ea-page .pp-band { padding-bottom: 0; }
+  .ea-page .ea-sec--cards { margin: 40px 0 80px; }   /* the two pillar bands */
+  .ea-page .ea-sec--pad80 { padding-block: 80px; }   /* implementation types */
+  .ea-page .ea-sec--pad32 { padding-block: 32px; }   /* tab strip, comparison card */
+  .ea-page .ea-sec--clear { margin-bottom: 120px; }  /* the theming demo */
+  .ea-page .ea-sec--flow { margin: 40px 0 140px; }   /* support team, like a split */
+  .ea-page .ea-sec--faq { margin-top: 104px; }
+  /* Three across, 48 under the standfirst, bodies in tertiary ink. */
+  .ea-page .pp-pillars { margin-top: 48px; }
+  .ea-page .pp-pillar-body { margin-bottom: 0; color: var(--color-ink-3); }
+
+  /* 24 under a band heading, except the tab strip's (16) and the comparison
+   * card's, which the original stands 64 clear of. */
+  .ea-page .pp-h36 { max-width: 568px; margin-bottom: 24px; }
+  .ea-page .pp-h36--close { margin-bottom: 16px; }
+  .ea-page .pp-h36--clear { margin-bottom: 64px; }
   .ea-page .pp-h36--tall { max-width: 640px; }
   .ea-page .pp-band-sub--narrow { max-width: 400px; line-height: 32px; }
-  .ea-page .pp-band-sub--tight { max-width: 600px; line-height: 32px; }
+  .ea-page .pp-band-sub--tight { width: fit-content; max-width: 600px; line-height: 32px; }
   .ea-page .pp-band-sub--wide { max-width: 600px; line-height: 32px; }
   .ea-page .pp-band-sub--600 { max-width: 600px; }
   .pp-split--reverse { flex-direction: row-reverse; }
@@ -1387,6 +1413,8 @@
     display: flex; align-items: center; height: 43px; padding: 0 16px;
   }
   .pp-points--sm .pp-point { font-size: 12px; }
+  /* Closer to the buttons above and well clear of the screenshot below. */
+  .pp-points--sm { gap: 8px 16px; margin: 12px 0 64px; }
 
   /* --- inline quote card ------------------------------------------------ */
   .pq-card { margin-top: 40px; }
@@ -1424,12 +1452,14 @@
 
   /* --- implementation cards --------------------------------------------- */
   .ea-impl-title {
-    width: 100%; max-width: none; margin-bottom: 16px;
+    width: 100%; max-width: none; margin-bottom: 8px;
     font-size: 30px; line-height: 36px; font-weight: 700;
     color: var(--color-ink);
   }
-  .ea-demo-link { margin-bottom: 8px; font-size: 20px; line-height: normal; }
-  .ea-impls { display: flex; gap: 32px; margin-top: 48px; text-align: left; }
+  /* A full-width centred line under the standfirst, not a shrink-to-fit pill. */
+  .ea-demo-link { display: block; width: 100%; margin: 0; font-size: 20px; line-height: normal; }
+  .ea-demo-link svg { display: inline; vertical-align: middle; }
+  .ea-impls { display: flex; gap: 32px; margin-top: 64px; text-align: left; }
   .ea-impl {
     flex: 1 1 616px; min-width: 0; display: flex; flex-direction: column;
     padding: 24px 24px 0;
@@ -1439,20 +1469,20 @@
     overflow: hidden;
   }
   .ea-impl-badge {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
     font-size: 18px; line-height: 24px; font-weight: 700; color: var(--color-brand);
   }
   .ea-impl-badge-icon { display: block; flex: none; }
-  .ea-impl-h { margin-top: 8px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
+  .ea-impl-h { margin-bottom: 8px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
   /* Tertiary ink -- the badge above carries the colour, the sub sits back. */
-  .ea-impl-sub { margin-top: 8px; font-size: 20px; line-height: 28px; color: var(--color-ink-3); }
-  .ea-impl-points { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .ea-impl-sub { margin-bottom: 8px; font-size: 20px; line-height: 28px; color: var(--color-ink-3); }
+  .ea-impl-points { margin-top: 24px; display: flex; flex-direction: column; gap: 2px; }
   .ea-impl-points li {
-    position: relative; padding-left: 28px;
+    position: relative; padding: 5px 10px 5px 26px;
     font-size: 18px; line-height: 28px; color: var(--color-ink-2);
   }
   .ea-impl-points li::before {
-    content: ''; position: absolute; left: 0; top: 10px;
+    content: ''; position: absolute; left: 0; top: 15px;
     width: 8px; height: 8px; border-radius: 50%; background: var(--color-brand);
   }
   .ea-impl-points b { font-weight: 700; }
@@ -1464,21 +1494,29 @@
   .ea-impl-img { display: block; width: 100%; height: auto; margin-top: auto; padding-top: 32px; }
 
   /* --- tabbed panel ----------------------------------------------------- */
-  .ea-tabs { margin-top: 40px; }
+  /* The standfirst above already carries the gap the original sets there. */
+  .ea-tabs { margin-top: 0; }
   .ea-tab-radio { position: absolute; opacity: 0; pointer-events: none; }
-  .ea-tabstrip { display: flex; justify-content: center; gap: 24px; }
+  .ea-tabstrip { display: flex; justify-content: center; gap: 48px; }
+  /* A fixed 224 per tab, so the strip does not shift as the labels change. */
   .ea-tab {
-    display: flex; align-items: center; gap: 8px; padding-bottom: 12px;
-    font-size: 20px; line-height: 28px; font-weight: 700;
-    color: #c6c9d2; border-bottom: 2px solid transparent;
-    cursor: pointer; transition: color 150ms ease, border-color 150ms ease;
+    flex: none; width: 224px; padding: 12px 0;
+    font-size: 20px; line-height: 28px; font-weight: 700; text-align: center;
+    color: #c6c9d2; cursor: pointer; transition: color 150ms ease;
   }
-  .ea-tab-icon { display: block; flex: none; }
   .ea-tab:hover { color: var(--color-brand); }
-  .ea-panelrow { display: none; align-items: center; gap: 64px; margin-top: 40px; text-align: left; }
+  /* Two halves of the container, the copy inset 96 — the original's grid. */
+  .ea-panelrow { display: none; align-items: center; margin-top: 64px; text-align: left; }
   .ea-tab-media { flex: none; width: 632px; max-width: 100%; }
-  .ea-tab-media img { display: block; width: 100%; height: auto; }
-  .ea-tab-copy { flex: 0 1 536px; min-width: 0; }
+  /* An 8-radius tint with no border, the shot inset 40/80 and running off
+     the right edge -- the original's tab frame. */
+  .pp-frame.ea-tab-media {
+    height: 523px; padding: 80px 0 0 40px;
+    align-items: flex-start; justify-content: flex-start;
+    border: 0; border-radius: 8px;
+  }
+  .pp-frame.ea-tab-media > img { width: var(--shot-w, 100%); max-width: none; height: auto; }
+  .ea-tab-copy { flex: none; width: 632px; max-width: 100%; padding-left: 96px; min-width: 0; }
   .ea-tab-copy .pp-h30 { line-height: 36px; }
   .ea-tab-body { margin-top: 16px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
   .ea-tab-body a { font-weight: 700; color: var(--color-brand); }
@@ -1488,27 +1526,31 @@
   /* One pair of rules per tab, since :has() cannot select by index. */
   .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'],
   .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'],
-  .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] {
-    color: var(--color-brand); border-bottom-color: var(--color-brand);
-  }
+  .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] { color: var(--color-brand); }
   .ea-tabs:has(#tab-metabot:checked) .ea-panelrow[data-tab='metabot'],
   .ea-tabs:has(#tab-explore:checked) .ea-panelrow[data-tab='explore'],
   .ea-tabs:has(#tab-simple:checked)  .ea-panelrow[data-tab='simple'] { display: flex; }
   .ea-tab-radio:focus-visible + .ea-tabstrip .ea-tab { outline: 2px solid var(--color-brand); outline-offset: 4px; }
 
   /* --- theming demo ----------------------------------------------------- */
-  .ea-theme { margin-top: 48px; }
+  /* The standfirst above carries the gap; the demo adds none of its own. */
+  .ea-theme { margin-top: 0; }
   .ea-theme-radio { position: absolute; opacity: 0; pointer-events: none; }
+  /* Canvas and readout are two separate boxes 32 apart, not one framed row:
+     on the original the canvas is a live 822x350 frame and the readout a
+     bordered card beside it. */
   .ea-theme-stage {
-    display: flex; gap: 0; align-items: stretch;
-    border-radius: 8px; overflow: hidden;
-    background: #fff; border: 1px solid var(--color-line);
+    display: flex; justify-content: center; align-items: stretch;
+    width: 100%; max-width: 1052px; margin-inline: auto; padding-inline: 8px;
   }
-  .ea-theme-canvas { flex: 1 1 822px; min-width: 0; }
+  .ea-theme-canvas {
+    flex: none; width: 822px; height: 350px; max-width: 100%;
+    border-radius: 8px; overflow: hidden; background: #fff;
+  }
   .ea-theme-canvas img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
   .ea-theme-controls {
-    flex: none; width: 182px; padding: 18px 16px;
-    border-left: 1px solid var(--color-line);
+    flex: none; width: 182px; height: 350px; margin-left: 32px; padding: 16px;
+    border: 2px solid var(--color-line); border-radius: 8px;
     text-align: left;
   }
   .ea-theme-label {
@@ -1526,20 +1568,19 @@
   .ea-sw { display: block; flex: none; width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--color-line); }
 
   .ea-theme-presets {
-    display: flex; justify-content: center; gap: 12px;
-    width: fit-content; margin: 24px auto 0; padding: 28px 46px;
+    display: flex; justify-content: center; gap: 20px;
+    width: fit-content; margin: 32px auto 0; padding: 16px 16px 40px;
     background: #fff; border-radius: 8px;
   }
   .ea-preset {
-    display: flex; align-items: center; gap: 6px;
-    height: 40px; padding-inline: 12px; justify-content: center;
+    display: flex; align-items: center;
+    height: 40px; padding: 4px 12px; justify-content: center;
     border-radius: 8px;
     font-size: 16px; line-height: 24px; font-weight: 700;
     color: #c6c9d2; background: var(--color-surface);
     cursor: pointer; transition: color 150ms ease, background-color 150ms ease;
   }
   .ea-preset b { display: flex; align-items: center; height: 32px; font-weight: 700; line-height: 24px; }
-  .ea-preset-dot { display: block; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
 
   /* Each preset drives the swatches, the font and the mode readout. */
   .ea-theme:has(#th-classic:checked) .ea-preset[data-theme='classic'],
@@ -1613,9 +1654,9 @@
   }
   .ea-vs-group + .ea-vs-group { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--color-line); }
   .ea-vs-h { width: fit-content; font-size: 16px; line-height: 24px; font-weight: 700; color: var(--color-ink-2); }
-  .ea-vs-list { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .ea-vs-list { margin-top: 8px; display: flex; flex-direction: column; gap: 21px; }
   .ea-vs-list li {
-    position: relative; padding-left: 22px;
+    position: relative; padding-left: 24px;
     font-size: 16px; line-height: 24px; color: var(--color-ink-2);
   }
   .ea-vs-list li::before {
@@ -1629,10 +1670,12 @@
   /* --- FAQ -------------------------------------------------------------- */
   .ea-faq { width: 100%; max-width: 602px; margin-top: 32px; text-align: left; }
   .ea-faq-item { border-bottom: 1px solid var(--color-line); }
+  .ea-faq-item:first-child summary { padding-top: 0; }
+  .ea-faq-item:last-child summary { padding-bottom: 12px; }
   .ea-faq-item summary {
-    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-    padding-block: 20px; cursor: pointer; list-style: none;
-    font-size: 16px; font-weight: 700; color: var(--color-ink);
+    display: flex; justify-content: space-between; gap: 20px;
+    padding-block: 24px; cursor: pointer; list-style: none;
+    font-size: 16px; line-height: 20px; font-weight: 700; color: var(--color-ink);
   }
   .ea-faq-item summary::-webkit-details-marker { display: none; }
   .ea-faq-item summary svg { flex: none; margin-top: 3px; transition: transform 200ms ease; }
@@ -1640,7 +1683,7 @@
   .ea-faq-item > p { padding-bottom: 20px; font-size: 16px; line-height: 26px; color: var(--color-ink-2); }
 
   /* --- closing CTA ------------------------------------------------------ */
-  .ea-final-media { position: relative; width: 100%; max-width: 894px; margin-top: 64px; }
+  .ea-final-media { position: relative; width: 100%; max-width: 894px; }
   .ea-final-frame {
     background: #fff; border: 1px solid var(--color-line);
     border-bottom: 0; border-radius: 24px 24px 0 0; overflow: hidden;
@@ -1663,7 +1706,8 @@
   @media (max-width: 1399px) {
     .ea-story { gap: 40px; }
     .ea-story-media { flex: 1 1 52%; width: auto; }
-    .ea-tab-media { flex: 1 1 52%; width: auto; }
+    .ea-tab-media { flex: 1 1 50%; width: auto; }
+    .ea-tab-copy { flex: 1 1 50%; width: auto; padding-left: 64px; }
     .ea-support { gap: 40px; }
     .ea-marquee { flex: 1 1 46%; width: auto; }
     .pp-frame--bleed > img { width: 100%; }
@@ -1673,9 +1717,10 @@
     .ea-panel { padding: 32px 20px; }
     .ea-story, .ea-impls, .ea-panelrow, .ea-support { flex-direction: column; gap: 32px; }
     .ea-story-media, .ea-tab-media, .ea-marquee { width: 100%; flex: 1 1 auto; }
+    .ea-tab-copy { width: 100%; padding-left: 0; }
     .ea-story-title, .ea-impl-title { font-size: 24px; line-height: 30px; }
     .ea-tabstrip { flex-wrap: wrap; gap: 16px; }
-    .ea-tab { font-size: 16px; line-height: 24px; }
+    .ea-tab { width: auto; font-size: 16px; line-height: 24px; }
     .ea-theme-stage { flex-direction: column; }
     .ea-theme-controls { width: 100%; border-left: 0; border-top: 1px solid var(--color-line); }
     .ea-theme-presets { flex-wrap: wrap; }
