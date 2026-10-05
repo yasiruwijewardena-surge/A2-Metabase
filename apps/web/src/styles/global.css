@@ -2808,3 +2808,69 @@
     .ev-carousel { height: 400px; }
   }
 }
+
+@layer components {
+  /*
+   * One event's page. The card is inset from the viewport with the category
+   * artwork lifted so it straddles its top edge, which is what the original
+   * does with a negative margin against the card's padding.
+   */
+  .ev-one { padding-block: 40px 96px; }
+  .ev-one-card {
+    position: relative;
+    max-width: 1280px; margin: 160px auto 96px;
+    padding: 92px 24px 64px;
+    border: 1px solid var(--color-brand-muted); border-radius: 24px;
+    background: var(--color-brand-faint);
+  }
+  .ev-one-back {
+    position: absolute; top: -60px; left: 10px;
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 16px; font-weight: 700; color: var(--color-brand);
+  }
+  .ev-one-back:hover { color: var(--color-brand-hover); }
+  @media (max-width: 991px) { .ev-one-back-long { display: none; } }
+  .ev-one-head { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  /* Lifted clear of the card so it overlaps the edge above it. */
+  .ev-one-art {
+    display: block; width: 176px; height: 176px;
+    margin-top: -160px; margin-bottom: 48px;
+    border-radius: 12px; object-fit: cover;
+    box-shadow: 0 8px 8px -4px rgb(16 24 40 / 0.03), 0 20px 24px -4px rgb(16 24 40 / 0.08);
+  }
+  .ev-one-title {
+    max-width: 720px; margin-bottom: 24px;
+    font-size: 36px; line-height: 40px; font-weight: 900; color: var(--color-ink);
+  }
+  .ev-one-meta { margin-bottom: 32px; font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
+  .ev-one-cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 18px; border-radius: 8px;
+    background: var(--color-brand); color: #fff;
+    font-size: 16px; line-height: 24px; font-weight: 700;
+    transition: background-color 200ms;
+  }
+  .ev-one-cta:hover { background: var(--color-brand-hover); }
+
+  .ev-one-intro { max-width: 600px; margin: 96px auto 0; font-size: 20px; line-height: 30px; color: var(--color-ink-2); }
+  .ev-one-h { margin-bottom: 32px; font-size: 20px; font-weight: 700; color: var(--color-ink); }
+
+  .ev-one-more-h { margin-bottom: 32px; font-size: 24px; font-weight: 700; color: var(--color-ink); text-align: center; }
+  .ev-one-more-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .ev-one-more-card {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px; border: 1px solid var(--color-line); border-radius: 16px; background: #fff;
+    transition: border-color 200ms, background-color 200ms;
+  }
+  .ev-one-more-card:hover { border-color: #c2daf0; background: #fcfcfd; }
+  .ev-one-more-card img { display: block; width: 96px; height: 96px; border-radius: 12px; object-fit: cover; flex: none; }
+  .ev-one-more-date { display: block; font-size: 16px; line-height: 24px; color: var(--color-ink-3); }
+  .ev-one-more-title { display: block; font-size: 20px; line-height: 28px; font-weight: 700; color: var(--color-ink); }
+
+  @media (max-width: 991px) {
+    .ev-one-card { margin: 120px 0 48px; border-radius: 0; border-inline: 0; padding-top: 72px; }
+    .ev-one-art { width: 96px; height: 96px; margin-top: -120px; margin-bottom: 32px; }
+    .ev-one-title { font-size: 24px; line-height: 32px; }
+    .ev-one-intro { margin-top: 48px; padding-inline: 32px; }
+  }
+}

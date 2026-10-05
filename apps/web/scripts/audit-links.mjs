@@ -51,7 +51,19 @@ const resolves = (href) => {
   return false;
 };
 
-const missing = [...hrefs.keys()].filter((h) => !resolves(h) && !NEVER_STUB.has(h)).sort();
+/*
+ * `href` is not only navigation: a preload carries one too, and those point at
+ * assets Strapi serves rather than pages in dist/. Counting them turned every
+ * preloaded image into a "missing page", which would have had the catch-all
+ * build a stub per image. Anything under an asset root, or ending in a file
+ * extension, is not a page.
+ */
+const ASSET_ROOTS = ['/uploads/', '/_astro/', '/images/', '/fonts/'];
+const isAsset = (h) => ASSET_ROOTS.some((r) => h.startsWith(r)) || /\.[a-z0-9]{2,5}$/i.test(h);
+
+const missing = [...hrefs.keys()]
+  .filter((h) => !isAsset(h) && !resolves(h) && !NEVER_STUB.has(h))
+  .sort();
 const previous = existsSync(listFile) ? JSON.parse(readFileSync(listFile, 'utf8')) : [];
 const changed = JSON.stringify(previous) !== JSON.stringify(missing);
 

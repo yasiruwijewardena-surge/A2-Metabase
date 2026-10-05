@@ -171,6 +171,7 @@ export const getEvents = () =>
        down rather than on the event itself. */
     'populate[category][populate][artwork]': 'true',
     'populate[category][populate][poster]': 'true',
+    'populate[seo]': 'true',
     sort: 'startsAt:desc',
   });
 

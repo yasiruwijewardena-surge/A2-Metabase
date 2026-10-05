@@ -126,6 +126,7 @@ export interface SiteEvent {
   recordingUrl?: string | null;
   featured?: boolean;
   category?: EventCategory | null;
+  seo?: Seo | null;
 }
 
 export interface GlossaryTerm {

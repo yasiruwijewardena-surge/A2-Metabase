@@ -1,0 +1,118 @@
+---
+/*
+ * One event.
+ *
+ * The index linked every event to /events/<slug> but no such route existed,
+ * so all eighteen were 404s (two of them landed on the information-
+ * architecture stub instead, which is worse: it claimed the page was never
+ * part of the build).
+ *
+ * Laid out as the original lays its own out: a rounded card inset from the
+ * page, the category artwork lifted so it straddles the card's top edge, the
+ * title, then the date and place, then "About this event" in a 600-wide
+ * measure. Where the original lists guests and embeds a recording, this uses
+ * what the content type actually holds -- there is no guest or video-id
+ * field -- rather than inventing either.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEvents } from '../../lib/strapi';
+import { cld } from '../../lib/image';
+import type { StrapiImage } from '../../lib/types';
+
+export async function getStaticPaths() {
+  const events = await getEvents();
+  return events.map((event) => ({ params: { slug: event.slug }, props: { event, events } }));
+}
+
+const { event, events } = Astro.props;
+
+const square = (c?: { artwork?: StrapiImage | null; poster?: StrapiImage | null } | null) =>
+  c?.artwork?.url ?? c?.poster?.url ?? null;
+const crop = (url: string, w: number, h: number, scale = 1) =>
+  cld(url, `f_auto,q_auto,c_fill,w_${w * scale},h_${h * scale}`);
+
+const art = square(event.category);
+const starts = new Date(event.startsAt);
+const isPast = starts.getTime() < Date.now();
+
+/* Fixed to UTC and said so, as the index is: a static build has no viewer
+   whose timezone it could use. */
+const fmtFull = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+  hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false,
+}).format(starts);
+
+const cta = isPast
+  ? { href: event.recordingUrl, label: 'Watch the recording' }
+  : { href: event.registrationUrl, label: 'Register now' };
+
+/* Up to three other events still to come. Only upcoming ones: the heading
+   says "join", and padding the row out with talks that already happened
+   would make it say something untrue. */
+const others = events
+  .filter((e) => e.slug !== event.slug && new Date(e.startsAt).getTime() >= Date.now())
+  .sort((a, b) => +new Date(a.startsAt) - +new Date(b.startsAt))
+  .slice(0, 3);
+---
+<BaseLayout
+  title={event.seo?.metaTitle ?? `${event.title} | Metabase`}
+  description={event.seo?.metaDescription ?? event.description ?? ''}
+>
+  <div class="ev-one">
+    <div class="ev-one-card">
+      <a class="ev-one-back" href="/events">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+        <span>Back to all<span class="ev-one-back-long">&nbsp;events</span></span>
+      </a>
+
+      <div class="ev-one-head">
+        {art && (
+          <img class="ev-one-art" src={crop(art, 176, 176)}
+               srcset={`${crop(art, 176, 176)} 1x, ${crop(art, 176, 176, 2)} 2x`}
+               width="176" height="176" alt="" loading="eager" decoding="sync" />
+        )}
+        <h1 class="ev-one-title">{event.title}</h1>
+        <p class="ev-one-meta">
+          <time datetime={starts.toISOString()}>{fmtFull} (UTC)</time>
+          {event.location && <> &middot; {event.location}</>}
+        </p>
+        {cta.href && <a class="ev-one-cta" href={cta.href}>{cta.label}</a>}
+      </div>
+
+      {event.description && (
+        <div class="ev-one-intro">
+          <h2 class="ev-one-h">About this event</h2>
+          <p>{event.description}</p>
+        </div>
+      )}
+    </div>
+
+    {others.length > 0 && (
+      <section class="ev-one-more container-mb">
+        <h2 class="ev-one-more-h">Join an upcoming event</h2>
+        <div class="ev-one-more-grid">
+          {others.map((e) => {
+            const a = square(e.category);
+            return (
+              <a class="ev-one-more-card" href={`/events/${e.slug}`}>
+                {a && (
+                  <img src={crop(a, 96, 96)} srcset={`${crop(a, 96, 96)} 1x, ${crop(a, 96, 96, 2)} 2x`}
+                       width="96" height="96" alt="" loading="lazy" decoding="async" />
+                )}
+                <span>
+                  <span class="ev-one-more-date">
+                    {new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(e.startsAt))}
+                  </span>
+                  <span class="ev-one-more-title">{e.title}</span>
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
