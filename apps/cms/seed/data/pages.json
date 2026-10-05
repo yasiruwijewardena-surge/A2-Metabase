@@ -2790,7 +2790,7 @@
               "badge": "Low-code",
               "icon": "embed",
               "title": "Embed charts and interactive dashboards fast with little engineering lift",
-              "sub": "Outrun competitors and boost revenue with reporting as a product feature.",
+              "sub": "Customers want data. Check it off your list.",
               "points": [
                 {
                   "lead": "Set up in minutes",
@@ -2801,10 +2801,6 @@
                   "rest": ", customise navigation and the surrounding experience with a low-code integration.",
                   "linkLabel": "White label with your branding",
                   "linkUrl": "/features/white-label-analytics"
-                },
-                {
-                  "lead": "Customize theming and interactivity",
-                  "rest": " per component, per organisation or per user."
                 },
                 {
                   "lead": "Limit exploration",
@@ -2822,23 +2818,19 @@
               "badge": "Modular Embedding SDK for React",
               "icon": "sdk",
               "title": "More control, more customization",
-              "sub": "Customers want data. Check it off your list.",
+              "sub": "Outrun competitors and boost revenue with reporting as a product feature.",
               "points": [
                 {
                   "lead": "Build custom analytics experiences",
                   "rest": " with a powerful alternative to hand-rolling your in-app reporting, and keep the parts you have already built."
                 },
                 {
-                  "lead": "Compose from React components",
-                  "rest": " and drop them wherever the product already has a place for them."
+                  "lead": "Customize theming and interactivity",
+                  "rest": " per component, per organisation or per user."
                 },
                 {
                   "lead": "Manage the UX",
                   "rest": " with custom behaviours, menu items, flows and formats."
-                },
-                {
-                  "lead": "Ship with your own design system",
-                  "rest": " so the embedded views stop looking embedded."
                 }
               ],
               "linkLabel": "Learn more about Modular Embedding SDK",

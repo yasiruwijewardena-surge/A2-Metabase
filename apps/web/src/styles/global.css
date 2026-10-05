@@ -1161,6 +1161,7 @@
   /* Each inset shot renders at its own width rather than filling the frame. */
   .pp-frame--inset > img { width: var(--shot-w, 100%); max-width: none; }
   .pp-frame > video, .pp-frame > img { display: block; width: 100%; height: auto; }
+  .pp-frame > video { border-radius: 12px; }
 
   /* --- media beside copy ------------------------------------------------ */
   .pp-split { display: flex; margin-block: 40px 140px; }
@@ -1425,8 +1426,13 @@
   .pp-points--sm { gap: 8px 16px; margin: 12px 0 64px; }
 
   /* --- inline quote card ------------------------------------------------ */
-  .pq-card { margin-top: 40px; }
-  .pq-body { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
+  /* A 4px rule down its left edge and the quote set in italic, as the
+     original runs it on every product page. */
+  .pq-card {
+    margin-top: 32px; padding-left: 24px;
+    border-left: 4px solid var(--color-line);
+  }
+  .pq-body { font-size: 18px; line-height: 26px; font-style: italic; color: var(--color-ink-2); }
   .pq-foot { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
   /* The company mark overlaps the portrait on the original. */
   .pq-marks { position: relative; flex: none; display: block; width: 68px; height: 48px; }
