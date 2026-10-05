@@ -89,12 +89,9 @@ const group = `acc-${s.id}`;
     }
   }
 
-  /* Without script, or with reduced motion, it is a plain click accordion and
-     the track collapses to its content. */
-  @media (prefers-reduced-motion: reduce) {
-    .pp-accordion-track[data-track] { height: auto; }
-    .pp-accordion-track[data-track] > .pp-accordion { position: static; min-height: 0; }
-  }
+  /* Without script it is a plain click accordion and the track collapses to
+     its content. Reduced motion keeps the scrub -- it is how the section is
+     read, not an effect -- and only drops the easing on the rails. */
   .pp-accordion-track:not([data-pinned]) { height: auto; }
   .pp-accordion-track:not([data-pinned]) > .pp-accordion { position: static; min-height: 0; }
 </style>
@@ -119,7 +116,6 @@ const group = `acc-${s.id}`;
     const shots = [...root.querySelectorAll<HTMLElement>('.pp-accordion-shot')];
     if (!track || radios.length < 2) return;
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 769px)');
 
     const showShot = (i: number) =>
@@ -128,7 +124,7 @@ const group = `acc-${s.id}`;
     /* Opt the track in only when it is actually driving, so the CSS above can
        fall back to a plain accordion otherwise. */
     const arm = () => {
-      const on = wide.matches && !reduced.matches;
+      const on = wide.matches;
       track.toggleAttribute('data-pinned', on);
       if (!on) {
         fills.forEach((f) => (f.style.height = ''));
@@ -161,6 +157,5 @@ const group = `acc-${s.id}`;
     update();
     addEventListener('scroll', update, { passive: true });
     addEventListener('resize', () => { arm(); update(); }, { passive: true });
-    reduced.addEventListener('change', () => { arm(); update(); });
   });
 </script>
