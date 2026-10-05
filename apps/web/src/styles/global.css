@@ -1049,7 +1049,12 @@
   }
 
   .pp-eyebrow { display: block; }
-  .pp-eyebrow-icon { display: inline-block; vertical-align: middle; margin-right: 14px; }
+  /* The original draws a 70-unit badge into a 62x70 box, so the artwork
+     scales to 0.886 and its 56/48 discs measure 50 and 43. */
+  .pp-eyebrow-icon {
+    display: inline-block; vertical-align: middle; margin-right: 14px;
+    width: 62px; height: 70px;
+  }
   .pp-eyebrow b { vertical-align: middle; line-height: 26px; font-size: 18px; font-weight: 700; color: var(--color-brand); }
 
   .pp-hero-title {

@@ -10,6 +10,7 @@
  */
 import NavIcon from '../NavIcon.astro';
 import ProductCtaRow from '../ProductCtaRow.astro';
+import ProductEyebrowIcon from './ProductEyebrowIcon.astro';
 import { src as atWidth } from '../../lib/image';
 import type { HeroSection } from '../../lib/types';
 
@@ -31,14 +32,7 @@ const cta = s.ctas?.length
   <div class="container-mb pp-center">
     {s.eyebrow && (
       <p class="pp-eyebrow">
-        {s.eyebrowIcon && (
-          <svg class="pp-eyebrow-icon" width="62" height="70" viewBox="0 0 62 70" fill="none" aria-hidden="true">
-            <rect x="1" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".3" />
-            <rect x="35" y="19" width="26" height="26" rx="5" fill="#509EE3" opacity=".55" />
-            <rect x="9.5" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" opacity=".75" />
-            <rect x="31" y="49" width="21.5" height="21.5" rx="4.5" fill="#509EE3" />
-          </svg>
-        )}
+        {s.eyebrowIcon && <ProductEyebrowIcon name={s.eyebrowIcon} />}
         <b>{s.eyebrow}</b>
       </p>
     )}
