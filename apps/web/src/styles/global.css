@@ -1277,9 +1277,15 @@
   }
   .pp-quote-body { max-width: 600px; margin-bottom: 16px; font-size: 20px; line-height: 26px; color: var(--color-ink-2); }
   .pp-quote-photo { display: block; width: 84px; height: 50px; object-fit: cover; border-radius: 6px; }
+  .pp-quote-photo--initials {
+    display: grid; place-items: center;
+    background: var(--color-brand-muted);
+    font-size: 16px; font-weight: 700; color: var(--color-brand-strong);
+  }
   .pp-quote-who { display: flex; flex-direction: column; }
   .pp-quote-name { font-size: 16px; line-height: 26px; font-weight: 700; color: var(--color-ink-2); }
-  .pp-quote-role { font-size: 16px; line-height: 26px; color: var(--color-ink-2); }
+  /* Tertiary, not secondary -- the name above it carries the darker ink. */
+  .pp-quote-role { font-size: 16px; line-height: 26px; color: var(--color-ink-3); }
 
   /* --- closing CTA ------------------------------------------------------ */
   /* No tint on the original: a hairline top border and the screenshot

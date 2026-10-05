@@ -4,7 +4,6 @@
  * then name 16/26/700 and role 16/26 in the original's muted grey. The
  * original sets no quotation marks around the body, so neither does this.
  */
-import Avatar from './Avatar.astro';
 import { thumbSet } from '../lib/image';
 
 interface Props { quote: any }
@@ -18,7 +17,14 @@ const photo = person?.avatar?.url ? thumbSet(person.avatar.url, 84, 50).src : nu
     {photo
       ? <img class="pp-quote-photo" src={photo} width="84" height="50"
              alt={`Photo of ${person?.name}`} loading="lazy" decoding="async" />
-      : <Avatar image={null} name={person?.name} size={50} class="pp-quote-photo" />}
+      : (
+          /* These people are fictional personas, so there is no photograph.
+             Initials fill the same 84x50 slot rather than collapsing it, as
+             the home page's pull quotes do. */
+          <span class="pp-quote-photo pp-quote-photo--initials" aria-hidden="true">
+            {(person?.name ?? '').split(/\s+/).filter(Boolean).slice(0, 2).map((w: string) => w[0]?.toUpperCase()).join('')}
+          </span>
+        )}
     <figcaption class="pp-quote-who">
       <span class="pp-quote-name">{person?.name}</span>
       <span class="pp-quote-role">
