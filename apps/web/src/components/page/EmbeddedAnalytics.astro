@@ -41,6 +41,7 @@
  */
 import NavIcon from '../NavIcon.astro';
 import ProductPillarIcon from './ProductPillarIcon.astro';
+import ProductEyebrowIcon from './ProductEyebrowIcon.astro';
 import ProductCtaRow from '../ProductCtaRow.astro';
 import ProductQuoteCard from '../ProductQuoteCard.astro';
 import SupportQuote from '../SupportQuote.astro';
@@ -71,12 +72,7 @@ const faqs = s.faqs ?? [];
   <div class="pp-hero-band">
     <div class="container-mb pp-center">
       <p class="pp-eyebrow">
-        <svg class="pp-eyebrow-icon" width="62" height="70" viewBox="0 0 62 70" fill="none" aria-hidden="true">
-          <rect x="1" y="12" width="60" height="44" rx="6" fill="#509EE3" opacity=".25" />
-          <rect x="9" y="22" width="44" height="6" rx="3" fill="#509EE3" />
-          <rect x="9" y="34" width="28" height="6" rx="3" fill="#509EE3" opacity=".7" />
-          <circle cx="46" cy="47" r="8" fill="#509EE3" />
-        </svg>
+        <ProductEyebrowIcon name="embedded" />
         <b>{s.eyebrow}</b>
       </p>
       <h1 class="pp-hero-title">{s.heading}</h1>

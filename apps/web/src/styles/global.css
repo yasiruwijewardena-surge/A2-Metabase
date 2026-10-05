@@ -1373,7 +1373,12 @@
   .ea-page .pp-band-sub--600 { max-width: 600px; }
   .pp-split--reverse { flex-direction: row-reverse; }
   .pp-split-copy--narrow > * { max-width: 488px; }
-  .pp-hero-img--bare { padding: 0; border: 0; border-radius: 12px; background: transparent; }
+  /* Unframed, and pulled 90px up into what follows -- which is what closes
+     the gap between the shot and the trust logos beneath it. */
+  .pp-hero-img--bare {
+    padding: 0; border: 0; border-radius: 12px; background: transparent;
+    margin-bottom: -90px;
+  }
   .pp-pillars--tall .pp-pillar { min-height: 231px; }
   /* The flexible-solutions shot is wider than its frame on the original. */
   .pp-frame--bleed { height: 514px; overflow: visible; }
