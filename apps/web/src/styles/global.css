@@ -1163,8 +1163,8 @@
     font-size: 30px; line-height: 35.1px; font-weight: 700; color: var(--color-ink);
   }
   .pp-lede { margin-bottom: 16px; font-size: 20px; line-height: 28px; color: var(--color-ink-2); }
-  .pp-lede a { font-weight: 700; color: var(--color-brand-hover); }
-  .pp-lede a:hover { text-decoration: underline; }
+  .pp-lede a { font-weight: 700; color: var(--color-brand); }
+  .pp-lede a:hover { color: var(--color-brand-hover); text-decoration: underline; }
 
   /* Bullets set with a bold lead-in on its own line, in the body colour. */
   .pp-rich > li {
@@ -1188,14 +1188,14 @@
     width: 100%; max-width: 600px; margin-bottom: 32px;
     font-size: 20px; line-height: 32px; color: var(--color-ink-2);
   }
-  .pp-band-sub a { color: var(--color-brand-hover); font-weight: 700; }
-  .pp-band-sub a:hover { text-decoration: underline; }
+  .pp-band-sub a { color: var(--color-brand); font-weight: 700; }
+  .pp-band-sub a:hover { color: var(--color-brand-hover); text-decoration: underline; }
   .pp-band-img { display: block; width: 100%; max-width: 592px; height: auto; margin-top: 48px; }
   .pp-band-link {
     display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
-    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+    font-size: 16px; font-weight: 700; color: var(--color-brand);
   }
-  .pp-band-link:hover { text-decoration: underline; }
+  .pp-band-link:hover { color: var(--color-brand-hover); text-decoration: underline; }
   .pp-band-link svg { display: block; flex: none; }
 
   /* --- feature accordion ------------------------------------------------ */
@@ -1224,7 +1224,7 @@
   .pp-feature-icon { display: block; color: var(--color-brand-hover); }
   .pp-feature-badge {
     display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
-    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-brand-hover);
+    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-brand);
   }
   .pp-feature-badge-icon { display: block; flex: none; }
   .pp-feature-title {
@@ -1238,9 +1238,9 @@
   .pp-feature-text { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
   .pp-feature-link {
     display: inline; margin-top: 28px;
-    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-brand-hover);
+    font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-brand);
   }
-  .pp-feature-link:hover { text-decoration: underline; }
+  .pp-feature-link:hover { color: var(--color-brand-hover); text-decoration: underline; }
 
   /* Open item: dark heading, brand rail, body revealed. */
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-title { color: var(--color-ink); }
