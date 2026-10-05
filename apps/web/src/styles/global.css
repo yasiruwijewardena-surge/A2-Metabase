@@ -1923,15 +1923,19 @@
     .fp-neutral { margin-bottom: 40px; padding-block: 32px 48px; }
     .fp-hero { flex-direction: column; align-items: stretch; gap: 32px; }
     .fp-hero-text, .fp-hero-media { flex: 1 1 auto; }
-    .fp-h1 { font-size: 28px; line-height: 34px; }
-    .fp-standfirst { font-size: 18px; line-height: 28px; }
-    .fp-h2 { margin-top: 48px; font-size: 24px; line-height: 30px; }
+    /* The original holds the headline at 36/40 all the way down and only
+       eases the section heading, which it runs fluid: 32 at desktop, 30 here,
+       28 under 768 and 25 on a phone. */
+    .fp-standfirst { font-size: 18px; line-height: 26px; }
+    .fp-h2 { margin-top: 48px; font-size: 30px; line-height: 35px; }
     .fp-cards, .fp-links { grid-template-columns: 1fr; margin-top: 32px; }
     .fp-link-h { font-size: 20px; line-height: 28px; }
     .fp-howto-h, .fp-final-h { font-size: 26px; line-height: 34px; }
     .fp-steps { padding: 24px; }
     .fp-final { margin-top: 40px; padding: 48px 28px; }
   }
+  @media (max-width: 767px) { .fp-h2 { font-size: 28px; line-height: 33px; } }
+  @media (max-width: 575px) { .fp-h2 { font-size: 25px; line-height: 29px; } }
 }
 
 /* ---------------------------------------------------------------------------
@@ -2886,14 +2890,13 @@
   @media (max-width: 991px) {
     .ev-upcoming { padding: 40px 20px 56px; }
     .ev-head { margin-block: 24px; padding-inline: 0; }
-    .ev-h1 { font-size: 34px; line-height: 42px; }
-    .ev-sub, .ev-watch-sub { font-size: 18px; line-height: 28px; }
-    .ev-watch-head { padding: 48px 20px 0; }
-    .ev-watch { padding-bottom: 64px; }
-    .ev-watch-h { font-size: 28px; line-height: 36px; }
+    /* The original holds this page's type at one size all the way down --
+       48/58 headline, 20/28 everywhere else -- and reflows instead. The step
+       that used to be here was mine, not its. */
     .ev-card { flex-direction: column; align-items: flex-start; gap: 16px; }
     .ev-thumb { width: 96px; height: 96px; }
-    .ev-title { font-size: 20px; line-height: 28px; }
+    .ev-watch-head { padding: 48px 20px 0; }
+    .ev-watch { padding-bottom: 64px; }
     .ev-carousel { height: 400px; }
   }
 }
