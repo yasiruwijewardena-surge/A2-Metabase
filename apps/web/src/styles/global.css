@@ -1168,8 +1168,12 @@
   /* 632 column less the 72px gutter leaves the original's 560 copy measure. */
   .pp-split-copy { flex: 0 0 632px; max-width: 100%; min-width: 0; padding-left: 72px; }
 
+  /* Hung under the frame rather than stacked below it, so it costs the
+     column no height -- which is how the original keeps the split square. */
+  .pp-split-media:has(.pp-play-caption) { position: relative; }
   .pp-play-caption {
-    margin: 0 20px; text-align: center;
+    position: absolute; top: 100%; left: 0; right: 0;
+    margin: 17px 20px 0; text-align: center;
     font-size: 14px; line-height: 22px; font-weight: 700; color: var(--color-ink-3);
   }
   /* Inline, so it follows the words rather than sitting in its own flex cell. */
@@ -1237,7 +1241,7 @@
   .pp-accordion-media img { width: 602px; max-width: 100%; height: auto; }
 
   .pp-features { flex: 0 0 492px; min-width: 0; }
-  .pp-feature { display: flex; gap: 20px; margin-bottom: 16px; }
+  .pp-feature { display: flex; gap: 20px; margin-bottom: 24px; }
   .pp-feature:last-child { margin-bottom: 0; }
   /* Real radios drive the open state, so the accordion needs no JavaScript. */
   .pp-feature-radio { position: absolute; opacity: 0; pointer-events: none; }
@@ -1245,7 +1249,7 @@
     flex: none; width: 4px; border-radius: 2px; background: var(--color-surface);
     align-self: stretch;
   }
-  .pp-feature-body { flex: 1 1 auto; min-width: 0; padding-bottom: 16px; }
+  .pp-feature-body { flex: 1 1 auto; min-width: 0; }
   .pp-feature-icon { display: block; color: var(--color-brand); }
   .pp-feature-badge {
     display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
@@ -1271,7 +1275,7 @@
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-title { color: var(--color-ink); }
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-detail { display: block; }
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-rail { background: var(--color-brand); }
-  .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { color: var(--color-ink-2); }
+  .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { display: none; }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-badge { display: none; }
   /* The open item is labelled by its badge, so the large icon steps aside --
      the original shows one or the other, never both. */
