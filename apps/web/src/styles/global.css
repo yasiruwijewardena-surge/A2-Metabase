@@ -136,6 +136,11 @@
     margin-inline: auto;
     padding-inline: 20px;
   }
+
+  /* The glossary headline holds 36/40 down to 576, where the original eases
+     it to 26/29 as the container goes full-bleed. */
+  .gl-h1 { font-size: 36px; line-height: 40px; }
+  @media (max-width: 575px) { .gl-h1 { font-size: 26px; line-height: 29px; } }
   @media (min-width: 576px)  { .container-mb { max-width: 540px; } }
   @media (min-width: 768px)  { .container-mb { max-width: 720px; } }
   @media (min-width: 992px)  { .container-mb { max-width: 960px; } }
@@ -2472,10 +2477,10 @@
 
   @media (max-width: 991px) {
     .dst-hero { padding-top: 32px; margin-bottom: 72px; }
-    .dst-h1 { max-width: 100%; font-size: 26px; line-height: 32px; }
-    .dst-lede { font-size: 18px; line-height: 28px; }
+    .dst-h1 { max-width: 100%; font-size: 28px; line-height: 34px; }
+    .dst-lede { font-size: 18px; line-height: 26px; }
     .dst-shot { margin-top: 40px; margin-bottom: -64px; padding: 8px; }
-    .dst-feats-h { margin-top: 56px; font-size: 24px; line-height: 30px; }
+    .dst-feats-h { margin-top: 56px; font-size: 24px; line-height: 32px; }
     .dst-feats-lede { margin-bottom: 32px; font-size: 18px; line-height: 28px; }
     .dst-grid { grid-template-columns: 1fr; gap: 16px; width: 100%; }
     .dst-faq { margin-top: 56px; }
