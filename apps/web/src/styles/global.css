@@ -1213,6 +1213,9 @@
     font-size: 16px; font-weight: 700; color: var(--color-brand);
   }
   .pp-band-link:hover { color: var(--color-brand-hover); text-decoration: underline; }
+  /* Inside a split the original sets this link larger and further down, and
+     lets it fill the copy column rather than shrink to its text. */
+  .pp-split .pp-band-link { display: flex; margin-top: 28px; font-size: 18px; }
   .pp-band-link svg { display: block; flex: none; }
 
   /* --- feature accordion ------------------------------------------------ */
@@ -1238,7 +1241,7 @@
     align-self: stretch;
   }
   .pp-feature-body { flex: 1 1 auto; min-width: 0; padding-bottom: 16px; }
-  .pp-feature-icon { display: block; color: var(--color-brand-hover); }
+  .pp-feature-icon { display: block; color: var(--color-brand); }
   .pp-feature-badge {
     display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
     font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-brand);
@@ -1432,11 +1435,12 @@
   }
   .ea-impl-badge {
     display: flex; align-items: center; gap: 8px;
-    font-size: 18px; line-height: 24px; font-weight: 700; color: var(--color-brand-hover);
+    font-size: 18px; line-height: 24px; font-weight: 700; color: var(--color-brand);
   }
   .ea-impl-badge-icon { display: block; flex: none; }
   .ea-impl-h { margin-top: 8px; font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink); }
-  .ea-impl-sub { margin-top: 8px; font-size: 20px; line-height: 28px; color: var(--color-ink-2); }
+  /* Tertiary ink -- the badge above carries the colour, the sub sits back. */
+  .ea-impl-sub { margin-top: 8px; font-size: 20px; line-height: 28px; color: var(--color-ink-3); }
   .ea-impl-points { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
   .ea-impl-points li {
     position: relative; padding-left: 28px;
@@ -1447,7 +1451,8 @@
     width: 8px; height: 8px; border-radius: 50%; background: var(--color-brand);
   }
   .ea-impl-points b { font-weight: 700; }
-  .ea-impl-points a { font-weight: 700; color: var(--color-brand-hover); }
+  .ea-impl-points a { font-weight: 700; color: var(--color-brand); }
+  .ea-impl-points a:hover { color: var(--color-brand-hover); }
   .ea-impl-points a:hover { text-decoration: underline; }
   /* Pushed to the card's foot and allowed to bleed off its bottom edge. */
   .ea-impl .pp-band-link { line-height: normal; }
@@ -1460,25 +1465,26 @@
   .ea-tab {
     display: flex; align-items: center; gap: 8px; padding-bottom: 12px;
     font-size: 20px; line-height: 28px; font-weight: 700;
-    color: var(--color-ink-3); border-bottom: 2px solid transparent;
+    color: #c6c9d2; border-bottom: 2px solid transparent;
     cursor: pointer; transition: color 150ms ease, border-color 150ms ease;
   }
   .ea-tab-icon { display: block; flex: none; }
-  .ea-tab:hover { color: var(--color-brand-hover); }
+  .ea-tab:hover { color: var(--color-brand); }
   .ea-panelrow { display: none; align-items: center; gap: 64px; margin-top: 40px; text-align: left; }
   .ea-tab-media { flex: none; width: 632px; max-width: 100%; }
   .ea-tab-media img { display: block; width: 100%; height: auto; }
   .ea-tab-copy { flex: 0 1 536px; min-width: 0; }
   .ea-tab-copy .pp-h30 { line-height: 36px; }
   .ea-tab-body { margin-top: 16px; font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
-  .ea-tab-body a { font-weight: 700; color: var(--color-brand-hover); }
+  .ea-tab-body a { font-weight: 700; color: var(--color-brand); }
+  .ea-tab-body a:hover { color: var(--color-brand-hover); }
   .ea-tab-body a:hover { text-decoration: underline; }
 
   /* One pair of rules per tab, since :has() cannot select by index. */
   .ea-tabs:has(#tab-metabot:checked) .ea-tab[data-tab='metabot'],
   .ea-tabs:has(#tab-explore:checked) .ea-tab[data-tab='explore'],
   .ea-tabs:has(#tab-simple:checked)  .ea-tab[data-tab='simple'] {
-    color: var(--color-brand-hover); border-bottom-color: var(--color-brand);
+    color: var(--color-brand); border-bottom-color: var(--color-brand);
   }
   .ea-tabs:has(#tab-metabot:checked) .ea-panelrow[data-tab='metabot'],
   .ea-tabs:has(#tab-explore:checked) .ea-panelrow[data-tab='explore'],
@@ -1524,7 +1530,7 @@
     height: 40px; padding-inline: 12px; justify-content: center;
     border-radius: 8px;
     font-size: 16px; line-height: 24px; font-weight: 700;
-    color: var(--color-ink-2); background: var(--color-surface);
+    color: #c6c9d2; background: var(--color-surface);
     cursor: pointer; transition: color 150ms ease, background-color 150ms ease;
   }
   .ea-preset b { display: flex; align-items: center; height: 32px; font-weight: 700; line-height: 24px; }
@@ -1535,7 +1541,7 @@
   .ea-theme:has(#th-tech:checked) .ea-preset[data-theme='tech'],
   .ea-theme:has(#th-elegant:checked) .ea-preset[data-theme='elegant'],
   .ea-theme:has(#th-playful:checked) .ea-preset[data-theme='playful'] {
-    color: #fff; background: var(--color-brand-hover);
+    color: var(--color-brand); background: var(--color-brand-muted);
   }
   .ea-theme { --t1: #ffffff; --t2: #509ee3; --t3: #4c5773; --tf: 'Lato'; --tm: 'Light'; }
   .ea-theme:has(#th-tech:checked)    { --t1: #0f1117; --t2: #22d3a6; --t3: #7c8598; --tf: 'IBM Plex Mono'; --tm: 'Dark'; }
@@ -1611,7 +1617,9 @@
     content: ''; position: absolute; left: 0; top: 8px;
     width: 7px; height: 7px; border-radius: 50%; background: var(--color-brand);
   }
-  .ea-vs-list b { font-weight: 700; color: var(--color-ink); }
+  /* The bold lead stays in the body colour on the original; it is weight,
+     not darker ink, that sets it apart. */
+  .ea-vs-list b { font-weight: 700; color: var(--color-ink-2); }
 
   /* --- FAQ -------------------------------------------------------------- */
   .ea-faq { width: 100%; max-width: 602px; margin-top: 32px; text-align: left; }
