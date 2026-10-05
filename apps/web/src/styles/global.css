@@ -1050,7 +1050,7 @@
 
   .pp-eyebrow { display: block; }
   .pp-eyebrow-icon { display: inline-block; vertical-align: middle; margin-right: 14px; }
-  .pp-eyebrow b { vertical-align: middle; line-height: 26px; font-size: 18px; font-weight: 700; color: var(--color-brand-hover); }
+  .pp-eyebrow b { vertical-align: middle; line-height: 26px; font-size: 18px; font-weight: 700; color: var(--color-brand); }
 
   .pp-hero-title {
     max-width: 580px; margin-top: -10px; margin-bottom: 16px;
@@ -1066,6 +1066,9 @@
   /* The original's product-page buttons are radius 8, not the 12 used in the
    * site chrome, and they size from their own padding. */
   .pp-btn { display: inline-block; height: auto; border-radius: 8px; padding: 12px 18px; line-height: 21px; }
+  /* 45 tall, against the outline button's 47: the home hero's primary has a
+     border and this one does not, so it cannot inherit that rule. */
+  .pp-btn.btn-primary { border: 0; }
 
   .pp-points {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
@@ -1073,7 +1076,7 @@
   }
   .pp-point {
     display: flex; align-items: center; gap: 4px;
-    font-size: 14px; line-height: normal; color: var(--color-ink-2);
+    font-size: 14px; line-height: normal; color: var(--color-ink-3);
   }
   .pp-point svg { display: block; flex: none; }
 
