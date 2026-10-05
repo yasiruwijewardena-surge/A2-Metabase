@@ -68,6 +68,21 @@
   h3 { font-size: 22px; line-height: 30px; }
   h4 { font-size: 18px; line-height: 25px; }
 
+  /* The original steps its type down twice, at 992 and again at 768, and the
+     sizes below are its own at each -- harvested with scripts/.scale.mjs
+     rather than guessed, because a desktop-only scale leaves the home h1 at
+     60/60 on a phone, where the original runs it at 34/34. */
+  @media (max-width: 991px) {
+    h1 { font-size: 48px; line-height: 48px; }
+    h2 { font-size: 30px; line-height: 36px; }
+  }
+  @media (max-width: 767px) {
+    h1 { font-size: 34px; line-height: 34px; }
+    h2 { font-size: 30px; line-height: 35px; }
+    h3 { font-size: 20px; line-height: 27px; }
+    h4 { font-size: 18px; line-height: 24px; }
+  }
+
   a { color: inherit; text-decoration: none; }
 
   /* Images always carry intrinsic dimensions; the original's blog cards do not,
@@ -119,7 +134,7 @@
   .container-mb {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 1.75rem;
+    padding-inline: 20px;
   }
   @media (min-width: 576px)  { .container-mb { max-width: 540px; } }
   @media (min-width: 768px)  { .container-mb { max-width: 720px; } }
@@ -463,7 +478,7 @@
 
   @media (max-width: 767px) {
     .hero-content { margin-bottom: 48px; }
-    .hero-sub { font-size: 20px; line-height: 28px; }
+    .hero-sub { font-size: 18px; line-height: 26px; }
     .hero-cta > * { width: 100%; }
     .hero-tour { min-height: 0; padding: 20px 24px; }
     .hero-tour__media { display: none; }
@@ -1342,10 +1357,10 @@
   }
   @media (max-width: 991px) {
     .pp-hero-band { padding-top: 40px; margin-bottom: 48px; }
-    .pp-hero-title { font-size: 36px; line-height: 44px; }
-    .pp-hero-sub, .pp-lede, .pp-band-sub { font-size: 18px; line-height: 28px; }
-    .pp-h36 { font-size: 28px; line-height: 34px; }
-    .pp-h30 { font-size: 24px; line-height: 30px; }
+    .pp-hero-title { font-size: 36px; line-height: 40px; }
+    .pp-hero-sub, .pp-lede, .pp-band-sub { font-size: 18px; line-height: 26px; }
+    .pp-h36 { font-size: 30px; line-height: 40px; }
+    .pp-h30 { font-size: 24px; line-height: 28px; }
     .pp-hero-img { margin-top: 40px; padding: 8px; }
     .pp-pillars { grid-template-columns: 1fr; margin-top: 48px; }
     .pp-trust { margin-top: 48px; }
@@ -1361,6 +1376,14 @@
     .pp-quote { padding-bottom: 72px; }
     .pp-final { padding-block: 56px; }
     .pp-final-img { margin-top: 40px; margin-bottom: -80px; }
+  }
+  /* The second step the original takes, at 768. */
+  @media (max-width: 767px) {
+    .pp-h36 { font-size: 30px; line-height: 36px; }
+    .pp-h36--tall { line-height: 36px; }
+    /* The -90 that tucks the hero shot under the trust line is a desktop
+       number; at phone height it eats the bottom of the shot. */
+    .pp-hero-img--bare { margin-bottom: 0; }
   }
 }
 
