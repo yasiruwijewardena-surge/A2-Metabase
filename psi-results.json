@@ -1,9 +1,9 @@
 {
  "measuredAt": "2026-10-03",
  "source": "PageSpeed Insights API v5",
- "note": "Scores are from the hosted PageSpeed Insights service against the deployed URLs, not local Lighthouse. The original is measured alongside for comparison.",
+ "note": "Scores are from the hosted PageSpeed Insights service against the deployed URLs, not local Lighthouse. The original is measured alongside for comparison. The site moved to a2-metabase.up.railway.app after these were taken; the build measured is the same.",
  "original": "https://www.metabase.com",
- "replica": "https://elegant-spontaneity-production-28e1.up.railway.app",
+ "replica": "https://a2-metabase.up.railway.app",
  "comparison": [
   {
    "page": "/",

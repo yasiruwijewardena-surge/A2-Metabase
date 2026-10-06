@@ -10,7 +10,7 @@ and the front end built in Astro.
 | **CMS** | Strapi 5 → Railway, with Postgres |
 | **Front end** | Astro → Railway |
 | **Live CMS** | https://a2-metabase-production.up.railway.app/admin |
-| **Live site** | https://elegant-spontaneity-production-28e1.up.railway.app |
+| **Live site** | https://a2-metabase.up.railway.app |
 
 ## Repository layout
 

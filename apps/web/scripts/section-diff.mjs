@@ -20,7 +20,7 @@ import { launch } from 'puppeteer-core';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const ORIGINAL = 'https://www.metabase.com';
-const REPLICA = process.env.PSI_SITE || 'https://elegant-spontaneity-production-28e1.up.railway.app';
+const REPLICA = process.env.PSI_SITE || 'https://a2-metabase.up.railway.app';
 
 const argv = process.argv.slice(2);
 const page = argv.find((a) => a.startsWith('/')) || '/';

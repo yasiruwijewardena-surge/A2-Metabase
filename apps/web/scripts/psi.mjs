@@ -17,7 +17,7 @@
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const BASE = process.env.PSI_SITE || 'https://elegant-spontaneity-production-28e1.up.railway.app';
+const BASE = process.env.PSI_SITE || 'https://a2-metabase.up.railway.app';
 const ORIGINAL = 'https://www.metabase.com';
 const KEY = process.env.PSI_API_KEY || '';
 
