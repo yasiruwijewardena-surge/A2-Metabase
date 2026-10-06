@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_page_ea_stories",
+  "info": {
+    "displayName": "Embedded customer story",
+    "icon": "quote"
+  },
+  "options": {},
+  "attributes": {
+    "company": {
+      "type": "string"
+    },
+    "title": {
+      "type": "text"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageW": {
+      "type": "integer"
+    },
+    "imageH": {
+      "type": "integer"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "linkUrl": {
+      "type": "string"
+    }
+  }
+}

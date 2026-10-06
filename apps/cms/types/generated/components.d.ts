@@ -343,6 +343,24 @@ export interface PageEaPillar extends Struct.ComponentSchema {
   };
 }
 
+export interface PageEaStory extends Struct.ComponentSchema {
+  collectionName: 'components_page_ea_stories';
+  info: {
+    displayName: 'Embedded customer story';
+    icon: 'quote';
+  };
+  attributes: {
+    company: Schema.Attribute.String;
+    image: Schema.Attribute.String;
+    imageAlt: Schema.Attribute.String;
+    imageH: Schema.Attribute.Integer;
+    imageW: Schema.Attribute.Integer;
+    linkLabel: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    title: Schema.Attribute.Text;
+  };
+}
+
 export interface PageEaTab extends Struct.ComponentSchema {
   collectionName: 'components_page_ea_tabs';
   info: {
@@ -411,14 +429,7 @@ export interface PageEmbeddedAnalytics extends Struct.ComponentSchema {
     stackHeading: Schema.Attribute.String;
     stackPillars: Schema.Attribute.Component<'page.ea-pillar', true>;
     stackSub: Schema.Attribute.Text;
-    storyAlt: Schema.Attribute.String;
-    storyH: Schema.Attribute.Integer;
-    storyLinkLabel: Schema.Attribute.String;
-    storyLinkUrl: Schema.Attribute.String;
-    storyPoster: Schema.Attribute.String;
-    storyTitle: Schema.Attribute.Text;
-    storyVideo: Schema.Attribute.String;
-    storyW: Schema.Attribute.Integer;
+    stories: Schema.Attribute.Component<'page.ea-story', true>;
     sub: Schema.Attribute.Text;
     supportHeading: Schema.Attribute.String;
     supportLead: Schema.Attribute.String;
@@ -1144,6 +1155,7 @@ declare module '@strapi/strapi' {
       'page.ea-impl': PageEaImpl;
       'page.ea-impl-point': PageEaImplPoint;
       'page.ea-pillar': PageEaPillar;
+      'page.ea-story': PageEaStory;
       'page.ea-tab': PageEaTab;
       'page.embedded-analytics': PageEmbeddedAnalytics;
       'page.events-index': PageEventsIndex;
