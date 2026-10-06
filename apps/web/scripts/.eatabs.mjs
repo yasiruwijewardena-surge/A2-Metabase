@@ -1,0 +1,22 @@
+import puppeteer from 'puppeteer-core';
+const b=await puppeteer.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,protocolTimeout:180000,args:['--no-sandbox']});
+const p=await b.newPage(); const errs=[]; p.on('pageerror',e=>errs.push(String(e)));
+await p.setViewport({width:1512,height:1000});
+await p.goto('http://127.0.0.1:4399/product/embedded-analytics',{waitUntil:'networkidle2'});
+await p.evaluate(()=>new Promise(r=>{document.querySelector('[data-tabs]')?.scrollIntoView({block:'center'});setTimeout(r,800);}));
+const state=()=>p.evaluate(()=>{
+  const root=document.querySelector('[data-tabs]');
+  const rs=[...root.querySelectorAll('.ea-tab-radio')];
+  const open=rs.findIndex(r=>r.checked);
+  const fill=root.querySelector('.ea-tabs:has(.ea-tab-radio:checked) .ea-tab .ea-tab-fill');
+  const fills=[...root.querySelectorAll('.ea-tab-fill')].map(f=>getComputedStyle(f).width);
+  const panels=[...root.querySelectorAll('.ea-panelrow')].map(x=>getComputedStyle(x).display);
+  return {open, fills, panels, paused:root.dataset.paused};
+});
+console.log('t=0  ', JSON.stringify(await state()));
+await p.evaluate(()=>new Promise(r=>setTimeout(r,3500)));
+console.log('t=3.5', JSON.stringify(await state()));
+await p.evaluate(()=>new Promise(r=>setTimeout(r,4500)));
+console.log('t=8  ', JSON.stringify(await state()));
+console.log('errors:', errs.length?errs[0].slice(0,80):'none');
+await b.close();
