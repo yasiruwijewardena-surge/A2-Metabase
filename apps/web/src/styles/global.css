@@ -1302,7 +1302,11 @@
     transition: color 150ms ease;
   }
   .pp-feature-title label { display: block; cursor: pointer; }
-  .pp-feature-detail { display: none; }
+  .pp-feature-detail {
+    overflow: hidden;
+    max-height: 0; opacity: 0;
+    transition: max-height 250ms, opacity 250ms;
+  }
   .pp-feature-text { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
   .pp-feature-link {
     display: inline; margin-top: 28px;
@@ -1312,7 +1316,10 @@
 
   /* Open item: dark heading, brand rail, body revealed. */
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-title { color: var(--color-ink); }
-  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-detail { display: block; }
+  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-detail {
+    max-height: 226px; opacity: 1;
+    transition: max-height 450ms, opacity 450ms;
+  }
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-rail { background: var(--color-brand); }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { display: none; }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-badge { display: none; }
