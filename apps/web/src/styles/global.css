@@ -1320,7 +1320,8 @@
     max-height: 226px; opacity: 1;
     transition: max-height 450ms, opacity 450ms;
   }
-  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-rail { background: var(--color-brand); }
+  /* The track stays grey on the open row too -- turning it brand blue painted
+     over the fill growing inside it, so the line never looked like it filled. */
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { display: none; }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-badge { display: none; }
   /* The open item is labelled by its badge, so the large icon steps aside --
@@ -1435,11 +1436,11 @@
    * from one band rule, so the shared 144 comes off and each section below
    * carries the margins or padding the original gives it. */
   .ea-page .pp-band { padding-bottom: 0; }
-  .ea-page .ea-sec--cards { margin: 40px 0 80px; }   /* the two pillar bands */
+  .ea-page .ea-sec--cards { margin-block: 40px 80px; }   /* the two pillar bands */
   .ea-page .ea-sec--pad80 { padding-block: 80px; }   /* implementation types */
   .ea-page .ea-sec--pad32 { padding-block: 32px; }   /* tab strip, comparison card */
   .ea-page .ea-sec--clear { margin-bottom: 120px; }  /* the theming demo */
-  .ea-page .ea-sec--flow { margin: 40px 0 140px; }   /* support team, like a split */
+  .ea-page .ea-sec--flow { margin-block: 40px 140px; }   /* support team, like a split */
   .ea-page .ea-sec--faq { margin-top: 104px; }
   /* Three across, 48 under the standfirst, bodies in tertiary ink. */
   .ea-page .pp-pillars { margin-top: 48px; }
