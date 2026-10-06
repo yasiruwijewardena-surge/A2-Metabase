@@ -578,7 +578,11 @@
    * #8d93a5 — 2.6:1 at 12px bold — so headings take the tertiary ink and the
    * links stay secondary, keeping the hierarchy and clearing AA.
    */
-  .site-footer { position: relative; background: #fff; }
+  /* The closing CTA's screenshot is meant to run on past its section and be
+     faded out by the wash over it -- but .pp-final is positioned, so without
+     a stacking context of its own the footer was painted under the shot and
+     half its columns disappeared behind the dashboard. */
+  .site-footer { position: relative; z-index: 1; background: #fff; }
   .site-footer-inner { margin-inline: 96px; padding-inline: 24px; }
   .site-footer-cols { display: flex; justify-content: space-between; gap: 32px; padding-block: 40px; }
   /* The original floors each column at 150 so the short ones do not collapse
