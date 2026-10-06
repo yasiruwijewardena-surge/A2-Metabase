@@ -102,5 +102,17 @@ const out = {
  * file -- so the results only landed anywhere if you remembered to redirect,
  * and a run piped through `tail` silently threw most of them away. */
 const dest = fileURLToPath(new URL('../../../psi-results.json', import.meta.url));
+/*
+ * A run that scored nothing must not overwrite a run that did. Without a key
+ * the API rate-limits, and an all-429 run used to land on top of the measured
+ * results, destroying the only record of them.
+ */
+const scored = comparison.filter((r) => typeof r.replica?.performance === 'number');
+if (scored.length === 0) {
+  console.error(`\nNOT WRITING ${dest}: no page scored.`);
+  console.error('Every request failed — most likely the PageSpeed quota.');
+  console.error('Set PSI_API_KEY to raise it, then run again. The previous results are untouched.');
+  process.exit(1);
+}
 writeFileSync(dest, JSON.stringify(out, null, 1) + '\n');
-console.error(`\nwrote ${dest} (${comparison.length} rows)`);
+console.error(`\nwrote ${dest} (${comparison.length} rows, ${scored.length} scored)`);
