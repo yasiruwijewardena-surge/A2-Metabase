@@ -2773,14 +2773,6 @@
           ],
           "customersHeading": "Our customers build great data experiences",
           "customersSub": "See how leading companies help their users work with data.",
-          "storyW": 559,
-          "storyH": 405,
-          "storyPoster": "/images/embedding/sincera-poster.webp",
-          "storyVideo": "/images/embedding/sincera.mp4",
-          "storyAlt": "An embedded analytics area inside a customer's product",
-          "storyTitle": "Northwind Lending uses Metabase embedding to give their customers a reporting area they do not have to maintain",
-          "storyLinkLabel": "Read the full story",
-          "storyLinkUrl": "/case-studies",
           "implHeading": "The right implementation type for whatever you need",
           "implSub": "Embed production-ready analytics components in your product, from a single chart to a whole self-service area, and change your mind later without starting over.",
           "implLinkLabel": "Check out the live demo",
@@ -3051,7 +3043,29 @@
           ],
           "closingHeading": "Ready to get started?",
           "closingSub": "Get up and running with a 14-day free trial in 5 minutes. Or talk to us about what you are trying to put in front of your customers.",
-          "closingCtas": []
+          "closingCtas": [],
+          "stories": [
+            {
+              "company": "Northwind Lending",
+              "title": "Northwind Lending uses Metabase embedding to give their customers a reporting area they do not have to maintain",
+              "image": "/images/product/embedded-analytics/application-screenshot.webp",
+              "imageW": 892,
+              "imageH": 467,
+              "imageAlt": "A reporting area embedded in a lending platform",
+              "linkLabel": "Read the full Northwind Lending story",
+              "linkUrl": "/case-studies"
+            },
+            {
+              "company": "Cadence CRM",
+              "title": "Cadence CRM uses Metabase embedding to put the numbers their customers ask for inside the product",
+              "image": "/images/product/embedded-analytics/track-in-app-reporting.webp",
+              "imageW": 590,
+              "imageH": 511,
+              "imageAlt": "In-app reporting inside a customer relationship tool",
+              "linkLabel": "Read the full Cadence CRM story",
+              "linkUrl": "/case-studies"
+            }
+          ]
         }
       ]
     }

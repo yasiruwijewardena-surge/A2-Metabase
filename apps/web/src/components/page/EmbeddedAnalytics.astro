@@ -63,6 +63,12 @@ const securityPillars = s.securityPillars ?? [];
 const stackPillars = s.stackPillars ?? [];
 const implementations = s.implementations ?? [];
 const tabs = s.tabs ?? [];
+const stories = s.stories ?? [];
+/* The story's quote is the one from somebody at that story's company, not the
+   next pull quote in the pile -- picking by index is how a story about
+   Northwind Lending ended up quoting a plant manager at Forge Industrial. */
+const quoteFor = (company?: string | null) =>
+  all.find((t: any) => t.company?.name === company) ?? pulls[3];
 /* The original gives each tab its own dwell (13s, then 30s twice) through a
    `--tabs-duration` custom property on the button; the strip reads like a
    different component at a uniform speed, so the three are kept. */
@@ -188,23 +194,36 @@ const faqs = s.faqs ?? [];
         <h2 class="pp-h36">{s.customersHeading}</h2>
         <p class="pp-band-sub pp-band-sub--far">{s.customersSub}</p>
       </div>
-      <div class="ea-story">
-        <div class="ea-story-media">
-          <video width={s.storyW} height={s.storyH} poster={s.storyPoster}
-                 autoplay loop muted playsinline preload="none"
-                 aria-label={s.storyAlt}>
-            <source src={s.storyVideo} type="video/mp4" />
-          </video>
+      {/* One tab per customer, as the original has. Its tabs are the two
+          companies' logos; these are fictional companies with no mark of
+          their own, so the tab is the name. */}
+      <div class="ea-tabs ea-stories" data-tabs>
+        {stories.map((st, i) => (
+          <input class="ea-tab-radio" type="radio" name="ea-story"
+                 id={`story-${i}`} checked={i === 0} />
+        ))}
+        <div class="ea-tabstrip">
+          {stories.map((st, i) => (
+            <label class="ea-tab" for={`story-${i}`} data-story={i}>{st.company}</label>
+          ))}
         </div>
-        <div class="ea-story-copy">
-          <h3 class="ea-story-title">{s.storyTitle}</h3>
-          <ProductQuoteCard quote={pulls[3]} width={463} />
-          <a href={s.storyLinkUrl} class="pp-band-link">
-            {s.storyLinkLabel}
-            <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
-                 stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
-          </a>
-        </div>
+        {stories.map((st, i) => (
+          <div class="ea-panelrow ea-story" data-story={i}>
+            <div class="ea-story-media">
+              <img src={st.image} alt={st.imageAlt} width={st.imageW} height={st.imageH}
+                   loading="lazy" decoding="async" />
+            </div>
+            <div class="ea-story-copy">
+              <h3 class="ea-story-title">{st.title}</h3>
+              <ProductQuoteCard quote={quoteFor(st.company)} width={463} />
+              <a href={st.linkUrl} class="pp-band-link">
+                {st.linkLabel}
+                <svg width="9" height="16" viewBox="0 0 9 16" fill="none" stroke="currentColor"
+                     stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>

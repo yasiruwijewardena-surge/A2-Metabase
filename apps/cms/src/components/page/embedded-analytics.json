@@ -145,35 +145,16 @@
     "customersLinkUrl": {
       "type": "string"
     },
-    "storyTitle": {
-      "type": "text"
-    },
-    "storyVideo": {
-      "type": "string"
-    },
-    "storyPoster": {
-      "type": "string"
-    },
-    "storyAlt": {
-      "type": "string"
-    },
-    "storyLinkLabel": {
-      "type": "string"
-    },
-    "storyLinkUrl": {
-      "type": "string"
+    "stories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.ea-story"
     },
     "implLinkLabel": {
       "type": "string"
     },
     "implLinkUrl": {
       "type": "string"
-    },
-    "storyW": {
-      "type": "integer"
-    },
-    "storyH": {
-      "type": "integer"
     },
     "balanceLinkLabel": {
       "type": "string"
