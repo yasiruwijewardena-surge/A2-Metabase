@@ -1,6 +1,13 @@
-/* Responsive audit. Per width: page-level horizontal scroll, then any element
-   wider than the viewport that is NOT inside a clipping ancestor (those are
-   the ones that actually break the layout), plus tiny text and tap targets. */
+/*
+ * Responsive audit. Per width, reports page-level horizontal scroll, then any
+ * element wider than the viewport that is NOT inside a clipping ancestor --
+ * those are the ones that actually break the layout, as opposed to a marquee
+ * track that is meant to run past its frame. On phone widths it also flags
+ * text under 12px and tap targets under 32px.
+ *
+ *   node scripts/responsive-audit.mjs <url>...        # the default widths
+ *   W=980,390 node scripts/responsive-audit.mjs <url> # specific ones
+ */
 import puppeteer from 'puppeteer-core';
 const WIDTHS = process.env.W ? process.env.W.split(',').map(Number) : [1440, 1280, 1024, 980, 834, 767, 430, 375];
 const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, protocolTimeout: 180000, args: ['--no-sandbox'] });
