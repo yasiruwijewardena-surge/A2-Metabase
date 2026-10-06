@@ -1,5 +1,13 @@
-/* Harvests the original's type and layout at each breakpoint, so the replica
-   is built to its scale rather than to one desktop screenshot. */
+/*
+ * Harvests a site's type and layout at each breakpoint, so the replica is
+ * built to the original's scale rather than to one desktop screenshot. Run it
+ * against both and diff the rows.
+ *
+ *   node scripts/type-scale.mjs https://www.metabase.com/ <more urls...>
+ *
+ * The widths are the ones the original steps at: 1440 desktop, 980 tablet,
+ * 767 and 390 phone.
+ */
 import puppeteer from 'puppeteer-core';
 const WIDTHS = [1440, 980, 767, 390];
 const PAGES = process.argv.slice(2);
