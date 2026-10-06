@@ -248,6 +248,7 @@ const ZONE: Record<string, Record<string, string>> = {
     '[logos]': 'true',
     '[securityPillars]': 'true',
     '[stackPillars]': 'true',
+    '[stories]': 'true',
     '[implementations][populate][points]': 'true',
     '[tabs]': 'true',
     '[usagePoints]': 'true',
