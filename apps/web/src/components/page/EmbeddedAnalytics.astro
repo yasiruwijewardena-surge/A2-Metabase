@@ -196,7 +196,12 @@ const faqs = s.faqs ?? [];
       </div>
       {/* One tab per customer, as the original has. Its tabs are the two
           companies' logos; these are fictional companies with no mark of
-          their own, so the tab is the name. */}
+          their own, so the tab is the name.
+
+          Guarded: with no stories this used to render the panel's chrome and
+          nothing inside it, which is how a web build that went out ahead of
+          its seed left the section as a heading over an empty box. */}
+      {stories.length > 0 && (
       <div class="ea-tabs ea-stories" data-tabs>
         {stories.map((st, i) => (
           <input class="ea-tab-radio" type="radio" name="ea-story"
@@ -225,6 +230,7 @@ const faqs = s.faqs ?? [];
           </div>
         ))}
       </div>
+      )}
     </div>
   </section>
 
