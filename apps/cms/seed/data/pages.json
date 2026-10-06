@@ -1906,28 +1906,34 @@
           ],
           "accessHeading": "AI access that stays under your control",
           "accessLede": "Decide who can do what with AI, and how much.",
-          "accessImage": "/images/features/metabot-ai/ai-feature-access-per-group.webp",
-          "accessImageAlt": "AI feature access being granted to a user group",
           "accessSteps": [
             {
               "anchor": "groups",
               "heading": "Enable AI feature access per user group",
-              "body": "Control which groups can ask AI questions, use SQL generation, or reach the agent API at all. The default is off, so access is something you grant rather than something you discover."
+              "body": "Control which groups can ask AI questions, use SQL generation, or reach the agent API at all. The default is off, so access is something you grant rather than something you discover.",
+              "image": "/images/features/metabot-ai/ai-feature-access-per-group.webp",
+              "imageAlt": "A permissions table granting AI features per user group"
             },
             {
               "anchor": "limits",
               "heading": "Set usage limits by token or message count",
-              "body": "Keep AI spend predictable with limits per user group and per feature, so one enthusiastic team cannot spend the quarter."
+              "body": "Keep AI spend predictable with limits per user group and per feature, so one enthusiastic team cannot spend the quarter.",
+              "image": "/images/features/metabot-ai/usage-limits.webp",
+              "imageAlt": "Usage limits set by token and message count"
             },
             {
               "anchor": "brand",
               "heading": "Customize how AI appears in your organization",
-              "body": "Give Metabot a name and an icon that fits your organisation, and set it up where people will actually meet it."
+              "body": "Give Metabot a name and an icon that fits your organisation, and set it up where people will actually meet it.",
+              "image": "/images/features/metabot-ai/customize-ai-appearance.webp",
+              "imageAlt": "Settings for how the assistant appears in the product"
             },
             {
               "anchor": "prompts",
               "heading": "System prompts to guide outputs",
-              "body": "Add instructions that shape tone, use the right naming conventions, and tell the model which tables are the ones people should be asking about."
+              "body": "Add instructions that shape tone, use the right naming conventions, and tell the model which tables are the ones people should be asking about.",
+              "image": "/images/features/metabot-ai/system-prompts.webp",
+              "imageAlt": "A system prompt steering the assistant’s answers"
             }
           ],
           "pricingHeading": "AI that isn't a separate meter",

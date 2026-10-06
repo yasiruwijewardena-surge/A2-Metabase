@@ -14,6 +14,12 @@
     },
     "body": {
       "type": "text"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string"
     }
   }
 }
