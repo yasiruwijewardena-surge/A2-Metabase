@@ -578,7 +578,11 @@
    * #8d93a5 — 2.6:1 at 12px bold — so headings take the tertiary ink and the
    * links stay secondary, keeping the hierarchy and clearing AA.
    */
-  .site-footer { position: relative; background: #fff; }
+  /* The closing CTA's screenshot is meant to run on past its section and be
+     faded out by the wash over it -- but .pp-final is positioned, so without
+     a stacking context of its own the footer was painted under the shot and
+     half its columns disappeared behind the dashboard. */
+  .site-footer { position: relative; z-index: 1; background: #fff; }
   .site-footer-inner { margin-inline: 96px; padding-inline: 24px; }
   .site-footer-cols { display: flex; justify-content: space-between; gap: 32px; padding-block: 40px; }
   /* The original floors each column at 150 so the short ones do not collapse
@@ -1298,7 +1302,11 @@
     transition: color 150ms ease;
   }
   .pp-feature-title label { display: block; cursor: pointer; }
-  .pp-feature-detail { display: none; }
+  .pp-feature-detail {
+    overflow: hidden;
+    max-height: 0; opacity: 0;
+    transition: max-height 250ms, opacity 250ms;
+  }
   .pp-feature-text { font-size: 18px; line-height: 26px; color: var(--color-ink-2); }
   .pp-feature-link {
     display: inline; margin-top: 28px;
@@ -1308,7 +1316,10 @@
 
   /* Open item: dark heading, brand rail, body revealed. */
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-title { color: var(--color-ink); }
-  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-detail { display: block; }
+  .pp-feature:has(.pp-feature-radio:checked) .pp-feature-detail {
+    max-height: 226px; opacity: 1;
+    transition: max-height 450ms, opacity 450ms;
+  }
   .pp-feature:has(.pp-feature-radio:checked) .pp-feature-rail { background: var(--color-brand); }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-icon { display: none; }
   .pp-feature:not(:has(.pp-feature-radio:checked)) .pp-feature-badge { display: none; }
