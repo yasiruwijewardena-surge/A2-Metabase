@@ -1611,7 +1611,16 @@
     border-radius: 8px; background: var(--color-brand-faint);
   }
   .ea-stories .ea-story-copy { flex: none; width: 632px; max-width: 100%; padding-left: 96px; }
-  .ea-tab-radio:focus-visible + .ea-tabstrip .ea-tab { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+  /* One ring on the tab that has focus, not one on every tab in the strip:
+     the sibling selector reached all of them, so a keyboard user saw the whole
+     strip outlined and could not tell where they were. */
+  .ea-tabs:has(#tab-metabot:focus-visible) .ea-tab[data-tab='metabot'],
+  .ea-tabs:has(#tab-explore:focus-visible) .ea-tab[data-tab='explore'],
+  .ea-tabs:has(#tab-simple:focus-visible)  .ea-tab[data-tab='simple'],
+  .ea-stories:has(#story-0:focus-visible) .ea-tab[data-story='0'],
+  .ea-stories:has(#story-1:focus-visible) .ea-tab[data-story='1'] {
+    outline: 2px solid var(--color-brand); outline-offset: 4px;
+  }
 
   /* --- theming demo ----------------------------------------------------- */
   /* The standfirst above carries the gap; the demo adds none of its own. */
