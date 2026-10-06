@@ -91,6 +91,8 @@ export interface PageAiStep extends Struct.ComponentSchema {
     anchor: Schema.Attribute.String;
     body: Schema.Attribute.Text;
     heading: Schema.Attribute.String;
+    image: Schema.Attribute.String;
+    imageAlt: Schema.Attribute.String;
   };
 }
 

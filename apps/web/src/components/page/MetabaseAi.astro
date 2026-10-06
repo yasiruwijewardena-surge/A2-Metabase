@@ -72,7 +72,7 @@ const isClip = (src: string) => src.endsWith('.mp4');
                 {isClip(c.mediaSrc)
                   ? <video width={c.mediaW} height={c.mediaH}
                            poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
-                           controls loop muted playsinline preload="none" aria-label={c.mediaAlt}>
+                           autoplay loop muted playsinline preload="none" aria-label={c.mediaAlt}>
                       <source src={c.mediaSrc} type="video/mp4" />
                     </video>
                   : <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
@@ -87,25 +87,31 @@ const isClip = (src: string) => src.endsWith('.mp4');
     <section class="mai-sec" id="access">
       <h2 class="mai-h2">{s.accessHeading}</h2>
       <p class="mai-lede">{s.accessLede}</p>
-      {/* The original pins this section and advances its four steps on
-          scroll. Radio inputs give the same four steps with no JavaScript. */}
-      <div class="mai-split">
-        <div class="mai-split-media">
-          <img src={s.accessImage} width="590" height="590"
-               alt={s.accessImageAlt} loading="lazy" decoding="async" />
+      {/* Pinned and scrubbed over 3000px, as the original is: the shot swaps
+          per step and the open step's rail fills across its share of the
+          scroll. The radios underneath still work without script. */}
+      <div class="mai-track" data-track>
+        <div class="mai-split" data-carousel>
+          <div class="mai-split-media">
+            {accessSteps.filter((st) => st.image).map((st, i) => (
+              <img class="mai-step-shot" src={st.image} width="590" height="590"
+                   alt={st.imageAlt} loading="lazy" decoding="async"
+                   style={i === 0 ? undefined : 'display:none'} />
+            ))}
+          </div>
+          <ul class="mai-steps">
+            {accessSteps.map((st, i) => (
+              <li class="mai-step">
+                <input class="mai-step-radio" type="radio" name="mai-access" id={`mai-${st.anchor}`} checked={i === 0} />
+                <span class="mai-step-rail" aria-hidden="true"><i class="mai-step-fill"></i></span>
+                <div class="mai-step-body">
+                  <h3 class="mai-step-h"><label for={`mai-${st.anchor}`}>{st.heading}</label></h3>
+                  <p class="mai-step-p">{st.body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul class="mai-steps">
-          {accessSteps.map((st, i) => (
-            <li class="mai-step">
-              <input class="mai-step-radio" type="radio" name="mai-access" id={`mai-${st.anchor}`} checked={i === 0} />
-              <span class="mai-step-rail" aria-hidden="true"></span>
-              <div class="mai-step-body">
-                <h3 class="mai-step-h"><label for={`mai-${st.anchor}`}>{st.heading}</label></h3>
-                <p class="mai-step-p">{st.body}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
 
@@ -188,7 +194,7 @@ const isClip = (src: string) => src.endsWith('.mp4');
                 {isClip(c.mediaSrc)
                   ? <video width={c.mediaW} height={c.mediaH}
                            poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
-                           controls loop muted playsinline preload="none" aria-label={c.mediaAlt}>
+                           autoplay loop muted playsinline preload="none" aria-label={c.mediaAlt}>
                       <source src={c.mediaSrc} type="video/mp4" />
                     </video>
                   : <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
@@ -248,3 +254,15 @@ const isClip = (src: string) => src.endsWith('.mp4');
       </p>
     </section>
   </div>
+
+<script>
+  import { initScrollCarousel } from '../../scripts/scroll-carousel';
+
+  /* Metabase AI pins from 992 on the original, not 769. */
+  initScrollCarousel({
+    radio: '.mai-step-radio',
+    fill: '.mai-step-fill',
+    shot: '.mai-step-shot',
+    minWidth: 992,
+  });
+</script>
