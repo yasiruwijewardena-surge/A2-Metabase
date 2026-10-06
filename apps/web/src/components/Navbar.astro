@@ -46,6 +46,32 @@ const resources: [string, string, string, string][] = [
   ['Events', '/events', 'events', 'Join a live event or watch on demand'],
   ['Customers', '/case-studies', 'customers', 'Real companies, real data, real stories'],
 ];
+
+/*
+ * The mobile panel, built from the same arrays the megamenus above use rather
+ * than a second hardcoded list -- the old panel carried six links that matched
+ * no menu on the site. The original's own mobile nav is a row per menu that
+ * opens an accordion, with Log in pinned to the foot; this is that, minus the
+ * Docs row, which this replica does not build.
+ */
+const mobileNav: { label: string; items: [string, string, string?, string?][] }[] = [
+  { label: 'Product', items: [
+    ['Business Intelligence', '/product/business-intelligence', 'bi', 'Self-service analytics for your team'],
+    ['Embedded Analytics', '/product/embedded-analytics', 'ea', 'Fast, flexible customer-facing analytics'],
+  ]},
+  { label: 'Features', items: [
+    ...features.map(([label, href, icon]) => [label, href, icon] as [string, string, string]),
+    ['Roadmap', '/roadmap', 'roadmap'],
+  ]},
+  { label: 'Resources', items: resources.map(
+    ([label, href, icon, sub]) => [label, href, icon, sub] as [string, string, string, string]) },
+  { label: 'Pricing', items: [
+    ['Business Intelligence pricing', '/pricing?use_case=business-intelligence', 'bi',
+     'Self-service analytics for your team'],
+    ['Embedded Analytics pricing', '/pricing?use_case=embedded-analytics', 'ea',
+     'Fast, flexible customer-facing analytics'],
+  ]},
+];
 ---
 {/* The original's bar is 74 tall, solid white and carries no bottom rule. */}
 <header class="sticky top-0 z-50 bg-white">
@@ -180,24 +206,113 @@ const resources: [string, string, string, string][] = [
       </a>
       <a href="/pricing" class="btn-secondary hidden sm:inline-flex">Log in</a>
       <a href="/pricing" class="btn-primary">Get started</a>
-      <button type="button" class="lg:hidden" data-mobile-toggle aria-expanded="false" aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      {/* The bars become a cross once the panel is open, as the original's do. */}
+      <button type="button" class="nav-burger" data-mobile-toggle
+              aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+        <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19"/>
         </svg>
       </button>
     </div>
   </nav>
 
-  <div class="container-mb hidden border-t border-(--color-line) py-4 lg:!hidden" data-mobile-panel hidden>
-    <ul class="space-y-2">
-      {[['Product','/product/business-intelligence'],['Blog','/blog'],['Customers','/case-studies'],['Love','/love'],['Glossary','/glossary'],['Pricing','/pricing']].map(([l,h]) => (
-        <li><a href={h} class="block py-1 font-bold text-(--color-ink)">{l}</a></li>
+  {/* A row per menu, each opening its own list, over a Log in pinned to the
+      foot -- the shape the original uses below 992. */}
+  <div class="nav-mobile" id="mobile-nav" data-mobile-panel>
+    <div class="nav-mobile-scroll">
+      {mobileNav.map((sec) => (
+        <section class="nav-mobile-sec">
+          <h2>
+            <button type="button" class="nav-mobile-row" aria-expanded="false" data-msec>
+              {sec.label}
+              <svg class="nav-mobile-chev" width="14" height="9" viewBox="0 0 12 8" fill="none"
+                   stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1.5 1.5 6 6l4.5-4.5"/></svg>
+            </button>
+          </h2>
+          <div class="nav-mobile-items" hidden>
+            {sec.items.map(([label, href, icon, sub]) => (
+              <a href={href} class="nav-mobile-link">
+                {icon && <NavIcon name={icon} size={24} />}
+                <span class="nav-mobile-link-text">
+                  <span class="nav-mobile-link-title">{label}</span>
+                  {sub && <span class="nav-mobile-link-sub">{sub}</span>}
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
       ))}
-    </ul>
+    </div>
+    <a href="/pricing" class="nav-mobile-login">Log in</a>
   </div>
 </header>
 
 <style>
+  /* --- mobile navigation ------------------------------------------------
+   * Measured off the original at 390: a 78-tall row per menu, 24/28 padding,
+   * ruled off with a 1px #f1f2f4 hairline, over a Log in bar at the foot.
+   * The panel fills what is left under the 74px bar and scrolls on its own,
+   * so a long Features list cannot push Log in off the screen.
+   */
+  .nav-burger { display: none; }
+  .nav-burger-close { display: none; }
+  .nav-burger[aria-expanded='true'] .nav-burger-open { display: none; }
+  .nav-burger[aria-expanded='true'] .nav-burger-close { display: block; }
+
+  .nav-mobile { display: none; }
+
+  @media (max-width: 1023px) {
+    .nav-burger { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; }
+
+    .nav-mobile {
+      position: fixed; inset: 74px 0 0; z-index: 40;
+      display: none; flex-direction: column;
+      background: #fff;
+      overscroll-behavior: contain;
+    }
+    .nav-mobile[data-open] { display: flex; }
+    .nav-mobile-scroll { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+    .nav-mobile-sec h2 { margin: 0; font: inherit; }
+    .nav-mobile-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      width: 100%; padding: 24px 28px;
+      border-bottom: 1px solid var(--color-line);
+      font-size: 24px; line-height: 30px; font-weight: 700; color: var(--color-ink);
+      text-align: left; background: none; cursor: pointer;
+    }
+    .nav-mobile-chev { flex: none; color: var(--color-brand); transition: rotate 200ms; }
+    .nav-mobile-row[aria-expanded='true'] .nav-mobile-chev { rotate: 180deg; }
+
+    .nav-mobile-link {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--color-line);
+      color: var(--color-ink);
+    }
+    .nav-mobile-link:active { background: var(--color-brand-faint); }
+    .nav-mobile-link :global(svg) { flex: none; margin-top: 2px; color: var(--color-ink-3); }
+    .nav-mobile-link-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .nav-mobile-link-title { font-size: 16px; line-height: 24px; font-weight: 700; }
+    .nav-mobile-link-sub { font-size: 14px; line-height: 20px; color: var(--color-ink-3); }
+
+    .nav-mobile-login {
+      flex: none; display: block; padding: 24px;
+      border-top: 1px solid var(--color-line);
+      background: var(--color-brand-faint);
+      font-size: 16px; line-height: 24px; font-weight: 700;
+      color: var(--color-ink); text-align: center;
+    }
+
+    /* The bar stops scrolling with the page while the panel is open. */
+    :global(body[data-nav-open]) { overflow: hidden; }
+  }
+
   /* Measured off the original: 8px/12px padding in an 8px-radius box, the
      chevron 8px clear of the label. With a 10px gap between boxes that puts
      34px between one label and the next, which is what the original has. */
@@ -556,11 +671,56 @@ const resources: [string, string, string, string][] = [
     if (root && !root.contains(e.target as Node)) closeEverything();
   });
 
+  /*
+   * The panel used to be toggled by its `hidden` attribute while a Tailwind
+   * `hidden` class held display:none, so it never opened at all -- on a phone
+   * the only navigation was the logo and Get started. It opens on a data
+   * attribute now, which is what the CSS above reads.
+   */
   const mobileToggle = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
   const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
-  mobileToggle?.addEventListener('click', () => {
-    const open = mobileToggle.getAttribute('aria-expanded') === 'true';
-    mobileToggle.setAttribute('aria-expanded', String(!open));
-    if (mobilePanel) mobilePanel.hidden = open;
+  const sections = [...document.querySelectorAll<HTMLButtonElement>('[data-msec]')];
+
+  const setOpen = (open: boolean) => {
+    if (!mobileToggle || !mobilePanel) return;
+    mobileToggle.setAttribute('aria-expanded', String(open));
+    mobileToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mobilePanel.toggleAttribute('data-open', open);
+    document.body.toggleAttribute('data-nav-open', open);
+    if (!open) sections.forEach(collapse);
+  };
+
+  const collapse = (btn: HTMLButtonElement) => {
+    btn.setAttribute('aria-expanded', 'false');
+    const items = btn.closest('section')?.querySelector<HTMLElement>('.nav-mobile-items');
+    if (items) items.hidden = true;
+  };
+
+  mobileToggle?.addEventListener('click', () =>
+    setOpen(mobileToggle.getAttribute('aria-expanded') !== 'true'));
+
+  /* One section open at a time, as the original does. */
+  sections.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      sections.forEach(collapse);
+      if (open) return;
+      btn.setAttribute('aria-expanded', 'true');
+      const items = btn.closest('section')?.querySelector<HTMLElement>('.nav-mobile-items');
+      if (items) items.hidden = false;
+    });
   });
+
+  /* Following a link, pressing Escape, or widening past the breakpoint all
+     close it -- otherwise the panel survives as a stuck overlay on desktop. */
+  mobilePanel?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileToggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      mobileToggle.focus();
+    }
+  });
+  const wide = window.matchMedia('(min-width: 1024px)');
+  wide.addEventListener('change', () => { if (wide.matches) setOpen(false); });
 </script>

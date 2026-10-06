@@ -623,6 +623,12 @@
     .site-footer-col { flex: 1 1 180px; }
   }
   @media (max-width: 639px) {
+    /* 24 a side rather than 48, which is what lets two columns sit side by
+       side at 390 as the original's do -- at 48 the pair no longer fits and
+       the whole footer falls to one column. */
+    .site-footer-inner, .site-footer-bottom, .site-footer-note { margin-inline: 0; }
+    .site-footer-cols { gap: 24px 20px; padding-block: 32px; }
+    .site-footer-col { flex: 1 1 140px; min-width: 140px; }
     .site-footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
   }
 }
