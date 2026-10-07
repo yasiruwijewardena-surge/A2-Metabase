@@ -3012,7 +3012,12 @@
        what stretched the answer panel to 757 and the card to 1411. */
     .mai-chat { flex-direction: column-reverse; gap: 20px; }
     .mai-chat-prompts, .mai-chat-panel { flex: 0 0 auto; width: 100%; }
+    /* One question at a time here: the original keeps only the live one in
+       the 88 window and pushes the rest out of view, rather than showing the
+       fading queue it shows on a wide screen. */
     .mai-chat-prompts { height: 88px; }
+    .mai-chat-prompts li { display: none; }
+    .mai-chat-prompts li[data-live] { display: flex; height: 100%; opacity: 1 !important; }
     .mai-chat-prompts { width: 100%; }
   }
   @media (max-width: 991px) {
