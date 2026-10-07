@@ -1208,7 +1208,9 @@
   /* Each inset shot renders at its own width rather than filling the frame. */
   .pp-frame--inset > img { width: var(--shot-w, 100%); max-width: none; }
   .pp-frame > video, .pp-frame > img { display: block; width: 100%; height: auto; }
-  .pp-frame > video { border-radius: 12px; }
+  /* Square: the frame clips at its own 24 radius, and the original's videos
+     carry no 12 of their own -- two of its three are flat 0. */
+  .pp-frame > video { border-radius: 0; }
 
   /* --- media beside copy ------------------------------------------------ */
   .pp-split { display: flex; margin-block: 40px 140px; }
@@ -1478,8 +1480,9 @@
   .pp-split-copy--narrow > * { max-width: 488px; }
   /* Unframed, and pulled 90px up into what follows -- which is what closes
      the gap between the shot and the trust logos beneath it. */
+  /* Square on the original -- it carries no radius at all here. */
   .pp-hero-img--bare {
-    padding: 0; border: 0; border-radius: 12px; background: transparent;
+    padding: 0; border: 0; border-radius: 0; background: transparent;
     margin-bottom: -90px;
   }
   .pp-pillars--tall .pp-pillar { min-height: 231px; }
