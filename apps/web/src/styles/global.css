@@ -2509,7 +2509,12 @@
   }
 
   /* --- trust ------------------------------------------------------------ */
-  .dst-trust { padding-top: 39px; }
+  /* The original closes the logo band with a rule in the dot-grid blue and
+     64 of space under it. */
+  .dst-trust {
+    padding-top: 39px; padding-bottom: 64px;
+    border-bottom: 1px solid #e4ecfb;
+  }
   .dst-trust > p { margin-bottom: 24px; font-size: 18px; line-height: normal; color: var(--color-ink-2); }
   .dst-trust > ul { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; }
   .dst-trust img {
