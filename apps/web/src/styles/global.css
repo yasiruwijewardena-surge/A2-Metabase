@@ -2089,7 +2089,9 @@
      824 panel column, then the 232 sidebar. The rail is what I had
      previously mistaken for empty gutter. */
   .rm-body { display: flex; align-items: flex-start; gap: 36px; }
-  .rm-rail { flex: 0 0 104px; position: sticky; top: 120px; }
+  /* 140 + the 36 gap puts the panel column 176 from the content edge, which
+     is where the original starts it; 104 is only the width of one label. */
+  .rm-rail { flex: 0 0 140px; position: sticky; top: 120px; }
   .rm-main { flex: 0 1 824px; min-width: 0; }
   .rm-side { flex: 0 0 232px; margin-left: auto; }
 
