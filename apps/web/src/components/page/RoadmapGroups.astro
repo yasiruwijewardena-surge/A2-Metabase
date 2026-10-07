@@ -30,11 +30,16 @@ import type { PageSection } from '../../lib/types';
 interface Props { section: PageSection }
 const { section: s } = Astro.props;
 const groups = s.groups ?? [];
+/* A link is only rendered if it has somewhere real to go: the seed blanks the
+ * ones that pointed at pages this build does not ship. */
+const tabs = (s.tabs ?? []).filter((t) => t.label && t.url);
+const cards = (s.cards ?? []).filter((c) => c.linkUrl);
+const hasFoot = Boolean(s.footLinkUrl && s.footLinkLabel);
 ---
   <div class="rm">
     <div class="container-mb">
       <nav class="rm-tabs" aria-label="Product updates">
-        {(s.tabs ?? []).map((t) => (
+        {tabs.map((t) => (
           <a href={t.url} class:list={['rm-tab', t.style === 'primary' && 'rm-tab--on']}
              aria-current={t.style === 'primary' ? 'page' : undefined}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
@@ -96,6 +101,7 @@ const groups = s.groups ?? [];
             </section>
           ))}
           </div>
+          {hasFoot && (
           <p class="rm-foot">
             {s.footLead}
             <a href={s.footLinkUrl}>
@@ -104,10 +110,11 @@ const groups = s.groups ?? [];
                    stroke-width="2" aria-hidden="true"><path d="M1.5 1.5L7 8l-5.5 6.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
           </p>
+          )}
         </div>
 
         <aside class="rm-side">
-          {(s.cards ?? []).map((c, i) => (
+          {cards.map((c, i) => (
             <div class:list={['rm-card', i === 0 && 'rm-card--lead']}>
               {i === 0 && <p class="rm-note">{s.note}</p>}
               {c.heading && <h2 class="rm-card-h">{c.heading}</h2>}
@@ -138,9 +145,15 @@ const groups = s.groups ?? [];
       let active = 0;
       groups.forEach((g, i) => { if (g.getBoundingClientRect().top < innerHeight / 3) active = i; });
       stages.forEach((a, i) => a.classList.toggle('rm-stage--on', i === active));
+      /* Drive the single sliding marker: which row it sits on, and its
+         colour. Both are transitioned, so it travels rather than jumps. */
+      const rail = stages[0].closest<HTMLElement>('.rm-rail');
+      if (rail) {
+        rail.style.setProperty('--rm-step', String(active));
+        rail.style.setProperty('--rm-marker', getComputedStyle(stages[active]).color);
+      }
       /* The original drops the rail once the panels have scrolled past it. */
       const last = groups[groups.length - 1];
-      const rail = stages[0].closest<HTMLElement>('.rm-rail');
       rail?.toggleAttribute('data-done', last.getBoundingClientRect().bottom < innerHeight / 2);
     };
     update();

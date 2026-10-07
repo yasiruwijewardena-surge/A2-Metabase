@@ -332,11 +332,6 @@
           "heading": "Highlights of what we're cooking",
           "tabs": [
             {
-              "label": "What’s new",
-              "url": "/releases",
-              "style": "text"
-            },
-            {
               "label": "Roadmap",
               "url": "/roadmap",
               "style": "primary"
@@ -481,21 +476,15 @@
               ]
             }
           ],
-          "footLead": "Want to see what we shipped recently?",
-          "footLinkLabel": "See what's new",
-          "footLinkUrl": "/releases",
+          "footLead": "",
+          "footLinkLabel": "",
+          "footLinkUrl": "",
           "note": "Keep in mind that these are non-exhaustive plans and subject to change. We ship when something is ready rather than when a date says so, which means the order here moves around more than we would like.",
           "cards": [
             {
               "strong": "Have a great feature idea?",
               "linkLabel": "Submit on GitHub",
               "linkUrl": "https://github.com/metabase/metabase/discussions"
-            },
-            {
-              "heading": "What’s new",
-              "body": "Want to see what we shipped recently?",
-              "linkLabel": "See what's new",
-              "linkUrl": "/releases"
             }
           ]
         }
