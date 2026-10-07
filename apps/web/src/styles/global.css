@@ -1417,6 +1417,13 @@
     .pp-split-copy, .pp-split > .pp-split-copy { padding-left: 0; padding-right: 0; margin-top: 40px; }
     .pp-band { padding-bottom: 72px; }
     .pp-accordion { flex-direction: column; gap: 40px; }
+    /* The 72 inset is a desktop two-column thing; the original drops it to 8
+       once the accordion stacks. Keeping it left 190 of a 334 column. It also
+       collapses the rail and its 20 inset here -- the carousel does not pin
+       below 769, so there is no progress to show. */
+    .pp-features { flex: 1 1 auto; padding-inline: 8px; }
+    .pp-feature { padding-left: 0; }
+    .pp-feature-rail { display: none; }
     .pp-accordion-media { flex: 1 1 auto; height: auto; padding: 24px; overflow: hidden; }
     .pp-features { flex: 1 1 auto; }
     .pp-feature-title { font-size: 20px; line-height: 28px; }
