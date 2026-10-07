@@ -2,12 +2,16 @@
   "collectionName": "components_page_text_items",
   "info": {
     "displayName": "Text item",
-    "icon": "dashboard"
+    "icon": "dashboard",
+    "description": "A line of text, optionally with an image the UI can pair with it."
   },
   "options": {},
   "attributes": {
     "text": {
       "type": "text"
+    },
+    "image": {
+      "type": "string"
     }
   }
 }

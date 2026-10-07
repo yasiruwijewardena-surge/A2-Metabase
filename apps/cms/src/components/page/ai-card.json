@@ -32,6 +32,10 @@
     },
     "mediaAlt": {
       "type": "string"
+    },
+    "horizontal": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

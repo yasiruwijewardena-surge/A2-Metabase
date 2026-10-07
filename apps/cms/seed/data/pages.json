@@ -1967,19 +1967,24 @@
           "chatCardBody": "Chat with your data and get an answer. Metabot builds the query using your models and definitions, and shows you what it ran.",
           "chatPrompts": [
             {
-              "text": "How many new accounts were created last week?"
+              "text": "How many new accounts were created last week?",
+              "image": "/images/features/metabot-ai/explore-your-data-with-ai_new-account-created.webp"
             },
             {
-              "text": "What's the average product rating?"
+              "text": "What's the average product rating?",
+              "image": "/images/features/metabot-ai/explore-your-data-with-ai_average-product-rating.webp"
             },
             {
-              "text": "How many active users did we have in the last 6 months?"
+              "text": "How many active users did we have in the last 6 months?",
+              "image": "/images/features/metabot-ai/explore-your-data-with-ai_active-users.webp"
             },
             {
-              "text": "Which plans are driving the most growth?"
+              "text": "Which plans are driving the most growth?",
+              "image": "/images/features/metabot-ai/explore-your-data-with-ai_distribution-of-plans.webp"
             },
             {
-              "text": "What's our revenue this quarter?"
+              "text": "What's our revenue this quarter?",
+              "image": "/images/features/metabot-ai/explore-your-data-with-ai_revenue-per-quarter.webp"
             }
           ],
           "chatPanelHeading": "New accounts created",
@@ -2075,7 +2080,8 @@
                       "mediaSrc": "/images/features/metabot-ai/sql-generation.mp4",
                       "mediaW": 1278,
                       "mediaH": 753,
-                      "mediaAlt": "SQL being generated from a plain-language description"
+                      "mediaAlt": "SQL being generated from a plain-language description",
+                      "horizontal": true
                     }
                   ]
                 },
