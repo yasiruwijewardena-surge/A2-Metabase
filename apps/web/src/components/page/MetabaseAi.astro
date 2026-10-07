@@ -344,6 +344,9 @@ const isClip = (src: string) => src.endsWith('.mp4');
         const place = (i - live + qs.length) % qs.length;
         q.style.opacity = String(FADE[Math.min(place, FADE.length - 1)]);
         q.style.order = String(place);
+        /* Narrow layouts show the live question on its own, so it needs to be
+           identifiable in CSS rather than by its order alone. */
+        q.toggleAttribute('data-live', place === 0);
       });
       shots.forEach((sh, i) => (sh.style.display = i === live ? 'block' : 'none'));
     };
@@ -358,6 +361,5 @@ const isClip = (src: string) => src.endsWith('.mp4');
       new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? start() : stop())),
         { threshold: 0.2 }).observe(root);
     }
-    qs.forEach((q, i) => q.addEventListener('mouseenter', () => { live = i; paint(); }));
   });
 </script>
