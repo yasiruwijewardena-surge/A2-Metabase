@@ -2761,9 +2761,11 @@
      card. This was rendering as a column like all the others. */
   .mai-card--h { flex-direction: row; align-items: flex-start; }
   .mai-card--h > .mai-card-copy { flex: 0 0 400px; max-width: 400px; }
+  /* The copy block's own 24 right margin is the whole gutter; adding another
+     24 here put the shot at 589 against the original's 565. */
   .mai-card--h > img, .mai-card--h > video {
     flex: none; width: auto; max-width: none; height: 100%;
-    margin-top: 0; margin-left: 24px;
+    margin-top: 0;
   }
   .mai-card-h {
     margin-bottom: 8px;
