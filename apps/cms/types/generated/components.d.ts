@@ -44,6 +44,7 @@ export interface PageAiCard extends Struct.ComponentSchema {
   attributes: {
     body: Schema.Attribute.Text;
     heading: Schema.Attribute.String;
+    horizontal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     linkLabel: Schema.Attribute.String;
     linkUrl: Schema.Attribute.String;
     mediaAlt: Schema.Attribute.String;
@@ -1053,10 +1054,12 @@ export interface PageSplit extends Struct.ComponentSchema {
 export interface PageTextItem extends Struct.ComponentSchema {
   collectionName: 'components_page_text_items';
   info: {
+    description: 'A line of text, optionally with an image the UI can pair with it.';
     displayName: 'Text item';
     icon: 'dashboard';
   };
   attributes: {
+    image: Schema.Attribute.String;
     text: Schema.Attribute.Text;
   };
 }

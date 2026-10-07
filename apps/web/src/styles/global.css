@@ -2645,6 +2645,9 @@
   @media (min-width: 1400px) { .mai-sec, .mai-faq, .mai-final, .mai-hero-inner { max-width: 1320px; } }
 
   /* --- hero ------------------------------------------------------------- */
+  /* The whole page is #fafbfe on the original and only the closing band is
+     white; this had the lot white, so the closing band never read as a band. */
+  .mai { background: var(--color-brand-faint); }
   .mai-hero { position: relative; padding-top: 70px; }
   /* The sky sits behind the copy rather than above it. */
   /* A fixed 1500 with max-width:none hung 555px off a phone viewport. It is
@@ -2701,6 +2704,10 @@
     justify-content: space-between; gap: 48px;
     width: 1240px; max-width: 100%; margin: 10px 0 24px;
   }
+  /* 34 more under the hero: the original clears 218 from the trust row to the
+     first section heading and this cleared 184. Padding, not margin, which
+     would just collapse into the trust row's own 24. */
+  .mai-hero { padding-bottom: 34px; }
   .mai-trust-line { font-size: 20px; line-height: 28px; color: var(--color-ink-2); }
   .mai-trust-logos { display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; }
   .mai-trust-logos li { flex: 1 1 auto; max-width: 135px; }
@@ -2749,6 +2756,15 @@
     box-shadow: 0 1px 2px 0 rgb(16 24 40 / 0.05);
   }
   .mai-card-copy { margin: 24px; }
+  /* One card on this page is a row -- the copy holds a 400 column and the
+     shot starts at 448 from the card edge and runs past it, clipped by the
+     card. This was rendering as a column like all the others. */
+  .mai-card--h { flex-direction: row; align-items: flex-start; }
+  .mai-card--h > .mai-card-copy { flex: 0 0 400px; max-width: 400px; }
+  .mai-card--h > img, .mai-card--h > video {
+    flex: none; width: auto; max-width: none; height: 100%;
+    margin-top: 0; margin-left: 24px;
+  }
   .mai-card-h {
     margin-bottom: 8px;
     font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink);
@@ -2866,15 +2882,23 @@
   /* The answers panel sits left at 757 and the prompts right at 440 on the
      original, 33 apart -- this had them the other way round. */
   .mai-chat { display: flex; gap: 33px; margin-top: 24px; }
+  /* A fixed window, as the original's is: five 64-tall items on an 80 pitch
+     inside 334, so the tail of the queue is clipped rather than listed. */
   .mai-chat-prompts {
-    flex: none; width: 440px; max-width: 100%;
+    flex: none; width: 440px; max-width: 100%; height: 334px; overflow: hidden;
     display: flex; flex-direction: column; gap: 16px;
   }
   .mai-chat-prompts li {
     display: flex; align-items: center; height: 64px; padding-inline: 24px;
     background: var(--color-surface); border-radius: 12px;
     font-size: 16px; line-height: 24px; color: var(--color-ink-2);
+    /* The script drives opacity and order; these are the resting values so the
+       list still reads correctly with no script. */
+    transition: opacity 400ms ease;
   }
+  .mai-chat-panel { position: relative; }
+  .mai-chat-shot { display: none; }
+  .mai-chat-shot:first-of-type { display: block; }
   .mai-chat-panel {
     flex: 1 1 757px; min-width: 0; padding: 15px;
     background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
@@ -2942,9 +2966,11 @@
   .mai-more-btn:hover { background: var(--color-brand-hover); }
 
   /* --- closing CTA ------------------------------------------------------ */
+  /* White, against the page's #fafbfe -- this is the band in the original. */
   .mai-final {
     display: flex; flex-direction: column; align-items: center;
     margin-top: 120px; padding-bottom: 96px; text-align: center;
+    background: #fff;
   }
   .mai-final-art { display: block; margin: -36px auto 64px; }
   .mai-final-h {
@@ -2960,8 +2986,11 @@
   @media (max-width: 1199px) {
     .mai-split { gap: 40px; }
     .mai-split-media { flex: 1 1 48%; width: auto; }
+    /* `flex: 1 1 757px` is a *height* once the row becomes a column, which is
+       what stretched the answer panel to 757 and the card to 1411. */
     .mai-chat { flex-direction: column-reverse; gap: 20px; }
-    .mai-chat-prompts { width: 100%; }
+    .mai-chat-prompts, .mai-chat-panel { flex: 0 0 auto; width: 100%; }
+    .mai-chat-prompts { height: 88px; }
     .mai-chat-prompts { width: 100%; }
   }
   @media (max-width: 991px) {
@@ -2989,8 +3018,13 @@
     .mai-trust-line { font-size: 18px; line-height: 26px; }
     .mai-trust-logos { flex-wrap: wrap; }
     .mai-trust img { height: 34px; padding-inline: 0; }
-    .mai-embed-frame { flex-direction: column; padding: 12px; border-radius: 20px; }
-    .mai-embed-side { width: 100%; max-width: 100%; }
+    /* Same trap: `flex: 1 1 948px` became a 948 height with a 249 image in
+       it. The original also drops the side strip altogether here and crops
+       the main shot to a 302x232 box. */
+    .mai-embed-frame { flex-direction: column; padding: 8px; border-radius: 20px; }
+    .mai-embed-main { flex: 0 0 auto; width: 100%; }
+    .mai-embed-main img { aspect-ratio: 302 / 232; object-fit: cover; object-position: left top; }
+    .mai-embed-side { display: none; }
     .mai-faq { margin-top: 72px; }
     .mai-faq-h { font-size: 30px; line-height: 40px; }
     .mai-final-h { font-size: 30px; line-height: 48px; }
