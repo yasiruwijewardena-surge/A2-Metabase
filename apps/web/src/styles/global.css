@@ -1616,12 +1616,15 @@
   }
   .ea-stories:has(#story-0:checked) .ea-panelrow[data-story='0'],
   .ea-stories:has(#story-1:checked) .ea-panelrow[data-story='1'] { display: flex; }
-  .ea-stories .ea-story-media { flex: none; width: 559px; max-width: 100%; }
+  /* Both halves have to be allowed to shrink: pinned at 559 + 632 they need
+     1191 of a 1084 column from 1280 down, which pushed the page into a
+     horizontal scroll at every width between 1024 and 1280. */
+  .ea-stories .ea-story-media { flex: 0 1 559px; min-width: 0; max-width: 100%; }
   .ea-stories .ea-story-media img {
     display: block; width: 100%; height: auto;
     border-radius: 8px; background: var(--color-brand-faint);
   }
-  .ea-stories .ea-story-copy { flex: none; width: 632px; max-width: 100%; padding-left: 96px; }
+  .ea-stories .ea-story-copy { flex: 0 1 632px; width: auto; min-width: 0; max-width: 100%; padding-left: 96px; }
   /* One ring on the tab that has focus, not one on every tab in the strip:
      the sibling selector reached all of them, so a keyboard user saw the whole
      strip outlined and could not tell where they were. */

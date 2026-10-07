@@ -82,7 +82,15 @@ const group = `acc-${s.id}`;
    */
   .pp-accordion-track { position: relative; }
   @media (min-width: 769px) {
-    .pp-accordion-track[data-track] { height: calc(100vh + 3000px); }
+    /* The original pins this one with GSAP's `pinSpacing: false`, so its
+       3000px of scrub costs the document no height -- its pin-spacer measures
+       the same 660 as the carousel, where Metabase AI's pin does add spacing.
+       Cancelling this track's height with a negative margin reproduces the
+       page length but not the result: the content that follows is not opaque,
+       so it renders straight through the pinned carousel. Keeping the spacing
+       costs 1500 of page length against the original and looks right, which
+       is the better trade. The scrub is halved to limit the cost. */
+    .pp-accordion-track[data-track] { height: calc(100vh + 1500px); }
     .pp-accordion-track[data-track] > .pp-accordion {
       position: sticky; top: 0;
       min-height: 100vh; display: flex; align-items: center;
@@ -105,5 +113,5 @@ const group = `acc-${s.id}`;
     fill: '.pp-feature-fill',
     shot: '.pp-accordion-shot',
     minWidth: 769,
-  });
+  }, 1500);
 </script>
