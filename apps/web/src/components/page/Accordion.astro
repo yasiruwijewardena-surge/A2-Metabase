@@ -67,7 +67,9 @@ const group = `acc-${s.id}`;
   /* Only the selected item's shot is shown; the rest are stacked under it. */
   .pp-accordion-media { position: relative; }
   .pp-accordion-shot { display: none; }
-  .pp-feature-rail { position: relative; overflow: hidden; }
+  /* The rail is absolute against the item's 20 inset -- global.css sets the
+     geometry; this only needs to clip the fill. */
+  .pp-feature-rail { overflow: hidden; }
   .pp-feature-fill {
     display: block; position: absolute; inset: 0 0 auto 0;
     height: 0; background: var(--color-brand); border-radius: inherit;
