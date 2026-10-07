@@ -2112,6 +2112,13 @@
   .rm-main { flex: 0 1 824px; min-width: 0; }
   .rm-side { flex: 0 0 232px; margin-left: auto; }
 
+  /* A 1px spine between the rail and the panels, running the panels' full
+     height. The active stage's rule and dot reach out to meet it. */
+  .rm-groups { position: relative; }
+  .rm-groups::before {
+    content: ''; position: absolute; left: -75px; top: 0; bottom: 0;
+    width: 1px; background: var(--color-brand-muted);
+  }
   .rm-group {
     margin-bottom: 24px;
     background: #fff;
@@ -2231,6 +2238,7 @@
       padding: 20px 0 12px; background: var(--color-brand-faint);
     }
     .rm-stage { padding: 4px 0; }
+    .rm-groups::before { display: none; }
     .rm-stage { width: auto; }
     .rm-stage--on::before, .rm-stage--on::after { display: none; }
   }

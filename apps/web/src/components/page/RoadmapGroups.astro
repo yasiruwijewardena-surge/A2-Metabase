@@ -69,6 +69,10 @@ const groups = s.groups ?? [];
         </nav>
 
         <div class="rm-main">
+          {/* The groups are wrapped so the spine between the rail and the
+              panels can run their full height and stop where they stop, as
+              the original's does. */}
+          <div class="rm-groups">
           {groups.map((g) => (
             <section class:list={['rm-group', `rm-group--${g.tone}`]} id={g.anchor}>
               <h2 class:list={['rm-group-h', `rm-group-h--${g.tone}`]}>{g.heading}</h2>
@@ -91,6 +95,7 @@ const groups = s.groups ?? [];
               </ul>
             </section>
           ))}
+          </div>
           <p class="rm-foot">
             {s.footLead}
             <a href={s.footLinkUrl}>
