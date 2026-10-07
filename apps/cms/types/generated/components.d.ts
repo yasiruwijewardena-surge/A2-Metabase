@@ -124,6 +124,7 @@ export interface PageBullet extends Struct.ComponentSchema {
   };
   attributes: {
     body: Schema.Attribute.Text;
+    pro: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }

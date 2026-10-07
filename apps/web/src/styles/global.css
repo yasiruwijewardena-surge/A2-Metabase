@@ -1997,7 +1997,9 @@
   }
   @media (max-width: 991px) {
     .fp-neutral { margin-bottom: 40px; padding-block: 32px 48px; }
-    .fp-hero { flex-direction: column; align-items: stretch; gap: 32px; }
+    /* No top margin once the hero stacks -- it only separated the two
+       columns' band from the eyebrow on a wide screen. */
+    .fp-hero { flex-direction: column; align-items: stretch; gap: 32px; margin-top: 0; }
     .fp-hero-text, .fp-hero-media { flex: 1 1 auto; }
     /* The original holds the headline at 36/40 all the way down and only
        eases the section heading, which it runs fluid: 32 at desktop, 30 here,
@@ -2121,9 +2123,12 @@
     font-size: 20px; line-height: normal; font-weight: 700;
     border-radius: 12px;
   }
-  .rm-group-h--green { color: #4a7a1f; background: #f5f9f0; }
-  .rm-group-h--amber { color: #8a6a00; background: #fef9e6; }
-  .rm-group-h--blue  { color: var(--color-brand-hover); background: var(--color-brand-muted); }
+  /* Measured off the original: the heading takes the stage colour and the
+     two tinted bands sit at half opacity. These were all darker than the
+     original's and the tints were fully opaque. */
+  .rm-group-h--green { color: #80b946; background: rgb(245 249 240 / 0.5); }
+  .rm-group-h--amber { color: #f7be08; background: rgb(254 249 230 / 0.5); }
+  .rm-group-h--blue  { color: var(--color-brand); background: var(--color-brand-muted); }
 
   /* 2 x 375 inside a 776 content box leaves 26 of gutter. */
   .rm-items {
@@ -2158,26 +2163,34 @@
   .rm-foot a:hover, .rm-card-link:hover { text-decoration: underline; }
   .rm-foot svg, .rm-card-link svg { display: block; flex: none; }
 
-  /* Muted until its group is the one in view, when it turns brand and grows
-     the short line and dot the original draws off the active stage. */
+  /* Grey until its group is the one in view, when it takes that group's own
+     colour -- green for now, amber for soon, blue for later -- and draws the
+     28x1 rule and 7px dot the original hangs off the active stage. */
   .rm-stage {
-    display: flex; align-items: center; gap: 8px;
-    padding: 1px 0 12px;
+    position: relative; display: flex; align-items: center; gap: 8px;
+    width: 101px; padding: 1px 0 12px;
     font-size: 16px; font-weight: 700; color: var(--color-ink-4);
+    transition: color 300ms ease;
   }
-  .rm-stage svg { flex: none; }
-  .rm-stage-tail {
-    display: block; position: relative; width: 0;
-    border-top: 1px solid currentColor;
-    transition: width 200ms ease;
+  .rm-stage svg { flex: none; width: 24px; height: 24px; }
+  .rm-stage--on.rm-stage--green { color: #80b946; }
+  .rm-stage--on.rm-stage--amber { color: #f7be08; }
+  .rm-stage--on.rm-stage--blue  { color: var(--color-brand); }
+  .rm-stage--on::before, .rm-stage--on::after {
+    content: ''; position: absolute; background: currentColor;
   }
-  .rm-stage--on { color: var(--color-brand-hover); }
-  .rm-stage--on .rm-stage-tail { width: 22px; }
-  .rm-stage--on .rm-stage-tail::after {
-    content: ''; position: absolute; right: -3px; top: -3px;
-    width: 6px; height: 6px; border-radius: 50%; background: currentColor;
-  }
-  @media (prefers-reduced-motion: reduce) { .rm-stage-tail { transition: none; } }
+  .rm-stage--on::before { left: 77px; top: 14px; width: 28px; height: 1px; }
+  .rm-stage--on::after  { left: 98px; top: 11px; width: 7px; height: 7px; border-radius: 50%; }
+  @media (prefers-reduced-motion: reduce) { .rm-stage { transition: none; } }
+
+  /* The rail drops away once the panels have run out, as the original's does. */
+  .rm-rail { transition: opacity 300ms ease; }
+  .rm-rail[data-done] { opacity: 0; pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .rm-rail { transition: none; } }
+
+  /* The gem marks a tile as a paid-plan feature. */
+  .rm-item { position: relative; }
+  .rm-gem { position: absolute; top: 16px; right: 20px; }
 
   .rm-note {
     margin: 0 0 24px;
@@ -2209,10 +2222,17 @@
     .rm-body { flex-direction: column; }
     .rm-rail, .rm-main, .rm-side { flex: 1 1 auto; width: 100%; margin-left: 0; }
     .rm-items { grid-template-columns: 1fr; gap: 16px; }
-    /* The rail lies down as a row of chips once the three columns collapse. */
-    .rm-rail { position: static; display: flex; flex-wrap: wrap; gap: 16px; }
+    /* The rail lies down as a row once the three columns collapse, and the
+       original keeps it stuck under the nav rather than letting it scroll
+       away: 110 from the top, on the page tint, padded 20/12. */
+    .rm-rail {
+      position: sticky; top: 110px; z-index: 4;
+      display: flex; flex-wrap: wrap; justify-content: space-between;
+      padding: 20px 0 12px; background: var(--color-brand-faint);
+    }
     .rm-stage { padding: 4px 0; }
-    .rm-stage-tail, .rm-stage--on .rm-stage-tail { display: none; }
+    .rm-stage { width: auto; }
+    .rm-stage--on::before, .rm-stage--on::after { display: none; }
   }
 }
 
