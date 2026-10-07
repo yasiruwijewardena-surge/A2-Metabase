@@ -1845,7 +1845,11 @@
     .pp-frame--bleed { height: auto; }
   }
   @media (max-width: 991px) {
+    /* The support panel runs flush to the column on the original here, and
+       its review column is 444 rather than the desktop 590. */
     .ea-panel { padding: 32px 20px; }
+    .ea-panel.ea-support { padding-inline: 0; }
+    .ea-marquee { width: 100%; height: 444px; }
     .ea-story, .ea-impls, .ea-panelrow, .ea-support { flex-direction: column; gap: 32px; }
     .ea-story-media, .ea-tab-media, .ea-marquee { width: 100%; flex: 1 1 auto; }
     .ea-tab-copy, .ea-stories .ea-story-copy { width: 100%; padding-left: 0; }
