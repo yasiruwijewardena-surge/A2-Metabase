@@ -26,7 +26,17 @@
  * original's, since they are what the page is for. The prose in the cells
  * is written here.
  */
+import ProductPillarIcon from './ProductPillarIcon.astro';
 import type { PageSection } from '../../lib/types';
+
+/* The original badges each method in the first column. Keyed off the method
+ * name, since the comparison rows carry no icon field. */
+const ROW_ICON: Record<string, string> = {
+  'row-level security': 'grid',
+  'connection impersonation': 'permissions',
+  'database routing': 'servers',
+  'locked parameters': 'segregation',
+};
 
 interface Props { section: PageSection }
 const { section: s } = Astro.props;
@@ -75,13 +85,18 @@ const rows = s.rows ?? [];
         {rows.map((r) => (
           <div class="ds-row" role="row">
             <div class="ds-cell ds-cell--name" role="rowheader">
+              <span class="ds-row-icon" aria-hidden="true">
+                <ProductPillarIcon name={ROW_ICON[r.name.toLowerCase()] ?? 'shield-plain'} />
+              </span>
+              <div>
               <b>{r.name}</b>
               {r.sub && <p class="ds-sub">{r.sub}</p>}
+              </div>
             </div>
             <div class="ds-cell" role="cell"><p>{r.mean}</p></div>
-            <div class="ds-cell" role="cell"><ul>{(r.when ?? []).map((x) => <li>{x.text}</li>)}</ul></div>
+            <div class="ds-cell" role="cell"><ul class="ds-list ds-list--yes">{(r.when ?? []).map((x) => <li>{x.text}</li>)}</ul></div>
             <div class="ds-cell" role="cell"><p>{r.example}</p></div>
-            <div class="ds-cell" role="cell"><ul>{(r.tradeoffs ?? []).map((x) => <li>{x.text}</li>)}</ul></div>
+            <div class="ds-cell" role="cell"><ul class="ds-list ds-list--no">{(r.tradeoffs ?? []).map((x) => <li>{x.text}</li>)}</ul></div>
           </div>
         ))}
       </div>
