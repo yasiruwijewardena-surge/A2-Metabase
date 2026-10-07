@@ -1182,8 +1182,10 @@
     font-size: 18px; line-height: 25px; color: var(--color-ink-2);
   }
   .pp-logos {
+    /* 20 between them, which is what makes the row 1037 and centres it at
+       238 on the original. At zero they sat shoulder to shoulder over 897. */
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-    gap: 0 0; padding-bottom: 76px;
+    gap: 0 20px; padding-bottom: 76px;
   }
   .pp-logos img {
     display: block; height: 38px;
