@@ -2616,14 +2616,14 @@
   /* --- the repeating section pattern ------------------------------------ */
   .mai-sec { margin-top: 160px; }
   .mai-h2 {
-    width: 100%; max-width: 800px; margin-inline: auto;
+    width: 100%; max-width: 800px; margin-inline: 0;
     font-size: 36px; line-height: 40px; font-weight: 700;
-    color: var(--color-ink); text-align: center;
+    color: var(--color-ink); text-align: left;
   }
-  .mai-h2--left { max-width: 520px; margin-inline: 0; text-align: left; }
+  .mai-h2--left { max-width: 520px; }
   .mai-lede {
-    width: 100%; max-width: 800px; margin: 16px auto 0;
-    font-size: 20px; line-height: 28px; color: var(--color-ink-2); text-align: center;
+    width: 100%; max-width: 800px; margin: 16px 0 0;
+    font-size: 20px; line-height: 28px; color: var(--color-ink-2); text-align: left;
   }
   .mai-lede--tall { max-width: 800px; }
   .mai-lede a, .mai-card-p a, .mai-split-lede a {
@@ -2655,8 +2655,12 @@
     font-size: 24px; line-height: 32px; font-weight: 700; color: var(--color-ink);
   }
   .mai-card-p { max-width: 800px; font-size: 20px; line-height: 28px; color: var(--color-ink-2); }
+  /* The shot spans the card edge to edge, as the original's does. The global
+     `img { max-width: 100% }` was capping it at the content box, so the bleed
+     the negative margin sets up never happened and every card's media sat 48
+     narrower than its card. */
   .mai-card > img, .mai-card > video {
-    display: block; width: calc(100% + 48px); margin-left: -24px;
+    display: block; width: calc(100% + 48px); max-width: none; margin-left: -24px;
     height: auto; margin-top: auto; padding-top: 32px;
   }
 
