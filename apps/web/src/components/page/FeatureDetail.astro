@@ -35,9 +35,13 @@ import type { PageSection } from '../../lib/types';
 
 interface Props { section: PageSection }
 const { section: s } = Astro.props;
+
+/* Dashboards and reporting is asked to sit tighter under the nav than the
+ * other feature pages, which keep the original's spacing. */
+const tightHero = Astro.url.pathname.replace(/\/$/, '') === '/features/analytics-dashboards';
 ---
   <div class="fp-page">
-    <section class="fp-neutral">
+    <section class:list={['fp-neutral', tightHero && 'fp-neutral--tight']}>
       <div class="fp-shell">
         <div class="fp-hero">
           <div class="fp-hero-text">

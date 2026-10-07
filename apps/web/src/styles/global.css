@@ -1845,6 +1845,10 @@
   .fp-shell { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: 28px; }
 
   .fp-hero { display: flex; align-items: center; gap: 0; margin-top: 40px; }
+  /* Asked for on /features/analytics-dashboards specifically: 48 above the
+     hero rather than the 88 the original carries. Scoped to that page so the
+     sibling feature pages keep the original's spacing. */
+  .fp-neutral--tight .fp-hero { margin-top: 0; }
   .fp-hero-text { flex: 0 1 632px; min-width: 0; max-width: 100%; }
   .fp-hero-media { flex: 0 1 632px; min-width: 0; max-width: 100%; }
   .fp-hero-media video {
@@ -1904,8 +1908,14 @@
      never wrap and share the row, so a page with two of them gets 616 each
      (white-label analytics) and a page with three gets 400. */
   .fp-cards, .fp-links { display: flex; gap: 32px; margin-top: 64px; }
-  .fp-cards { flex-wrap: wrap; justify-content: center; }
-  .fp-cards > li { flex: 0 1 calc((100% - 64px) / 3); }
+  /* `stretch` explicitly, and the card fills its row item, so a card with
+     shorter copy still matches its neighbours -- the original's six are all
+     204 and one of mine was coming out 180. */
+  .fp-cards { flex-wrap: wrap; justify-content: center; align-items: stretch; }
+  /* The li *is* the card here, so it must keep `height: auto` -- a
+     `height: 100%` on it takes the cross size out of `auto` and switches
+     stretch off, which is what left one card 180 beside two 204s. */
+  .fp-cards > li { flex: 0 1 calc((100% - 64px) / 3); align-self: stretch; }
   .fp-links > li { flex: 1 1 0; min-width: 0; }
   .fp-card, .fp-link-card {
     display: block; padding: 24px;
@@ -1923,7 +1933,6 @@
   /* The original keeps the three cards level even when one title is a
      single line; `start` left the short card short. */
   .fp-links { align-items: stretch; margin-bottom: 120px; }
-  .fp-card { height: 100%; }
   .fp-link-card { height: 100%; transition: border-color 150ms, box-shadow 150ms; }
   .fp-link-card:hover {
     border-color: var(--color-brand-border);
