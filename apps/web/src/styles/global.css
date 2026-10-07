@@ -1884,8 +1884,10 @@
   }
   .fp-btn--secondary:hover { background: var(--color-brand-muted); }
 
+  /* Centred, as the original sets it -- left-aligned it sat out of line with
+     its own standfirst, which was centred directly beneath it. */
   .fp-h2 {
-    margin-top: 140px; margin-bottom: 24px;
+    margin-top: 140px; margin-bottom: 24px; text-align: center;
     font-size: 32px; line-height: 37px; font-weight: 700; color: var(--color-ink);
   }
   .fp-h2--b { margin-top: 120px; margin-bottom: 0; }
@@ -2278,7 +2280,9 @@
 
   /* --- comparison grid -------------------------------------------------- */
   .ds-compare { padding-top: 96px; }
+  /* Centred on the original, like every other section heading here. */
   .ds-compare-h {
+    text-align: center;
     margin-bottom: 8px;
     font-size: 36px; line-height: 40px; font-weight: 900; color: var(--color-ink);
   }
