@@ -351,11 +351,13 @@
               "items": [
                 {
                   "title": "Explorations",
-                  "body": "A new way to work through your data, with AI alongside you rather than in the way."
+                  "body": "A new way to work through your data, with AI alongside you rather than in the way.",
+                  "pro": true
                 },
                 {
                   "title": "Transform indexes",
-                  "body": "Create indexes on your transforms and keep them persisted between runs."
+                  "body": "Create indexes on your transforms and keep them persisted between runs.",
+                  "pro": true
                 },
                 {
                   "title": "Treemaps",
@@ -383,31 +385,38 @@
               "items": [
                 {
                   "title": "Workspaces",
-                  "body": "Isolated data warehouse space for each agent, so one cannot disturb another."
+                  "body": "Isolated data warehouse space for each agent, so one cannot disturb another.",
+                  "pro": true
                 },
                 {
                   "title": "Data apps",
-                  "body": "Custom applications built on top of the Metabase semantic layer."
+                  "body": "Custom applications built on top of the Metabase semantic layer.",
+                  "pro": true
                 },
                 {
                   "title": "Product analytics",
-                  "body": "Track and analyse product events natively, without a second tool to reconcile."
+                  "body": "Track and analyse product events natively, without a second tool to reconcile.",
+                  "pro": true
                 },
                 {
                   "title": "Content optimizer",
-                  "body": "Organise what already exists and surface the parts actually worth reading."
+                  "body": "Organise what already exists and surface the parts actually worth reading.",
+                  "pro": true
                 },
                 {
                   "title": "Transform improvements",
-                  "body": "Faster transforms, clearer error handling, and a number of smaller fixes."
+                  "body": "Faster transforms, clearer error handling, and a number of smaller fixes.",
+                  "pro": true
                 },
                 {
                   "title": "Transform tests",
-                  "body": "Verification for the semantic layer, so a model can be trusted on sight."
+                  "body": "Verification for the semantic layer, so a model can be trusted on sight.",
+                  "pro": true
                 },
                 {
                   "title": "Two-factor authentication (2FA)",
-                  "body": "Add support for two-factor authentication, where SSO is not the answer."
+                  "body": "Add support for two-factor authentication, where SSO is not the answer.",
+                  "pro": true
                 }
               ]
             },
@@ -419,19 +428,23 @@
               "items": [
                 {
                   "title": "Data catalog",
-                  "body": "Track lineage, PII and data quality, and help people find the right table."
+                  "body": "Track lineage, PII and data quality, and help people find the right table.",
+                  "pro": true
                 },
                 {
                   "title": "Data warehouse cost insights",
-                  "body": "Know what your queries cost, and optimise or stop the expensive ones."
+                  "body": "Know what your queries cost, and optimise or stop the expensive ones.",
+                  "pro": true
                 },
                 {
                   "title": "Mandatory filters and partition support",
-                  "body": "Require a filter on every GUI query, so partitioned tables stay affordable."
+                  "body": "Require a filter on every GUI query, so partitioned tables stay affordable.",
+                  "pro": true
                 },
                 {
                   "title": "Permissions debugger",
-                  "body": "Troubleshoot permissions as an admin, and set them with more confidence."
+                  "body": "Troubleshoot permissions as an admin, and set them with more confidence.",
+                  "pro": true
                 },
                 {
                   "title": "Better control over auto-refresh",
