@@ -35,6 +35,15 @@
  */
 import type { PageSection } from '../../lib/types';
 
+/* The original leads each feature card with a small brand glyph above the
+ * label. The cards carry no icon field, so they are keyed off the label. */
+const CARD_GLYPH: Record<string, string> = {
+  transforms: 'M8 1.5v13M1.5 8h13M3.4 3.4l9.2 9.2M12.6 3.4l-9.2 9.2',
+  metadata: 'M8 4.2C6.8 3.1 5.3 2.6 3 2.6v9.6c2.3 0 3.8.5 5 1.6 1.2-1.1 2.7-1.6 5-1.6V2.6c-2.3 0-3.8.5-5 1.6zM8 4.2v10.6',
+  metrics: 'M2 2.6h12v10.8H2zM2 6.2h12M6 6.2v7.2',
+  lineage: 'M2 3.2h12l-4.6 5.2v4.8l-2.8 1.6V8.4z',
+};
+
 interface Props { section: PageSection }
 const { section: s } = Astro.props;
 
@@ -97,6 +106,12 @@ const faqs = s.faqs ?? [];
       <ul class="dst-grid">
         {cards.map((c) => (
           <li class="dst-card">
+            <span class="dst-card-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                   stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d={CARD_GLYPH[(c.icon ?? '').toLowerCase()] ?? CARD_GLYPH.metrics} />
+              </svg>
+            </span>
             <p class="dst-card-label">{c.icon}</p>
             <h3 class="dst-card-h">{c.title}</h3>
             <p class="dst-card-p">{c.body} <a href={c.trailingUrl}>{c.trailingLabel}</a></p>

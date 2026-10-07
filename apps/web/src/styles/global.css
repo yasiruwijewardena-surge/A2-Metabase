@@ -131,10 +131,12 @@
   .pill:hover { background: var(--color-brand-hover); color: #fff; }
   .pill-on { background: var(--color-brand-strong); color: #fff; }
 
+  /* 28px, which is what the original's `.container` carries at every
+     breakpoint from 390 up; 20px left every page 8px wide on each side. */
   .container-mb {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 20px;
+    padding-inline: 28px;
   }
 
   /* The glossary headline holds 36/40 down to 576, where the original eases
@@ -1896,11 +1898,15 @@
     font-size: 18px; line-height: 26px; color: var(--color-ink-2); text-align: center;
   }
 
-  /* 3 x 400 in 1264 leaves 32 of gutter. */
-  .fp-cards, .fp-links {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 400px));
-    justify-content: space-between; gap: 32px; margin-top: 64px;
-  }
+  /* Both rows are flex on the original, and they behave differently.
+     The feature cards wrap at a fixed third-width and centre, so a seventh
+     card sits in the middle of its own row (drill-through). The link cards
+     never wrap and share the row, so a page with two of them gets 616 each
+     (white-label analytics) and a page with three gets 400. */
+  .fp-cards, .fp-links { display: flex; gap: 32px; margin-top: 64px; }
+  .fp-cards { flex-wrap: wrap; justify-content: center; }
+  .fp-cards > li { flex: 0 1 calc((100% - 64px) / 3); }
+  .fp-links > li { flex: 1 1 0; min-width: 0; }
   .fp-card, .fp-link-card {
     display: block; padding: 24px;
     background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
@@ -1914,7 +1920,10 @@
   .fp-card-p a { font-weight: 700; color: var(--color-brand-hover); }
   .fp-card-p a:hover { text-decoration: underline; }
 
-  .fp-links { align-items: start; margin-bottom: 120px; }
+  /* The original keeps the three cards level even when one title is a
+     single line; `start` left the short card short. */
+  .fp-links { align-items: stretch; margin-bottom: 120px; }
+  .fp-card { height: 100%; }
   .fp-link-card { height: 100%; transition: border-color 150ms, box-shadow 150ms; }
   .fp-link-card:hover {
     border-color: var(--color-brand-border);
@@ -1933,8 +1942,10 @@
 
   /* --- numbered how-to ------------------------------------------------- */
   .fp-howto { padding-inline: 28px; text-align: center; }
+  /* 640px is the original's cap, which is what makes this heading wrap onto
+     two lines instead of running the full column width. */
   .fp-howto-h {
-    width: fit-content; max-width: 100%; margin: 0 auto 24px;
+    width: fit-content; max-width: 640px; margin: 0 auto 24px;
     font-size: 36px; line-height: 48px; font-weight: 700; color: var(--color-ink);
   }
   .fp-steps {
@@ -1972,7 +1983,8 @@
 
   @media (max-width: 1199px) {
     .fp-hero-text, .fp-hero-media { flex: 1 1 50%; }
-    .fp-cards, .fp-links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .fp-cards, .fp-links { gap: 24px; }
+    .fp-cards > li { flex-basis: calc((100% - 48px) / 3); }
   }
   @media (max-width: 991px) {
     .fp-neutral { margin-bottom: 40px; padding-block: 32px 48px; }
@@ -1983,7 +1995,8 @@
        28 under 768 and 25 on a phone. */
     .fp-standfirst { font-size: 18px; line-height: 26px; }
     .fp-h2 { margin-top: 48px; font-size: 30px; line-height: 35px; }
-    .fp-cards, .fp-links { grid-template-columns: 1fr; margin-top: 32px; }
+    .fp-cards, .fp-links { flex-direction: column; margin-top: 32px; }
+    .fp-cards > li, .fp-links > li { flex: 0 0 auto; }
     .fp-link-h { font-size: 20px; line-height: 28px; }
     .fp-howto-h, .fp-final-h { font-size: 26px; line-height: 34px; }
     .fp-steps { padding: 24px; }
@@ -2055,6 +2068,10 @@
   .rm { padding-block: 40px 96px; }
 
   .rm-tabs { display: flex; gap: 8px; }
+  .rm-tab { display: inline-flex; align-items: center; gap: 8px; }
+  /* The resting tab carries the border on the original; the open one drops it
+     for its tinted fill. */
+  .rm-tab:not(.rm-tab--on) { border: 1px solid var(--color-line); }
   .rm-tab {
     padding: 8px 12px; border-radius: 12px;
     font-size: 16px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
@@ -2068,14 +2085,18 @@
     font-size: 30px; line-height: 36px; font-weight: 700; color: var(--color-ink);
   }
 
-  .rm-body { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; }
+  /* Three columns on the original, not two: a 104-wide stage rail, the
+     824 panel column, then the 232 sidebar. The rail is what I had
+     previously mistaken for empty gutter. */
+  .rm-body { display: flex; align-items: flex-start; gap: 36px; }
+  .rm-rail { flex: 0 0 104px; position: sticky; top: 120px; }
   .rm-main { flex: 0 1 824px; min-width: 0; }
-  .rm-side { flex: 0 0 232px; }
+  .rm-side { flex: 0 0 232px; margin-left: auto; }
 
   .rm-group {
     margin-bottom: 24px;
-    background: var(--color-brand-faint);
-    border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--color-line); border-radius: 12px;
     overflow: hidden;
   }
   .rm-group-h {
@@ -2120,20 +2141,40 @@
   .rm-foot a:hover, .rm-card-link:hover { text-decoration: underline; }
   .rm-foot svg, .rm-card-link svg { display: block; flex: none; }
 
-  .rm-stages { display: flex; flex-direction: column; align-items: flex-start; }
+  /* Muted until its group is the one in view, when it turns brand and grows
+     the short line and dot the original draws off the active stage. */
   .rm-stage {
-    min-width: 101px; padding: 1px 6px 12px;
-    font-size: 16px; font-weight: 700; color: var(--color-brand-hover);
+    display: flex; align-items: center; gap: 8px;
+    padding: 1px 0 12px;
+    font-size: 16px; font-weight: 700; color: var(--color-ink-4);
   }
-  .rm-stage:hover { text-decoration: underline; }
+  .rm-stage svg { flex: none; }
+  .rm-stage-tail {
+    display: block; position: relative; width: 0;
+    border-top: 1px solid currentColor;
+    transition: width 200ms ease;
+  }
+  .rm-stage--on { color: var(--color-brand-hover); }
+  .rm-stage--on .rm-stage-tail { width: 22px; }
+  .rm-stage--on .rm-stage-tail::after {
+    content: ''; position: absolute; right: -3px; top: -3px;
+    width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  }
+  @media (prefers-reduced-motion: reduce) { .rm-stage-tail { transition: none; } }
 
   .rm-note {
-    margin-top: 12px; margin-bottom: 24px;
+    margin: 0 0 24px;
     font-size: 16px; line-height: 24px; color: var(--color-ink-2);
   }
   .rm-card {
     margin-bottom: 24px; padding: 24px;
     background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
+  }
+  /* The plans note and the feature-idea prompt share one card, split by a
+     rule, as they do on the original. */
+  .rm-card--lead .rm-note {
+    margin: -24px -24px 24px; padding: 24px;
+    border-bottom: 1px solid var(--color-line);
   }
   .rm-card b, .rm-card-h {
     display: block; width: fit-content; max-width: 100%; margin-bottom: 8px;
@@ -2149,10 +2190,12 @@
     .rm { padding-block: 24px 56px; }
     .rm-h1 { padding-block: 16px 24px; font-size: 26px; line-height: 32px; }
     .rm-body { flex-direction: column; }
-    .rm-main, .rm-side { flex: 1 1 auto; width: 100%; }
+    .rm-rail, .rm-main, .rm-side { flex: 1 1 auto; width: 100%; margin-left: 0; }
     .rm-items { grid-template-columns: 1fr; gap: 16px; }
-    .rm-stages { flex-direction: row; flex-wrap: wrap; gap: 8px; }
-    .rm-stage { padding: 4px 8px; }
+    /* The rail lies down as a row of chips once the three columns collapse. */
+    .rm-rail { position: static; display: flex; flex-wrap: wrap; gap: 16px; }
+    .rm-stage { padding: 4px 0; }
+    .rm-stage-tail, .rm-stage--on .rm-stage-tail { display: none; }
   }
 }
 
@@ -2305,10 +2348,33 @@
   .ds-sub { margin-top: 2px; font-size: 14px; line-height: 22px; color: var(--color-ink-2); }
   .ds-cell ul { display: flex; flex-direction: column; gap: 10px; }
   .ds-cell li { position: relative; padding-left: 28px; }
-  .ds-cell li::before {
-    content: ''; position: absolute; left: 8px; top: 8px;
-    width: 6px; height: 6px; border-radius: 50%; background: var(--color-brand);
+  /* A tick beside the reasons to pick a method and a cross beside its
+     tradeoffs, which is how the original reads the two columns apart. */
+  .ds-list li::before {
+    content: ''; position: absolute; left: 2px; top: 4px;
+    width: 14px; height: 14px; background: currentColor;
+    -webkit-mask: var(--ds-mark) center / contain no-repeat;
+            mask: var(--ds-mark) center / contain no-repeat;
   }
+  .ds-list--yes li { color: var(--color-ink-2); }
+  .ds-list--yes li::before {
+    color: var(--color-ink);
+    --ds-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 7.5l3.2 3.2L12 3.8'/%3E%3C/svg%3E");
+  }
+  .ds-list--no li::before {
+    color: var(--color-ink);
+    --ds-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 3l8 8M11 3l-8 8'/%3E%3C/svg%3E");
+  }
+
+  /* The method column leads with a bordered glyph on the original. */
+  .ds-cell--name { display: flex; gap: 12px; align-items: flex-start; }
+  .ds-row-icon {
+    display: grid; place-items: center; flex: none;
+    width: 40px; height: 40px;
+    border: 1px solid var(--color-line); border-radius: 8px;
+    background: #fff; color: var(--color-brand);
+  }
+  .ds-row-icon svg { width: 18px; height: 18px; }
 
   /* --- closing CTA ------------------------------------------------------ */
   .ds-final {
@@ -2362,6 +2428,11 @@
  * capped at 800.
  * ------------------------------------------------------------------------ */
 @layer components {
+  /* The original lays a 20px dot grid under the whole page. */
+  .dst {
+    background-image: radial-gradient(circle, #e4ecfb 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
   .dst-wrap, .dst-trust, .dst-feats, .dst-faq, .dst-final {
     width: 100%; max-width: 1512px; margin-inline: auto; padding-inline: 24px;
   }
@@ -2462,6 +2533,8 @@
     padding: 24px;
     background: #fff; border: 1px solid var(--color-line); border-radius: 12px;
   }
+  .dst-card-icon { display: block; color: var(--color-brand); }
+  .dst-card-icon svg { display: block; }
   .dst-card-label {
     margin-top: 24px; margin-bottom: 4px;
     font-size: 18px; line-height: 26px; font-weight: 700; color: var(--color-ink-2);
