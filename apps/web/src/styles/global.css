@@ -96,6 +96,15 @@
   }
 }
 
+/* Registered so the marker's `top` interpolates: an unregistered custom
+   property inside calc() is a string to the engine, so it steps rather than
+   animating and the marker jumped between stages. */
+@property --rm-step {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
 @layer components {
   /* Lifted from the original's .blog-card: radius .5rem, white on the tinted
      page, 24px padding, and a 4px lift with a soft shadow on hover. */
@@ -2108,7 +2117,9 @@
   .rm-body { display: flex; align-items: flex-start; gap: 36px; }
   /* 140 + the 36 gap puts the panel column 176 from the content edge, which
      is where the original starts it; 104 is only the width of one label. */
-  .rm-rail { flex: 0 0 140px; position: sticky; top: 120px; }
+  /* Above the spine, so the dot sits on the line rather than the line being
+     drawn through the dot. */
+  .rm-rail { flex: 0 0 140px; position: sticky; top: 120px; z-index: 1; }
   .rm-main { flex: 0 1 824px; min-width: 0; }
   .rm-side { flex: 0 0 232px; margin-left: auto; }
 
@@ -2183,15 +2194,30 @@
   .rm-stage--on.rm-stage--green { color: #80b946; }
   .rm-stage--on.rm-stage--amber { color: #f7be08; }
   .rm-stage--on.rm-stage--blue  { color: var(--color-brand); }
-  .rm-stage--on::before, .rm-stage--on::after {
-    content: ''; position: absolute; background: currentColor;
+
+  /* One marker that slides, not one per stage that blinks on and off. The
+     original keeps a single rule and dot on the rail and animates their `top`
+     and colour over 0.3s, which is the movement down the line as you scroll.
+     Hanging them off whichever stage was active meant they jumped. */
+  .rm-rail::before, .rm-rail::after {
+    content: ''; position: absolute; background: var(--rm-marker, transparent);
+    transition: top 300ms ease, background-color 300ms ease;
   }
-  .rm-stage--on::before { left: 77px; top: 14px; width: 28px; height: 1px; }
-  .rm-stage--on::after  { left: 98px; top: 11px; width: 7px; height: 7px; border-radius: 50%; }
-  @media (prefers-reduced-motion: reduce) { .rm-stage { transition: none; } }
+  .rm-rail::before {
+    left: 77px; top: calc(14px + var(--rm-step, 0) * 37px);
+    width: 28px; height: 1px;
+  }
+  .rm-rail::after {
+    left: 98px; top: calc(11px + var(--rm-step, 0) * 37px);
+    width: 7px; height: 7px; border-radius: 50%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rm-stage, .rm-rail::before, .rm-rail::after { transition: none; }
+  }
 
   /* The rail drops away once the panels have run out, as the original's does. */
   .rm-rail { transition: opacity 300ms ease; }
+  .rm-rail[data-done]::before, .rm-rail[data-done]::after { opacity: 0; }
   .rm-rail[data-done] { opacity: 0; pointer-events: none; }
   @media (prefers-reduced-motion: reduce) { .rm-rail { transition: none; } }
 
@@ -2238,7 +2264,7 @@
       padding: 20px 0 12px; background: var(--color-brand-faint);
     }
     .rm-stage { padding: 4px 0; }
-    .rm-groups::before { display: none; }
+    .rm-groups::before, .rm-rail::before, .rm-rail::after { display: none; }
     .rm-stage { width: auto; }
     .rm-stage--on::before, .rm-stage--on::after { display: none; }
   }
