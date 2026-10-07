@@ -1659,8 +1659,9 @@
   }
   .ea-theme-label {
     margin-bottom: 2px;
-    font-size: 11px; line-height: 15px; font-weight: 700; letter-spacing: 0.04em;
-    text-transform: uppercase; color: var(--color-ink-3);
+    /* 0.1em and blue-grey-60 on the original, not 0.04em and ink-3. */
+    font-size: 11px; line-height: 15px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #949aab;
   }
   .ea-theme-label + .ea-theme-val { margin-bottom: 0; }
   .ea-theme-val {
@@ -1830,8 +1831,12 @@
     .ea-tab-copy, .ea-stories .ea-story-copy { width: 100%; padding-left: 0; }
     .ea-stories .ea-story-media { width: 100%; }
     .ea-story-title, .ea-impl-title { font-size: 24px; line-height: 30px; }
-    .ea-tabstrip { flex-wrap: wrap; gap: 16px; }
+    /* The two story tabs stay side by side on the original (100 each, 32
+       apart). A 180 min-width needs 376 of a 334 column, so they wrapped into
+       a column here. */
+    .ea-tabstrip { flex-wrap: nowrap; gap: 32px; }
     .ea-tab { width: auto; font-size: 16px; line-height: 24px; }
+    .ea-stories .ea-tab { flex: 1 1 0; min-width: 0; }
     .ea-theme-stage { flex-direction: column; }
     .ea-theme-controls { width: 100%; border-left: 0; border-top: 1px solid var(--color-line); }
     .ea-theme-presets { flex-wrap: wrap; }
