@@ -45,18 +45,18 @@ const isClip = (src: string) => src.endsWith('.mp4');
             <source src={`${A}/hero-section-ai.mp4`} type="video/mp4" />
           </video>
         </div>
+
+        <div class="mai-trust">
+          <span class="mai-trust-line">{s.trustLine}</span>
+          <ul class="mai-trust-logos">
+            {logos.map((l) => (
+              <li><img src={`/images/logos/${l.src}.svg`} alt={l.alt} width={l.width} height="38"
+                       style={`width:${l.width}px`} loading="lazy" decoding="async" /></li>
+            ))}
+          </ul>
+        </div>
       </div>
     </header>
-
-    <div class="mai-trust">
-      <ul>
-        {logos.map((l) => (
-          <li><img src={`/images/logos/${l.src}.svg`} alt={l.alt} width={l.width} height="38"
-                   style={`width:${l.width}px`} loading="lazy" decoding="async" /></li>
-        ))}
-      </ul>
-      <p>{s.trustLine}</p>
-    </div>
 
     {sections.map((sec) => (
       <section class="mai-sec" id={sec.anchor}>
@@ -65,10 +65,12 @@ const isClip = (src: string) => src.endsWith('.mp4');
           <div class:list={['mai-row', row.cards?.length === 1 && row.cards[0].wide && 'mai-row--wide']}>
             {(row.cards ?? []).map((c) => (
               <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
-                <h3 class="mai-card-h">{c.heading}</h3>
-                <p class="mai-card-p">
-                  {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
-                </p>
+                <div class="mai-card-copy">
+                  <h3 class="mai-card-h">{c.heading}</h3>
+                  <p class="mai-card-p">
+                    {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
+                  </p>
+                </div>
                 {isClip(c.mediaSrc)
                   ? <video width={c.mediaW} height={c.mediaH}
                            poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
@@ -90,7 +92,7 @@ const isClip = (src: string) => src.endsWith('.mp4');
       {/* Pinned and scrubbed over 3000px, as the original is: the shot swaps
           per step and the open step's rail fills across its share of the
           scroll. The radios underneath still work without script. */}
-      <div class="mai-track" data-track>
+      <div class="mai-track mai-access-desktop" data-track>
         <div class="mai-split" data-carousel>
           <div class="mai-split-media">
             {accessSteps.filter((st) => st.image).map((st, i) => (
@@ -106,12 +108,31 @@ const isClip = (src: string) => src.endsWith('.mp4');
                 <span class="mai-step-rail" aria-hidden="true"><i class="mai-step-fill"></i></span>
                 <div class="mai-step-body">
                   <h3 class="mai-step-h"><label for={`mai-${st.anchor}`}>{st.heading}</label></h3>
-                  <p class="mai-step-p">{st.body}</p>
+                  <div class="mai-step-reveal"><p class="mai-step-p">{st.body}</p></div>
                 </div>
               </li>
             ))}
           </ul>
         </div>
+      </div>
+
+      {/* Under 992 the original abandons the carousel and lays every step out
+          with its own shot, so none of it depends on scroll position. */}
+      <div class="mai-access-mobile">
+        {accessSteps.map((st) => (
+          <div class="mai-access-step">
+            <div>
+              <h3>{st.heading}</h3>
+              <p>{st.body}</p>
+            </div>
+            {st.image && (
+              <div class="mai-split-media">
+                <img src={st.image} width="590" height="590" alt={st.imageAlt}
+                     loading="lazy" decoding="async" />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </section>
 
@@ -124,19 +145,25 @@ const isClip = (src: string) => src.endsWith('.mp4');
     </section>
 
     <section class="mai-sec" id="audit">
-      <div class="mai-split mai-split--reverse">
-        <div class="mai-split-media">
-          <img src={s.auditImage} width="590" height="588"
-               alt={s.auditImageAlt} loading="lazy" decoding="async" />
-        </div>
+      <div class="mai-split mai-split--audit">
         <div class="mai-split-copy">
           <h2 class="mai-h2 mai-h2--left">{s.auditHeading}</h2>
           <p class="mai-split-lede">{s.auditLede}</p>
           <ul class="mai-stats">
             {usageStats.map((st) => (
-              <li><h3>{st.value}</h3><p>{st.label}</p></li>
+              <li>
+                <svg class="mai-stat-tick" width="14" height="10" viewBox="0 0 14 10" aria-hidden="true">
+                  <path fill="currentColor" fill-rule="evenodd"
+                        d="M5.272 7.067L1.44 3.097 0 4.487 3.858 8.48l-.004.004.236.237.078.08h.001l1.099 1.097 8.485-8.485L12.34 0 5.272 7.067z" />
+                </svg>
+                <div><h3>{st.value}</h3><p>{st.label}</p></div>
+              </li>
             ))}
           </ul>
+        </div>
+        <div class="mai-split-media">
+          <img src={s.auditImage} width="590" height="588"
+               alt={s.auditImageAlt} loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -146,17 +173,21 @@ const isClip = (src: string) => src.endsWith('.mp4');
       <p class="mai-lede">{s.chatLede}</p>
       <div class="mai-row mai-row--wide">
         <article class="mai-card mai-card--wide">
-          <h3 class="mai-card-h">{s.chatCardHeading}</h3>
-          <p class="mai-card-p">{s.chatCardBody}</p>
-          <div class="mai-chat">
-            <ul class="mai-chat-prompts">
-              {chatPrompts.map((q) => <li>{q.text}</li>)}
-            </ul>
-            <div class="mai-chat-panel">
-              <h4>{s.chatPanelHeading}</h4>
-              <img src={s.chatPanelImage}
-                   width={s.chatPanelW} height={s.chatPanelH} alt={s.chatPanelImageAlt}
-                   loading="lazy" decoding="async" />
+          <div class="mai-card-copy">
+            <div>
+              <h3 class="mai-card-h">{s.chatCardHeading}</h3>
+              <p class="mai-card-p">{s.chatCardBody}</p>
+            </div>
+            <div class="mai-chat">
+              <div class="mai-chat-panel">
+                <h4>{s.chatPanelHeading}</h4>
+                <img src={s.chatPanelImage}
+                     width={s.chatPanelW} height={s.chatPanelH} alt={s.chatPanelImageAlt}
+                     loading="lazy" decoding="async" />
+              </div>
+              <ul class="mai-chat-prompts">
+                {chatPrompts.map((q) => <li>{q.text}</li>)}
+              </ul>
             </div>
           </div>
         </article>
@@ -165,8 +196,10 @@ const isClip = (src: string) => src.endsWith('.mp4');
         <div class="mai-row">
           {(row.cards ?? []).map((c) => (
             <article class="mai-card">
-              <h3 class="mai-card-h">{c.heading}</h3>
-              <p class="mai-card-p">{c.body}</p>
+              <div class="mai-card-copy">
+                <h3 class="mai-card-h">{c.heading}</h3>
+                <p class="mai-card-p">{c.body}</p>
+              </div>
               <img src={c.mediaSrc} alt={c.mediaAlt} width={c.mediaW} height={c.mediaH}
                    loading="lazy" decoding="async" />
             </article>
@@ -187,10 +220,12 @@ const isClip = (src: string) => src.endsWith('.mp4');
           <div class:list={['mai-row', row.cards?.length === 1 && row.cards[0].wide && 'mai-row--wide']}>
             {(row.cards ?? []).map((c) => (
               <article class:list={['mai-card', c.wide && 'mai-card--wide']}>
-                <h3 class="mai-card-h">{c.heading}</h3>
-                <p class="mai-card-p">
-                  {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
-                </p>
+                <div class="mai-card-copy">
+                  <h3 class="mai-card-h">{c.heading}</h3>
+                  <p class="mai-card-p">
+                    {c.body}{c.linkUrl && <> <a href={c.linkUrl}>{c.linkLabel}</a></>}
+                  </p>
+                </div>
                 {isClip(c.mediaSrc)
                   ? <video width={c.mediaW} height={c.mediaH}
                            poster={c.mediaSrc.replace('.mp4', '-poster.webp')}
@@ -240,16 +275,31 @@ const isClip = (src: string) => src.endsWith('.mp4');
         ))}
       </div>
       <p class="mai-more">
-        <span>Have more questions? We'd be happy to help.</span>
+        <span class="mai-more-text">
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M4.75 6.75a2 2 0 0 1 2-2h10.5a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-2.625l-2.625 3-2.625-3H6.75a2 2 0 0 1-2-2v-7.5Z" />
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.5 11a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM12.5 11a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM15.5 11a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+          </svg>
+          <span>Have more questions? We'd be happy to help.</span>
+        </span>
         <a href="/contact" class="mai-more-btn">Contact us</a>
       </p>
     </section>
 
     <section class="mai-final">
+      {/* The original opens its closing block with a small screen graphic. */}
+      <svg class="mai-final-art" width="89" height="67" viewBox="0 0 89 67" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="86" height="63" rx="5" fill="#CBE2F7" stroke="#509EE3" stroke-width="1.5" />
+        <rect x="10.4" y="8.9" width="64.9" height="40.4" rx="3.1" fill="#fff" />
+        <path d="M20 40.5v-9M30 40.5v-16M40 40.5v-11M50 40.5v-20M60 40.5v-7"
+              stroke="#509EE3" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
       <h2 class="mai-final-h">{s.closingHeading}</h2>
-      <p class="mai-hero-ctas">
+      <p class="mai-final-ctas">
         {closeCtas.map((c, i) => (
-          <a href={c.url} class:list={['mai-btn', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
+          <a href={c.url} class:list={['mai-btn', 'mai-btn--sm', i === 0 ? 'mai-btn--primary' : 'mai-btn--secondary']}>{c.label}</a>
         ))}
       </p>
     </section>
