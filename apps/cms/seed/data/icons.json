@@ -115,6 +115,12 @@
   },
   {
     "set": "nav",
+    "key": "model",
+    "name": "Model",
+    "file": "nav/model.svg"
+  },
+  {
+    "set": "nav",
     "key": "news",
     "name": "News",
     "file": "nav/news.svg"
