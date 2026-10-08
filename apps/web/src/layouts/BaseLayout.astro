@@ -54,6 +54,23 @@ const site = await getSiteSettings();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    {/* Every image on the site is delivered by Cloudinary, so the first one
+        costs a DNS lookup, a TCP handshake and a TLS negotiation before a byte
+        of it arrives -- measured at ~176ms. Opening that connection while the
+        head is still parsing takes it off the critical path.
+
+        Pages whose LCP is an image already absorb this through the preload
+        below; this is for the ones the preload deliberately skips, where the
+        first Cloudinary request is further down the page -- the home page's
+        logo strip, a card thumbnail -- and would otherwise pay in full.
+
+        No `crossorigin`: the images are plain <img> with no crossorigin
+        attribute, so they are no-CORS requests. A CORS preconnect opens a
+        connection in a different pool that those requests cannot reuse, which
+        would warm a socket nobody touches and cost a second handshake. */}
+    <link rel="preconnect" href="https://res.cloudinary.com" />
+
     <title>{metaTitle}</title>
     {metaDesc && <meta name="description" content={metaDesc} />}
     <link rel="canonical" href={canonical} />
