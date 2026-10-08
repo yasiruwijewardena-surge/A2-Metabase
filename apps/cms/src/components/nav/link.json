@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_nav_links",
+  "info": {
+    "displayName": "Nav link",
+    "icon": "link",
+    "description": "One destination in the header or the footer."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "description": "Key from the site's icon set; blank renders no icon."
+    },
+    "description": {
+      "type": "string",
+      "description": "The line under the label, where a menu shows one."
+    },
+    "badge": {
+      "type": "string",
+      "description": "Small pill beside the label, e.g. New."
+    }
+  }
+}

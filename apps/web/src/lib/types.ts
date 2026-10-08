@@ -602,3 +602,35 @@ export interface Page {
 
 
 
+
+/* --- site settings ------------------------------------------------------- */
+
+/** One destination in the header or the footer. */
+export interface NavLink {
+  label: string;
+  url: string;
+  icon?: string | null;
+  description?: string | null;
+  badge?: string | null;
+}
+
+/** One header menu. `key` picks the panel that renders it. */
+export interface NavGroup {
+  key: 'product' | 'features' | 'resources' | 'pricing';
+  label: string;
+  items?: NavLink[];
+}
+
+/** A titled block of footer links; blocks sharing a column stack together. */
+export interface FooterColumn {
+  title: string;
+  column: number;
+  links?: NavLink[];
+}
+
+export interface SiteSettings {
+  navGroups?: NavGroup[];
+  footerColumns?: FooterColumn[];
+  headScripts?: string | null;
+  bodyScripts?: string | null;
+}

@@ -20,6 +20,7 @@ import lato400 from '@fontsource/lato/files/lato-latin-400-normal.woff2?url';
 import lato700 from '@fontsource/lato/files/lato-latin-700-normal.woff2?url';
 import lato900 from '@fontsource/lato/files/lato-latin-900-normal.woff2?url';
 import Navbar from '../components/Navbar.astro';
+import { getSiteSettings } from '../lib/strapi';
 import Footer from '../components/Footer.astro';
 import type { Seo } from '../lib/types';
 import type { PreloadAttrs } from '../lib/image';
@@ -45,6 +46,8 @@ const metaDesc = seo?.metaDescription || description || '';
 const canonical = seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
 const social = ogImage || seo?.ogImage?.url || null;
 const blocked = noIndex || seo?.noIndex;
+
+const site = await getSiteSettings();
 ---
 <!doctype html>
 <html lang="en">
@@ -79,8 +82,13 @@ const blocked = noIndex || seo?.noIndex;
       />
     )}
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {/* Whatever Site Settings carries for the head -- a tag manager, say.
+        Written by an administrator and baked in at build time, so it is the
+        same trust boundary as the rest of the templates. */}
+    {site?.headScripts && <Fragment set:html={site.headScripts} />}
   </head>
   <body>
+    {site?.bodyScripts && <Fragment set:html={site.bodyScripts} />}
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:shadow">Skip to content</a>
     <Navbar />
     <main id="main"><slot /></main>

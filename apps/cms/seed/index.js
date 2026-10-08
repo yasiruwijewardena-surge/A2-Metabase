@@ -147,7 +147,7 @@ async function wipe(app, uid) {
  * whole-corpus write is the better part of an hour whether or not anything
  * changed. Most edits touch one section.
  */
-const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related', 'pages'];
+const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related', 'pages', 'settings'];
 const onlyArg = process.argv.indexOf('--only');
 const ONLY = onlyArg > -1 ? process.argv[onlyArg + 1]?.split(',').map((x) => x.trim()) : null;
 const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase);
@@ -576,6 +576,21 @@ async function main() {
         }
         await upsert(app, 'api::page.page', { slug: page.slug },
           { title: page.title, slug: page.slug, seo: page.seo, sections });
+      }
+    }
+
+    // ---- site settings ---------------------------------------------------
+    // A single type, so there is nothing to match on: write the one entry.
+    if (want('settings')) {
+      const settings = read('site-settings.json');
+      const uid = 'api::site-setting.site-setting';
+      const existing = await app.documents(uid).findFirst({ status: 'draft' });
+      if (existing) {
+        await app.documents(uid).update({ documentId: existing.documentId, data: settings, status: 'published' });
+        console.log('    site settings updated');
+      } else {
+        await app.documents(uid).create({ data: settings, status: 'published' });
+        console.log('    site settings created');
       }
     }
 

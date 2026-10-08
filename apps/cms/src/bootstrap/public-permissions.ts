@@ -26,6 +26,7 @@ const PUBLIC_READ_APIS = [
   'api::tag.tag',
   'api::testimonial.testimonial',
   'api::use-case.use-case',
+  'api::site-setting.site-setting',
 ] as const;
 
 const READ_ACTIONS = ['find', 'findOne'] as const;

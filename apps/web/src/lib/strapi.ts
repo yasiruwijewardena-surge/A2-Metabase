@@ -31,7 +31,9 @@ interface Paged<T> { data: T[]; meta: { pagination: { page: number; pageCount: n
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** A response the server answered clearly: retrying will not change it. */
-class HardError extends Error {}
+class HardError extends Error {
+  constructor(message: string, readonly status: number) { super(message); }
+}
 
 /** 502/503/504 mean the CMS is restarting rather than wrong; those are worth retrying. */
 const TRANSIENT = new Set([408, 429, 500, 502, 503, 504]);
@@ -52,7 +54,8 @@ async function fetchPage<T>(path: string, params: URLSearchParams, attempt = 1):
       throw new HardError(
         `Strapi ${res.status} ${res.statusText} for ${path}\n` +
         `  ${url}\n` +
-        `  Is STRAPI_URL correct and the content published?`
+        `  Is STRAPI_URL correct and the content published?`,
+        res.status
       );
     }
 
@@ -72,6 +75,29 @@ async function fetchPage<T>(path: string, params: URLSearchParams, attempt = 1):
       `Strapi unreachable at ${BASE} after ${MAX} attempts\n  ${(err as Error).message}`
     );
   }
+}
+
+/**
+ * A single type: one object rather than a page of them. Returns null when
+ * nothing is published yet, so a fresh database renders the built-in
+ * fallbacks instead of failing the build.
+ */
+async function single<T>(path: string, query: Record<string, string> = {}): Promise<T | null> {
+  const key = `single:${path}${JSON.stringify(query)}`;
+  if (cache.has(key)) return cache.get(key) as T | null;
+
+  let data: T | null = null;
+  try {
+    const res = await fetchPage<T>(path, new URLSearchParams(query));
+    data = (res as unknown as { data: T | null }).data ?? null;
+  } catch (err) {
+    /* A single type nobody has filled in yet answers 404. That is a state, not
+       a failure: the caller falls back to what it ships with. */
+    if (!(err instanceof HardError) || err.status !== 404) throw err;
+  }
+
+  cache.set(key, data);
+  return data;
 }
 
 /** Fetches every page of a collection, following Strapi's pagination. */
@@ -344,3 +370,16 @@ export const getPage = async (slug: string) =>
   (await all<Page>('pages', {
     'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
   }))[0] ?? null;
+
+/* --- site settings ------------------------------------------------------- *
+ * Header and footer navigation, plus whatever markup the site injects into
+ * every page (a tag manager, for instance). One single type, so an editor
+ * changes a menu without a code change.
+ * ------------------------------------------------------------------------ */
+const SITE_SETTINGS_POPULATE = {
+  'populate[navGroups][populate][items]': 'true',
+  'populate[footerColumns][populate][links]': 'true',
+};
+
+export const getSiteSettings = () =>
+  single<SiteSettings>('site-setting', SITE_SETTINGS_POPULATE);

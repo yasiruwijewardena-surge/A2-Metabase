@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Header and footer navigation, and scripts injected into every page."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "navGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.group"
+    },
+    "footerColumns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.footer-column"
+    },
+    "headScripts": {
+      "type": "text",
+      "description": "Raw markup injected at the end of <head> on every page, e.g. the Google Tag Manager snippet."
+    },
+    "bodyScripts": {
+      "type": "text",
+      "description": "Raw markup injected immediately after <body> opens, e.g. the GTM noscript iframe."
+    }
+  }
+}

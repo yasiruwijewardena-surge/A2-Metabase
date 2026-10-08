@@ -10,40 +10,56 @@
  * than linked dead. The full information architecture is still recorded in
  * ia-paths.json and those URLs still resolve if typed.
  */
-const columns: { title: string; links: [string, string][] }[][] = [
-  [
-    { title: 'Product', links: [['Roadmap', '/roadmap']] },
-    { title: 'Pricing', links: [['Plans', '/pricing']] },
-  ],
-  [
-    { title: 'Use cases', links: [
-      ['Self-Service Business Intelligence', '/product/business-intelligence'],
-      ['Embedded Analytics', '/product/embedded-analytics'],
-      ['Data Studio', '/product/data-studio'],
-    ]},
-    { title: 'Metabase plans', links: [
-      ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
-    ]},
-  ],
-  [
-    { title: 'Features', links: [
-      ['Metabase AI', '/features/metabase-ai'], ['Query Builder', '/features/query-builder'],
-      ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
-      ['Dashboards and reporting', '/features/analytics-dashboards'],
-      ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
-      ['Data segregation', '/features/data-segregation'],
-      ['Usage analytics', '/features/usage-analytics'],
-      ['White-label analytics', '/features/white-label-analytics'],
-      ['All features', '/features'],
-    ]},
-  ],
-  [
-    { title: 'Resources', links: [
-      ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Events', '/events'],
-      ['Glossary', '/glossary'], ['Customer love', '/love'],
-    ]},
-  ],
+import { getSiteSettings } from '../lib/strapi';
+
+const settings = await getSiteSettings();
+
+/*
+ * Footer blocks come from Site Settings; blocks sharing a column number stack
+ * in the same column. The fallback is what the site shipped with, so a
+ * database without Site Settings still renders a full footer.
+ */
+const FALLBACK: { title: string; column: number; links: [string, string][] }[] = [
+  { title: 'Product', column: 1, links: [['Roadmap', '/roadmap']] },
+  { title: 'Pricing', column: 1, links: [['Plans', '/pricing']] },
+  { title: 'Use cases', column: 2, links: [
+    ['Self-Service Business Intelligence', '/product/business-intelligence'],
+    ['Embedded Analytics', '/product/embedded-analytics'],
+    ['Data Studio', '/product/data-studio'],
+  ]},
+  { title: 'Metabase plans', column: 2, links: [
+    ['Starter and Open Source', '/pricing'], ['Pro', '/pricing'], ['Enterprise', '/pricing'],
+  ]},
+  { title: 'Features', column: 3, links: [
+    ['Metabase AI', '/features/metabase-ai'], ['Query Builder', '/features/query-builder'],
+    ['Drill Through', '/features/drill-through'], ['Collections', '/features/collections'],
+    ['Dashboards and reporting', '/features/analytics-dashboards'],
+    ['SQL editor', '/features/sql-editor'], ['Permissions', '/features/permissions'],
+    ['Data segregation', '/features/data-segregation'],
+    ['Usage analytics', '/features/usage-analytics'],
+    ['White-label analytics', '/features/white-label-analytics'],
+    ['All features', '/features'],
+  ]},
+  { title: 'Resources', column: 4, links: [
+    ['Case Studies', '/case-studies'], ['Blog', '/blog'], ['Events', '/events'],
+    ['Glossary', '/glossary'], ['Customer love', '/love'],
+  ]},
 ];
+
+const blocks = settings?.footerColumns?.length
+  ? settings.footerColumns.map((c) => ({
+      title: c.title,
+      column: c.column ?? 1,
+      links: (c.links ?? []).map((l) => [l.label, l.url] as [string, string]),
+    }))
+  : FALLBACK;
+
+/* Group into visual columns, preserving the order the editor set. */
+const columns: { title: string; links: [string, string][] }[][] =
+  [...new Set(blocks.map((b) => b.column))]
+    .sort((a, b) => a - b)
+    .map((n) => blocks.filter((b) => b.column === n)
+      .map(({ title, links }) => ({ title, links })));
 
 
 const social: [string, string, string][] = [
