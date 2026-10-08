@@ -39,7 +39,10 @@ function sanitise(svg: string): string {
     /* on* handlers, quoted or bare. */
     .replace(/\s+on[a-z]+\s*=\s*"[^"]*"/gi, '')
     .replace(/\s+on[a-z]+\s*=\s*'[^']*'/gi, '')
-    .replace(/\s+on[a-z]+\s*=\s*[^\s>]+/gi, '')
+    /* The value class excludes `/` so a self-closing tag survives:
+       `onclick=alert(1)/>` must lose the handler, not the slash that
+       closes the element. */
+    .replace(/\s+on[a-z]+\s*=\s*[^\s"'>\/]+/gi, '')
     /* javascript: in href/xlink:href. */
     .replace(/(href\s*=\s*")\s*javascript:[^"]*"/gi, '$1#"')
     .replace(/(href\s*=\s*')\s*javascript:[^']*'/gi, "$1#'");

@@ -1,6 +1,7 @@
 import type { Core } from '@strapi/strapi';
 import { grantPublicReadPermissions } from './bootstrap/public-permissions';
 import { rebuildSiteOnContentChange } from './bootstrap/rebuild-site';
+import { sanitiseSvgUploads } from './bootstrap/sanitise-svg-uploads';
 
 export default {
   /**
@@ -31,5 +32,6 @@ export default {
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await grantPublicReadPermissions(strapi);
     rebuildSiteOnContentChange(strapi);
+    sanitiseSvgUploads(strapi);
   },
 };
