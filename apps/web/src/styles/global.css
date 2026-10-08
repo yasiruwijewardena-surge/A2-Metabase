@@ -841,9 +841,11 @@
   .pricing-compare a { display: block; font-weight: 700; color: var(--color-brand-hover); }
   .pricing-compare a:hover { text-decoration: underline; }
 
+  /* The original's saving pill is the quiet blue it uses for secondary
+     actions, not a green -- a full-round pill at 4px 6px. */
   .pricing-save {
-    border-radius: 4px; background: var(--color-ok-faint); padding: 1px 6px;
-    font-size: 12px; font-weight: 700; color: var(--color-ok-strong);
+    border-radius: 999px; background: var(--color-brand-muted); padding: 4px 6px;
+    font-size: 12px; font-weight: 700; color: var(--color-brand-strong);
   }
 
   /*
@@ -878,7 +880,18 @@
   .plan-bullet { flex: none; margin: 2px 12px 0 0; color: var(--color-ink-4); }
 
   .plan-cta-row { margin-top: auto; padding-top: 32px; border-top: 1px solid var(--color-line); }
-  .plan-cta { width: 100%; }
+  /* 37px on the original, not the 42 the site's buttons use elsewhere. */
+  .plan-cta { width: 100%; height: 37px; }
+  /* Only one plan gets a filled button; the rest take the quiet blue. Ours
+     were a solid brand fill and a white outline, neither of which the original
+     uses here. */
+  .plan-cta.btn-secondary {
+    border-color: transparent; background: var(--color-brand-muted);
+    color: var(--color-brand-strong);
+  }
+  .plan-cta.btn-secondary:hover {
+    border-color: transparent; background: #d4e2f7; color: var(--color-brand-strong);
+  }
   .plan-foot { display: block; margin-top: 10px; text-align: center; font-size: 12px; line-height: 16px; color: var(--color-ink-2); }
   .plan-foot + .plan-foot { margin-top: 0; }
 
@@ -980,6 +993,12 @@
   .pricing-label {
     border-radius: 12px; background: var(--color-brand-faint); padding: 32px 24px;
   }
+  /* On the Plans row the panel runs the height of the cards beside it, and the
+     original puts "Compare plans" at the foot of that space rather than
+     directly under the billing choice -- 26px off the bottom, where ours left
+     it 282px short. */
+  .pricing-row--plans .pricing-label { display: flex; flex-direction: column; }
+  .pricing-row--plans .pricing-compare { margin-top: auto; }
   .pricing-row--block { margin-top: 24px; align-items: stretch; }
   .pricing-block { flex: 1; min-width: 0; }
   .pricing-narrow { max-width: 500px; }
