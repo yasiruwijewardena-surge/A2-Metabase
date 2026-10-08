@@ -35,29 +35,65 @@ const MUTATION = `
   }
 `;
 
+/*
+ * Railway takes two different headers depending on where the token was minted:
+ * account and workspace tokens authenticate as `Authorization: Bearer`, while a
+ * project token uses `Project-Access-Token` and is rejected as "Not Authorized"
+ * if sent as a bearer. Which kind someone pasted into the variable is not
+ * knowable from the value - both are plain UUIDs - so try the common one and
+ * fall back rather than making the operator diagnose a header.
+ */
+const AUTH_HEADERS: Record<string, string>[] = [
+  { Authorization: `Bearer ${TOKEN}` },
+  { 'Project-Access-Token': `${TOKEN}` },
+];
+
+type GraphQLReply = { errors?: { message: string }[] };
+
+async function callRailway(auth: Record<string, string>) {
+  const res = await fetch(ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...auth },
+    body: JSON.stringify({
+      query: MUTATION,
+      variables: { serviceId: SERVICE_ID, environmentId: ENVIRONMENT_ID },
+    }),
+  });
+
+  const body = (await res.json().catch(() => ({}))) as GraphQLReply;
+  const why = body.errors?.map((e) => e.message).join('; ');
+
+  return { ok: res.ok && !body.errors?.length, why: why ?? `HTTP ${res.status}` };
+}
+
 async function askRailwayToRebuild(strapi: Core.Strapi, reason: string) {
   try {
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${TOKEN}`,
-      },
-      body: JSON.stringify({
-        query: MUTATION,
-        variables: { serviceId: SERVICE_ID, environmentId: ENVIRONMENT_ID },
-      }),
-    });
+    let last = '';
 
-    const body = (await res.json()) as { errors?: { message: string }[] };
+    for (const auth of AUTH_HEADERS) {
+      const { ok, why } = await callRailway(auth);
 
-    if (!res.ok || body.errors?.length) {
-      const why = body.errors?.map((e) => e.message).join('; ') ?? `HTTP ${res.status}`;
-      strapi.log.error(`[rebuild] Railway refused the build: ${why}`);
-      return;
+      if (ok) {
+        strapi.log.info(`[rebuild] asked Railway to rebuild the site (${reason})`);
+        return;
+      }
+
+      last = why;
+      /* Anything other than a rejected token is a real failure - a wrong
+       * service id, a GraphQL change, an outage - and retrying with a
+       * different header would only obscure it. */
+      if (!/not authorized|unauthorized/i.test(why)) break;
     }
 
-    strapi.log.info(`[rebuild] asked Railway to rebuild the site (${reason})`);
+    /* A rejected token is the one failure an operator can fix from the logs,
+     * so name the remedy there rather than leaving them a bare GraphQL string. */
+    const hint = /not authorized|unauthorized/i.test(last)
+      ? ' RAILWAY_API_TOKEN is not valid for this workspace - mint a fresh account'
+        + ' or workspace token at railway.com/account/tokens and confirm it can'
+        + ' reach this project.'
+      : '';
+
+    strapi.log.error(`[rebuild] Railway refused the build: ${last}.${hint}`);
   } catch (err) {
     /* A failed build request must never take the CMS down with it: the admin
      * stays usable and the next content change tries again. */
