@@ -5,7 +5,13 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-Icon
+# Finder's custom-folder-icon file is named "Icon" plus a carriage return,
+# which no .gitignore pattern expresses reliably here: spelt "Icon" it matched
+# any file or directory called icon and silently kept the whole src/api/icon
+# content type out of the repo; "Icon?" matched seed/assets/icons instead; the
+# literal carriage-return form matches neither it nor anything else. .DS_Store
+# and ._* below cover the Finder droppings that actually turn up, so the rule
+# is removed rather than left wrong.
 .Spotlight-V100
 .Trashes
 ._*

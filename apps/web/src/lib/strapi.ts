@@ -5,9 +5,10 @@ import type {
   Category,
   EventCategory,
   Faq,
-  Page,
   GlossaryTerm,
+  Icon,
   Industry,
+  Page,
   Plan,
   Post,
   PricingAddon,
@@ -17,7 +18,7 @@ import type {
   UseCase,
 } from './types';
 
-const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
+export const BASE = (import.meta.env.STRAPI_URL ?? process.env.STRAPI_URL ?? 'http://localhost:1337')
   .replace(/\/+$/, '');
 
 /**
@@ -188,6 +189,11 @@ export const getTestimonials = () =>
   });
 
 export const getGlossary = () => all<GlossaryTerm>('glossary-terms', { sort: 'term:asc' });
+
+/* The site's icon set. Artwork lives in the CMS so it can be added without a
+   code change; `icons.ts` turns this into a key -> markup registry. */
+export const getIcons = () =>
+  all<Icon>('icons', { 'populate[svg]': 'true', sort: 'set:asc' });
 
 /** Soonest first. The page splits on `startsAt` rather than a flag, so an
  *  event moves from upcoming to past on its own. */
