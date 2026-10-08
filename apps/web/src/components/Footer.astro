@@ -1,4 +1,5 @@
 ---
+import NavIcon from './NavIcon.astro';
 /*
  * Site footer, measured off the original: columns laid out space-between,
  * each holding one or two labelled groups, over a bottom bar ruled off with
@@ -13,6 +14,8 @@
 import { getSiteSettings } from '../lib/strapi';
 
 const settings = await getSiteSettings();
+const siteName = settings?.siteName || 'Metabase';
+const socialLinks = settings?.socialLinks ?? [];
 
 /*
  * Footer blocks come from Site Settings; blocks sharing a column number stack
@@ -92,22 +95,32 @@ const social: [string, string, string][] = [
 
   <div class="site-footer-bottom">
     <div class="site-footer-brand">
-      <a href="/" aria-label="Metabase home" class="site-footer-mark">
-        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
-          <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
-          <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
-          <circle cx="5" cy="19" r="2.6"/><circle cx="12" cy="20" r="2.2" opacity=".75"/><circle cx="19" cy="19" r="2.6"/>
-        </svg>
+      <a href="/" aria-label={`${siteName} home`} class="site-footer-mark">
+        {settings?.footerLogo?.url
+          ? <img src={settings.footerLogo.url} alt={siteName} width={24} height={24} loading="lazy" decoding="async" />
+          : (
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
+            <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
+            <circle cx="5" cy="12" r="2.2" opacity=".75"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.2" opacity=".75"/>
+            <circle cx="5" cy="19" r="2.6"/><circle cx="12" cy="20" r="2.2" opacity=".75"/><circle cx="19" cy="19" r="2.6"/>
+          </svg>
+          )}
       </a>
-      <span>© Metabase {new Date().getFullYear()}</span>
+      <span>© {siteName} {new Date().getFullYear()}</span>
     </div>
 
     <div class="site-footer-social">
-      {social.map(([label, href, d]) => (
-        <a href={href} aria-label={label} rel="noopener noreferrer" target="_blank">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d} /></svg>
-        </a>
-      ))}
+      {socialLinks.length > 0
+        ? socialLinks.map((l) => (
+            <a href={l.url} aria-label={l.label} rel="noopener noreferrer" target="_blank">
+              <NavIcon name={typeof l.icon === 'string' ? l.icon : ''} set="social" size={20} class="site-footer-social-icon" />
+            </a>
+          ))
+        : social.map(([label, href, d]) => (
+            <a href={href} aria-label={label} rel="noopener noreferrer" target="_blank">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d} /></svg>
+            </a>
+          ))}
     </div>
   </div>
 

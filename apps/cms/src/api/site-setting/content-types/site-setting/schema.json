@@ -29,6 +29,44 @@
       ],
       "description": "The icon browsers show on the tab and in bookmarks. An SVG is sharpest and scales to every size; a square PNG of at least 180x180 also works. Leave empty to use the one bundled with the site."
     },
+    "siteName": {
+      "type": "string",
+      "description": "The name of the site, used in the share-preview metadata and the footer copyright. Not the page title."
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "The lockup in the header. An SVG keeps it sharp at any size. Leave empty to use the one bundled with the site."
+    },
+    "footerLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "The mark beside the copyright line. The original uses a smaller, simpler mark here than in the header, so this is a separate field rather than the header logo scaled down."
+    },
+    "defaultMetaDescription": {
+      "type": "text",
+      "description": "Used for the search and share preview of any page that does not set its own description."
+    },
+    "defaultSocialImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "The picture shown when a page is shared and has no image of its own. Around 1200x630 works everywhere."
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.link",
+      "description": "The icon links at the foot of the page. Pick artwork from the social set of the Icon Library."
+    },
     "headScripts": {
       "type": "text",
       "description": "Raw markup injected at the end of <head> on every page, e.g. the Google Tag Manager snippet."
