@@ -57,6 +57,15 @@ Verify the push landed and that `.env` is **not** in the file list on GitHub.
 
 ## Step 3 — Postgres on Railway
 
+> **Put the database in the same region as the Strapi service.** This is not a
+> tuning detail. With the two in different regions every query crosses regions
+> at roughly 200 ms a round trip, and because an API request runs a handful of
+> queries and publishing a page runs around two hundred, the symptoms are a CMS
+> that takes 1.4 s to return one row and a publish that takes 91 seconds. The
+> CPU looks idle throughout, which is what makes it hard to spot. Same region:
+> ~1 s to publish, and the site build drops from 161 s to 98 s.
+
+
 1. Open the Railway project → environment `production`.
 2. **New** → **Database** → **Add PostgreSQL**.
 3. Wait for it to provision. The service will be named `Postgres`.
@@ -326,6 +335,48 @@ On the **CMS** service, set `FRONTEND_URL` to the Astro domain so browser
 requests from the site are allowed.
 
 ---
+
+## Step 9b — Rebuild on publish
+
+The site is static, so content changes only appear once it is rebuilt. The CMS
+asks Railway to do that itself. Set three variables on the Strapi service:
+
+| Variable | Where it comes from |
+|---|---|
+| `RAILWAY_API_TOKEN` | a **project** token: project → Settings → Tokens |
+| `RAILWAY_WEB_SERVICE_ID` | the front end's service id |
+| `RAILWAY_ENVIRONMENT_ID` | the environment id |
+
+A project token, not an account token. An account token is scoped to the
+workspace it was minted in, and if the project lives in a workspace you cannot
+mint one for, it will be rejected as `Not Authorized` no matter how valid it
+looks. Project tokens use a different HTTP header; the trigger tries both, so
+either kind works once it has access.
+
+On boot the log should read:
+
+```
+[rebuild] watching publish, unpublish and delete; a build follows 5s after the last one
+[svg] uploads are sanitised before they are stored
+```
+
+It listens for publish, unpublish and delete rather than every write, so draft
+autosaves cost nothing. Without the variables it logs that it is off and stays
+inert.
+
+## Step 9c — Edge caching
+
+Turn CDN caching **on for the front end** and **off for Strapi**:
+
+```bash
+railway cdn enable  --service <front-end>
+railway cdn disable --service <cms>
+```
+
+Caching in front of an authenticated admin is a liability, and the front end is
+where the win is: TTFB roughly halves. The server already sends
+`s-maxage=600, stale-while-revalidate=86400` for HTML, and Railway purges
+cached HTML on every successful deploy, so publishing is not delayed by it.
 
 ## Step 8 — Verify
 
