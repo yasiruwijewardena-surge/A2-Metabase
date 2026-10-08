@@ -106,13 +106,13 @@
       "items": [
         {
           "label": "Business Intelligence pricing",
-          "url": "/pricing?use_case=business-intelligence",
+          "url": "/pricing?use_case=bi",
           "icon": "bi",
           "description": "Self-service analytics for your team"
         },
         {
           "label": "Embedded Analytics pricing",
-          "url": "/pricing?use_case=embedded-analytics",
+          "url": "/pricing?use_case=ea",
           "icon": "ea",
           "description": "Fast, flexible customer-facing analytics"
         }

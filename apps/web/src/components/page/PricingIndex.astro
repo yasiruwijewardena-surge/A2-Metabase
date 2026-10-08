@@ -23,6 +23,9 @@ const [plans, useCases, faqs, addons] = await Promise.all([
 ]);
 
 const slugOf = (x: string) => x.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+/* The original addresses these by initials -- /pricing?use_case=bi and ?use_case=ea --
+   while the collection knows them by slug. Carry both so either form works. */
+const codeOf = (name: string) => name.split(/\s+/).map((w) => w[0]).join('').toLowerCase();
 const money = (n: number) => `$${n.toLocaleString('en-US')}`;
 ---
   <div class="pricing container-mb">
@@ -36,7 +39,8 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
       <legend class="sr-only">What are you pricing?</legend>
       {useCases.map((u, i) => (
         <>
-          <input class="sr-only" type="radio" name="use-case" id={`uc-${u.slug}`} value={u.slug} checked={i === 0} />
+          <input class="sr-only" type="radio" name="use-case" id={`uc-${u.slug}`} value={u.slug}
+                 data-code={codeOf(u.name)} checked={i === 0} />
           <label class="pricing-tab" for={`uc-${u.slug}`}>{u.name}</label>
         </>
       ))}
@@ -270,3 +274,38 @@ const money = (n: number) => `$${n.toLocaleString('en-US')}`;
 
     <p class="pricing-note">{s.footNote}</p>
   </div>
+
+{/*
+  The tabs are radios the CSS reads, so the page needs no script to work --
+  but a URL cannot reach a radio on its own, and the header links here with
+  ?use_case=bi and ?use_case=ea. Without this the two Pricing menu items both
+  landed on whichever tab happened to be first, showing identical pages.
+
+  Kept to the two directions that matter: the url selects the tab on arrival,
+  and choosing a tab rewrites the url so the address bar is still true if
+  someone copies it. replaceState rather than pushState, because switching a
+  tab is not a navigation anyone wants to press Back through.
+*/}
+<script>
+  const field = document.querySelector('.pricing-axis--uc');
+
+  if (field) {
+    const radios = [...field.querySelectorAll('input[type="radio"]')] as HTMLInputElement[];
+
+    const wanted = new URLSearchParams(location.search).get('use_case');
+    if (wanted) {
+      const key = wanted.toLowerCase();
+      const match = radios.find((r) => r.value === key || r.dataset.code === key);
+      if (match) match.checked = true;
+    }
+
+    for (const radio of radios) {
+      radio.addEventListener('change', () => {
+        if (!radio.checked) return;
+        const url = new URL(location.href);
+        url.searchParams.set('use_case', radio.dataset.code || radio.value);
+        history.replaceState(null, '', url);
+      });
+    }
+  }
+</script>

@@ -89,9 +89,9 @@ const resources: [string, string, string, string][] = resourceLinks.map(
   (l) => [l.label, l.url, l.icon ?? '', l.description ?? ''] as [string, string, string, string]);
 
 const pricingLinks = group('pricing', [
-  { label: 'Business Intelligence pricing', url: '/pricing?use_case=business-intelligence',
+  { label: 'Business Intelligence pricing', url: '/pricing?use_case=bi',
     icon: 'bi', description: 'Self-service analytics for your team' },
-  { label: 'Embedded Analytics pricing', url: '/pricing?use_case=embedded-analytics',
+  { label: 'Embedded Analytics pricing', url: '/pricing?use_case=ea',
     icon: 'ea', description: 'Fast, flexible customer-facing analytics' },
 ]);
 
