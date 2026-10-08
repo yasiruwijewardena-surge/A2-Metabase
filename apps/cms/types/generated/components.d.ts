@@ -198,6 +198,19 @@ export interface PageBullet extends Struct.ComponentSchema {
   };
 }
 
+export interface PageChartBar extends Struct.ComponentSchema {
+  collectionName: 'components_page_chart_bars';
+  info: {
+    description: 'One bar in the themed demo chart.';
+    displayName: 'Chart bar';
+    icon: 'chartBar';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.Integer & Schema.Attribute.Required;
+  };
+}
+
 export interface PageClosing extends Struct.ComponentSchema {
   collectionName: 'components_page_closings';
   info: {
@@ -467,7 +480,12 @@ export interface PageEmbeddedAnalytics extends Struct.ComponentSchema {
     balanceLinkLabel: Schema.Attribute.String;
     balanceLinkUrl: Schema.Attribute.String;
     balanceSub: Schema.Attribute.Text;
+    chartBars: Schema.Attribute.Component<'page.chart-bar', true>;
     chartColorsLabel: Schema.Attribute.String;
+    chartMax: Schema.Attribute.Integer;
+    chartTitle: Schema.Attribute.String;
+    chartXLabel: Schema.Attribute.String;
+    chartYLabel: Schema.Attribute.String;
     closingCtas: Schema.Attribute.Component<'shared.cta', true>;
     closingHeading: Schema.Attribute.String;
     closingSub: Schema.Attribute.Text;
@@ -513,8 +531,6 @@ export interface PageEmbeddedAnalytics extends Struct.ComponentSchema {
     tabsHeading: Schema.Attribute.String;
     tabsSub: Schema.Attribute.Text;
     themeH: Schema.Attribute.Integer;
-    themeImage: Schema.Attribute.String;
-    themeImageAlt: Schema.Attribute.String;
     themeW: Schema.Attribute.Integer;
     trustLine: Schema.Attribute.String;
     usageHeading: Schema.Attribute.String;
@@ -1224,6 +1240,7 @@ declare module '@strapi/strapi' {
       'page.ai-step': PageAiStep;
       'page.band': PageBand;
       'page.bullet': PageBullet;
+      'page.chart-bar': PageChartBar;
       'page.closing': PageClosing;
       'page.collection-list': PageCollectionList;
       'page.compare-grid': PageCompareGrid;

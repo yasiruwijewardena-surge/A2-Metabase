@@ -162,12 +162,6 @@
     "balanceLinkUrl": {
       "type": "string"
     },
-    "themeImage": {
-      "type": "string"
-    },
-    "themeImageAlt": {
-      "type": "string"
-    },
     "chartColorsLabel": {
       "type": "string"
     },
@@ -176,6 +170,28 @@
     },
     "appearanceLabel": {
       "type": "string"
+    },
+    "chartTitle": {
+      "type": "string",
+      "description": "The heading on the demo chart card."
+    },
+    "chartYLabel": {
+      "type": "string",
+      "description": "The label running up the left of the chart."
+    },
+    "chartXLabel": {
+      "type": "string",
+      "description": "The label under the bars."
+    },
+    "chartMax": {
+      "type": "integer",
+      "description": "The top of the value axis. Gridlines are drawn every fifth of it."
+    },
+    "chartBars": {
+      "type": "component",
+      "repeatable": true,
+      "component": "page.chart-bar",
+      "description": "The bars, left to right."
     },
     "usageImage": {
       "type": "string"
