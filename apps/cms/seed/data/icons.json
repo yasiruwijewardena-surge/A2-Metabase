@@ -322,5 +322,29 @@
     "key": "window",
     "name": "Code window (feature)",
     "file": "feature/window.svg"
+  },
+  {
+    "set": "social",
+    "key": "github",
+    "name": "GitHub (social)",
+    "file": "social/github.svg"
+  },
+  {
+    "set": "social",
+    "key": "linkedin",
+    "name": "LinkedIn (social)",
+    "file": "social/linkedin.svg"
+  },
+  {
+    "set": "social",
+    "key": "x",
+    "name": "X (social)",
+    "file": "social/x.svg"
+  },
+  {
+    "set": "social",
+    "key": "youtube",
+    "name": "YouTube (social)",
+    "file": "social/youtube.svg"
   }
 ]

@@ -626,18 +626,24 @@ async function main() {
        * resolve it to the document here. Menus only ever draw the `nav` set.
        */
       const iconRows = await app.documents('api::icon.icon').findMany({
-        filters: { set: 'nav' }, status: 'published', limit: -1,
+        status: 'published', limit: -1,
       });
-      const iconByKey = new Map(iconRows.map((i) => [i.key, i.documentId]));
+      /* Menus say `sql`; the footer's socials say `social:github`, because the
+         same key exists in more than one set. Bare keys mean the nav set. */
+      const iconId = (ref) => {
+        const [set, key] = ref.includes(':') ? ref.split(':') : ['nav', ref];
+        return iconRows.find((i) => i.set === set && i.key === key)?.documentId;
+      };
 
-      for (const group of settings.navGroups ?? []) {
-        for (const item of group.items ?? []) {
-          if (typeof item.icon !== 'string') continue;
-          const id = iconByKey.get(item.icon);
-          if (!id) console.log(`    ! no nav icon "${item.icon}" for ${item.label}`);
-          item.icon = id ?? null;
-        }
-      }
+      const link = (item) => {
+        if (typeof item.icon !== 'string') return;
+        const id = iconId(item.icon);
+        if (!id) console.log(`    ! no icon "${item.icon}" for ${item.label}`);
+        item.icon = id ?? null;
+      };
+
+      for (const group of settings.navGroups ?? []) (group.items ?? []).forEach(link);
+      (settings.socialLinks ?? []).forEach(link);
       const uid = 'api::site-setting.site-setting';
       const existing = await app.documents(uid).findFirst({ status: 'draft' });
       if (existing) {

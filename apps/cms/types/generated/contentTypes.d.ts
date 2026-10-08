@@ -796,7 +796,9 @@ export interface ApiIconIcon extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    set: Schema.Attribute.Enumeration<['nav', 'pillar', 'scale', 'feature']> &
+    set: Schema.Attribute.Enumeration<
+      ['nav', 'pillar', 'scale', 'feature', 'social']
+    > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'nav'>;
     svg: Schema.Attribute.Media<'images' | 'files'> & Schema.Attribute.Required;
@@ -1076,8 +1078,11 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    defaultMetaDescription: Schema.Attribute.Text;
+    defaultSocialImage: Schema.Attribute.Media<'images'>;
     favicon: Schema.Attribute.Media<'images'>;
     footerColumns: Schema.Attribute.Component<'nav.footer-column', true>;
+    footerLogo: Schema.Attribute.Media<'images'>;
     headScripts: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1085,8 +1090,11 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
       'api::site-setting.site-setting'
     > &
       Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
     navGroups: Schema.Attribute.Component<'nav.group', true>;
     publishedAt: Schema.Attribute.DateTime;
+    siteName: Schema.Attribute.String;
+    socialLinks: Schema.Attribute.Component<'nav.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

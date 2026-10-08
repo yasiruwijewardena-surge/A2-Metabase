@@ -29,11 +29,12 @@
         "nav",
         "pillar",
         "scale",
-        "feature"
+        "feature",
+        "social"
       ],
       "default": "nav",
       "required": true,
-      "description": "Where this icon is used. nav: menus, feature lists and link cards. pillar: the glyph above a product pillar card. scale: the brand-blue cards. feature: the small icons over embedded-analytics points."
+      "description": "Where this icon is used. nav: menus, feature lists and link cards. pillar: the glyph above a product pillar card. scale: the brand-blue cards. feature: the small icons over embedded-analytics points. social: the icons beside the links in the footer."
     },
     "svg": {
       "type": "media",

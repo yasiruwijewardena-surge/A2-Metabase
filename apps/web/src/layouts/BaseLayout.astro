@@ -42,13 +42,17 @@ interface Props {
 
 const { title, description, seo, ogImage, preload, noIndex } = Astro.props;
 
-const metaTitle = seo?.metaTitle || title;
-const metaDesc = seo?.metaDescription || description || '';
-const canonical = seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
-const social = ogImage || seo?.ogImage?.url || null;
-const blocked = noIndex || seo?.noIndex;
-
+/* Read first: the fallbacks below come from here. */
 const site = await getSiteSettings();
+const siteName = site?.siteName || 'Metabase';
+
+const metaTitle = seo?.metaTitle || title;
+/* A page's own description wins; the site-wide one is the floor, so a page
+   that sets none still has something in search results and link previews. */
+const metaDesc = seo?.metaDescription || description || site?.defaultMetaDescription || '';
+const canonical = seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site).href;
+const social = ogImage || seo?.ogImage?.url || site?.defaultSocialImage?.url || null;
+const blocked = noIndex || seo?.noIndex;
 
 /*
  * The tab icon. Site Settings wins when an editor has set one; otherwise the
@@ -110,7 +114,7 @@ const appleTouch = squared && squared !== site?.favicon?.url ? squared : null;
     {blocked && <meta name="robots" content="noindex" />}
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Metabase" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={metaTitle} />
     {metaDesc && <meta property="og:description" content={metaDesc} />}
     <meta property="og:url" content={canonical} />

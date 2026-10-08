@@ -386,6 +386,10 @@ const SITE_SETTINGS_POPULATE = {
   'populate[navGroups][populate][items][populate][icon]': 'true',
   'populate[footerColumns][populate][links][populate][icon]': 'true',
   'populate[favicon]': 'true',
+  'populate[logo]': 'true',
+  'populate[footerLogo]': 'true',
+  'populate[defaultSocialImage]': 'true',
+  'populate[socialLinks][populate][icon]': 'true',
 };
 
 /*
@@ -409,6 +413,7 @@ const flattenIcons = (s: SiteSettings | null): SiteSettings | null => {
 
   s.navGroups?.forEach((g) => fix(g.items as Unflattened[]));
   s.footerColumns?.forEach((c) => fix(c.links as Unflattened[]));
+  fix(s.socialLinks as Unflattened[]);
   return s;
 };
 

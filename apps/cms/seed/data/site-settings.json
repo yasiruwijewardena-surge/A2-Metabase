@@ -253,5 +253,28 @@
     }
   ],
   "headScripts": "",
-  "bodyScripts": ""
+  "bodyScripts": "",
+  "siteName": "Metabase",
+  "socialLinks": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@metabasedata",
+      "icon": "social:youtube"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/metabase",
+      "icon": "social:github"
+    },
+    {
+      "label": "X",
+      "url": "https://x.com/metabase",
+      "icon": "social:x"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/metabase/",
+      "icon": "social:linkedin"
+    }
+  ]
 }

@@ -8,7 +8,7 @@ export interface StrapiImage {
   formats?: Record<string, { url: string; width: number; height: number }> | null;
 }
 
-export type IconSet = 'nav' | 'pillar' | 'scale' | 'feature';
+export type IconSet = 'nav' | 'pillar' | 'scale' | 'feature' | 'social';
 
 export interface Icon {
   key: string;
@@ -643,4 +643,10 @@ export interface SiteSettings {
   headScripts?: string | null;
   bodyScripts?: string | null;
   favicon?: StrapiImage | null;
+  logo?: StrapiImage | null;
+  footerLogo?: StrapiImage | null;
+  siteName?: string | null;
+  defaultMetaDescription?: string | null;
+  defaultSocialImage?: StrapiImage | null;
+  socialLinks?: NavLink[];
 }

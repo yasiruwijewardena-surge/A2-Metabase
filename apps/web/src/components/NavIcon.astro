@@ -14,11 +14,12 @@
  * what lets the colour transition on a row carry the icon with it on hover.
  */
 import { resolveIcon } from '../lib/icons';
+import type { IconSet } from '../lib/types';
 
-interface Props { name: string; size?: number; class?: string }
-const { name, size = 24, class: cls = 'nav-icon' } = Astro.props;
+interface Props { name: string; size?: number; class?: string; set?: IconSet }
+const { name, size = 24, class: cls = 'nav-icon', set = 'nav' } = Astro.props;
 
-const icon = name ? await resolveIcon(name) : undefined;
+const icon = name ? await resolveIcon(name, set) : undefined;
 ---
 {icon && (
   <svg

@@ -32,6 +32,7 @@ import NavIcon from './NavIcon.astro';
  * Site Settings still renders the right menus rather than an empty bar.
  */
 const settings = await getSiteSettings();
+const siteName = settings?.siteName || 'Metabase';
 const group = (key: string, fallback: NavLink[]): NavLink[] =>
   settings?.navGroups?.find((g) => g.key === key)?.items?.length
     ? settings.navGroups.find((g) => g.key === key)!.items!
@@ -108,8 +109,14 @@ const mobileNav: { label: string; items: [string, string, string?, string?][] }[
       the actions. Left-aligning the menu against the logo put it ~190px left
       of where the original has it. */}
   <nav class="nav-row" aria-label="Main">
-    <a href="/" class="nav-logo" aria-label="Metabase home">
-      <Logo width={129} />
+    <a href="/" class="nav-logo" aria-label={`${siteName} home`}>
+      {/* Site Settings wins; the bundled vector is the fallback, so a database
+          with no settings still shows a lockup rather than a gap. Eager and
+          high priority because it sits at the top of every page. */}
+      {settings?.logo?.url
+        ? <img src={settings.logo.url} alt={siteName} width={129} height={32}
+               loading="eager" fetchpriority="high" decoding="sync" />
+        : <Logo width={129} />}
     </a>
 
     <ul class="nav-menu hidden lg:flex" data-menu-root>
