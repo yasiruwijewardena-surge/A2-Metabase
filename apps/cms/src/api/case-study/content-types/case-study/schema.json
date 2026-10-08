@@ -4,8 +4,8 @@
   "info": {
     "singularName": "case-study",
     "pluralName": "case-studies",
-    "displayName": "Case Study",
-    "description": "Customer story. Filterable by company.industry and useCases."
+    "displayName": "Customer Stories",
+    "description": "A customer success story at /case-studies/<slug>. Filtered on the listing by the industry of its company and by use case."
   },
   "options": {
     "draftAndPublish": true

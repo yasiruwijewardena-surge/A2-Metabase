@@ -4,8 +4,8 @@
   "info": {
     "singularName": "use-case",
     "pluralName": "use-cases",
-    "displayName": "Use Case",
-    "description": "Business Intelligence / Embedded Analytics; second filter dimension."
+    "displayName": "Customer Use Cases",
+    "description": "Business Intelligence or Embedded Analytics. The second filter dimension on the case-study listing."
   },
   "options": {
     "draftAndPublish": true

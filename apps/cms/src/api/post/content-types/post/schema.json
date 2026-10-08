@@ -4,8 +4,8 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Post",
-    "description": "Blog article."
+    "displayName": "Blog Posts",
+    "description": "Articles on /blog. Carries the cover image, author, category and tags that the listing and the article page both read."
   },
   "options": {
     "draftAndPublish": true

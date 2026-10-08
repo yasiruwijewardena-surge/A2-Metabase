@@ -4,8 +4,8 @@
   "info": {
     "singularName": "author",
     "pluralName": "authors",
-    "displayName": "Author",
-    "description": "Blog post author; powers /blog/authors/[slug]."
+    "displayName": "Blog Authors",
+    "description": "Who wrote a blog post. Each one gets a page at /blog/authors/<slug> listing their posts."
   },
   "options": {
     "draftAndPublish": true

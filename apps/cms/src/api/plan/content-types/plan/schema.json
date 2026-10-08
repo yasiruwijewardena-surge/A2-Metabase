@@ -4,8 +4,8 @@
   "info": {
     "singularName": "plan",
     "pluralName": "plans",
-    "displayName": "Plan",
-    "description": "A pricing tier. The original's pricing page is three independent axes \u2014 use case, deployment and billing period \u2014 so a plan declares which combinations it belongs to rather than existing once per combination."
+    "displayName": "Pricing Plans",
+    "description": "A pricing tier shown on /pricing. The page crosses three independent axes - use case, deployment and tier - so a plan is one cell of that grid."
   },
   "options": {
     "draftAndPublish": true

@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "Site Settings",
-    "description": "Header and footer navigation, and scripts injected into every page."
+    "description": "The header and footer navigation, and any scripts injected into every page such as a tag manager. Changing this affects every page on the site."
   },
   "options": {
     "draftAndPublish": true

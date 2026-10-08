@@ -4,23 +4,45 @@
   "info": {
     "singularName": "faq",
     "pluralName": "faqs",
-    "displayName": "FAQ",
-    "description": "A question and answer. Scoped to a page so the same type can serve more than one."
+    "displayName": "FAQs",
+    "description": "A question and its answer. Scoped to a page, so the same type serves the pricing page and any other page that needs one."
   },
-  "options": { "draftAndPublish": true },
+  "options": {
+    "draftAndPublish": true
+  },
   "pluginOptions": {},
   "attributes": {
-    "question": { "type": "string", "required": true },
-    "slug": { "type": "uid", "targetField": "question" },
-    "answer": { "type": "text", "required": true },
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "question"
+    },
+    "answer": {
+      "type": "text",
+      "required": true
+    },
     "page": {
       "type": "enumeration",
-      "enum": ["pricing", "general"],
+      "enum": [
+        "pricing",
+        "general"
+      ],
       "default": "pricing",
       "required": true
     },
-    "linkLabel": { "type": "string", "description": "Trailing link, e.g. 'How we define users'." },
-    "linkUrl": { "type": "string" },
-    "displayOrder": { "type": "integer", "default": 0 }
+    "linkLabel": {
+      "type": "string",
+      "description": "Trailing link, e.g. 'How we define users'."
+    },
+    "linkUrl": {
+      "type": "string"
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0
+    }
   }
 }

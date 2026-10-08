@@ -4,8 +4,8 @@
   "info": {
     "singularName": "industry",
     "pluralName": "industries",
-    "displayName": "Industry",
-    "description": "Controlled vocabulary for company sector; drives the case-study filter."
+    "displayName": "Customer Industries",
+    "description": "The sector a customer company belongs to. A fixed list rather than free text, because it drives a filter."
   },
   "options": {
     "draftAndPublish": true
