@@ -21,6 +21,14 @@
       "repeatable": true,
       "component": "nav.footer-column"
     },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "description": "The icon browsers show on the tab and in bookmarks. An SVG is sharpest and scales to every size; a square PNG of at least 180x180 also works. Leave empty to use the one bundled with the site."
+    },
     "headScripts": {
       "type": "text",
       "description": "Raw markup injected at the end of <head> on every page, e.g. the Google Tag Manager snippet."
