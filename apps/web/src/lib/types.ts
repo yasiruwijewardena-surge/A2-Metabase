@@ -25,8 +25,17 @@ export interface Seo {
   noIndex?: boolean | null;
 }
 
-export interface Category { name: string; slug: string; description?: string | null }
-export interface Tag { name: string; slug: string }
+export interface Category {
+  name: string;
+  slug: string;
+  description?: string | null;
+  seo?: Seo | null;
+}
+export interface Tag {
+  name: string;
+  slug: string;
+  seo?: Seo | null;
+}
 
 export interface Author {
   name: string;
@@ -34,6 +43,7 @@ export interface Author {
   role?: string | null;
   bio?: string | null;
   avatar?: StrapiImage | null;
+  seo?: Seo | null;
 }
 
 /** Strapi's rich-text `blocks` field. */
@@ -61,8 +71,20 @@ export interface Post {
   seo?: Seo | null;
 }
 
-export interface Industry { name: string; slug: string; description?: string | null; displayOrder?: number }
-export interface UseCase { name: string; slug: string; description?: string | null; displayOrder?: number }
+export interface Industry {
+  name: string;
+  slug: string;
+  description?: string | null;
+  displayOrder?: number;
+  seo?: Seo | null;
+}
+export interface UseCase {
+  name: string;
+  slug: string;
+  description?: string | null;
+  displayOrder?: number;
+  seo?: Seo | null;
+}
 
 export interface Company {
   name: string;

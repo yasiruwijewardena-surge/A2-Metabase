@@ -151,9 +151,16 @@ const getPostsDeep = () =>
 export const getPost = async (slug: string): Promise<Post | undefined> =>
   (await getPostsDeep()).find((p) => p.slug === slug);
 
-export const getCategories = () => all<Category>('categories', { sort: 'name:asc' });
-export const getTags = () => all<Tag>('tags', { sort: 'name:asc' });
-export const getAuthors = () => all<Author>('authors', { 'populate[avatar]': 'true', sort: 'name:asc' });
+export const getCategories = () =>
+  all<Category>('categories', { 'populate[seo][populate][ogImage]': 'true', sort: 'name:asc' });
+export const getTags = () =>
+  all<Tag>('tags', { 'populate[seo][populate][ogImage]': 'true', sort: 'name:asc' });
+export const getAuthors = () =>
+  all<Author>('authors', {
+    'populate[avatar]': 'true',
+    'populate[seo][populate][ogImage]': 'true',
+    sort: 'name:asc',
+  });
 
 const CASE_POPULATE = {
   'populate[company][populate][industry]': 'true',
@@ -177,8 +184,10 @@ const getCaseStudiesDeep = () =>
 export const getCaseStudy = async (slug: string): Promise<CaseStudy | undefined> =>
   (await getCaseStudiesDeep()).find((c) => c.slug === slug);
 
-export const getIndustries = () => all<Industry>('industries', { sort: 'displayOrder:asc' });
-export const getUseCases = () => all<UseCase>('use-cases', { sort: 'displayOrder:asc' });
+export const getIndustries = () =>
+  all<Industry>('industries', { 'populate[seo][populate][ogImage]': 'true', sort: 'displayOrder:asc' });
+export const getUseCases = () =>
+  all<UseCase>('use-cases', { 'populate[seo][populate][ogImage]': 'true', sort: 'displayOrder:asc' });
 
 export const getTestimonials = () =>
   all<Testimonial>('testimonials', {

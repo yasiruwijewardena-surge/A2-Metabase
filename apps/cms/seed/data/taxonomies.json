@@ -3,127 +3,271 @@
   "categories": [
     {
       "name": "Analytics and BI",
-      "description": "Practice and craft of working with data."
+      "description": "Practice and craft of working with data.",
+      "seo": {
+        "metaTitle": "Analytics and BI | Metabase Blog",
+        "metaDescription": "Writing on the craft of analytics \u2014 asking better questions, choosing measures that hold up, and reading a chart honestly."
+      }
     },
     {
       "name": "Data explorations",
-      "description": "Analyses of public and internal datasets."
+      "description": "Analyses of public and internal datasets.",
+      "seo": {
+        "metaTitle": "Data explorations | Metabase Blog",
+        "metaDescription": "Analyses of public and internal datasets, written out in full so you can follow the reasoning rather than take the conclusion."
+      }
     },
     {
       "name": "Engineering",
-      "description": "How we build and run the product."
+      "description": "How we build and run the product.",
+      "seo": {
+        "metaTitle": "Engineering | Metabase Blog",
+        "metaDescription": "How Metabase is built and run: the architecture decisions, the trade-offs, and the things we would do differently."
+      }
     },
     {
       "name": "News",
-      "description": "Announcements, releases and company updates."
+      "description": "Announcements, releases and company updates.",
+      "seo": {
+        "metaTitle": "News | Metabase Blog",
+        "metaDescription": "Releases, announcements and company updates from Metabase."
+      }
     },
     {
       "name": "Product",
-      "description": "Features, workflows and what they are for."
+      "description": "Features, workflows and what they are for.",
+      "seo": {
+        "metaTitle": "Product | Metabase Blog",
+        "metaDescription": "What the features are for, how they fit together, and the problems they were built to solve."
+      }
     },
     {
       "name": "Using Metabase",
-      "description": "Practical guides for getting more out of it."
+      "description": "Practical guides for getting more out of it.",
+      "seo": {
+        "metaTitle": "Using Metabase | Metabase Blog",
+        "metaDescription": "Practical guides for getting more out of Metabase, from a first question to a dashboard a team relies on."
+      }
     }
   ],
   "tags": [
     {
-      "name": "AI"
+      "name": "AI",
+      "seo": {
+        "metaTitle": "AI | Metabase Blog",
+        "metaDescription": "Articles on using language models for analytics \u2014 where they genuinely help, where they produce a confident wrong answer, and how to tell the difference."
+      }
     },
     {
-      "name": "Analytics"
+      "name": "Analytics",
+      "seo": {
+        "metaTitle": "Analytics | Metabase Blog",
+        "metaDescription": "Writing on the practice of analytics: framing a question, choosing a measure, and knowing when a number is answering something else."
+      }
     },
     {
-      "name": "Dashboards"
+      "name": "Dashboards",
+      "seo": {
+        "metaTitle": "Dashboards | Metabase Blog",
+        "metaDescription": "Building dashboards people actually return to \u2014 what to put on one, what to leave off, and why most of them go stale."
+      }
     },
     {
-      "name": "Data modeling"
+      "name": "Data modeling",
+      "seo": {
+        "metaTitle": "Data modeling | Metabase Blog",
+        "metaDescription": "Shaping raw tables into something a non-specialist can query without learning the schema first."
+      }
     },
     {
-      "name": "Embedding"
+      "name": "Embedding",
+      "seo": {
+        "metaTitle": "Embedding | Metabase Blog",
+        "metaDescription": "Putting analytics inside your own product: what customers should see, what they should not, and how to keep those apart."
+      }
     },
     {
-      "name": "Hiring"
+      "name": "Hiring",
+      "seo": {
+        "metaTitle": "Hiring | Metabase Blog",
+        "metaDescription": "How we hire, how we interview, and what we have changed after getting it wrong."
+      }
     },
     {
-      "name": "Open Source"
+      "name": "Open Source",
+      "seo": {
+        "metaTitle": "Open Source | Metabase Blog",
+        "metaDescription": "Running an open-source analytics product: the licence, the contributions, and the parts that are harder than the code."
+      }
     },
     {
-      "name": "Performance"
+      "name": "Performance",
+      "seo": {
+        "metaTitle": "Performance | Metabase Blog",
+        "metaDescription": "Making queries and dashboards fast enough that people stop avoiding them."
+      }
     },
     {
-      "name": "SQL"
+      "name": "SQL",
+      "seo": {
+        "metaTitle": "SQL | Metabase Blog",
+        "metaDescription": "Practical SQL for analytics work \u2014 joins that behave, window functions worth knowing, and the queries worth saving."
+      }
     },
     {
-      "name": "Security"
+      "name": "Security",
+      "seo": {
+        "metaTitle": "Security | Metabase Blog",
+        "metaDescription": "Permissions, access control and the quiet ways analytics tools leak more than they should."
+      }
     },
     {
-      "name": "Self-service"
+      "name": "Self-service",
+      "seo": {
+        "metaTitle": "Self-service | Metabase Blog",
+        "metaDescription": "Letting people answer their own questions without a queue, and what has to be true before that works."
+      }
     }
   ],
   "industries": [
     {
-      "name": "Education"
+      "name": "Education",
+      "seo": {
+        "metaTitle": "Education customer stories | Metabase",
+        "metaDescription": "How schools, universities and education platforms use Metabase \u2014 enrolment, engagement and outcomes, read by people who are not analysts."
+      }
     },
     {
-      "name": "Financial Services"
+      "name": "Financial Services",
+      "seo": {
+        "metaTitle": "Financial Services customer stories | Metabase",
+        "metaDescription": "How financial services teams use Metabase for reporting that has to reconcile, with access control that has to hold."
+      }
     },
     {
-      "name": "Venture Capital"
+      "name": "Venture Capital",
+      "seo": {
+        "metaTitle": "Venture Capital customer stories | Metabase",
+        "metaDescription": "How investment teams use Metabase to track portfolio performance without rebuilding a spreadsheet every quarter."
+      }
     },
     {
-      "name": "B2B Software / Financial Technology"
+      "name": "B2B Software / Financial Technology",
+      "seo": {
+        "metaTitle": "B2B Software / Financial Technology customer stories | Metabase",
+        "metaDescription": "How fintech software companies use Metabase across their own operations and the analytics they ship to customers."
+      }
     },
     {
-      "name": "IT & Software"
+      "name": "IT & Software",
+      "seo": {
+        "metaTitle": "IT & Software customer stories | Metabase",
+        "metaDescription": "How software and IT teams use Metabase for product, infrastructure and support numbers in one place."
+      }
     },
     {
-      "name": "B2B SaaS"
+      "name": "B2B SaaS",
+      "seo": {
+        "metaTitle": "B2B SaaS customer stories | Metabase",
+        "metaDescription": "How B2B SaaS companies use Metabase to follow activation, retention and expansion without a dedicated data team."
+      }
     },
     {
-      "name": "Developer Tools"
+      "name": "Developer Tools",
+      "seo": {
+        "metaTitle": "Developer Tools customer stories | Metabase",
+        "metaDescription": "How developer-tools companies use Metabase to understand adoption, from first install to daily use."
+      }
     },
     {
-      "name": "Manufacturing"
+      "name": "Manufacturing",
+      "seo": {
+        "metaTitle": "Manufacturing customer stories | Metabase",
+        "metaDescription": "How manufacturers use Metabase for production, quality and supply numbers that reach the floor, not just the office."
+      }
     },
     {
-      "name": "Healthcare"
+      "name": "Healthcare",
+      "seo": {
+        "metaTitle": "Healthcare customer stories | Metabase",
+        "metaDescription": "How healthcare organisations use Metabase for operational reporting under real access constraints."
+      }
     },
     {
-      "name": "Logistics & Transportation"
+      "name": "Logistics & Transportation",
+      "seo": {
+        "metaTitle": "Logistics & Transportation customer stories | Metabase",
+        "metaDescription": "How logistics and transport teams use Metabase to follow fleets, routes and delivery performance as they happen."
+      }
     },
     {
-      "name": "Nonprofit"
+      "name": "Nonprofit",
+      "seo": {
+        "metaTitle": "Nonprofit customer stories | Metabase",
+        "metaDescription": "How nonprofits use Metabase to measure programmes and report to funders without buying an enterprise stack."
+      }
     },
     {
-      "name": "Travel & Hospitality"
+      "name": "Travel & Hospitality",
+      "seo": {
+        "metaTitle": "Travel & Hospitality customer stories | Metabase",
+        "metaDescription": "How travel and hospitality teams use Metabase for occupancy, bookings and the numbers that move by the hour."
+      }
     },
     {
-      "name": "eCommerce"
+      "name": "eCommerce",
+      "seo": {
+        "metaTitle": "eCommerce customer stories | Metabase",
+        "metaDescription": "How online retailers use Metabase for orders, inventory and the questions that come up mid-season."
+      }
     },
     {
-      "name": "Banking & Finance"
+      "name": "Banking & Finance",
+      "seo": {
+        "metaTitle": "Banking & Finance customer stories | Metabase",
+        "metaDescription": "How banks and finance teams use Metabase where every figure has to be traceable to its source."
+      }
     },
     {
-      "name": "Transport Management System"
+      "name": "Transport Management System",
+      "seo": {
+        "metaTitle": "Transport Management System customer stories | Metabase",
+        "metaDescription": "How transport management platforms use Metabase, both internally and embedded for the operators who use them."
+      }
     },
     {
-      "name": "Retail"
+      "name": "Retail",
+      "seo": {
+        "metaTitle": "Retail customer stories | Metabase",
+        "metaDescription": "How retailers use Metabase across stores and channels, with numbers store managers can read themselves."
+      }
     },
     {
-      "name": "Internet of Things"
+      "name": "Internet of Things",
+      "seo": {
+        "metaTitle": "Internet of Things customer stories | Metabase",
+        "metaDescription": "How IoT companies use Metabase to make sense of device fleets and the data they send back."
+      }
     }
   ],
   "useCases": [
     {
       "name": "Business Intelligence",
       "displayOrder": 1,
-      "description": "Self-service analytics for your own team."
+      "description": "Self-service analytics for your own team.",
+      "seo": {
+        "metaTitle": "Business Intelligence customer stories | Metabase",
+        "metaDescription": "Customer stories from teams using Metabase for their own analytics \u2014 self-service reporting without a queue in front of it."
+      }
     },
     {
       "name": "Embedded Analytics",
       "displayOrder": 2,
-      "description": "Customer-facing analytics inside your product."
+      "description": "Customer-facing analytics inside your product.",
+      "seo": {
+        "metaTitle": "Embedded Analytics customer stories | Metabase",
+        "metaDescription": "Customer stories from companies that ship Metabase inside their own product, so their customers get analytics too."
+      }
     }
   ],
   "authors": [

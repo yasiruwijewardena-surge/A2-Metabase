@@ -48,6 +48,12 @@
       "relation": "oneToMany",
       "target": "api::post.post",
       "mappedBy": "author"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo",
+      "description": "Overrides for how this page looks in search results and link previews. Blog author pages live at /blog/authors/<slug>. Leave empty and the page writes its own from the fields above."
     }
   }
 }
