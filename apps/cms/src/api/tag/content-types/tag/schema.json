@@ -4,8 +4,8 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "Tag",
-    "description": "Cross-cutting topic; a post may have many."
+    "displayName": "Blog Tags",
+    "description": "A cross-cutting topic on a blog post, used by the second filter on /blog. A post may have several."
   },
   "options": {
     "draftAndPublish": true

@@ -4,8 +4,8 @@
   "info": {
     "singularName": "person",
     "pluralName": "people",
-    "displayName": "Person",
-    "description": "A named human who gives a testimonial."
+    "displayName": "Testimonial People",
+    "description": "A named person who is quoted. Separate from Blog Authors: these people write nothing, they are cited."
   },
   "options": {
     "draftAndPublish": true

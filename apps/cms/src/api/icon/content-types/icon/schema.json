@@ -4,8 +4,8 @@
   "info": {
     "singularName": "icon",
     "pluralName": "icons",
-    "displayName": "Icon",
-    "description": "One SVG in the site's icon set. Navigation and page content point at an icon by its key, so adding artwork is an upload here rather than a code change."
+    "displayName": "Icon Library",
+    "description": "The SVG artwork the site draws from. Navigation and page content pick an icon from here, so adding one is an upload rather than a code change."
   },
   "options": {
     "draftAndPublish": true

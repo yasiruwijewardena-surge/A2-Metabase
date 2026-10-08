@@ -4,8 +4,8 @@
   "info": {
     "singularName": "company",
     "pluralName": "companies",
-    "displayName": "Company",
-    "description": "Customer organisation. Owns the industry relation."
+    "displayName": "Customer Companies",
+    "description": "A customer organisation. Holds the logo used in logo strips, and the industry that filters the case-study listing."
   },
   "options": {
     "draftAndPublish": true

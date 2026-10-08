@@ -4,8 +4,8 @@
   "info": {
     "singularName": "testimonial",
     "pluralName": "testimonials",
-    "displayName": "Testimonial",
-    "description": "Written once, reused on home, product sections, case studies and /love."
+    "displayName": "Testimonials",
+    "description": "A quote from a customer. Written once here and reused on the home page, product pages, case studies and /love."
   },
   "options": {
     "draftAndPublish": true

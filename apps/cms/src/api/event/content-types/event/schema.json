@@ -4,8 +4,8 @@
   "info": {
     "singularName": "event",
     "pluralName": "events",
-    "displayName": "Event",
-    "description": "A live session or its recording. `startsAt` decides which band it appears in, so nothing has to be re-flagged as it ages."
+    "displayName": "Events",
+    "description": "A live session or its recording, at /events. The start date decides whether it shows as upcoming or on demand, so nothing needs flagging by hand."
   },
   "options": {
     "draftAndPublish": true

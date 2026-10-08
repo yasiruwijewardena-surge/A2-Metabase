@@ -4,8 +4,8 @@
   "info": {
     "singularName": "category",
     "pluralName": "categories",
-    "displayName": "Category",
-    "description": "Blog post category (one per post)."
+    "displayName": "Blog Categories",
+    "description": "The single subject a blog post belongs to, used by the filter on /blog. A post has exactly one."
   },
   "options": {
     "draftAndPublish": true

@@ -4,8 +4,8 @@
   "info": {
     "singularName": "glossary-term",
     "pluralName": "glossary-terms",
-    "displayName": "Glossary Term",
-    "description": "BI/data term definition; listing filters by letter and topic."
+    "displayName": "Glossary Terms",
+    "description": "A data or analytics term defined at /glossary. The listing filters by first letter and by topic."
   },
   "options": {
     "draftAndPublish": true

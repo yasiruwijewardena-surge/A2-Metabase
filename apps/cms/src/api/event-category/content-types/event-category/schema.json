@@ -4,8 +4,8 @@
   "info": {
     "singularName": "event-category",
     "pluralName": "event-categories",
-    "displayName": "Event category",
-    "description": "A strand of events — fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on. The artwork lives here rather than on `event` because the original keys it by strand: every event in a series shows that series' square on its card, and its tall poster is what the carousel scrolls."
+    "displayName": "Event Categories",
+    "description": "A strand of events such as fireside chats, workshops or meetups. Used to group the listing."
   },
   "options": {
     "draftAndPublish": true

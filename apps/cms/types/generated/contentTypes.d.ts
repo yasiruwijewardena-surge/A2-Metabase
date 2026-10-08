@@ -446,8 +446,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   collectionName: 'authors';
   info: {
-    description: 'Blog post author; powers /blog/authors/[slug].';
-    displayName: 'Author';
+    description: 'Who wrote a blog post. Each one gets a page at /blog/authors/<slug> listing their posts.';
+    displayName: 'Blog Authors';
     pluralName: 'authors';
     singularName: 'author';
   };
@@ -482,8 +482,8 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
 export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
   collectionName: 'case_studies';
   info: {
-    description: 'Customer story. Filterable by company.industry and useCases.';
-    displayName: 'Case Study';
+    description: 'A customer success story at /case-studies/<slug>. Filtered on the listing by the industry of its company and by use case.';
+    displayName: 'Customer Stories';
     pluralName: 'case-studies';
     singularName: 'case-study';
   };
@@ -536,8 +536,8 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
-    description: 'Blog post category (one per post).';
-    displayName: 'Category';
+    description: 'The single subject a blog post belongs to, used by the filter on /blog. A post has exactly one.';
+    displayName: 'Blog Categories';
     pluralName: 'categories';
     singularName: 'category';
   };
@@ -568,8 +568,8 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
 export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
   collectionName: 'companies';
   info: {
-    description: 'Customer organisation. Owns the industry relation.';
-    displayName: 'Company';
+    description: 'A customer organisation. Holds the logo used in logo strips, and the industry that filters the case-study listing.';
+    displayName: 'Customer Companies';
     pluralName: 'companies';
     singularName: 'company';
   };
@@ -614,8 +614,8 @@ export interface ApiEventCategoryEventCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'event_categories';
   info: {
-    description: "A strand of events \u2014 fireside chats, workshops, meetups. Named after the original's own `data-category` attribute, which is what it filters its recordings on. The artwork lives here rather than on `event` because the original keys it by strand: every event in a series shows that series' square on its card, and its tall poster is what the carousel scrolls.";
-    displayName: 'Event category';
+    description: 'A strand of events such as fireside chats, workshops or meetups. Used to group the listing.';
+    displayName: 'Event Categories';
     pluralName: 'event-categories';
     singularName: 'event-category';
   };
@@ -649,8 +649,8 @@ export interface ApiEventCategoryEventCategory
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
   collectionName: 'events';
   info: {
-    description: 'A live session or its recording. `startsAt` decides which band it appears in, so nothing has to be re-flagged as it ages.';
-    displayName: 'Event';
+    description: 'A live session or its recording, at /events. The start date decides whether it shows as upcoming or on demand, so nothing needs flagging by hand.';
+    displayName: 'Events';
     pluralName: 'events';
     singularName: 'event';
   };
@@ -695,8 +695,8 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
   collectionName: 'faqs';
   info: {
-    description: 'A question and answer. Scoped to a page so the same type can serve more than one.';
-    displayName: 'FAQ';
+    description: 'A question and its answer. Scoped to a page, so the same type serves the pricing page and any other page that needs one.';
+    displayName: 'FAQs';
     pluralName: 'faqs';
     singularName: 'faq';
   };
@@ -730,8 +730,8 @@ export interface ApiGlossaryTermGlossaryTerm
   extends Struct.CollectionTypeSchema {
   collectionName: 'glossary_terms';
   info: {
-    description: 'BI/data term definition; listing filters by letter and topic.';
-    displayName: 'Glossary Term';
+    description: 'A data or analytics term defined at /glossary. The listing filters by first letter and by topic.';
+    displayName: 'Glossary Terms';
     pluralName: 'glossary-terms';
     singularName: 'glossary-term';
   };
@@ -778,8 +778,8 @@ export interface ApiGlossaryTermGlossaryTerm
 export interface ApiIconIcon extends Struct.CollectionTypeSchema {
   collectionName: 'icons';
   info: {
-    description: "One SVG in the site's icon set. Navigation and page content point at an icon by its key, so adding artwork is an upload here rather than a code change.";
-    displayName: 'Icon';
+    description: 'The SVG artwork the site draws from. Navigation and page content pick an icon from here, so adding one is an upload rather than a code change.';
+    displayName: 'Icon Library';
     pluralName: 'icons';
     singularName: 'icon';
   };
@@ -809,8 +809,8 @@ export interface ApiIconIcon extends Struct.CollectionTypeSchema {
 export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   collectionName: 'industries';
   info: {
-    description: 'Controlled vocabulary for company sector; drives the case-study filter.';
-    displayName: 'Industry';
+    description: 'The sector a customer company belongs to. A fixed list rather than free text, because it drives a filter.';
+    displayName: 'Customer Industries';
     pluralName: 'industries';
     singularName: 'industry';
   };
@@ -842,8 +842,8 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
-    description: "Every composed page on the site, one row per URL. The body is a dynamic zone over the whole section vocabulary, so a page's shape -- which sections it has and in what order -- is content, not code. Collection detail routes (a post, a case study) are templates over their own type and are not rows here.";
-    displayName: 'Page';
+    description: 'Every composed page on the site, one per URL. The body is a dynamic zone, so a page is assembled from sections rather than written as one block of text.';
+    displayName: 'Pages';
     pluralName: 'pages';
     singularName: 'page';
   };
@@ -901,8 +901,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
 export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
   collectionName: 'people';
   info: {
-    description: 'A named human who gives a testimonial.';
-    displayName: 'Person';
+    description: 'A named person who is quoted. Separate from Blog Authors: these people write nothing, they are cited.';
+    displayName: 'Testimonial People';
     pluralName: 'people';
     singularName: 'person';
   };
@@ -940,8 +940,8 @@ export interface ApiPersonPerson extends Struct.CollectionTypeSchema {
 export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
   collectionName: 'plans';
   info: {
-    description: "A pricing tier. The original's pricing page is three independent axes \u2014 use case, deployment and billing period \u2014 so a plan declares which combinations it belongs to rather than existing once per combination.";
-    displayName: 'Plan';
+    description: 'A pricing tier shown on /pricing. The page crosses three independent axes - use case, deployment and tier - so a plan is one cell of that grid.';
+    displayName: 'Pricing Plans';
     pluralName: 'plans';
     singularName: 'plan';
   };
@@ -980,8 +980,8 @@ export interface ApiPlanPlan extends Struct.CollectionTypeSchema {
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: 'posts';
   info: {
-    description: 'Blog article.';
-    displayName: 'Post';
+    description: 'Articles on /blog. Carries the cover image, author, category and tags that the listing and the article page both read.';
+    displayName: 'Blog Posts';
     pluralName: 'posts';
     singularName: 'post';
   };
@@ -1029,8 +1029,8 @@ export interface ApiPricingAddonPricingAddon
   extends Struct.CollectionTypeSchema {
   collectionName: 'pricing_addons';
   info: {
-    description: 'A usage-based line on the pricing page: what it is, what it costs beyond the included allowance.';
-    displayName: 'Pricing Addon';
+    description: 'A usage-based line on the pricing page: what it is, and what it costs once the included allowance runs out.';
+    displayName: 'Pricing Add-ons';
     pluralName: 'pricing-addons';
     singularName: 'pricing-addon';
   };
@@ -1063,7 +1063,7 @@ export interface ApiPricingAddonPricingAddon
 export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'Header and footer navigation, and scripts injected into every page.';
+    description: 'The header and footer navigation, and any scripts injected into every page such as a tag manager. Changing this affects every page on the site.';
     displayName: 'Site Settings';
     pluralName: 'site-settings';
     singularName: 'site-setting';
@@ -1095,8 +1095,8 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
 export interface ApiTagTag extends Struct.CollectionTypeSchema {
   collectionName: 'tags';
   info: {
-    description: 'Cross-cutting topic; a post may have many.';
-    displayName: 'Tag';
+    description: 'A cross-cutting topic on a blog post, used by the second filter on /blog. A post may have several.';
+    displayName: 'Blog Tags';
     pluralName: 'tags';
     singularName: 'tag';
   };
@@ -1123,8 +1123,8 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
 export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
   collectionName: 'testimonials';
   info: {
-    description: 'Written once, reused on home, product sections, case studies and /love.';
-    displayName: 'Testimonial';
+    description: 'A quote from a customer. Written once here and reused on the home page, product pages, case studies and /love.';
+    displayName: 'Testimonials';
     pluralName: 'testimonials';
     singularName: 'testimonial';
   };
@@ -1167,8 +1167,8 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
 export interface ApiUseCaseUseCase extends Struct.CollectionTypeSchema {
   collectionName: 'use_cases';
   info: {
-    description: 'Business Intelligence / Embedded Analytics; second filter dimension.';
-    displayName: 'Use Case';
+    description: 'Business Intelligence or Embedded Analytics. The second filter dimension on the case-study listing.';
+    displayName: 'Customer Use Cases';
     pluralName: 'use-cases';
     singularName: 'use-case';
   };

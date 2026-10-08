@@ -4,8 +4,8 @@
   "info": {
     "singularName": "page",
     "pluralName": "pages",
-    "displayName": "Page",
-    "description": "Every composed page on the site, one row per URL. The body is a dynamic zone over the whole section vocabulary, so a page's shape -- which sections it has and in what order -- is content, not code. Collection detail routes (a post, a case study) are templates over their own type and are not rows here."
+    "displayName": "Pages",
+    "description": "Every composed page on the site, one per URL. The body is a dynamic zone, so a page is assembled from sections rather than written as one block of text."
   },
   "options": {
     "draftAndPublish": true
