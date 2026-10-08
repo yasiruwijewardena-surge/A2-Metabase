@@ -188,133 +188,133 @@
   {
     "set": "pillar",
     "key": "bi",
-    "name": "Business Intelligence",
+    "name": "Business Intelligence (pillar)",
     "file": "pillar/bi.svg"
   },
   {
     "set": "pillar",
     "key": "cloud",
-    "name": "Cube",
+    "name": "Cube (pillar)",
     "file": "pillar/cloud.svg"
   },
   {
     "set": "pillar",
     "key": "data",
-    "name": "Data",
+    "name": "Data (pillar)",
     "file": "pillar/data.svg"
   },
   {
     "set": "pillar",
     "key": "gear",
-    "name": "Settings",
+    "name": "Settings (pillar)",
     "file": "pillar/gear.svg"
   },
   {
     "set": "pillar",
     "key": "grid",
-    "name": "Four panes",
+    "name": "Four panes (pillar)",
     "file": "pillar/grid.svg"
   },
   {
     "set": "pillar",
     "key": "people",
-    "name": "Two figures",
+    "name": "Two figures (pillar)",
     "file": "pillar/people.svg"
   },
   {
     "set": "pillar",
     "key": "permissions",
-    "name": "Permissions",
+    "name": "Permissions (pillar)",
     "file": "pillar/permissions.svg"
   },
   {
     "set": "pillar",
     "key": "racks",
-    "name": "Racks",
+    "name": "Racks (pillar)",
     "file": "pillar/racks.svg"
   },
   {
     "set": "pillar",
     "key": "segregation",
-    "name": "Data segregation",
+    "name": "Data segregation (pillar)",
     "file": "pillar/segregation.svg"
   },
   {
     "set": "pillar",
     "key": "servers",
-    "name": "Two racks",
+    "name": "Two racks (pillar)",
     "file": "pillar/servers.svg"
   },
   {
     "set": "pillar",
     "key": "shield",
-    "name": "Shield with tick",
+    "name": "Shield with tick (pillar)",
     "file": "pillar/shield.svg"
   },
   {
     "set": "pillar",
     "key": "shield-plain",
-    "name": "Shield",
+    "name": "Shield (pillar)",
     "file": "pillar/shield-plain.svg"
   },
   {
     "set": "pillar",
     "key": "terminal",
-    "name": "Code window",
+    "name": "Code window (pillar)",
     "file": "pillar/terminal.svg"
   },
   {
     "set": "scale",
     "key": "bolt",
-    "name": "Lightning bolt",
+    "name": "Lightning bolt (scale)",
     "file": "scale/bolt.svg"
   },
   {
     "set": "scale",
     "key": "chart",
-    "name": "Bar chart",
+    "name": "Bar chart (scale)",
     "file": "scale/chart.svg"
   },
   {
     "set": "scale",
     "key": "eye",
-    "name": "Eye",
+    "name": "Eye (scale)",
     "file": "scale/eye.svg"
   },
   {
     "set": "scale",
     "key": "grid",
-    "name": "Four panes",
+    "name": "Four panes (scale)",
     "file": "scale/grid.svg"
   },
   {
     "set": "scale",
     "key": "layers",
-    "name": "Layers",
+    "name": "Layers (scale)",
     "file": "scale/layers.svg"
   },
   {
     "set": "scale",
     "key": "terminal",
-    "name": "Code window",
+    "name": "Code window (scale)",
     "file": "scale/terminal.svg"
   },
   {
     "set": "feature",
     "key": "package",
-    "name": "Package",
+    "name": "Package (feature)",
     "file": "feature/package.svg"
   },
   {
     "set": "feature",
     "key": "shield",
-    "name": "Shield with tick",
+    "name": "Shield with tick (feature)",
     "file": "feature/shield.svg"
   },
   {
     "set": "feature",
     "key": "window",
-    "name": "Code window",
+    "name": "Code window (feature)",
     "file": "feature/window.svg"
   }
 ]

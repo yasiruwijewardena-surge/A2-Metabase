@@ -618,6 +618,26 @@ async function main() {
     // A single type, so there is nothing to match on: write the one entry.
     if (want('settings')) {
       const settings = read('site-settings.json');
+
+      /*
+       * Nav links point at an icon by relation rather than by typed key, so an
+       * editor picks from a list instead of guessing. The seed data still
+       * writes the key, because that is what is readable in a JSON file, so
+       * resolve it to the document here. Menus only ever draw the `nav` set.
+       */
+      const iconRows = await app.documents('api::icon.icon').findMany({
+        filters: { set: 'nav' }, status: 'published', limit: -1,
+      });
+      const iconByKey = new Map(iconRows.map((i) => [i.key, i.documentId]));
+
+      for (const group of settings.navGroups ?? []) {
+        for (const item of group.items ?? []) {
+          if (typeof item.icon !== 'string') continue;
+          const id = iconByKey.get(item.icon);
+          if (!id) console.log(`    ! no nav icon "${item.icon}" for ${item.label}`);
+          item.icon = id ?? null;
+        }
+      }
       const uid = 'api::site-setting.site-setting';
       const existing = await app.documents(uid).findFirst({ status: 'draft' });
       if (existing) {
