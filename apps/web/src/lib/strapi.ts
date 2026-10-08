@@ -385,6 +385,7 @@ export const getPage = async (slug: string) =>
 const SITE_SETTINGS_POPULATE = {
   'populate[navGroups][populate][items][populate][icon]': 'true',
   'populate[footerColumns][populate][links][populate][icon]': 'true',
+  'populate[favicon]': 'true',
 };
 
 /*

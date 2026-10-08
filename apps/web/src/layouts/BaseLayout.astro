@@ -21,6 +21,7 @@ import lato700 from '@fontsource/lato/files/lato-latin-700-normal.woff2?url';
 import lato900 from '@fontsource/lato/files/lato-latin-900-normal.woff2?url';
 import Navbar from '../components/Navbar.astro';
 import { getSiteSettings } from '../lib/strapi';
+import { cld } from '../lib/image';
 import Footer from '../components/Footer.astro';
 import type { Seo } from '../lib/types';
 import type { PreloadAttrs } from '../lib/image';
@@ -48,6 +49,34 @@ const social = ogImage || seo?.ogImage?.url || null;
 const blocked = noIndex || seo?.noIndex;
 
 const site = await getSiteSettings();
+
+/*
+ * The tab icon. Site Settings wins when an editor has set one; otherwise the
+ * file bundled with the site is used, so a database with no settings still has
+ * an icon rather than whatever the browser guesses.
+ *
+ * Both links are deliberate. SVG is sharp at every size and is what modern
+ * browsers take; the .ico is the fallback for the ones that do not, and naming
+ * it explicitly is better than relying on browsers probing /favicon.ico.
+ */
+const faviconUrl = site?.favicon?.url ?? '/favicon.svg';
+const faviconType = faviconUrl.endsWith('.svg') ? 'image/svg+xml' : undefined;
+
+/*
+ * iOS wants a square raster of its own and ignores an SVG. When the icon comes
+ * from the CMS, Cloudinary can produce that square from the same upload, so an
+ * editor does not have to supply a second file. `cld` returns the url
+ * untouched for anything it does not serve, which is why the bundled fallback
+ * is not sent down this path.
+ */
+const squared = site?.favicon?.url
+  ? cld(site.favicon.url, 'f_png,c_pad,b_white,w_180,h_180')
+  : null;
+/* `cld` hands back the url unchanged for anything it does not serve. Emitting
+   that would advertise the original file -- an SVG, most likely -- as an
+   apple-touch icon, which iOS ignores, so only link it when the transform
+   actually took. */
+const appleTouch = squared && squared !== site?.favicon?.url ? squared : null;
 ---
 <!doctype html>
 <html lang="en">
@@ -70,6 +99,10 @@ const site = await getSiteSettings();
         connection in a different pool that those requests cannot reuse, which
         would warm a socket nobody touches and cost a second handshake. */}
     <link rel="preconnect" href="https://res.cloudinary.com" />
+
+    <link rel="icon" href={faviconUrl} type={faviconType} />
+    <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
+    {appleTouch && <link rel="apple-touch-icon" sizes="180x180" href={appleTouch} />}
 
     <title>{metaTitle}</title>
     {metaDesc && <meta name="description" content={metaDesc} />}

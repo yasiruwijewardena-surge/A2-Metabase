@@ -1076,6 +1076,7 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    favicon: Schema.Attribute.Media<'images'>;
     footerColumns: Schema.Attribute.Component<'nav.footer-column', true>;
     headScripts: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

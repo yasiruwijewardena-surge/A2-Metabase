@@ -642,4 +642,5 @@ export interface SiteSettings {
   footerColumns?: FooterColumn[];
   headScripts?: string | null;
   bodyScripts?: string | null;
+  favicon?: StrapiImage | null;
 }
