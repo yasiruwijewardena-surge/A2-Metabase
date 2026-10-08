@@ -65,6 +65,14 @@ pairing gets ~70% of the "looks like the original" impression for almost no effo
 
 ## 2. Measured baseline — PageSpeed Insights
 
+> This section is the **baseline**, taken before any of the replica existed, and
+> is kept at its original date deliberately — it is what the comparison is
+> against. The original was re-measured on 8 Oct 2026 alongside the finished
+> replica; those figures, and the replica's own, are in `psi-results.json` and
+> summarised in the README. The original's mobile scores had drifted further
+> down by then (44–80 across the nine pages), so the gap below is, if anything,
+> conservative.
+
 Run 30 Sep 2026 via the PSI API v5. Lab = Lighthouse on throttled emulated mobile /
 desktop; Field = real Chrome user data (CrUX, 28-day p75).
 

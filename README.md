@@ -123,6 +123,38 @@ changing how a page looks. The ones acted on so far:
 - **Outcomes are structured.** A `shared.metric` component surfaces the numbers
   the original buries in prose.
 
+## What an editor controls
+
+Nothing about the site's chrome is in the code any more. Each of these falls
+back to what the site shipped with, so an empty database still renders.
+
+| Entry | Holds |
+|---|---|
+| **Navigation** | the logo, all four menus, both header buttons, the GitHub link and its star count |
+| **Footer** | the logo, six link columns, the social links, the small print |
+| **Site Settings** | site name, favicon, default meta description, default share image, scripts injected into every page |
+| **Icon Library** | 58 SVGs across five sets — upload one and it appears in the picker |
+
+The header and the foot are separate entries rather than one Site Settings
+form: they are separate jobs, and publishing one should not rebuild the other.
+
+Icons were four hardcoded maps across four components. They are now uploads,
+grouped into sets because the same word means different artwork in different
+places — `cloud` is a cloud in the menus and a cube on a product pillar. A nav
+link picks one from a list rather than an editor typing a key nobody has
+written down.
+
+Uploaded SVG is cleaned before it is stored: script, `foreignObject`, `on*`
+handlers and `javascript:` URLs are stripped by the CMS, and again by the front
+end before the markup is inlined. One guards the file, the other the page, and
+neither depends on the other being right. Draw with `currentColor` on the paths
+— the component supplies the root `<svg>`, so artwork carrying its colour there
+renders invisible.
+
+Publishing triggers a rebuild on its own. The trigger listens for publish,
+unpublish and delete rather than every write, so a draft autosave costs
+nothing.
+
 ## The navigation
 
 The original's information architecture is part of what is being replicated, so
@@ -156,6 +188,13 @@ JavaScript. Here they are radio inputs and the filtering is `:has()`, so the
 page works with JavaScript off, ships nothing for the interaction, and keeps the
 browser's own keyboard and screen-reader handling of a radio group.
 
+One exception, and it is small. The header links here with `?use_case=bi` and
+`?use_case=ea`, and a URL cannot reach a radio on its own — without a few lines
+of script both Pricing menu items landed on whichever tab came first, showing
+the same page twice. The script selects the tab on arrival and rewrites the URL
+when someone switches, so a copied address is still true. Everything else on
+the page still works with JavaScript off.
+
 The content model follows from the same observation: a plan declares which
 deployments and use cases it belongs to, so five records cover a matrix that
 would otherwise need twenty near-duplicates. Use cases are the relation the case
@@ -184,35 +223,49 @@ bounds the risk either way.
 
 ## Performance
 
-Measured with the PageSpeed Insights API, same pages, same day.
+Measured with the PageSpeed Insights API against the deployed site, 2026-10-08,
+each page in both strategies. Each cell is *original → this replica*.
 
 | Page | Mobile | Desktop | LCP (mobile) | CLS | TBT |
 |---|---|---|---|---|---|
-| `/` | 76 → **98** | 91 → **100** | 1.7 s | 0 | 20 ms |
-| `/pricing` | 64 → **100** | 84 → **100** | 1.4 s | 0 | 0 ms |
-| `/blog` | 58 → **98** | 82 → **100** | 1.8 s | 0 | 0 ms |
-| `/case-studies` | 47 → **98** | 61 → **100** | 1.9 s | 0 | 0 ms |
-| `/events` | 64 → **98** | 97 → **100** | 1.8 s | 0 | 0 ms |
-| `/glossary` | 86 → **99** | 85 → **100** | 1.4 s | 0 | 0 ms |
-| `/product/business-intelligence` | 38 → **98** | 82 → **100** | 1.8 s | 0 | 0 ms |
-| `/features/metabase-ai` | 72 → **98** | 74 → **100** | 1.8 s | 0 | 0 ms |
-| `/roadmap` | 50 → **98** | 97 → **100** | 1.4 s | 0 | 0 ms |
+| `/` | 54 → **96** | 73 → **100** | 2.1 s | 0 | 10 ms |
+| `/pricing` | 80 → **100** | 74 → **100** | 1.8 s | 0 | 0 ms |
+| `/blog` | 47 → **98** | 80 → **100** | 2.0 s | 0 | 0 ms |
+| `/case-studies` | 58 → **99** | 65 → **100** | 2.0 s | 0 | 0 ms |
+| `/events` | 68 → **99** | 79 → **100** | 2.0 s | 0 | 0 ms |
+| `/glossary` | 45 → **99** | 86 → **100** | 2.1 s | 0 | 0 ms |
+| `/product/business-intelligence` | 44 → **92** | 56 → **100** | 3.3 s | 0 | 0 ms |
+| `/features/metabase-ai` | 44 → **98** | 86 → **100** | 2.3 s | 0 | 0 ms |
+| `/roadmap` | 49 → **100** | 86 → **100** | 1.8 s | 0 | 0 ms |
 
-Nine pages, both strategies, measured the same day. Each cell is *original →
-this replica*. Desktop is 100 on all nine; mobile is 98-100. Accessibility is
-95-97, Best Practices and SEO 100. Across the 18 measurements, CLS is 0 on
-all but one (0.001) and total blocking time is 0 on all but one (20 ms).
+Desktop is **100 on all nine**. Mobile ranges 92–100. Accessibility is 94–96,
+Best Practices and SEO are 100 everywhere. CLS is 0 on every page and total
+blocking time is 0 on all but the homepage (10 ms).
 
-The brief asks for 90+ desktop and 80+ mobile. Raw numbers in
-`psi-results.json`, the original's baseline and the reasoning in
+The brief asks for 90+ desktop and 80+ mobile. Raw numbers are in
+`psi-results.json`; the original's baseline and the reasoning are in
 `SITE-ANALYSIS.md` §2.
 
 The gap is not cleverness. The original carries 78% of its homepage payload as
 third-party script — 679 KB of Google Tag Manager across five containers, plus
 Hotjar and five ad pixels — lazy-loads its own LCP image, and ships images
-without dimensions. This replica ships no third-party JavaScript at all, no
-external JavaScript files of any kind, 23 KB of CSS over the wire, and preloads the LCP image
+without dimensions. Its mobile LCP reaches 52.5 s on `/features/metabase-ai`
+and 21.7 s on `/product/business-intelligence`. This replica ships no
+third-party JavaScript, 23 KB of CSS over the wire, and preloads the LCP image
 with a matching `imagesrcset`.
+
+Three things were added after the first round of measurements, each verified
+rather than assumed:
+
+- **HTML is cached at the edge.** Railway's CDN serves it with
+  `s-maxage=600, stale-while-revalidate=86400`; a deploy purges it, so publish
+  → live is unchanged. TTFB went from ~0.32 s to ~0.16 s.
+- **Cloudinary is preconnected.** Every image is delivered from there, and the
+  first request paid a full DNS, TCP and TLS handshake. On `/events`, which has
+  no LCP preload to absorb it, the first image's TTFB went from 579 ms to 70 ms.
+- **Postgres was moved into the CMS's region.** Each query had been crossing
+  regions at ~200 ms a round trip, which is what made publishing a page take
+  91 seconds. It is now ~1 s, and the site build dropped from 161 s to 98 s.
 
 ## Status
 
@@ -222,21 +275,32 @@ with a matching `imagesrcset`.
 - [x] Deploy Strapi + Postgres to Railway
 - [x] Seed content (`npm run seed`, idempotent — safe to re-run)
 - [x] Scaffold Astro with the design tokens
-- [x] Build the pages (310 static routes)
+- [x] Build the pages (309 static routes)
 - [x] Deploy the front end
-- [x] Optimise and record PageSpeed results — 9 pages, both strategies
 - [x] Match the homepage, blog and case studies against measured values
 - [x] Build `/pricing` and model its plans in Strapi
 - [x] Give the rest of the replicated navigation somewhere to land
 - [x] Glossary — 176 terms against the original's 166
 - [x] Build the product and feature pages against measured values
 - [x] Model events in Strapi and build `/events` with its series filter
+- [x] Move the header, footer, icons and site-wide metadata into the CMS
+- [x] Rebuild the site automatically when content is published
+- [x] Record PageSpeed against the deployed site — 9 pages, both strategies
 
 Known gaps, in the order they are worth closing:
 
-- [ ] The bespoke middles of the marketing pages -- a tabbed panel, a theming
-      demo, a support marquee, a comparison table -- are still in the Astro
-      components. Their heroes and closing CTAs are in Strapi, and Business
-      Intelligence is modelled end to end. Each of those middles is one-of-one,
-      so a component apiece would clutter the admin for no reuse.
+- [ ] `/pricing` carries a use-case tab row the original does not have — it
+      switches through the header links alone. Ours is a superset rather than a
+      mismatch, and it is the one place the replica adds a control. Worth a
+      decision if strict URL-for-URL fidelity matters.
+- [ ] `/features/models` and `/features/semantic-layer` are real pages here and
+      301 on the original.
+- [ ] The bespoke middles of the marketing pages — a tabbed panel, a support
+      marquee, a comparison table — are still in the Astro components. Their
+      heroes and closing CTAs are in Strapi, and Business Intelligence is
+      modelled end to end. Each of those middles is one-of-one, so a component
+      apiece would clutter the admin for no reuse.
 - [ ] 75 of the replicated navigation's paths have no page behind them.
+- [ ] 26 blog authors have no search metadata of their own. They carry a bio,
+      which the page uses, so the fallback is real content rather than a
+      generated string.
