@@ -11,8 +11,19 @@ const allowedMediaTypes = [
   'text/csv',
 ];
 
+/*
+ * SVG is deliberately absent from this list, though it is the obvious thing to
+ * deny: an uploaded SVG is a document that can carry <script>, and the media
+ * library serves it back verbatim. It sat here until the Icon collection made
+ * SVG upload the whole point -- artwork an editor can add without a deploy.
+ *
+ * It is allowed rather than simply unblocked. `src/bootstrap/sanitise-svg-uploads.ts`
+ * rewrites every uploaded SVG before the provider sees it, stripping script,
+ * foreignObject, on* handlers and javascript: urls, so what gets stored is
+ * already clean. The front end strips the same things again before inlining;
+ * that guards the page, this guards the file, and neither relies on the other.
+ */
 const deniedTypes = [
-  'image/svg+xml',
   'application/vnd.microsoft.portable-executable',
   'application/x-msdownload',
   'application/x-msdos-program',
