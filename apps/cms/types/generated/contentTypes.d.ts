@@ -775,6 +775,37 @@ export interface ApiGlossaryTermGlossaryTerm
   };
 }
 
+export interface ApiIconIcon extends Struct.CollectionTypeSchema {
+  collectionName: 'icons';
+  info: {
+    description: "One SVG in the site's icon set. Navigation and page content point at an icon by its key, so adding artwork is an upload here rather than a code change.";
+    displayName: 'Icon';
+    pluralName: 'icons';
+    singularName: 'icon';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::icon.icon'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    set: Schema.Attribute.Enumeration<['nav', 'pillar', 'scale', 'feature']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'nav'>;
+    svg: Schema.Attribute.Media<'images' | 'files'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   collectionName: 'industries';
   info: {
@@ -1693,6 +1724,7 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::faq.faq': ApiFaqFaq;
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
+      'api::icon.icon': ApiIconIcon;
       'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;
       'api::person.person': ApiPersonPerson;

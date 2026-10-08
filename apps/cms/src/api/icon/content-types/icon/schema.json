@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "icons",
+  "info": {
+    "singularName": "icon",
+    "pluralName": "icons",
+    "displayName": "Icon",
+    "description": "One SVG in the site's icon set. Navigation and page content point at an icon by its key, so adding artwork is an upload here rather than a code change."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "What this icon depicts, for people browsing the list."
+    },
+    "key": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "description": "What content refers to this icon by, e.g. sql. Unique within a set, because the same word means different artwork in different places: cloud is a cloud in the menus and a cube on a product pillar."
+    },
+    "set": {
+      "type": "enumeration",
+      "enum": [
+        "nav",
+        "pillar",
+        "scale",
+        "feature"
+      ],
+      "default": "nav",
+      "required": true,
+      "description": "Where this icon is used. nav: menus, feature lists and link cards. pillar: the glyph above a product pillar card. scale: the brand-blue cards. feature: the small icons over embedded-analytics points."
+    },
+    "svg": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "description": "An SVG file. Draw it with stroke=\"currentColor\" or fill=\"currentColor\" so it takes the colour of whatever it sits in and can animate on hover; a hardcoded colour will stay put while its neighbours change."
+    }
+  }
+}

@@ -1,0 +1,320 @@
+[
+  {
+    "set": "nav",
+    "key": "ai",
+    "name": "AI",
+    "file": "nav/ai.svg"
+  },
+  {
+    "set": "nav",
+    "key": "bi",
+    "name": "Business Intelligence",
+    "file": "nav/bi.svg"
+  },
+  {
+    "set": "nav",
+    "key": "blog",
+    "name": "Blog",
+    "file": "nav/blog.svg"
+  },
+  {
+    "set": "nav",
+    "key": "catQuerying",
+    "name": "Querying (category tile)",
+    "file": "nav/catQuerying.svg"
+  },
+  {
+    "set": "nav",
+    "key": "cloud",
+    "name": "Cloud",
+    "file": "nav/cloud.svg"
+  },
+  {
+    "set": "nav",
+    "key": "community",
+    "name": "Community",
+    "file": "nav/community.svg"
+  },
+  {
+    "set": "nav",
+    "key": "csv",
+    "name": "CSV upload",
+    "file": "nav/csv.svg"
+  },
+  {
+    "set": "nav",
+    "key": "customers",
+    "name": "Customers",
+    "file": "nav/customers.svg"
+  },
+  {
+    "set": "nav",
+    "key": "dashboards",
+    "name": "Dashboards",
+    "file": "nav/dashboards.svg"
+  },
+  {
+    "set": "nav",
+    "key": "data",
+    "name": "Data",
+    "file": "nav/data.svg"
+  },
+  {
+    "set": "nav",
+    "key": "docs",
+    "name": "Docs",
+    "file": "nav/docs.svg"
+  },
+  {
+    "set": "nav",
+    "key": "drill",
+    "name": "Drill-through",
+    "file": "nav/drill.svg"
+  },
+  {
+    "set": "nav",
+    "key": "ea",
+    "name": "Embedded Analytics",
+    "file": "nav/ea.svg"
+  },
+  {
+    "set": "nav",
+    "key": "embed",
+    "name": "Embedding (category tile)",
+    "file": "nav/embed.svg"
+  },
+  {
+    "set": "nav",
+    "key": "events",
+    "name": "Events",
+    "file": "nav/events.svg"
+  },
+  {
+    "set": "nav",
+    "key": "gear",
+    "name": "Settings (category tile)",
+    "file": "nav/gear.svg"
+  },
+  {
+    "set": "nav",
+    "key": "glossary",
+    "name": "Glossary",
+    "file": "nav/glossary.svg"
+  },
+  {
+    "set": "nav",
+    "key": "learn",
+    "name": "Learn",
+    "file": "nav/learn.svg"
+  },
+  {
+    "set": "nav",
+    "key": "love",
+    "name": "Customer love",
+    "file": "nav/love.svg"
+  },
+  {
+    "set": "nav",
+    "key": "news",
+    "name": "News",
+    "file": "nav/news.svg"
+  },
+  {
+    "set": "nav",
+    "key": "permissions",
+    "name": "Permissions",
+    "file": "nav/permissions.svg"
+  },
+  {
+    "set": "nav",
+    "key": "query",
+    "name": "Query builder",
+    "file": "nav/query.svg"
+  },
+  {
+    "set": "nav",
+    "key": "roadmap",
+    "name": "Roadmap",
+    "file": "nav/roadmap.svg"
+  },
+  {
+    "set": "nav",
+    "key": "rocket",
+    "name": "Rocket",
+    "file": "nav/rocket.svg"
+  },
+  {
+    "set": "nav",
+    "key": "sdk",
+    "name": "SDK",
+    "file": "nav/sdk.svg"
+  },
+  {
+    "set": "nav",
+    "key": "segregation",
+    "name": "Data segregation",
+    "file": "nav/segregation.svg"
+  },
+  {
+    "set": "nav",
+    "key": "services",
+    "name": "Services",
+    "file": "nav/services.svg"
+  },
+  {
+    "set": "nav",
+    "key": "sql",
+    "name": "SQL editor",
+    "file": "nav/sql.svg"
+  },
+  {
+    "set": "nav",
+    "key": "studio",
+    "name": "Data Studio",
+    "file": "nav/studio.svg"
+  },
+  {
+    "set": "nav",
+    "key": "usage",
+    "name": "Usage analytics",
+    "file": "nav/usage.svg"
+  },
+  {
+    "set": "nav",
+    "key": "whitelabel",
+    "name": "White-label",
+    "file": "nav/whitelabel.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "bi",
+    "name": "Business Intelligence",
+    "file": "pillar/bi.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "cloud",
+    "name": "Cube",
+    "file": "pillar/cloud.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "data",
+    "name": "Data",
+    "file": "pillar/data.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "gear",
+    "name": "Settings",
+    "file": "pillar/gear.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "grid",
+    "name": "Four panes",
+    "file": "pillar/grid.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "people",
+    "name": "Two figures",
+    "file": "pillar/people.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "permissions",
+    "name": "Permissions",
+    "file": "pillar/permissions.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "racks",
+    "name": "Racks",
+    "file": "pillar/racks.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "segregation",
+    "name": "Data segregation",
+    "file": "pillar/segregation.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "servers",
+    "name": "Two racks",
+    "file": "pillar/servers.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "shield",
+    "name": "Shield with tick",
+    "file": "pillar/shield.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "shield-plain",
+    "name": "Shield",
+    "file": "pillar/shield-plain.svg"
+  },
+  {
+    "set": "pillar",
+    "key": "terminal",
+    "name": "Code window",
+    "file": "pillar/terminal.svg"
+  },
+  {
+    "set": "scale",
+    "key": "bolt",
+    "name": "Lightning bolt",
+    "file": "scale/bolt.svg"
+  },
+  {
+    "set": "scale",
+    "key": "chart",
+    "name": "Bar chart",
+    "file": "scale/chart.svg"
+  },
+  {
+    "set": "scale",
+    "key": "eye",
+    "name": "Eye",
+    "file": "scale/eye.svg"
+  },
+  {
+    "set": "scale",
+    "key": "grid",
+    "name": "Four panes",
+    "file": "scale/grid.svg"
+  },
+  {
+    "set": "scale",
+    "key": "layers",
+    "name": "Layers",
+    "file": "scale/layers.svg"
+  },
+  {
+    "set": "scale",
+    "key": "terminal",
+    "name": "Code window",
+    "file": "scale/terminal.svg"
+  },
+  {
+    "set": "feature",
+    "key": "package",
+    "name": "Package",
+    "file": "feature/package.svg"
+  },
+  {
+    "set": "feature",
+    "key": "shield",
+    "name": "Shield with tick",
+    "file": "feature/shield.svg"
+  },
+  {
+    "set": "feature",
+    "key": "window",
+    "name": "Code window",
+    "file": "feature/window.svg"
+  }
+]

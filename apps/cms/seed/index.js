@@ -147,7 +147,7 @@ async function wipe(app, uid) {
  * whole-corpus write is the better part of an hour whether or not anything
  * changed. Most edits touch one section.
  */
-const PHASES = ['taxonomies', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related', 'pages', 'settings'];
+const PHASES = ['taxonomies', 'icons', 'events', 'companies', 'posts', 'case-studies', 'testimonials', 'related', 'pages', 'settings'];
 const onlyArg = process.argv.indexOf('--only');
 const ONLY = onlyArg > -1 ? process.argv[onlyArg + 1]?.split(',').map((x) => x.trim()) : null;
 const want = (phase) => !ONLY || !PHASES.includes(phase) || ONLY.includes(phase);
@@ -167,6 +167,7 @@ const pending = {};
 
 const ORDER = [
   'api::page.page',
+  'api::icon.icon',
   'api::event.event',
   'api::event-category.event-category',
   'api::faq.faq',
@@ -577,6 +578,40 @@ async function main() {
         await upsert(app, 'api::page.page', { slug: page.slug },
           { title: page.title, slug: page.slug, seo: page.seo, sections });
       }
+    }
+
+    // ---- icons -------------------------------------------------------------
+    /*
+     * The site's icon set. These used to be a hardcoded map in NavIcon.astro,
+     * which meant an editor could only use artwork a developer had already
+     * pasted in, and had to guess its key from nothing. They live here instead
+     * so the set is visible, extendable and seeded into a fresh database.
+     *
+     * The SVG files beside this data are the originals lifted from the markup,
+     * so seeding reproduces exactly what the hardcoded maps drew.
+     *
+     * Grouped into sets because the same word means different artwork in
+     * different places: `cloud` is a cloud in the menus and a cube on a product
+     * pillar, `terminal` differs between a pillar and a scale card. Keeping the
+     * sets apart is what lets the content keep the keys it already uses.
+     */
+    if (want('icons')) {
+      phase = 'icons';
+      const ICONS = join(__dirname, 'assets', 'icons');
+      const icons = read('icons.json');
+
+      for (const icon of icons) {
+        const svg = await uploadFromPath(app, join(ICONS, icon.file), icon.name);
+        if (!svg) {
+          console.log(`    ! ${icon.key}: ${icon.file} missing, skipped`);
+          stats.skipped += 1;
+          continue;
+        }
+        await upsert(app, 'api::icon.icon', { key: icon.key, set: icon.set },
+          { key: icon.key, set: icon.set, name: icon.name, svg });
+      }
+      const bySet = icons.reduce((a, i) => ({ ...a, [i.set]: (a[i.set] ?? 0) + 1 }), {});
+      console.log(`    ${icons.length} icons (${Object.entries(bySet).map(([k, n]) => `${k} ${n}`).join(', ')})`);
     }
 
     // ---- site settings ---------------------------------------------------

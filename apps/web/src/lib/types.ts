@@ -8,6 +8,15 @@ export interface StrapiImage {
   formats?: Record<string, { url: string; width: number; height: number }> | null;
 }
 
+export type IconSet = 'nav' | 'pillar' | 'scale' | 'feature';
+
+export interface Icon {
+  key: string;
+  set: IconSet;
+  name: string;
+  svg: StrapiImage | null;
+}
+
 export interface Seo {
   metaTitle?: string | null;
   metaDescription?: string | null;

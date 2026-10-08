@@ -17,6 +17,7 @@ const PUBLIC_READ_APIS = [
   'api::event-category.event-category',
   'api::glossary-term.glossary-term',
   'api::faq.faq',
+  'api::icon.icon',
   'api::industry.industry',
   'api::page.page',
   'api::person.person',
