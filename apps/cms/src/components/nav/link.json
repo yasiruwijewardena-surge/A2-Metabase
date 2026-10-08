@@ -16,8 +16,10 @@
       "required": true
     },
     "icon": {
-      "type": "string",
-      "description": "Key from the site's icon set; blank renders no icon."
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::icon.icon",
+      "description": "Pick from the site's icon set. Leave empty for no icon."
     },
     "description": {
       "type": "string",

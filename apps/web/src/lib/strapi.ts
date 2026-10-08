@@ -383,9 +383,33 @@ export const getPage = async (slug: string) =>
  * changes a menu without a code change.
  * ------------------------------------------------------------------------ */
 const SITE_SETTINGS_POPULATE = {
-  'populate[navGroups][populate][items]': 'true',
-  'populate[footerColumns][populate][links]': 'true',
+  'populate[navGroups][populate][items][populate][icon]': 'true',
+  'populate[footerColumns][populate][links][populate][icon]': 'true',
 };
 
-export const getSiteSettings = () =>
-  single<SiteSettings>('site-setting', SITE_SETTINGS_POPULATE);
+/*
+ * A nav link points at an icon by relation, so an editor picks from a list
+ * rather than typing a key nobody has written down. The rest of the site only
+ * wants the key, and the hardcoded menu fallbacks below are written with plain
+ * keys, so flatten the relation here and let everything downstream keep
+ * treating `icon` as a string.
+ */
+const flattenIcons = (s: SiteSettings | null): SiteSettings | null => {
+  if (!s) return s;
+
+  /* Only true between the fetch and the flatten, so it is not worth spreading
+     a union through `NavLink` and every component that reads one. */
+  type Unflattened = { icon?: Icon | string | null };
+
+  const fix = (links?: Unflattened[] | null) =>
+    links?.forEach((l) => {
+      if (l.icon && typeof l.icon === 'object') l.icon = l.icon.key;
+    });
+
+  s.navGroups?.forEach((g) => fix(g.items as Unflattened[]));
+  s.footerColumns?.forEach((c) => fix(c.links as Unflattened[]));
+  return s;
+};
+
+export const getSiteSettings = async () =>
+  flattenIcons(await single<SiteSettings>('site-setting', SITE_SETTINGS_POPULATE));

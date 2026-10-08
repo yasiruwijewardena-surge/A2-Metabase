@@ -50,7 +50,7 @@ export interface NavLink extends Struct.ComponentSchema {
   attributes: {
     badge: Schema.Attribute.String;
     description: Schema.Attribute.String;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.Relation<'oneToOne', 'api::icon.icon'>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };
