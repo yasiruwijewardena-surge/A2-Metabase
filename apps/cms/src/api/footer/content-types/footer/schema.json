@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "footer",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "Footer",
+    "description": "The foot of every page: its link columns, its social links, the mark beside the copyright and the small print."
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "media", "multiple": false, "allowedTypes": ["images"],
+      "description": "The mark beside the copyright. The original uses a smaller, simpler mark here than in the header, so this is its own image rather than the header logo scaled down."
+    },
+    "columns": {
+      "type": "component", "repeatable": true, "component": "nav.footer-column",
+      "description": "The link columns. The column number decides which of the four they stack into, so several groups can share one."
+    },
+    "socialLinks": {
+      "type": "component", "repeatable": true, "component": "nav.link",
+      "description": "The icon links at the foot. Pick artwork from the social set of the Icon Library."
+    },
+    "note": {
+      "type": "text",
+      "description": "The small print under everything else."
+    }
+  }
+}

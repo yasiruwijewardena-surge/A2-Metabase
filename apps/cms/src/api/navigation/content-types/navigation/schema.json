@@ -1,0 +1,38 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigation",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "Navigation",
+    "description": "The header: its logo, its menus and its buttons. Everything that appears at the top of every page."
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "media", "multiple": false, "allowedTypes": ["images"],
+      "description": "The lockup at the top left. An SVG keeps it sharp at any size. Leave empty to use the one bundled with the site."
+    },
+    "navGroups": {
+      "type": "component", "repeatable": true, "component": "nav.group",
+      "description": "The menus along the top. Each one opens a panel; the key decides which panel shape it uses."
+    },
+    "secondaryAction": {
+      "type": "component", "repeatable": false, "component": "nav.action",
+      "description": "The quieter button on the right, Log in on the original."
+    },
+    "primaryAction": {
+      "type": "component", "repeatable": false, "component": "nav.action",
+      "description": "The filled button on the right, Get started on the original."
+    },
+    "githubUrl": {
+      "type": "string",
+      "description": "The repository the star count links to. Leave empty to hide the whole star link."
+    },
+    "githubStars": {
+      "type": "string",
+      "description": "The figure shown beside the star, written as you want it to read, e.g. 49.6k. It is not fetched from GitHub, so it is only as current as you keep it."
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "logo": "branding/logo.svg",
+  "navGroups": [
+    {
+      "key": "product",
+      "label": "Product",
+      "items": [
+        {
+          "label": "Business Intelligence",
+          "url": "/product/business-intelligence",
+          "icon": "bi",
+          "description": "Self-service analytics for your team"
+        },
+        {
+          "label": "Embedded Analytics",
+          "url": "/product/embedded-analytics",
+          "icon": "ea",
+          "description": "Fast, flexible customer-facing analytics"
+        }
+      ]
+    },
+    {
+      "key": "features",
+      "label": "Features",
+      "items": [
+        {
+          "label": "Metabase AI",
+          "url": "/features/metabase-ai",
+          "icon": "ai"
+        },
+        {
+          "label": "Data Studio",
+          "url": "/product/data-studio",
+          "icon": "studio",
+          "badge": "New"
+        },
+        {
+          "label": "Dashboards and reporting",
+          "url": "/features/analytics-dashboards",
+          "icon": "dashboards"
+        },
+        {
+          "label": "Query builder",
+          "url": "/features/query-builder",
+          "icon": "query"
+        },
+        {
+          "label": "Data segregation",
+          "url": "/features/data-segregation",
+          "icon": "segregation"
+        },
+        {
+          "label": "Usage analytics",
+          "url": "/features/usage-analytics",
+          "icon": "usage"
+        },
+        {
+          "label": "White-label analytics",
+          "url": "/features/white-label-analytics",
+          "icon": "whitelabel"
+        },
+        {
+          "label": "Drill-through",
+          "url": "/features/drill-through",
+          "icon": "drill"
+        },
+        {
+          "label": "SQL editor",
+          "url": "/features/sql-editor",
+          "icon": "sql"
+        },
+        {
+          "label": "Permissions",
+          "url": "/features/permissions",
+          "icon": "permissions"
+        }
+      ]
+    },
+    {
+      "key": "resources",
+      "label": "Resources",
+      "items": [
+        {
+          "label": "Blog",
+          "url": "/blog",
+          "icon": "blog",
+          "description": "News, updates, and ideas"
+        },
+        {
+          "label": "Events",
+          "url": "/events",
+          "icon": "events",
+          "description": "Join a live event or watch on demand"
+        },
+        {
+          "label": "Customers",
+          "url": "/case-studies",
+          "icon": "customers",
+          "description": "Real companies, real data, real stories"
+        }
+      ]
+    },
+    {
+      "key": "pricing",
+      "label": "Pricing",
+      "items": [
+        {
+          "label": "Business Intelligence pricing",
+          "url": "/pricing?use_case=business-intelligence",
+          "icon": "bi",
+          "description": "Self-service analytics for your team"
+        },
+        {
+          "label": "Embedded Analytics pricing",
+          "url": "/pricing?use_case=embedded-analytics",
+          "icon": "ea",
+          "description": "Fast, flexible customer-facing analytics"
+        }
+      ]
+    }
+  ],
+  "secondaryAction": {
+    "label": "Log in",
+    "url": "/pricing"
+  },
+  "primaryAction": {
+    "label": "Get started",
+    "url": "/pricing"
+  },
+  "githubUrl": "https://github.com/metabase/metabase",
+  "githubStars": "49.6k"
+}

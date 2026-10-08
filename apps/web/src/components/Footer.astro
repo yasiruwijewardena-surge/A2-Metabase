@@ -11,11 +11,13 @@ import NavIcon from './NavIcon.astro';
  * than linked dead. The full information architecture is still recorded in
  * ia-paths.json and those URLs still resolve if typed.
  */
-import { getSiteSettings } from '../lib/strapi';
+import { getFooter } from '../lib/strapi';
 
-const settings = await getSiteSettings();
-const siteName = settings?.siteName || 'Metabase';
+const settings = await getFooter();
+const siteName = 'Metabase';   /* the mark is artwork; this is the accessible name */
 const socialLinks = settings?.socialLinks ?? [];
+const note = settings?.note
+  ?? 'Replica built for an assignment. Not affiliated with Metabase, Inc.';
 
 /*
  * Footer blocks come from Site Settings; blocks sharing a column number stack
@@ -49,8 +51,8 @@ const FALLBACK: { title: string; column: number; links: [string, string][] }[] =
   ]},
 ];
 
-const blocks = settings?.footerColumns?.length
-  ? settings.footerColumns.map((c) => ({
+const blocks = settings?.columns?.length
+  ? settings.columns.map((c) => ({
       title: c.title,
       column: c.column ?? 1,
       links: (c.links ?? []).map((l) => [l.label, l.url] as [string, string]),
@@ -96,8 +98,8 @@ const social: [string, string, string][] = [
   <div class="site-footer-bottom">
     <div class="site-footer-brand">
       <a href="/" aria-label={`${siteName} home`} class="site-footer-mark">
-        {settings?.footerLogo?.url
-          ? <img src={settings.footerLogo.url} alt={siteName} width={24} height={24} loading="lazy" decoding="async" />
+        {settings?.logo?.url
+          ? <img src={settings.logo.url} alt={siteName} width={24} height={24} loading="lazy" decoding="async" />
           : (
           <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="var(--color-brand)">
             <circle cx="5" cy="5" r="2.6"/><circle cx="12" cy="4" r="2.2" opacity=".75"/><circle cx="19" cy="5" r="2.6"/>
@@ -124,7 +126,5 @@ const social: [string, string, string][] = [
     </div>
   </div>
 
-  <p class="site-footer-note">
-    Replica built for an assignment. Not affiliated with Metabase, Inc.
-  </p>
+  {note && <p class="site-footer-note">{note}</p>}
 </footer>

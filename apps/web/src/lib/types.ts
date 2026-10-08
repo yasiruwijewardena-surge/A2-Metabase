@@ -637,16 +637,35 @@ export interface FooterColumn {
   links?: NavLink[];
 }
 
-export interface SiteSettings {
-  navGroups?: NavGroup[];
-  footerColumns?: FooterColumn[];
-  headScripts?: string | null;
-  bodyScripts?: string | null;
-  favicon?: StrapiImage | null;
+export interface NavAction {
+  label: string;
+  url: string;
+}
+
+/** The header. */
+export interface Navigation {
   logo?: StrapiImage | null;
-  footerLogo?: StrapiImage | null;
+  navGroups?: NavGroup[];
+  secondaryAction?: NavAction | null;
+  primaryAction?: NavAction | null;
+  githubUrl?: string | null;
+  githubStars?: string | null;
+}
+
+/** The foot of the page. Named for the shape, not the component. */
+export interface FooterSettings {
+  logo?: StrapiImage | null;
+  columns?: FooterColumn[];
+  socialLinks?: NavLink[];
+  note?: string | null;
+}
+
+/** Everything that belongs to neither the header nor the footer. */
+export interface SiteSettings {
   siteName?: string | null;
+  favicon?: StrapiImage | null;
   defaultMetaDescription?: string | null;
   defaultSocialImage?: StrapiImage | null;
-  socialLinks?: NavLink[];
+  headScripts?: string | null;
+  bodyScripts?: string | null;
 }

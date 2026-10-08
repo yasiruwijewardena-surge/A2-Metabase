@@ -1,0 +1,160 @@
+{
+  "logo": "branding/footer-mark.svg",
+  "columns": [
+    {
+      "title": "Product",
+      "column": 1,
+      "links": [
+        {
+          "label": "Roadmap",
+          "url": "/roadmap"
+        }
+      ]
+    },
+    {
+      "title": "Pricing",
+      "column": 1,
+      "links": [
+        {
+          "label": "Plans",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "title": "Use cases",
+      "column": 2,
+      "links": [
+        {
+          "label": "Self-Service Business Intelligence",
+          "url": "/product/business-intelligence"
+        },
+        {
+          "label": "Embedded Analytics",
+          "url": "/product/embedded-analytics"
+        },
+        {
+          "label": "Data Studio",
+          "url": "/product/data-studio"
+        }
+      ]
+    },
+    {
+      "title": "Metabase plans",
+      "column": 2,
+      "links": [
+        {
+          "label": "Starter and Open Source",
+          "url": "/pricing"
+        },
+        {
+          "label": "Pro",
+          "url": "/pricing"
+        },
+        {
+          "label": "Enterprise",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "title": "Features",
+      "column": 3,
+      "links": [
+        {
+          "label": "Metabase AI",
+          "url": "/features/metabase-ai"
+        },
+        {
+          "label": "Query Builder",
+          "url": "/features/query-builder"
+        },
+        {
+          "label": "Drill Through",
+          "url": "/features/drill-through"
+        },
+        {
+          "label": "Collections",
+          "url": "/features/collections"
+        },
+        {
+          "label": "Dashboards and reporting",
+          "url": "/features/analytics-dashboards"
+        },
+        {
+          "label": "SQL editor",
+          "url": "/features/sql-editor"
+        },
+        {
+          "label": "Permissions",
+          "url": "/features/permissions"
+        },
+        {
+          "label": "Data segregation",
+          "url": "/features/data-segregation"
+        },
+        {
+          "label": "Usage analytics",
+          "url": "/features/usage-analytics"
+        },
+        {
+          "label": "White-label analytics",
+          "url": "/features/white-label-analytics"
+        },
+        {
+          "label": "All features",
+          "url": "/features"
+        }
+      ]
+    },
+    {
+      "title": "Resources",
+      "column": 4,
+      "links": [
+        {
+          "label": "Case Studies",
+          "url": "/case-studies"
+        },
+        {
+          "label": "Blog",
+          "url": "/blog"
+        },
+        {
+          "label": "Events",
+          "url": "/events"
+        },
+        {
+          "label": "Glossary",
+          "url": "/glossary"
+        },
+        {
+          "label": "Customer love",
+          "url": "/love"
+        }
+      ]
+    }
+  ],
+  "socialLinks": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@metabasedata",
+      "icon": "social:youtube"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/metabase",
+      "icon": "social:github"
+    },
+    {
+      "label": "X",
+      "url": "https://x.com/metabase",
+      "icon": "social:x"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/metabase/",
+      "icon": "social:linkedin"
+    }
+  ],
+  "note": "Replica built for an assignment. Not affiliated with Metabase, Inc."
+}

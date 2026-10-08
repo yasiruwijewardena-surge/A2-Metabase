@@ -5,22 +5,12 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "Site Settings",
-    "description": "The header and footer navigation, and any scripts injected into every page such as a tag manager. Changing this affects every page on the site."
+    "description": "Settings that are not the header or the footer: the site's name, its favicon, the share-preview defaults, and any scripts injected into every page. Navigation and Footer have their own entries."
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "navGroups": {
-      "type": "component",
-      "repeatable": true,
-      "component": "nav.group"
-    },
-    "footerColumns": {
-      "type": "component",
-      "repeatable": true,
-      "component": "nav.footer-column"
-    },
     "favicon": {
       "type": "media",
       "multiple": false,
@@ -33,22 +23,6 @@
       "type": "string",
       "description": "The name of the site, used in the share-preview metadata and the footer copyright. Not the page title."
     },
-    "logo": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ],
-      "description": "The lockup in the header. An SVG keeps it sharp at any size. Leave empty to use the one bundled with the site."
-    },
-    "footerLogo": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ],
-      "description": "The mark beside the copyright line. The original uses a smaller, simpler mark here than in the header, so this is a separate field rather than the header logo scaled down."
-    },
     "defaultMetaDescription": {
       "type": "text",
       "description": "Used for the search and share preview of any page that does not set its own description."
@@ -60,12 +34,6 @@
         "images"
       ],
       "description": "The picture shown when a page is shared and has no image of its own. Around 1200x630 works everywhere."
-    },
-    "socialLinks": {
-      "type": "component",
-      "repeatable": true,
-      "component": "nav.link",
-      "description": "The icon links at the foot of the page. Pick artwork from the social set of the Icon Library."
     },
     "headScripts": {
       "type": "text",
