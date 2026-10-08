@@ -908,6 +908,13 @@
   .pricing:has(#bill-monthly:checked) .plan-price-when[data-billing="monthly"],
   .pricing:has(#bill-yearly:checked) .plan-price-when[data-billing="yearly"] { display: inline; }
 
+  /* So does the saving. It had no rule at all, so a card billed monthly
+     carried a badge reading "$100 $90 / mo." directly above "$100 / month" --
+     the card contradicting itself. The original shows the badge only once
+     yearly billing is chosen, which is the only state where it is true. */
+  .plan-save { display: none; }
+  .pricing:has(#bill-yearly:checked) .plan-save { display: inline-block; }
+
   @media (max-width: 991px) {
     .pricing-row, .pricing-deploys { flex-direction: column; }
     .pricing-row > .pricing-row-head, .pricing-aside { flex: 0 0 auto; }
