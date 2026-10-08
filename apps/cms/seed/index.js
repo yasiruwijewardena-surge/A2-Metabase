@@ -231,6 +231,35 @@ async function main() {
       upsert(app, 'api::use-case.use-case', { slug: slugify(u.name) },
         { ...u, slug: slugify(u.name) }))));
 
+    /*
+     * Anything in the database that the seed data no longer mentions.
+     *
+     * The seeder matches on slug, so renaming an entry in seed/data creates a
+     * new row and leaves the old one behind, still published and still
+     * generating pages. That is how three renamed industries survived locally
+     * and quietly added nine case-study pages to the build -- the kind of
+     * drift that only shows up when two environments disagree about how many
+     * pages a site has.
+     *
+     * Reported rather than deleted: an orphan may still have content attached,
+     * and silently removing published entries is not something a seed run
+     * should decide on its own.
+     */
+    const reportOrphans = async (uid, wanted, label) => {
+      const live = await app.documents(uid).findMany({ status: 'published', limit: -1 });
+      const names = new Set(wanted.map((w) => w.name));
+      const orphans = live.filter((d) => !names.has(d.name));
+      if (orphans.length) {
+        console.log(`    ! ${orphans.length} ${label} in the database but not in the seed data:`);
+        for (const o of orphans) console.log(`        ${o.name} (${o.slug})`);
+      }
+    };
+
+    await reportOrphans('api::category.category', tax.categories, 'categories');
+    await reportOrphans('api::tag.tag', tax.tags, 'tags');
+    await reportOrphans('api::industry.industry', tax.industries, 'industries');
+    await reportOrphans('api::use-case.use-case', tax.useCases, 'use cases');
+
     const authors = {};
     for (const a of tax.authors) {
       const { avatarUrl, ...rest } = a;
