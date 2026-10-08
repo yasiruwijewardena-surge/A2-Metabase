@@ -19,6 +19,7 @@ const { industry, industries, useCases, cases } = Astro.props;
 <BaseLayout
   title={`${industry.name} customer stories | Metabase`}
   description={industry.description ?? `How ${industry.name} teams use Metabase.`}
+  seo={industry.seo}
   preload={preloadFor(cases[0]?.heroImage?.url, [300, 480, 760], '(max-width: 768px) 100vw, 360px')}
 >
   <CaseStudyListing cases={cases} industries={industries} useCases={useCases} activeIndustry={industry.slug} />

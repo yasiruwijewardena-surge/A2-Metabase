@@ -35,6 +35,7 @@ const { tag, tags, categories, posts } = Astro.props;
 <BaseLayout
   title={`${tag.name} | Metabase Blog`}
   description={`Posts tagged ${tag.name}.`}
+  seo={tag.seo}
   preload={preloadFor(posts[0]?.coverImage?.url)}
 >
   <BlogListing posts={posts} categories={categories} tags={tags} activeTag={tag.slug} />

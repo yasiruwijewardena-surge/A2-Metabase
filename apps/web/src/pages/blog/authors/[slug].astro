@@ -17,6 +17,7 @@ const { author, posts } = Astro.props;
 <BaseLayout
   title={`${author.name} | Metabase Blog`}
   description={author.bio ?? `Posts by ${author.name}.`}
+  seo={author.seo}
 >
   <div class="container-mb max-w-[860px] py-12">
     <a href="/blog" class="text-sm font-bold text-(--color-brand-hover)">← All posts</a>
