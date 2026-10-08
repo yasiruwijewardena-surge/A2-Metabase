@@ -81,7 +81,7 @@
     "cta": {
       "label": "Start free trial",
       "url": "/start",
-      "style": "primary"
+      "style": "secondary"
     },
     "highlighted": true,
     "useCases": [
@@ -111,7 +111,7 @@
     "cta": {
       "label": "Start free trial",
       "url": "/start",
-      "style": "primary"
+      "style": "secondary"
     },
     "highlighted": true,
     "useCases": [
