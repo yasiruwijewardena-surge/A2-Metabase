@@ -16,10 +16,15 @@ const TOKEN = process.env.RAILWAY_API_TOKEN;
 const SERVICE_ID = process.env.RAILWAY_WEB_SERVICE_ID;
 const ENVIRONMENT_ID = process.env.RAILWAY_ENVIRONMENT_ID;
 
-/** How long the writes have to stop before a build is asked for. */
-const QUIET_MS = Number(process.env.REBUILD_DEBOUNCE_MS ?? 90_000);
+/*
+ * How long to wait before asking for the build. Publishing is a deliberate,
+ * one-at-a-time act rather than a stream of keystrokes, so this only needs to
+ * be long enough to collect someone publishing a handful of entries in a row.
+ */
+const QUIET_MS = Number(process.env.REBUILD_DEBOUNCE_MS ?? 5_000);
 
-const ENDPOINT = 'https://backboard.railway.com/graphql/v2';
+/* Overridable so the trigger can be pointed at a stub and asserted on. */
+const ENDPOINT = process.env.RAILWAY_API_URL ?? 'https://backboard.railway.com/graphql/v2';
 
 /* `serviceInstanceDeployV2` builds the service's latest commit. Its sibling,
  * `redeploy`, re-runs the existing image -- which for this site would put the
@@ -69,36 +74,47 @@ export function rebuildSiteOnContentChange(strapi: Core.Strapi) {
     return;
   }
 
-  /* Every content type this project defines. Strapi's own collections --
-   * users, permissions, files -- are deliberately not in here: uploading an
-   * image or inviting an editor does not change a page. */
-  const models = Object.keys(strapi.contentTypes).filter((uid) => uid.startsWith('api::'));
+  /*
+   * Only these change what a visitor sees. Saving a draft does not: the site
+   * reads published content, so rebuilding on every keystroke-driven autosave
+   * spent a minute of build time to publish nothing. That is what the
+   * entity-level lifecycle hooks did before.
+   */
+  const PUBLISHES = new Set(['publish', 'unpublish', 'delete']);
 
   let timer: NodeJS.Timeout | undefined;
-  let writes = 0;
+  let reasons: string[] = [];
 
-  const bump = () => {
-    writes += 1;
+  const bump = (what: string) => {
+    reasons.push(what);
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      const n = writes;
-      writes = 0;
+      const n = reasons.length;
+      const first = reasons[0];
+      reasons = [];
       timer = undefined;
-      void askRailwayToRebuild(strapi, `${n} content change${n === 1 ? '' : 's'}`);
+      void askRailwayToRebuild(strapi, n === 1 ? first : `${first} and ${n - 1} more`);
     }, QUIET_MS);
     /* Node should not stay alive just to fire this. */
     timer.unref?.();
   };
 
-  strapi.db.lifecycles.subscribe({
-    models,
-    afterCreate: bump,
-    afterUpdate: bump,
-    afterDelete: bump,
-  } as Parameters<typeof strapi.db.lifecycles.subscribe>[0]);
+  /*
+   * Document Service middleware rather than database lifecycles, because only
+   * this layer knows the difference between saving a draft and publishing it.
+   */
+  strapi.documents.use(async (context, next) => {
+    const result = await next();
+
+    if (context.uid?.startsWith('api::') && PUBLISHES.has(context.action)) {
+      bump(`${context.action} ${context.uid.split('.').pop()}`);
+    }
+
+    return result;
+  });
 
   strapi.log.info(
-    `[rebuild] watching ${models.length} content types; `
-    + `a build follows ${QUIET_MS / 1000}s after the last change`
+    `[rebuild] watching publish, unpublish and delete; `
+    + `a build follows ${QUIET_MS / 1000}s after the last one`
   );
 }
