@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_nav_groups",
+  "info": {
+    "displayName": "Nav group",
+    "icon": "bulletList",
+    "description": "One menu in the header. The key picks which panel renders it; its chrome lives in the Navbar component."
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "enumeration",
+      "enum": ["product", "features", "resources", "pricing"],
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "nav.link"
+    }
+  }
+}

@@ -1,5 +1,61 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface NavFooterColumn extends Struct.ComponentSchema {
+  collectionName: 'components_nav_footer_columns';
+  info: {
+    description: 'A titled block of footer links. Blocks sharing a column number stack in the same column.';
+    displayName: 'Footer column';
+    icon: 'layout';
+  };
+  attributes: {
+    column: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 6;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    links: Schema.Attribute.Component<'nav.link', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface NavGroup extends Struct.ComponentSchema {
+  collectionName: 'components_nav_groups';
+  info: {
+    description: 'One menu in the header. The key picks which panel renders it; its chrome lives in the Navbar component.';
+    displayName: 'Nav group';
+    icon: 'bulletList';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'nav.link', true>;
+    key: Schema.Attribute.Enumeration<
+      ['product', 'features', 'resources', 'pricing']
+    > &
+      Schema.Attribute.Required;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface NavLink extends Struct.ComponentSchema {
+  collectionName: 'components_nav_links';
+  info: {
+    description: 'One destination in the header or the footer.';
+    displayName: 'Nav link';
+    icon: 'link';
+  };
+  attributes: {
+    badge: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface PageAccordion extends Struct.ComponentSchema {
   collectionName: 'components_page_accordions';
   info: {
@@ -1143,6 +1199,9 @@ export interface SharedSeo extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'nav.footer-column': NavFooterColumn;
+      'nav.group': NavGroup;
+      'nav.link': NavLink;
       'page.accordion': PageAccordion;
       'page.accordion-item': PageAccordionItem;
       'page.ai-card': PageAiCard;

@@ -1,5 +1,6 @@
 ---
-import { getPosts } from '../lib/strapi';
+import { getPosts, getSiteSettings } from '../lib/strapi';
+import type { NavLink } from '../lib/types';
 import Logo from './Logo.astro';
 
 // The original's megamenu carries a live "Recent Blog Posts" column. Resolved
@@ -20,18 +21,45 @@ const recent = (await getPosts()).slice(0, 5);
  */
 import NavIcon from './NavIcon.astro';
 
-const features: [string, string, string, string?][] = [
-  ['Metabase AI', '/features/metabase-ai', 'ai'],
-  ['Data Studio', '/product/data-studio', 'studio', 'New'],
-  ['Dashboards and reporting', '/features/analytics-dashboards', 'dashboards'],
-  ['Query builder', '/features/query-builder', 'query'],
-  ['Data segregation', '/features/data-segregation', 'segregation'],
-  ['Usage analytics', '/features/usage-analytics', 'usage'],
-  ['White-label analytics', '/features/white-label-analytics', 'whitelabel'],
-  ['Drill-through', '/features/drill-through', 'drill'],
-  ['SQL editor', '/features/sql-editor', 'sql'],
-  ['Permissions', '/features/permissions', 'permissions'],
-];
+/*
+ * The menus come from Site Settings so an editor can add, remove or reorder a
+ * link without a code change. The panel chrome does not: each one has its own
+ * anatomy (Product draws a CSS bar chart and an illustration, Features is icon
+ * columns, Resources is title-and-description rows), so the shapes stay here
+ * and only the destinations are content.
+ *
+ * The fallbacks below are what the site shipped with, so a database without
+ * Site Settings still renders the right menus rather than an empty bar.
+ */
+const settings = await getSiteSettings();
+const group = (key: string, fallback: NavLink[]): NavLink[] =>
+  settings?.navGroups?.find((g) => g.key === key)?.items?.length
+    ? settings.navGroups.find((g) => g.key === key)!.items!
+    : fallback;
+
+const product = group('product', [
+  { label: 'Business Intelligence', url: '/product/business-intelligence', icon: 'bi',
+    description: 'Self-service analytics for your team' },
+  { label: 'Embedded Analytics', url: '/product/embedded-analytics', icon: 'ea',
+    description: 'Fast, flexible customer-facing analytics' },
+]);
+
+const featureLinks = group('features', [
+  { label: 'Metabase AI', url: '/features/metabase-ai', icon: 'ai' },
+  { label: 'Data Studio', url: '/product/data-studio', icon: 'studio', badge: 'New' },
+  { label: 'Dashboards and reporting', url: '/features/analytics-dashboards', icon: 'dashboards' },
+  { label: 'Query builder', url: '/features/query-builder', icon: 'query' },
+  { label: 'Data segregation', url: '/features/data-segregation', icon: 'segregation' },
+  { label: 'Usage analytics', url: '/features/usage-analytics', icon: 'usage' },
+  { label: 'White-label analytics', url: '/features/white-label-analytics', icon: 'whitelabel' },
+  { label: 'Drill-through', url: '/features/drill-through', icon: 'drill' },
+  { label: 'SQL editor', url: '/features/sql-editor', icon: 'sql' },
+  { label: 'Permissions', url: '/features/permissions', icon: 'permissions' },
+]);
+
+/* The shape the existing panel markup reads. */
+const features: [string, string, string, string?][] = featureLinks.map(
+  (l) => [l.label, l.url, l.icon ?? '', l.badge ?? undefined] as [string, string, string, string?]);
 
 /*
  * The original's Resources menu is Blog, Events, Customers, Discussion,
@@ -41,11 +69,20 @@ const features: [string, string, string, string?][] = [
  * at all. The last three menu entries are the ones the original carries that
  * this replica has not built yet, so the menu stops at Customers for now.
  */
-const resources: [string, string, string, string][] = [
-  ['Blog', '/blog', 'blog', 'News, updates, and ideas'],
-  ['Events', '/events', 'events', 'Join a live event or watch on demand'],
-  ['Customers', '/case-studies', 'customers', 'Real companies, real data, real stories'],
-];
+const resourceLinks = group('resources', [
+  { label: 'Blog', url: '/blog', icon: 'blog', description: 'News, updates, and ideas' },
+  { label: 'Events', url: '/events', icon: 'events', description: 'Join a live event or watch on demand' },
+  { label: 'Customers', url: '/case-studies', icon: 'customers', description: 'Real companies, real data, real stories' },
+]);
+const resources: [string, string, string, string][] = resourceLinks.map(
+  (l) => [l.label, l.url, l.icon ?? '', l.description ?? ''] as [string, string, string, string]);
+
+const pricingLinks = group('pricing', [
+  { label: 'Business Intelligence pricing', url: '/pricing?use_case=business-intelligence',
+    icon: 'bi', description: 'Self-service analytics for your team' },
+  { label: 'Embedded Analytics pricing', url: '/pricing?use_case=embedded-analytics',
+    icon: 'ea', description: 'Fast, flexible customer-facing analytics' },
+]);
 
 /*
  * The mobile panel, built from the same arrays the megamenus above use rather
@@ -54,23 +91,15 @@ const resources: [string, string, string, string][] = [
  * opens an accordion, with Log in pinned to the foot; this is that, minus the
  * Docs row, which this replica does not build.
  */
+const row = (l: NavLink): [string, string, string?, string?] =>
+  [l.label, l.url, l.icon ?? undefined, l.description ?? undefined];
+
 const mobileNav: { label: string; items: [string, string, string?, string?][] }[] = [
-  { label: 'Product', items: [
-    ['Business Intelligence', '/product/business-intelligence', 'bi', 'Self-service analytics for your team'],
-    ['Embedded Analytics', '/product/embedded-analytics', 'ea', 'Fast, flexible customer-facing analytics'],
-  ]},
-  { label: 'Features', items: [
-    ...features.map(([label, href, icon]) => [label, href, icon] as [string, string, string]),
-    ['Roadmap', '/roadmap', 'roadmap'],
-  ]},
-  { label: 'Resources', items: resources.map(
-    ([label, href, icon, sub]) => [label, href, icon, sub] as [string, string, string, string]) },
-  { label: 'Pricing', items: [
-    ['Business Intelligence pricing', '/pricing?use_case=business-intelligence', 'bi',
-     'Self-service analytics for your team'],
-    ['Embedded Analytics pricing', '/pricing?use_case=embedded-analytics', 'ea',
-     'Fast, flexible customer-facing analytics'],
-  ]},
+  { label: 'Product', items: product.map(row) },
+  { label: 'Features', items: [...featureLinks.map(row),
+    ['Roadmap', '/roadmap', 'roadmap'] as [string, string, string]] },
+  { label: 'Resources', items: resourceLinks.map(row) },
+  { label: 'Pricing', items: pricingLinks.map(row) },
 ];
 ---
 {/* The original's bar is 74 tall, solid white and carries no bottom rule. */}
@@ -94,21 +123,22 @@ const mobileNav: { label: string; items: [string, string, string?, string?][] }[
               kind: Business Intelligence is a bar chart drawn in CSS whose
               bars re-sort on hover, and Embedded Analytics is a flat
               illustration on a tinted plate. An icon in a tile was neither. */}
+          {/* The artwork is per card and stays in code; the destination and
+              the words come from Site Settings. `icon` picks which one. */}
           <div class="nav-cards">
-            <a href="/product/business-intelligence" class="nav-card nav-card--stack">
-              <span class="nav-bars" aria-hidden="true">
-                {[20, 30, 35, 24, 16, 20].map(() => <span></span>)}
-              </span>
-              <span class="nav-card-title">Business Intelligence</span>
-              <span class="nav-card-sub">Self-service analytics for your team</span>
-            </a>
-            <a href="/product/embedded-analytics" class="nav-card nav-card--stack">
-              <span class="nav-embed" aria-hidden="true">
-                <img src="/images/nav/embed.svg" width="64" height="56" alt="" />
-              </span>
-              <span class="nav-card-title">Embedded Analytics</span>
-              <span class="nav-card-sub">Fast, flexible customer-facing analytics</span>
-            </a>
+            {product.map((l) => (
+              <a href={l.url} class="nav-card nav-card--stack">
+                {l.icon === 'ea'
+                  ? <span class="nav-embed" aria-hidden="true">
+                      <img src="/images/nav/embed.svg" width="64" height="56" alt="" />
+                    </span>
+                  : <span class="nav-bars" aria-hidden="true">
+                      {[20, 30, 35, 24, 16, 20].map(() => <span></span>)}
+                    </span>}
+                <span class="nav-card-title">{l.label}</span>
+                <span class="nav-card-sub">{l.description}</span>
+              </a>
+            ))}
           </div>
         </div>
       </li>
@@ -168,16 +198,15 @@ const mobileNav: { label: string; items: [string, string, string?, string?][] }[
         {/* Pricing: cards only, same shape as Product's. 578 wide. */}
         <div class="nav-panel" style="width:596px" data-panel="pricing">
           <div class="nav-cards">
-            {[['Business Intelligence pricing', 'bi', 'Self-service analytics for your team'],
-              ['Embedded Analytics pricing', 'ea', 'Fast, flexible customer-facing analytics']].map(([t, art, sub]) => (
-              <a href={`/pricing?use_case=${art === 'bi' ? 'business-intelligence' : 'embedded-analytics'}`}
-                 class="nav-card nav-card--stack">
+            {pricingLinks.map((l) => (
+              <a href={l.url} class="nav-card nav-card--stack">
                 <span class="nav-card-art" aria-hidden="true">
-                  <img src={`/images/nav/pricing-${art}.svg`} width="64" height="56" alt="" />
+                  <img src={`/images/nav/pricing-${l.icon === 'ea' ? 'ea' : 'bi'}.svg`}
+                       width="64" height="56" alt="" />
                 </span>
                 <span>
-                  <span class="nav-card-title">{t}</span>
-                  <span class="nav-card-sub">{sub}</span>
+                  <span class="nav-card-title">{l.label}</span>
+                  <span class="nav-card-sub">{l.description}</span>
                 </span>
               </a>
             ))}
