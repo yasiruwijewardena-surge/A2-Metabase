@@ -377,45 +377,67 @@ export const getPage = async (slug: string) =>
     'filters[slug][$eq]': slug, ...zonePopulate('sections'), 'populate[seo]': 'true',
   }))[0] ?? null;
 
-/* --- site settings ------------------------------------------------------- *
- * Header and footer navigation, plus whatever markup the site injects into
- * every page (a tag manager, for instance). One single type, so an editor
- * changes a menu without a code change.
+/* --- navigation, footer, site settings ------------------------------------ *
+ * Three single types rather than one. The header and the foot of the page are
+ * separate jobs -- someone adding a footer link should not be looking at the
+ * menus -- and keeping them apart means publishing one does not touch the
+ * other. What is left in Site Settings is the handful of things that belong to
+ * neither: the site's name, its favicon, the share-preview defaults, and the
+ * scripts injected into every page.
  * ------------------------------------------------------------------------ */
 const SITE_SETTINGS_POPULATE = {
-  'populate[navGroups][populate][items][populate][icon]': 'true',
-  'populate[footerColumns][populate][links][populate][icon]': 'true',
   'populate[favicon]': 'true',
-  'populate[logo]': 'true',
-  'populate[footerLogo]': 'true',
   'populate[defaultSocialImage]': 'true',
+};
+
+const NAVIGATION_POPULATE = {
+  'populate[logo]': 'true',
+  'populate[navGroups][populate][items][populate][icon]': 'true',
+  'populate[primaryAction]': 'true',
+  'populate[secondaryAction]': 'true',
+};
+
+const FOOTER_POPULATE = {
+  'populate[logo]': 'true',
+  'populate[columns][populate][links][populate][icon]': 'true',
   'populate[socialLinks][populate][icon]': 'true',
 };
 
 /*
- * A nav link points at an icon by relation, so an editor picks from a list
- * rather than typing a key nobody has written down. The rest of the site only
- * wants the key, and the hardcoded menu fallbacks below are written with plain
- * keys, so flatten the relation here and let everything downstream keep
- * treating `icon` as a string.
+ * A link points at an icon by relation, so an editor picks from a list rather
+ * than typing a key nobody has written down. The rest of the site only wants
+ * the key, and the hardcoded fallbacks are written with plain keys, so flatten
+ * the relation here and let everything downstream treat `icon` as a string.
+ *
+ * Only true between the fetch and the flatten, so it is not worth spreading a
+ * union through `NavLink` and every component that reads one.
  */
-const flattenIcons = (s: SiteSettings | null): SiteSettings | null => {
-  if (!s) return s;
+type Unflattened = { icon?: Icon | string | null };
 
-  /* Only true between the fetch and the flatten, so it is not worth spreading
-     a union through `NavLink` and every component that reads one. */
-  type Unflattened = { icon?: Icon | string | null };
-
-  const fix = (links?: Unflattened[] | null) =>
-    links?.forEach((l) => {
+const flatten = (...lists: (Unflattened[] | undefined | null)[]) => {
+  for (const list of lists) {
+    list?.forEach((l) => {
       if (l.icon && typeof l.icon === 'object') l.icon = l.icon.key;
     });
-
-  s.navGroups?.forEach((g) => fix(g.items as Unflattened[]));
-  s.footerColumns?.forEach((c) => fix(c.links as Unflattened[]));
-  fix(s.socialLinks as Unflattened[]);
-  return s;
+  }
 };
 
-export const getSiteSettings = async () =>
-  flattenIcons(await single<SiteSettings>('site-setting', SITE_SETTINGS_POPULATE));
+export const getSiteSettings = () =>
+  single<SiteSettings>('site-setting', SITE_SETTINGS_POPULATE);
+
+/** The header: its logo, its menus and its buttons. */
+export const getNavigation = async () => {
+  const nav = await single<Navigation>('navigation', NAVIGATION_POPULATE);
+  flatten(...(nav?.navGroups ?? []).map((g) => g.items as Unflattened[]));
+  return nav;
+};
+
+/** The foot of the page: its columns, socials, mark and small print. */
+export const getFooter = async () => {
+  const foot = await single<FooterSettings>('footer', FOOTER_POPULATE);
+  flatten(
+    ...(foot?.columns ?? []).map((c) => c.links as Unflattened[]),
+    foot?.socialLinks as Unflattened[]
+  );
+  return foot;
+};

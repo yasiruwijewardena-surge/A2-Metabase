@@ -726,6 +726,38 @@ export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footer';
+  info: {
+    description: 'The foot of every page: its link columns, its social links, the mark beside the copyright and the small print.';
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    columns: Schema.Attribute.Component<'nav.footer-column', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    note: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    socialLinks: Schema.Attribute.Component<'nav.link', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlossaryTermGlossaryTerm
   extends Struct.CollectionTypeSchema {
   collectionName: 'glossary_terms';
@@ -835,6 +867,40 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
+  collectionName: 'navigation';
+  info: {
+    description: 'The header: its logo, its menus and its buttons. Everything that appears at the top of every page.';
+    displayName: 'Navigation';
+    pluralName: 'navigations';
+    singularName: 'navigation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    githubStars: Schema.Attribute.String;
+    githubUrl: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::navigation.navigation'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    navGroups: Schema.Attribute.Component<'nav.group', true>;
+    primaryAction: Schema.Attribute.Component<'nav.action', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    secondaryAction: Schema.Attribute.Component<'nav.action', false>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1065,7 +1131,7 @@ export interface ApiPricingAddonPricingAddon
 export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'The header and footer navigation, and any scripts injected into every page such as a tag manager. Changing this affects every page on the site.';
+    description: "Settings that are not the header or the footer: the site's name, its favicon, the share-preview defaults, and any scripts injected into every page. Navigation and Footer have their own entries.";
     displayName: 'Site Settings';
     pluralName: 'site-settings';
     singularName: 'site-setting';
@@ -1081,8 +1147,6 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
     defaultMetaDescription: Schema.Attribute.Text;
     defaultSocialImage: Schema.Attribute.Media<'images'>;
     favicon: Schema.Attribute.Media<'images'>;
-    footerColumns: Schema.Attribute.Component<'nav.footer-column', true>;
-    footerLogo: Schema.Attribute.Media<'images'>;
     headScripts: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1090,11 +1154,8 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
       'api::site-setting.site-setting'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images'>;
-    navGroups: Schema.Attribute.Component<'nav.group', true>;
     publishedAt: Schema.Attribute.DateTime;
     siteName: Schema.Attribute.String;
-    socialLinks: Schema.Attribute.Component<'nav.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1732,9 +1793,11 @@ declare module '@strapi/strapi' {
       'api::event-category.event-category': ApiEventCategoryEventCategory;
       'api::event.event': ApiEventEvent;
       'api::faq.faq': ApiFaqFaq;
+      'api::footer.footer': ApiFooterFooter;
       'api::glossary-term.glossary-term': ApiGlossaryTermGlossaryTerm;
       'api::icon.icon': ApiIconIcon;
       'api::industry.industry': ApiIndustryIndustry;
+      'api::navigation.navigation': ApiNavigationNavigation;
       'api::page.page': ApiPagePage;
       'api::person.person': ApiPersonPerson;
       'api::plan.plan': ApiPlanPlan;

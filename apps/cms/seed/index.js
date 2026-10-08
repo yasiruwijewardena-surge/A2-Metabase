@@ -614,17 +614,15 @@ async function main() {
       console.log(`    ${icons.length} icons (${Object.entries(bySet).map(([k, n]) => `${k} ${n}`).join(', ')})`);
     }
 
-    // ---- site settings ---------------------------------------------------
-    // A single type, so there is nothing to match on: write the one entry.
+    // ---- navigation, footer and site settings -----------------------------
+    /*
+     * Three single types, so there is nothing to match on: write the one entry
+     * of each. The header and the foot of the page are separate entries
+     * because they are separate jobs - someone adding a footer link should not
+     * be looking at the menus - and because publishing one should not rebuild
+     * the other.
+     */
     if (want('settings')) {
-      const settings = read('site-settings.json');
-
-      /*
-       * Nav links point at an icon by relation rather than by typed key, so an
-       * editor picks from a list instead of guessing. The seed data still
-       * writes the key, because that is what is readable in a JSON file, so
-       * resolve it to the document here. Menus only ever draw the `nav` set.
-       */
       const iconRows = await app.documents('api::icon.icon').findMany({
         status: 'published', limit: -1,
       });
@@ -635,6 +633,9 @@ async function main() {
         return iconRows.find((i) => i.set === set && i.key === key)?.documentId;
       };
 
+      /* Links point at an icon by relation so an editor picks from a list
+         instead of guessing a key. The seed data still writes the key,
+         because that is what is readable in a JSON file. */
       const link = (item) => {
         if (typeof item.icon !== 'string') return;
         const id = iconId(item.icon);
@@ -642,17 +643,31 @@ async function main() {
         item.icon = id ?? null;
       };
 
-      for (const group of settings.navGroups ?? []) (group.items ?? []).forEach(link);
-      (settings.socialLinks ?? []).forEach(link);
-      const uid = 'api::site-setting.site-setting';
-      const existing = await app.documents(uid).findFirst({ status: 'draft' });
-      if (existing) {
-        await app.documents(uid).update({ documentId: existing.documentId, data: settings, status: 'published' });
-        console.log('    site settings updated');
-      } else {
-        await app.documents(uid).create({ data: settings, status: 'published' });
-        console.log('    site settings created');
-      }
+      const BRAND = join(__dirname, 'assets');
+      const image = async (rel) => (rel ? await uploadFromPath(app, join(BRAND, rel)) : undefined);
+
+      const writeSingle = async (uid, data, label) => {
+        const existing = await app.documents(uid).findFirst({ status: 'draft' });
+        if (existing) {
+          await app.documents(uid).update({ documentId: existing.documentId, data, status: 'published' });
+          console.log(`    ${label} updated`);
+        } else {
+          await app.documents(uid).create({ data, status: 'published' });
+          console.log(`    ${label} created`);
+        }
+      };
+
+      const nav = read('navigation.json');
+      for (const group of nav.navGroups ?? []) (group.items ?? []).forEach(link);
+      nav.logo = await image(nav.logo);
+      await writeSingle('api::navigation.navigation', nav, 'navigation');
+
+      const foot = read('footer.json');
+      (foot.socialLinks ?? []).forEach(link);
+      foot.logo = await image(foot.logo);
+      await writeSingle('api::footer.footer', foot, 'footer');
+
+      await writeSingle('api::site-setting.site-setting', read('site-settings.json'), 'site settings');
     }
 
     // ---- summary ---------------------------------------------------------

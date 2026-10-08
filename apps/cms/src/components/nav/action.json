@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_nav_actions",
+  "info": {
+    "displayName": "Button",
+    "icon": "cursor",
+    "description": "A button in the header, such as Log in or Get started."
+  },
+  "options": {},
+  "attributes": {
+    "label": { "type": "string", "required": true, "description": "The words on the button." },
+    "url":   { "type": "string", "required": true, "description": "Where it goes." }
+  }
+}

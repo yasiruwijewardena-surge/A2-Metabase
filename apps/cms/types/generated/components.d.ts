@@ -1,5 +1,18 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface NavAction extends Struct.ComponentSchema {
+  collectionName: 'components_nav_actions';
+  info: {
+    description: 'A button in the header, such as Log in or Get started.';
+    displayName: 'Button';
+    icon: 'cursor';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface NavFooterColumn extends Struct.ComponentSchema {
   collectionName: 'components_nav_footer_columns';
   info: {
@@ -1199,6 +1212,7 @@ export interface SharedSeo extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
+      'nav.action': NavAction;
       'nav.footer-column': NavFooterColumn;
       'nav.group': NavGroup;
       'nav.link': NavLink;
