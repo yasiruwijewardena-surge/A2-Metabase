@@ -295,6 +295,7 @@ const ZONE: Record<string, Record<string, string>> = {
     '[usagePoints]': 'true',
     '[supportPoints]': 'true',
     '[presets]': 'true',
+    '[chartBars]': 'true',
     '[vsGroups][populate][lines]': 'true',
     '[faqs]': 'true',
     '[closingCtas]': 'true',

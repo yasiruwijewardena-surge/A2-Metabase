@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_chart_bars",
+  "info": {
+    "displayName": "Chart bar",
+    "icon": "chartBar",
+    "description": "One bar in the themed demo chart."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "description": "What sits under the bar, e.g. 2025."
+    },
+    "value": {
+      "type": "integer",
+      "required": true,
+      "description": "How tall the bar is, in the chart's own units."
+    }
+  }
+}

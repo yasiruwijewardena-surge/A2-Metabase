@@ -5,14 +5,14 @@
       "slug": "home",
       "seo": {
         "metaTitle": "Metabase | Open source Business Intelligence and Embedded Analytics",
-        "metaDescription": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer."
+        "metaDescription": "Metabase gives you answers guided by your semantic layer \u2014 your metrics and business logic \u2014 whether reached by an agent or a teammate. Inspect the query behind every answer."
       },
       "sections": [
         {
           "__component": "page.home-hero",
           "heading": "Open source AI analytics",
           "headingBreakAfter": "you can verify",
-          "sub": "Metabase gives you answers guided by your semantic layer — your metrics and business logic — whether reached by an agent or a teammate. Inspect the query behind every answer.",
+          "sub": "Metabase gives you answers guided by your semantic layer \u2014 your metrics and business logic \u2014 whether reached by an agent or a teammate. Inspect the query behind every answer.",
           "ctas": [
             {
               "label": "Try Metabase Cloud free",
@@ -73,7 +73,7 @@
             {
               "visual": "compliance-badges",
               "heading": "Enterprise-grade security",
-              "body": "We treat your data the way we'd want ours — it's secure and compliant (SOC1, SOC2, GDPR, CCPA, and more)."
+              "body": "We treat your data the way we'd want ours \u2014 it's secure and compliant (SOC1, SOC2, GDPR, CCPA, and more)."
             }
           ]
         },
@@ -242,12 +242,12 @@
           "__component": "page.events-index",
           "heading": "Events",
           "standfirst": "Register for an upcoming event or stream a past recording.",
-          "noUpcoming": "No events on the calendar right now — the recordings below are all free to stream.",
+          "noUpcoming": "No events on the calendar right now \u2014 the recordings below are all free to stream.",
           "upcomingCta": "Register now",
           "watchHeading": "Watch now",
-          "watchStandfirst": "Miss an event? No worries. Stream recordings of previous events—no email registration required.",
+          "watchStandfirst": "Miss an event? No worries. Stream recordings of previous events\u2014no email registration required.",
           "pickLabel": "Pick a series",
-          "noRecordings": "No recordings in this series yet — pick another.",
+          "noRecordings": "No recordings in this series yet \u2014 pick another.",
           "watchCta": "Learn more"
         }
       ]
@@ -528,7 +528,7 @@
           "embedLinkLabel": "Embedded analytics pricing",
           "embedLinkUrl": "/pricing",
           "embedMedia": "../../web/public/images/home/embedding-promo.webp",
-          "footNote": "Prices and tiers mirror metabase.com. This is a replica built for an assignment — nothing here can be purchased."
+          "footNote": "Prices and tiers mirror metabase.com. This is a replica built for an assignment \u2014 nothing here can be purchased."
         }
       ]
     },
@@ -613,7 +613,7 @@
             {
               "icon": "drill",
               "title": "Click on charts to drill into data",
-              "body": "Drill-through menus answer the next question before it is asked — “can we see this broken down by plan?” — without anybody writing a query for it.",
+              "body": "Drill-through menus answer the next question before it is asked \u2014 \u201ccan we see this broken down by plan?\u201d \u2014 without anybody writing a query for it.",
               "media": "../../web/public/images/product/business-intelligence/avoid-repeated-requests-2.webp",
               "mediaLabel": "Drilling into a chart to see the rows behind a bar"
             },
@@ -649,7 +649,7 @@
         {
           "__component": "page.split",
           "heading": "Make sure people only see what they need to",
-          "lede": "Granular permissions keep people safe from accidentally seeing — or breaking — data that was never theirs to touch.",
+          "lede": "Granular permissions keep people safe from accidentally seeing \u2014 or breaking \u2014 data that was never theirs to touch.",
           "media": "../../web/public/images/product/business-intelligence/permissions2.mp4",
           "mediaPoster": "../../web/public/images/product/business-intelligence/permissions2-poster.webp",
           "mediaLabel": "Setting table, row and column permissions for a group",
@@ -661,7 +661,7 @@
             },
             {
               "title": "Manage role-based permissions with SSO",
-              "body": "Set visibility by role — marketing sees one thing, support another — with view and edit granted separately."
+              "body": "Set visibility by role \u2014 marketing sees one thing, support another \u2014 with view and edit granted separately."
             },
             {
               "title": "Keep track of who's doing what, when",
@@ -685,7 +685,7 @@
               "href": "/data-sources"
             },
             {
-              "t": ", so the numbers people read are the numbers that are in there right now — not the ones that were true when last night's export finished."
+              "t": ", so the numbers people read are the numbers that are in there right now \u2014 not the ones that were true when last night's export finished."
             }
           ],
           "media": "seed:product-pages/works-with-your-stack.webp",
@@ -837,7 +837,7 @@
             {
               "icon": "medal",
               "title": "Official collections",
-              "body": "Admins can mark a collection official, so people can tell at a glance which numbers have been through review and which are someone’s working draft.",
+              "body": "Admins can mark a collection official, so people can tell at a glance which numbers have been through review and which are someone\u2019s working draft.",
               "links": []
             },
             {
@@ -886,7 +886,7 @@
               "text": "Or start from a question: save it, and either pick a collection or create one from the bottom of the same menu."
             },
             {
-              "text": "If you are an admin, set and adjust permissions per group from the <b>…</b> menu at the top right."
+              "text": "If you are an admin, set and adjust permissions per group from the <b>\u2026</b> menu at the top right."
             },
             {
               "text": "Admins on a Pro or Enterprise plan can mark the collection <b>Official</b> from that same menu."
@@ -933,7 +933,7 @@
             {
               "icon": "bifurcate",
               "title": "Breakout",
-              "body": "Split the same measure by another dimension — time, location, category — without going back to the query builder.",
+              "body": "Split the same measure by another dimension \u2014 time, location, category \u2014 without going back to the query builder.",
               "links": []
             },
             {
@@ -951,7 +951,7 @@
             {
               "icon": "filter-plus",
               "title": "Cross-filter",
-              "body": "Wire a card to the dashboard’s filter widgets, so clicking a state on a map narrows every other card to it.",
+              "body": "Wire a card to the dashboard\u2019s filter widgets, so clicking a state on a map narrows every other card to it.",
               "links": []
             },
             {
@@ -985,7 +985,7 @@
               "text": "Find a dashboard, chart or model you want to know more about."
             },
             {
-              "text": "Click anywhere on a chart built with the query builder — a state on a map, a bar in a bar chart, a slice of a pie — and pick whichever option from the drill-through menu looks like the next question."
+              "text": "Click anywhere on a chart built with the query builder \u2014 a state on a map, a bar in a bar chart, a slice of a pie \u2014 and pick whichever option from the drill-through menu looks like the next question."
             },
             {
               "text": "That is more or less it. Go wild."
@@ -1109,7 +1109,7 @@
           "badge": "query-builder-icon",
           "eyebrow": "Query builder",
           "h1": "Get answers in a few clicks with the query builder",
-          "standfirst": "The query builder lets anyone — including your less data-savvy teammates — put a question together from clicks and menu choices, with no SQL anywhere in sight.",
+          "standfirst": "The query builder lets anyone \u2014 including your less data-savvy teammates \u2014 put a question together from clicks and menu choices, with no SQL anywhere in sight.",
           "showCtas": true,
           "mediaHeight": 381,
           "h2": "Analytics for everyone",
@@ -1176,7 +1176,7 @@
               "text": "Click <b>New &gt; Question</b> at the top right of your Metabase to open the query builder. You can also get to it from a saved question by clicking the editor icon, which is quicker than starting again when all you want is a small change to something that already exists."
             },
             {
-              "text": "Pick the table or model you want to ask about — say the <b>Orders</b> table from the sample data that ships with Metabase."
+              "text": "Pick the table or model you want to ask about \u2014 say the <b>Orders</b> table from the sample data that ships with Metabase."
             },
             {
               "text": "Click into <b>Filters</b>, choose <b>Created at</b>, and select <b>Last 12 months</b>."
@@ -1185,7 +1185,7 @@
               "text": "Click <b>+</b> to add another filter. This time choose <b>Total</b>, then pick <b>Greater than</b> from the dropdown, and enter a number to cut off the small orders."
             },
             {
-              "text": "Click into <b>Summarize</b>, choose <b>Sum of…</b>, and pick <b>Taxes</b> as the column to add up."
+              "text": "Click into <b>Summarize</b>, choose <b>Sum of\u2026</b>, and pick <b>Taxes</b> as the column to add up."
             },
             {
               "text": "Use the <b>by</b> box beside it to group the results. Start with <b>Product &gt; Category</b>."
@@ -1290,10 +1290,10 @@
           "howtoTitle": "How to ask a question with SQL",
           "howtoSteps": [
             {
-              "text": "Click <b>New &gt; SQL Query</b> at the top of Metabase. You will not see this option at all if your group has not been given native query access, which is deliberate — it is the setting that decides who gets to write raw SQL."
+              "text": "Click <b>New &gt; SQL Query</b> at the top of Metabase. You will not see this option at all if your group has not been given native query access, which is deliberate \u2014 it is the setting that decides who gets to write raw SQL."
             },
             {
-              "text": "Write your query. If you are here, you know what to do — we will stay out of the way."
+              "text": "Write your query. If you are here, you know what to do \u2014 we will stay out of the way."
             },
             {
               "text": "Click the run button to see the results below."
@@ -1379,7 +1379,7 @@
             },
             {
               "pill": "Release announcement",
-              "title": "Learn what's happening in your Metabase…using Metabase",
+              "title": "Learn what's happening in your Metabase\u2026using Metabase",
               "url": "/releases/metabase-48"
             },
             {
@@ -1431,7 +1431,7 @@
             {
               "icon": "medal",
               "title": "Branded in-app reporting",
-              "body": "Set the name, the logo, the fonts, and the UI and chart colours, so the reporting area reads as a part of your product rather than a window into someone else’s.",
+              "body": "Set the name, the logo, the fonts, and the UI and chart colours, so the reporting area reads as a part of your product rather than a window into someone else\u2019s.",
               "links": []
             },
             {
@@ -1494,7 +1494,7 @@
               "text": "Choose your white-labeling method. Use Modular Embedding for a quick implementation, or the Modular Embedding SDK when you want control over how the components are composed inside your own layout."
             },
             {
-              "text": "Add your branding — logo, colours, fonts, and whatever custom UI elements you need."
+              "text": "Add your branding \u2014 logo, colours, fonts, and whatever custom UI elements you need."
             },
             {
               "text": "Define permissions, and set up authentication so each customer only ever sees their own data."
@@ -1637,7 +1637,7 @@
               "anchor": "routing",
               "label": "Database routing",
               "image": "database-routing",
-              "lede": "In one-database-per-tenant setups, Metabase routes each customer’s queries to their own database while shared content stays in a primary one.",
+              "lede": "In one-database-per-tenant setups, Metabase routes each customer\u2019s queries to their own database while shared content stays in a primary one.",
               "linkLabel": "Learn more about database routing"
             },
             {
@@ -1734,7 +1734,7 @@
                   "text": "You are more worried about user attributes being misconfigured"
                 },
                 {
-                  "text": "You want to avoid one tenant’s queries slowing another’s"
+                  "text": "You want to avoid one tenant\u2019s queries slowing another\u2019s"
                 }
               ],
               "example": "Acme's queries go to Acme's database when they open an embedded dashboard in your SaaS app, because the data is separated at the database level.",
@@ -1935,14 +1935,14 @@
               "heading": "System prompts to guide outputs",
               "body": "Add instructions that shape tone, use the right naming conventions, and tell the model which tables are the ones people should be asking about.",
               "image": "/images/features/metabot-ai/system-prompts.webp",
-              "imageAlt": "A system prompt steering the assistant’s answers"
+              "imageAlt": "A system prompt steering the assistant\u2019s answers"
             }
           ],
           "pricingHeading": "AI that isn't a separate meter",
           "pricingLedeBefore": "Power Metabase AI with ",
           "pricingLedeLinkLabel": "your own model",
           "pricingLedeLinkUrl": "#faq",
-          "pricingLedeAfter": " — Anthropic, OpenAI, AWS Bedrock, Mistral or whatever you have already standardised on — and pay that provider directly rather than paying us a markup on top of it.",
+          "pricingLedeAfter": " \u2014 Anthropic, OpenAI, AWS Bedrock, Mistral or whatever you have already standardised on \u2014 and pay that provider directly rather than paying us a markup on top of it.",
           "pricingLinkLabel": "See how AI pricing works",
           "pricingLinkUrl": "/pricing",
           "auditHeading": "See who's doing what with AI, down to exact questions",
@@ -2147,7 +2147,7 @@
           "faqs": [
             {
               "question": "Can I choose my own AI provider?",
-              "answer": "Yes. You can bring your own key and plug in the AI provider you already use — Anthropic, OpenAI, AWS Bedrock, Mistral and others — rather than being routed through ours."
+              "answer": "Yes. You can bring your own key and plug in the AI provider you already use \u2014 Anthropic, OpenAI, AWS Bedrock, Mistral and others \u2014 rather than being routed through ours."
             },
             {
               "question": "Does Metabase charge for AI usage?",
@@ -2320,7 +2320,7 @@
             },
             {
               "question": "Who is Data Studio for?",
-              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean \u2014 the people who would otherwise be answering the same question about a column every week."
             },
             {
               "question": "What problem does Data Studio solve?",
@@ -2336,7 +2336,7 @@
             },
             {
               "question": "How do I get started with Data Studio?",
-              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+              "answer": "If you are already using Metabase, it is ready to use \u2014 start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
             },
             {
               "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
@@ -2489,7 +2489,7 @@
             },
             {
               "question": "Who is Data Studio for?",
-              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean \u2014 the people who would otherwise be answering the same question about a column every week."
             },
             {
               "question": "What problem does Data Studio solve?",
@@ -2505,7 +2505,7 @@
             },
             {
               "question": "How do I get started with Data Studio?",
-              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+              "answer": "If you are already using Metabase, it is ready to use \u2014 start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
             },
             {
               "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
@@ -2658,7 +2658,7 @@
             },
             {
               "question": "Who is Data Studio for?",
-              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean — the people who would otherwise be answering the same question about a column every week."
+              "answer": "Analytics engineers, analysts and anyone who ends up owning what the numbers mean \u2014 the people who would otherwise be answering the same question about a column every week."
             },
             {
               "question": "What problem does Data Studio solve?",
@@ -2674,7 +2674,7 @@
             },
             {
               "question": "How do I get started with Data Studio?",
-              "answer": "If you are already using Metabase, it is ready to use — start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
+              "answer": "If you are already using Metabase, it is ready to use \u2014 start by adding descriptions and semantic types to the tables people query most, then define the metrics you keep re-deriving."
             },
             {
               "question": "How does Data Studio fit alongside existing data modeling and transformation tools?",
@@ -2800,7 +2800,7 @@
               "points": [
                 {
                   "lead": "Set up in minutes",
-                  "rest": " — validate your in-app reporting needs before you commit a sprint to them."
+                  "rest": " \u2014 validate your in-app reporting needs before you commit a sprint to them."
                 },
                 {
                   "lead": "White label with your branding",
@@ -2909,14 +2909,10 @@
               "body": "Keep control of your data and your deployment, or hand the hosting to us and stop thinking about it."
             }
           ],
-          "balanceHeading": "The perfect balance of plug – and – play and customizability",
+          "balanceHeading": "The perfect balance of plug \u2013 and \u2013 play and customizability",
           "balanceSub": "You sweat every detail of your product, so we will make sure the analytics inside it look like they belong there.",
           "balanceLinkLabel": "Customize labels, colors, fonts, branding",
           "balanceLinkUrl": "/features/white-label-analytics",
-          "themeImage": "/images/product/embedded-analytics/application-screenshot.webp",
-          "themeW": 892,
-          "themeH": 467,
-          "themeImageAlt": "An embedded dashboard restyled to match the host application",
           "chartColorsLabel": "Chart colors",
           "fontLabel": "Font",
           "appearanceLabel": "Appearance",
@@ -3011,7 +3007,7 @@
                 {
                   "pre": "",
                   "strong": "Rigid",
-                  "post": " — your product has to look like their product."
+                  "post": " \u2014 your product has to look like their product."
                 }
               ]
             },
@@ -3047,7 +3043,7 @@
               "answer": "White label the embedded charts and dashboards, set theming per component, per organisation or per user, and with the SDK compose the views out of React components using your own design system."
             },
             {
-              "question": "Is it secure enough to ensure my customers never see another customer’s data?",
+              "question": "Is it secure enough to ensure my customers never see another customer\u2019s data?",
               "answer": "Row and column permissions are applied before the query runs, not filtered out afterwards, and sandboxing scopes every embedded session to one tenant. Metabase is up to date with first-class compliance certifications."
             },
             {
@@ -3078,6 +3074,32 @@
               "imageAlt": "In-app reporting inside a customer relationship tool",
               "linkLabel": "Read the full Cadence CRM story",
               "linkUrl": "/case-studies"
+            }
+          ],
+          "chartTitle": "Gadgets sold per year",
+          "chartYLabel": "Gadgets",
+          "chartXLabel": "Year",
+          "chartMax": 30000,
+          "chartBars": [
+            {
+              "label": "2025",
+              "value": 3200
+            },
+            {
+              "label": "2026",
+              "value": 14500
+            },
+            {
+              "label": "2027",
+              "value": 23000
+            },
+            {
+              "label": "2028",
+              "value": 25500
+            },
+            {
+              "label": "2029",
+              "value": 3900
             }
           ]
         }

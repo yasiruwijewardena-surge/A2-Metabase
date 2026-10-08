@@ -1664,11 +1664,64 @@
     display: flex; justify-content: center; align-items: stretch;
     width: 100%; max-width: 1052px; margin-inline: auto; padding-inline: 8px;
   }
-  .ea-theme-canvas {
-    flex: none; width: 822px; height: 350px; max-width: 100%;
-    border-radius: 8px; overflow: hidden; background: #fff;
+  /* --- the themed demo chart -------------------------------------------- */
+  .ea-chart {
+    flex: none; width: 822px; height: 350px; max-width: 100%; margin: 0;
+    display: flex; flex-direction: column;
+    border-radius: 8px; overflow: hidden;
+    background: var(--t-bg); color: var(--t-ink);
+    font-family: var(--t-font);
+    transition: background-color 200ms ease, color 200ms ease;
   }
-  .ea-theme-canvas img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .ea-chart-title {
+    flex: none; padding: 20px 24px;
+    font-size: 20px; line-height: 28px; font-weight: 700; text-align: left;
+    border-bottom: 1px solid var(--t-line);
+  }
+  .ea-chart-body {
+    flex: 1; min-height: 0;
+    display: grid; gap: 0 8px; padding: 14px 24px 10px;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto auto;
+    grid-template-areas: 'ylabel plot' '. xaxis' '. xlabel';
+  }
+  .ea-chart-ylabel {
+    grid-area: ylabel; align-self: center;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-size: 11px; color: var(--t-mute);
+  }
+  /* The tick labels hang off the left of the plot, so the plot has to start
+     clear of them or they land on top of the axis title. */
+  .ea-chart-plot { grid-area: plot; position: relative; min-height: 0; margin-left: 52px; }
+  /* The gridlines carry their own labels, so the two cannot drift apart. */
+  .ea-chart-grid {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .ea-chart-tick { position: relative; height: 0; border-top: 1px solid var(--t-line); }
+  .ea-chart-tick span {
+    position: absolute; right: calc(100% + 8px); top: -0.6em;
+    font-size: 11px; line-height: 1.2; color: var(--t-mute); white-space: nowrap;
+  }
+  .ea-chart-bars {
+    position: absolute; inset: 0; margin: 0; padding: 0; list-style: none;
+    display: flex; align-items: flex-end; justify-content: space-around;
+  }
+  .ea-chart-bars li {
+    flex: 0 0 13%; height: var(--h);
+    background: var(--t-accent);
+    transition: height 260ms ease, background-color 200ms ease;
+  }
+  .ea-chart-xaxis {
+    grid-area: xaxis; display: flex; justify-content: space-around;
+    margin: 6px 0 0 52px; padding: 0; list-style: none;
+    font-size: 11px; color: var(--t-mute);
+  }
+  .ea-chart-xaxis li { flex: 0 0 13%; text-align: center; }
+  .ea-chart-xlabel {
+    grid-area: xlabel; margin: 4px 0 0 52px;
+    font-size: 11px; color: var(--t-mute); text-align: center;
+  }
   .ea-theme-controls {
     flex: none; width: 182px; height: 350px; margin-left: 32px; padding: 16px;
     border: 2px solid var(--color-line); border-radius: 8px;
@@ -1702,28 +1755,70 @@
     color: #c6c9d2; background: var(--color-surface);
     cursor: pointer; transition: color 150ms ease, background-color 150ms ease;
   }
-  .ea-preset b { display: flex; align-items: center; height: 32px; font-weight: 700; line-height: 24px; }
+  .ea-preset { flex-direction: column; gap: 6px; height: auto; padding: 0; background: none; }
+  .ea-preset-tile {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 36px; border-radius: 8px;
+    background: var(--color-surface);
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+  .ea-preset b { display: flex; align-items: center; height: 24px; font-weight: 700; line-height: 24px; }
 
   /* Each preset drives the swatches, the font and the mode readout. */
   .ea-theme:has(#th-classic:checked) .ea-preset[data-theme='classic'],
   .ea-theme:has(#th-tech:checked) .ea-preset[data-theme='tech'],
   .ea-theme:has(#th-elegant:checked) .ea-preset[data-theme='elegant'],
   .ea-theme:has(#th-playful:checked) .ea-preset[data-theme='playful'] {
-    color: var(--color-brand); background: var(--color-brand-muted);
+    color: var(--color-brand); background: none;
   }
-  .ea-theme { --t1: #ffffff; --t2: #509ee3; --t3: #4c5773; --tf: 'Lato'; --tm: 'Light'; }
-  .ea-theme:has(#th-tech:checked)    { --t1: #0f1117; --t2: #22d3a6; --t3: #7c8598; --tf: 'IBM Plex Mono'; --tm: 'Dark'; }
-  .ea-theme:has(#th-elegant:checked) { --t1: #faf7f2; --t2: #8b6f47; --t3: #3f3a34; --tf: 'Merriweather'; --tm: 'Light'; }
-  .ea-theme:has(#th-playful:checked) { --t1: #fff4e6; --t2: #f76707; --t3: #d6336c; --tf: 'Fredoka'; --tm: 'Light'; }
+  /* The tile is what fills, not the whole control. */
+  .ea-theme:has(#th-classic:checked) .ea-preset[data-theme='classic'] .ea-preset-tile,
+  .ea-theme:has(#th-tech:checked) .ea-preset[data-theme='tech'] .ea-preset-tile,
+  .ea-theme:has(#th-elegant:checked) .ea-preset[data-theme='elegant'] .ea-preset-tile,
+  .ea-theme:has(#th-playful:checked) .ea-preset[data-theme='playful'] .ea-preset-tile {
+    color: #fff; background: var(--color-brand);
+  }
+  /* The four presets carry the values the original publishes beside each one.
+     The readout reads the same custom properties the swatches and the chart
+     use, so a wrong colour cannot sit under a right label -- which is how the
+     hexes for swatches two and three came to be missing entirely. */
+  .ea-theme {
+    --t1: #ffffff; --t2: #509ee3; --t3: #4c5773;
+    --h1: '#FFFFFF'; --h2: '#509EE3'; --h3: '#4C5773';
+    --tf: 'Lato'; --tm: 'Light';
+    --t-bg: #ffffff; --t-ink: #2e353b; --t-mute: #696e7b; --t-line: #eef0f2;
+    --t-accent: var(--t2); --t-font: Lato, system-ui, sans-serif;
+  }
+  .ea-theme:has(#th-tech:checked) {
+    --t1: #22242b; --t2: #64bd0d; --t3: #5a6072;
+    --h1: '#22242B'; --h2: '#64BD0D'; --h3: '#5A6072';
+    --tf: 'Source Code Pro'; --tm: 'Dark';
+    --t-bg: #0d1b25; --t-ink: #ffffff; --t-mute: #b4bcc4; --t-line: #27333d;
+    --t-font: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .ea-theme:has(#th-elegant:checked) {
+    --t1: #ffffff; --t2: #428e60; --t3: #4c5773;
+    --h1: '#FFFFFF'; --h2: '#428E60'; --h3: '#4C5773';
+    --tf: 'Georgia'; --tm: 'Light';
+    --t-bg: #ffffff; --t-ink: #2e353b; --t-mute: #696e7b; --t-line: #eef0f2;
+    --t-font: Georgia, 'Times New Roman', serif;
+  }
+  .ea-theme:has(#th-playful:checked) {
+    --t1: #22242b; --t2: #f25353; --t3: #5a6072;
+    --h1: '#22242B'; --h2: '#F25353'; --h3: '#5A6072';
+    --tf: 'Varela Round'; --tm: 'Dark';
+    --t-bg: #0d1b25; --t-ink: #ffffff; --t-mute: #b4bcc4; --t-line: #27333d;
+    --t-font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
   .ea-sw-1 { background: var(--t1); }
   .ea-sw-2 { background: var(--t2); }
   .ea-sw-3 { background: var(--t3); }
-  .ea-hex-1::before { content: var(--h1, '#FFFFFF'); }
+  .ea-hex-1::before { content: var(--h1); }
+  .ea-hex-2::before { content: var(--h2); }
+  .ea-hex-3::before { content: var(--h3); }
   .ea-font::before { content: var(--tf); }
   .ea-mode::before { content: var(--tm); }
-  /* The canvas picks up the accent so the preview visibly responds. */
-  .ea-theme-canvas { background: var(--t1); }
-  .ea-theme-canvas img { mix-blend-mode: multiply; }
+
 
   /* --- support team + marquee ------------------------------------------- */
   .ea-support { display: flex; align-items: flex-start; gap: 64px; }
@@ -1863,7 +1958,14 @@
     .ea-stories .ea-tab { flex: 1 1 0; min-width: 0; }
     .ea-theme-stage { flex-direction: column; }
     .ea-theme-controls { width: 100%; border-left: 0; border-top: 1px solid var(--color-line); }
-    .ea-theme-presets { flex-wrap: wrap; }
+    /* Four presets on one row at phone width: the tiles and the gap shrink
+       rather than the fourth one dropping to a line of its own. */
+    .ea-theme-presets { gap: 6px; padding: 12px 10px 28px; }
+    .ea-preset { font-size: 13px; }
+    .ea-preset-tile { width: 42px; height: 32px; }
+    .ea-chart-plot, .ea-chart-xaxis, .ea-chart-xlabel { margin-left: 42px; }
+    .ea-chart-title { padding: 14px 16px; font-size: 17px; line-height: 24px; }
+    .ea-chart-body { padding: 12px 14px 8px; }
     .ea-final-snippet { position: static; margin: 16px auto 0; max-width: 80%; }
     .ea-final-media { margin-top: 40px; }
   }

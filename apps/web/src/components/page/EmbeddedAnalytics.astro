@@ -73,6 +73,23 @@ const quoteFor = (company?: string | null) =>
    `--tabs-duration` custom property on the button; the strip reads like a
    different component at a uniform speed, so the three are kept. */
 const DWELL = [13, 30, 30];
+const PRESETS = [
+  { key: 'classic', label: 'Classic',
+    glyph: '<circle cx="12" cy="12" r="8"/><path d="M12 4v8h8"/>' },
+  { key: 'tech', label: 'Tech',
+    glyph: '<rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M9 10l2.5 2L9 14"/><path d="M13.5 14.5h2.5"/>' },
+  { key: 'elegant', label: 'Elegant',
+    glyph: '<path d="M12 4.5l1.6 4.3 4.4 1.7-4.4 1.7L12 16.5l-1.6-4.3L6 10.5l4.4-1.7L12 4.5Z"/><path d="M18 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/>' },
+  { key: 'playful', label: 'Playful',
+    glyph: '<circle cx="12" cy="12" r="8"/><path d="M9 14c.9 1.1 1.9 1.6 3 1.6s2.1-.5 3-1.6"/><circle cx="9.3" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="14.7" cy="10" r=".9" fill="currentColor" stroke="none"/>' },
+];
+
+/* The demo chart. Gridlines every fifth of the axis, top line first so the
+   labels read downwards the way an axis does. */
+const bars = (s.chartBars ?? []) as { label: string; value: number }[];
+const chartMax = s.chartMax ?? 30000;
+const ticks = Array.from({ length: 7 }, (_, i) => Math.round((chartMax / 6) * (6 - i)));
+
 const usagePoints = s.usagePoints ?? [];
 const supportPoints = s.supportPoints ?? [];
 const buildVsBuy = s.vsGroups ?? [];
@@ -327,10 +344,34 @@ const faqs = s.faqs ?? [];
           <input class="ea-theme-radio" type="radio" name="ea-theme" id={`th-${t}`} checked={i === 0} />
         ))}
         <div class="ea-theme-stage">
-          <div class="ea-theme-canvas">
-            <img src={s.themeImage} alt={s.themeImageAlt}
-                 width={s.themeW} height={s.themeH} loading="lazy" decoding="async" />
-          </div>
+          {/* The original embeds a live Metabase question here. Drawn rather
+              than iframed: the point of the section is that the chart takes on
+              the host application's styling, and an iframe to someone else's
+              instance would neither restyle nor survive their downtime. */}
+          <figure class="ea-chart">
+            <figcaption class="ea-chart-title">{s.chartTitle}</figcaption>
+            <div class="ea-chart-body">
+              <span class="ea-chart-ylabel">{s.chartYLabel}</span>
+              <div class="ea-chart-plot">
+                <div class="ea-chart-grid" aria-hidden="true">
+                  {ticks.map((t) => (
+                    <div class="ea-chart-tick"><span>{t.toLocaleString('en-US')}</span></div>
+                  ))}
+                </div>
+                <ol class="ea-chart-bars">
+                  {bars.map((b) => (
+                    <li style={`--h:${(b.value / chartMax) * 100}%`}>
+                      <span class="sr-only">{b.label}: {b.value.toLocaleString('en-US')}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <ol class="ea-chart-xaxis" aria-hidden="true">
+                {bars.map((b) => <li>{b.label}</li>)}
+              </ol>
+              <span class="ea-chart-xlabel">{s.chartXLabel}</span>
+            </div>
+          </figure>
           <div class="ea-theme-controls">
             <h3 class="ea-theme-label">{s.chartColorsLabel}</h3>
             <p class="ea-theme-val"><span class="ea-sw ea-sw-1"></span><span class="ea-hex ea-hex-1"></span></p>
@@ -342,10 +383,18 @@ const faqs = s.faqs ?? [];
             <p class="ea-theme-val"><span class="ea-mode"></span></p>
           </div>
         </div>
+        {/* Chrome for this one widget rather than content, the same way each
+            nav panel keeps its own shapes: the glyph is what the preset means,
+            not something an editor would swap. */}
         <div class="ea-theme-presets">
-          {['Classic', 'Tech', 'Elegant', 'Playful'].map((t) => (
-            <label class="ea-preset" for={`th-${t.toLowerCase()}`} data-theme={t.toLowerCase()}>
-              <b>{t}</b>
+          {PRESETS.map((t) => (
+            <label class="ea-preset" for={`th-${t.key}`} data-theme={t.key}>
+              <span class="ea-preset-tile" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.6"
+                     stroke-linecap="round" stroke-linejoin="round" set:html={t.glyph} />
+              </span>
+              <b>{t.label}</b>
             </label>
           ))}
         </div>
