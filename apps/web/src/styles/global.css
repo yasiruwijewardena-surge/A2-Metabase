@@ -1509,7 +1509,13 @@
   .ea-page .pp-band-sub--tight { width: fit-content; max-width: 600px; line-height: 32px; }
   .ea-page .pp-band-sub--wide { max-width: 600px; line-height: 32px; }
   .ea-page .pp-band-sub--600 { max-width: 600px; }
-  .pp-split--reverse { flex-direction: row-reverse; }
+  /* Only once there are two columns to reverse. Written flat, this sat after
+     the rule that stacks .pp-split at 991 and matched with the same
+     specificity, so it won -- and the section it modifies never stacked at any
+     width. At 541 that left its copy column 101px wide, a word per line. */
+  @media (min-width: 992px) {
+    .pp-split--reverse { flex-direction: row-reverse; }
+  }
   .pp-split-copy--narrow > * { max-width: 488px; }
   /* Unframed, and pulled 90px up into what follows -- which is what closes
      the gap between the shot and the trust logos beneath it. */
@@ -1692,7 +1698,9 @@
   }
   /* --- the themed demo chart -------------------------------------------- */
   .ea-chart {
-    flex: none; width: 822px; height: 350px; max-width: 100%; margin: 0;
+    /* Shrinkable rather than fixed: beside the 182px readout and its 32px
+       gap, a rigid 822 overflowed every viewport between 992 and 1052. */
+    flex: 1 1 822px; min-width: 0; max-width: 822px; height: 350px; margin: 0;
     display: flex; flex-direction: column;
     border-radius: 8px; overflow: hidden;
     background: var(--t-bg); color: var(--t-ink);
@@ -1943,8 +1951,14 @@
   .ea-final-snippet {
     position: absolute; left: -64px; bottom: -40px;
     width: 460px; max-width: 52%; height: auto;
+    /* The -64 tuck is a wide-viewport flourish. Below 1120 the frame no longer
+       has 64px of room to its left and the image hung off the page. */
     border-radius: 12px;
     box-shadow: 0 16px 28px -6px rgb(24 39 75 / 0.14), 0 6px 12px -4px rgb(24 39 75 / 0.1);
+  }
+
+  @media (max-width: 1119px) and (min-width: 992px) {
+    .ea-final-snippet { left: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1970,9 +1984,22 @@
        its review column is 444 rather than the desktop 590. */
     .ea-panel { padding: 32px 20px; }
     .ea-panel.ea-support { padding-inline: 0; }
-    .ea-marquee { width: 100%; height: 444px; }
+    /* Same column trap as the story media: a flex-basis is a height once this
+       stacks, and 487px of it sat as empty space under the bullet list. */
+    .ea-support-copy { flex: 0 0 auto; }
+    /* The original keeps this a bounded scrolling window at phone width too,
+       so it stays one -- letting it stack would run thirteen quotes down the
+       page. What goes is the fade: the original carries no mask here, and with
+       96px of it at each end the card at the top always read as half-rendered
+       rather than scrolling. */
+    .ea-marquee { width: 100%; height: 444px; mask: none; }
     .ea-story, .ea-impls, .ea-panelrow, .ea-support { flex-direction: column; gap: 32px; }
     .ea-story-media, .ea-tab-media, .ea-marquee { width: 100%; flex: 1 1 auto; }
+    /* The shot is deliberately wider than its frame on desktop, so it reads as
+       a window onto a larger screen. Once the frame is phone-width that crop
+       eats most of the picture, so the shot fits instead. */
+    .pp-frame.ea-tab-media > img, .pp-frame--inset > img { width: 100%; }
+    .pp-frame--inset { padding: 16px; }
     .ea-tab-copy, .ea-stories .ea-story-copy { width: 100%; padding-left: 0; }
     .ea-stories .ea-story-media { width: 100%; }
     .ea-story-title, .ea-impl-title { font-size: 24px; line-height: 30px; }
@@ -1982,8 +2009,22 @@
     .ea-tabstrip { flex-wrap: nowrap; gap: 32px; }
     .ea-tab { width: auto; font-size: 16px; line-height: 24px; }
     .ea-stories .ea-tab { flex: 1 1 0; min-width: 0; }
+    /* The story stacks into a column here, and in a column a flex-basis is a
+       HEIGHT. `flex: 0 1 559px` was sizing the media box 559px tall around a
+       232px image, leaving a third of a screen of empty tint under every
+       story. */
+    .ea-stories .ea-story-media { flex: 0 0 auto; width: 100%; }
     .ea-theme-stage { flex-direction: column; }
-    .ea-theme-controls { width: 100%; border-left: 0; border-top: 1px solid var(--color-line); }
+    /* Third time this file has been caught by it: the stage becomes a column
+       here, and a flex-basis is a height in a column. `flex: 1 1 822px` -- set
+       so the chart could shrink beside the readout on desktop -- made the card
+       822px tall on a phone. */
+    .ea-chart { flex: 0 0 auto; width: 100%; max-width: none; }
+    /* The readout is a legend for the chart, and the chart is the point. Once
+       they stack it is a tall list of hex codes pushing the presets off the
+       screen, so it goes rather than reflows -- the colours it names are
+       visible in the chart itself. */
+    .ea-theme-controls { display: none; }
     /* Four presets on one row at phone width: the tiles and the gap shrink
        rather than the fourth one dropping to a line of its own. */
     .ea-theme-presets { gap: 6px; padding: 12px 10px 28px; }
