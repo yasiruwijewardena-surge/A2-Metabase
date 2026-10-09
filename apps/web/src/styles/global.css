@@ -1447,7 +1447,18 @@
       gap: 80px; padding-bottom: 72px;
     }
     .pp-split-media, .pp-split-copy { flex: 1 1 auto; }
-    .pp-split-copy, .pp-split > .pp-split-copy { padding-left: 0; padding-right: 0; }
+    /* The 72px gutter is what separates the copy from the shot beside it, so
+       it has nothing to do once they stack. It survived anyway: the rule that
+       sets it is `.pp-split:not(.pp-split--reverse) > .pp-split-copy:first-child`,
+       four classes deep, and out-specified a two-class reset no matter that it
+       sat inside this media query. Written to match, it loses. That 72px was
+       taking a 334px column down to 262 of text on a phone. */
+    .pp-split-copy,
+    .pp-split > .pp-split-copy,
+    .pp-split:not(.pp-split--reverse) > .pp-split-copy:first-child,
+    .pp-split--reverse > .pp-split-copy:last-child {
+      padding-left: 0; padding-right: 0;
+    }
     .pp-band { padding-bottom: 72px; }
     .pp-accordion { flex-direction: column; gap: 40px; }
     /* The 72 inset is a desktop two-column thing; the original drops it to 8
