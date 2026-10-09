@@ -1438,9 +1438,16 @@
     .pp-pillars { grid-template-columns: 1fr; margin-top: 48px; }
     .pp-trust { margin-top: 48px; }
     .pp-logos { padding-bottom: 48px; }
-    .pp-split { flex-direction: column; align-items: stretch; padding-bottom: 72px; }
+    /* The gap belongs to the split, not to one of its halves. As a margin on
+       the copy it only appeared when the copy came second: every section that
+       leads with its text had its shot pressed straight against the last line
+       -- 1px against the original's 85. */
+    .pp-split {
+      flex-direction: column; align-items: stretch;
+      gap: 80px; padding-bottom: 72px;
+    }
     .pp-split-media, .pp-split-copy { flex: 1 1 auto; }
-    .pp-split-copy, .pp-split > .pp-split-copy { padding-left: 0; padding-right: 0; margin-top: 40px; }
+    .pp-split-copy, .pp-split > .pp-split-copy { padding-left: 0; padding-right: 0; }
     .pp-band { padding-bottom: 72px; }
     .pp-accordion { flex-direction: column; gap: 40px; }
     /* The 72 inset is a desktop two-column thing; the original drops it to 8
